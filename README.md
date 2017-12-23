@@ -1,35 +1,15 @@
-# Digital Synth VRA8-Px v2.0.1
+# Digital Synth VRA8-Q v0.0.0
 
 - 2017-07-22 ISGK Instruments
-- <https://github.com/risgk/digital-synth-vra8-p/tree/vra8-px-v2>
+- <https://github.com/risgk/digital-synth-vra8-q>
 
 ## Concept
 
-- 3 Voice Paraphonic Synthesizer for Arduino Uno
-- A Variant of Digital Synth VRA8-P <https://github.com/risgk/digital-synth-vra8-p>
-
-## History
-
-### v2.0 New Features
-
-- ORGAN Waveform Deleted, RESONANCE Steps Changed (17 -> 9)
-- CC# of AMP EG, VELOCITY SENS, and CUTOFF V SENS Changed
-- Improved Sound, New PRESETs, PITCH BEND Support, TRANSPOSE Support, MIDI Shield Official Support
-- DETUNE S&H AMT, DETUNE EG AMT, PORTAMENTO, UNI TO MONO, CUTOFF NG AMT, EG ATTACK, AMP EG/HOLD
-
-### v1.2 New Features
-
-- Cutoff Velocity Sensitivity, Detune EG Amount
-
-### v1.0 New Features
-
-- Phase Resolution: 24 bit, Internal Signal Processing: 16 bit
-- Audio Output (8 bit) with Error Diffusion, Sub Oscillators (Triangle Wave)
-- Changeable Osc 2 (Detune) Level, Resonance with Q = 11.3 (Max), Velocity Sensitivity
+- 4 Voice Paraphonic Synthesizer for Arduino Uno
 
 ## Features
 
-- 3 Voice Paraphonic Synthesizer (Pseudo Polyphonic Synthesizer), MIDI Sound Module
+- 4 Voice Paraphonic Synthesizer (Pseudo Polyphonic Synthesizer), MIDI Sound Module
 - Serial MIDI In (38400 bps), PWM Audio Out (Pin 6), PWM Rate: 62500 Hz
     - We recommend adding a RC filter circuit to reduce PWM ripples
     - A cutoff frequency 10.6 kHz (R: 150 ohm, C: 100 nF) works well
@@ -40,7 +20,7 @@
 - Sampling Rate: 15625 Hz, Bit Depth: 8 bit, LPF Attenuation Slope: -12 dB/oct
 - Recommending [Hairless MIDI<->Serial Bridge](http://projectgus.github.io/hairless-midiserial/) to connect PC
 - Files
-    - `DigitalSynthVRA8Px.ino` is a sketch for Arduino/Genuino Uno
+    - `DigitalSynthVRA8Q.ino` is a sketch for Arduino/Genuino Uno
     - `make-sample-wav-file.cc` is for Debugging on PC
         - Requiring GCC (G++) or other
         - `make-sample-wav-file-cc.bat` makes a sample WAV file (working on Windows)
@@ -48,12 +28,12 @@
         - Requiring a Ruby execution environment
 - **CAUTION**: We recommend Arduino IDE 1.8.3
 
-## VRA8-Px CTRL
+## VRA8-Q CTRL
 
-- Parameter Editor (MIDI Controller) for VRA8-Px, Web App
+- Parameter Editor (MIDI Controller) for VRA8-Q, Web App
 - We recommend Google Chrome, which implements Web MIDI API
-- VRA8-Px CTRL includes PRESET programs
-- Recommending [loopMIDI](http://www.tobias-erichsen.de/software/loopmidi.html) (virtual loopback MIDI cable) to connect VRA8-Px
+- VRA8-Q CTRL includes PRESET programs
+- Recommending [loopMIDI](http://www.tobias-erichsen.de/software/loopmidi.html) (virtual loopback MIDI cable) to connect VRA8-Q
 - **CAUTION**: Low CUTOFF with high RESONANCE can damage the speakers
 
 ## Controllers
@@ -87,8 +67,8 @@
 
 ## MIDI Implementation Chart
 
-      [Paraphonic Synthesizer]                                        Date: 2017-07-22       
-      Model: Digital Synth VRA8-Px    MIDI Implementation Chart       Version: 2.0.1         
+      [Paraphonic Synthesizer]                                        Date: 2017-12-23       
+      Model: Digital Synth VRA8-Q     MIDI Implementation Chart       Version: 0.0.0         
     +-------------------------------+---------------+---------------+-----------------------+
     | Function...                   | Transmitted   | Recognized    | Remarks               |
     +-------------------------------+---------------+---------------+-----------------------+
