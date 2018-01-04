@@ -1,23 +1,22 @@
-# Digital Synth VRA8-Q v0.0.0
+# Digital Synth VRA8-N v0.0.0
 
-- 2017-07-22 ISGK Instruments
-- <https://github.com/risgk/digital-synth-vra8-q>
+- 2018-01-04 ISGK Instruments
+- <https://github.com/risgk/digital-synth-vra8-n>
 
 ## Concept
 
-- 4 Voice Paraphonic Synthesizer for Arduino Uno
+- Monophonic Synthesizer for Arduino Uno
 
 ## Features
 
-- 4 Voice Paraphonic Synthesizer (Pseudo Polyphonic Synthesizer), MIDI Sound Module
+- Monophonic Synthesizer, MIDI Sound Module
 - Serial MIDI In (38400 bps), PWM Audio Out (Pin 6), PWM Rate: 62500 Hz
     - We recommend adding a RC filter circuit to reduce PWM ripples
-    - A cutoff frequency 10.6 kHz (R: 150 ohm, C: 100 nF) works well
     - A cutoff frequency 15.9 kHz (R: 100 ohm, C: 100 nF) works well, too
     - **CAUTION**: Click sounds may occur when you connect the audio out to an amp/a speaker or reset the board
     - **CAUTION**: The Arduino PWM audio output is a unipolar LINE OUT
         - Please connect this to a power amp/a headphone amp (not to a speaker/a headphone directly)
-- Sampling Rate: 15625 Hz, Bit Depth: 8 bit, LPF Attenuation Slope: -12 dB/oct
+- Sampling Rate: 31250 Hz, Bit Depth: 8 bit, LPF Attenuation Slope: -12 dB/oct
 - Recommending [Hairless MIDI<->Serial Bridge](http://projectgus.github.io/hairless-midiserial/) to connect PC
 - Files
     - `DigitalSynthVRA8Q.ino` is a sketch for Arduino/Genuino Uno
@@ -28,12 +27,12 @@
         - Requiring a Ruby execution environment
 - **CAUTION**: We recommend Arduino IDE 1.8.3
 
-## VRA8-Q CTRL
+## VRA8-N CTRL
 
-- Parameter Editor (MIDI Controller) for VRA8-Q, Web App
+- Parameter Editor (MIDI Controller) for VRA8-N, Web App
 - We recommend Google Chrome, which implements Web MIDI API
-- VRA8-Q CTRL includes PRESET programs
-- Recommending [loopMIDI](http://www.tobias-erichsen.de/software/loopmidi.html) (virtual loopback MIDI cable) to connect VRA8-Q
+- VRA8-N CTRL includes PRESET programs
+- Recommending [loopMIDI](http://www.tobias-erichsen.de/software/loopmidi.html) (virtual loopback MIDI cable) to connect VRA8-N
 - **CAUTION**: Low CUTOFF with high RESONANCE can damage the speakers
 
 ## Controllers
@@ -67,8 +66,8 @@
 
 ## MIDI Implementation Chart
 
-      [Paraphonic Synthesizer]                                        Date: 2017-12-23       
-      Model: Digital Synth VRA8-Q     MIDI Implementation Chart       Version: 0.0.0         
+      [Paraphonic Synthesizer]                                        Date: 2018-01-04       
+      Model: Digital Synth VRA8-N     MIDI Implementation Chart       Version: 0.0.0         
     +-------------------------------+---------------+---------------+-----------------------+
     | Function...                   | Transmitted   | Recognized    | Remarks               |
     +-------------------------------+---------------+---------------+-----------------------+
