@@ -21,8 +21,8 @@ public:
     TCCR0B = 0x01;
     OCR0A  = 0x80;
 
-    // Timer/Counter1 (10-bit Fast PWM, 15625 Hz)
-    TCCR1A = 0x03;
+    // Timer/Counter1 (9-bit Fast PWM, 31250 Hz)
+    TCCR1A = 0x02;
     TCCR1B = 0x09;
 
     m_count = 0;
