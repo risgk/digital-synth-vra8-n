@@ -38,9 +38,6 @@ public:
     m_count++;
     if ((m_count & (GATE_CONTROL_INTERVAL - 1)) == 0) {
       update_level<0>();
-      update_level<1>();
-      update_level<2>();
-      update_level<3>();
     }
   }
 

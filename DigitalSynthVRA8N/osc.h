@@ -150,72 +150,34 @@ public:
       case 0:
         update_freq_0();
         break;
-      case 1:
-        update_freq_1();
-        break;
-      case 2:
-        update_freq_2();
-        break;
       case 3:
         update_freq_detune(mod_input);
         break;
       case 4:
         update_pitch_current_array<0>();
         break;
-      case 5:
-        if (!m_unison_on) {
-          update_pitch_current_array<1>();
-        }
-        break;
-      case 6:
-        if (!m_unison_on) {
-          update_pitch_current_array<2>();
-        }
-        break;
       }
     }
 
     m_phase_array[0] += m_freq_array[0];
-    m_phase_array[1] += m_freq_array[1];
-    m_phase_array[2] += m_freq_array[2];
-    m_phase_detune += m_freq_detune;
+//    m_phase_detune += m_freq_detune;
 
     int8_t wave_0_main,   wave_1_main,   wave_2_main;
     int8_t wave_0_detune, wave_1_detune, wave_2_detune;
-    int8_t wave_0_sub,    wave_1_sub,    wave_2_sub;
     int16_t level_main;
     int16_t level_detune;
-    int16_t level_sub;
     int16_t result;
     {
       wave_0_main   = get_wave_level(m_wave_table[0],  m_phase_array[0]                   << 1);
-      wave_1_main   = get_wave_level(m_wave_table[1],  m_phase_array[1]                   << 1);
-      wave_2_main   = get_wave_level(m_wave_table[2],  m_phase_array[2]                   << 1);
-      wave_0_detune = get_wave_level(m_wave_table[0], (m_phase_array[0] + m_phase_detune) << 1);
-      wave_1_detune = get_wave_level(m_wave_table[1], (m_phase_array[1] + m_phase_detune) << 1);
-      wave_2_detune = get_wave_level(m_wave_table[2], (m_phase_array[2] + m_phase_detune) << 1);
-      wave_0_sub    = get_tri_wave_level(m_phase_array[0]);
-      wave_1_sub    = get_tri_wave_level(m_phase_array[1]);
-      wave_2_sub    = get_tri_wave_level(m_phase_array[2]);
+//      wave_0_detune = get_wave_level(m_wave_table[0], (m_phase_array[0] + m_phase_detune) << 1);
 
       // amp and mix
-      if (m_unison_on && (m_unison_option & 0x40)) {
-        amp_0 = amp_0 + (amp_0 >> 1);
+      {
         level_main   = mul_q15_q7((wave_0_main   * amp_0), m_mix_main);
-        level_detune = mul_q15_q7((wave_0_detune * amp_0), m_mix_detune);
-        level_sub    = mul_q15_q7((wave_0_sub    * amp_0), m_mix_sub);
-      } else {
-        level_main   = mul_q15_q7((wave_0_main   * amp_0) +
-                                  (wave_1_main   * amp_1) +
-                                  (wave_2_main   * amp_2), m_mix_main);
-        level_detune = mul_q15_q7((wave_0_detune * amp_0) +
-                                  (wave_1_detune * amp_1) +
-                                  (wave_2_detune * amp_2), m_mix_detune);
-        level_sub    = mul_q15_q7((wave_0_sub    * amp_0) +
-                                  (wave_1_sub    * amp_1) +
-                                  (wave_2_sub    * amp_2), m_mix_sub);
+//        level_detune = mul_q15_q7((wave_0_detune * amp_0), m_mix_detune);
       }
-      result = level_main + level_detune + level_sub;
+//      result = level_main + level_detune;
+      result = level_main + level_detune;
     }
 
     return result;

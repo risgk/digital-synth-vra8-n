@@ -19,7 +19,7 @@
 - Sampling Rate: 31250 Hz, Bit Depth: 8 bit, LPF Attenuation Slope: -12 dB/oct
 - Recommending [Hairless MIDI<->Serial Bridge](http://projectgus.github.io/hairless-midiserial/) to connect PC
 - Files
-    - `DigitalSynthVRA8Q.ino` is a sketch for Arduino/Genuino Uno
+    - `DigitalSynthVRA8N.ino` is a sketch for Arduino/Genuino Uno
     - `make-sample-wav-file.cc` is for Debugging on PC
         - Requiring GCC (G++) or other
         - `make-sample-wav-file-cc.bat` makes a sample WAV file (working on Windows)

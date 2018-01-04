@@ -332,13 +332,13 @@ public:
     gate_output_array[2] = IGate<0>::level<2>();
     gate_output_array[3] = IGate<0>::level<3>();
     uint8_t env_gen_output = IEnvGen<0>::clock();
-    int16_t osc_output = IOsc<0>::clock(gate_output_array[0],
-                                        gate_output_array[1],
-                                        gate_output_array[2],
+    int16_t osc_output = IOsc<0>::clock(63,
+                                        63,
+                                        63,
                                         env_gen_output);
     int16_t filter_output = IFilter<0>::clock(osc_output, env_gen_output);
     uint8_t gain_control = high_byte((env_gen_output * m_amp_env_amt_current) +
-                                     ((gate_output_array[3] << 2) *
+                                     ((gate_output_array[0] << 2) *
                                       (AMP_ENV_AMT_MAX - m_amp_env_amt_current)));
     int16_t amp_output = IAmp<0>::clock(filter_output, gain_control);
 
