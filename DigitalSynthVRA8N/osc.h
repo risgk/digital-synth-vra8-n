@@ -10,8 +10,6 @@ static const uint8_t OSC_MIX_TABLE_LENGTH = 32 + 1;  // odd number
 template <uint8_t T>
 class Osc {
   static uint8_t        m_count;
-  static boolean        m_unison_on;
-  static uint8_t        m_unison_option;
   static int8_t         m_mix_main;
   static int8_t         m_mix_detune;
   static int8_t         m_mix_sub;
@@ -34,8 +32,6 @@ class Osc {
 public:
   INLINE static void initialize() {
     m_count = 0;
-    m_unison_on = false;
-    m_unison_option = 0;
     for (uint8_t i = 0; i < OSC_MIX_TABLE_LENGTH; i++) {
       m_mix_table[i] = static_cast<uint8_t>(sqrtf(static_cast<float>(i) /
                                                   (OSC_MIX_TABLE_LENGTH - 1)) * 127);
@@ -67,10 +63,6 @@ public:
     m_phase_array[1] = 0;
     m_phase_array[2] = 0;
     m_phase_detune = 0;
-  }
-
-  INLINE static void set_unison(boolean unison_on) {
-    m_unison_on = unison_on;
   }
 
   INLINE static void set_mix(uint8_t controller_value) {
@@ -111,10 +103,6 @@ public:
     m_detune_mod_amt = controller_value;
   }
 
-  INLINE static void set_unison_option(uint8_t controller_value) {
-    m_unison_option = controller_value;
-  }
-
   INLINE static void set_portamento(uint8_t controller_value) {
     if (controller_value < 4) {
       m_portamento = 0x4000;
@@ -124,13 +112,7 @@ public:
   }
 
   INLINE static void note_on(uint8_t osc_number, uint8_t note_number) {
-    if (m_unison_on) {
-      m_pitch_target_array[0] = note_number << 8;
-      m_pitch_target_array[1] = m_pitch_target_array[0];
-      m_pitch_target_array[2] = m_pitch_target_array[0];
-    } else {
-      m_pitch_target_array[osc_number] = note_number << 8;
-    }
+    m_pitch_target_array[0] = note_number << 8;
   }
 
   INLINE static void set_pitch_bend(int16_t pitch_bend) {
@@ -148,7 +130,7 @@ public:
       uint8_t idx = (m_count >> OSC_CONTROL_INTERVAL_BITS) & 0x07;
       switch (idx) {
       case 0:
-        update_freq_0();
+        update_freq<0>();
         break;
       case 3:
         update_freq_detune(mod_input);
@@ -160,7 +142,7 @@ public:
     }
 
     m_phase_array[0] += m_freq_array[0];
-//    m_phase_detune += m_freq_detune;
+    m_phase_detune += m_freq_detune;
 
     int8_t wave_0_main,   wave_1_main,   wave_2_main;
     int8_t wave_0_detune, wave_1_detune, wave_2_detune;
@@ -169,14 +151,14 @@ public:
     int16_t result;
     {
       wave_0_main   = get_wave_level(m_wave_table[0],  m_phase_array[0]                   << 1);
-//      wave_0_detune = get_wave_level(m_wave_table[0], (m_phase_array[0] + m_phase_detune) << 1);
+      wave_0_detune = get_wave_level(m_wave_table[0], (m_phase_array[0] + m_phase_detune) << 1);
 
       // amp and mix
       {
+        amp_0 = amp_0 + (amp_0 >> 1);
         level_main   = mul_q15_q7((wave_0_main   * amp_0), m_mix_main);
-//        level_detune = mul_q15_q7((wave_0_detune * amp_0), m_mix_detune);
+        level_detune = mul_q15_q7((wave_0_detune * amp_0), m_mix_detune);
       }
-//      result = level_main + level_detune;
       result = level_main + level_detune;
     }
 
@@ -219,30 +201,6 @@ private:
     }
     level -= 0x4000;
     return high_sbyte(level << 1);
-  }
-
-  INLINE static void update_freq_0() {
-    update_freq<0>();
-  }
-
-  INLINE static void update_freq_1() {
-    if (m_unison_on) {
-      m_pitch_current_array[1] = m_pitch_current_array[0];
-      m_wave_table[1] = m_wave_table[0];
-      m_freq_array[1] = m_freq_array[0] + (m_freq_detune << 1);
-    } else {
-      update_freq<1>();
-    }
-  }
-
-  INLINE static void update_freq_2() {
-    if (m_unison_on) {
-      m_pitch_current_array[2] = m_pitch_current_array[0];
-      m_wave_table[2] = m_wave_table[0];
-      m_freq_array[2] = m_freq_array[0] - (m_freq_detune << 1);
-    } else {
-      update_freq<2>();
-    }
   }
 
   template <uint8_t N>
@@ -304,8 +262,6 @@ private:
 };
 
 template <uint8_t T> uint8_t         Osc<T>::m_count;
-template <uint8_t T> boolean         Osc<T>::m_unison_on;
-template <uint8_t T> uint8_t         Osc<T>::m_unison_option;
 template <uint8_t T> int8_t          Osc<T>::m_mix_main;
 template <uint8_t T> int8_t          Osc<T>::m_mix_detune;
 template <uint8_t T> int8_t          Osc<T>::m_mix_sub;

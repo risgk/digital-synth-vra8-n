@@ -3,7 +3,6 @@
 template <uint8_t T>
 class Voice {
   static uint8_t m_count;
-  static boolean m_unison_on;
   static uint8_t m_waveform;
   static uint8_t m_amp_env_amt_current;
   static uint8_t m_amp_env_amt_target;
@@ -19,7 +18,6 @@ class Voice {
 public:
   INLINE static void initialize() {
     m_count = 3;
-    m_unison_on = false;
     m_waveform = OSC_WAVEFORM_SAW;
     m_amp_env_amt_current = 0;
     m_amp_env_amt_target = 0;
@@ -45,31 +43,15 @@ public:
   INLINE static void set_unison(uint8_t controller_value) {
     if (controller_value >= 64) {
       IOsc<0>::set_mix((127 - controller_value) << 1);
-      if (!m_unison_on) {
-        m_unison_on = true;
-        IOsc<0>::set_unison(m_unison_on);
-        if (m_note_number[0] != NOTE_NUMBER_INVALID) {
-          m_note_number[1] = NOTE_NUMBER_INVALID;
-          m_note_number[2] = NOTE_NUMBER_INVALID;
-          IOsc<0>::note_on(0, m_note_number[0]);
-          IGate<0>::note_on(1, m_velocity[0]);
-          IGate<0>::note_on(2, m_velocity[0]);
-        } else {
-          all_note_off();
-        }
-      }
+      all_note_off();
     } else {
       IOsc<0>::set_mix(controller_value << 1);
-      if (m_unison_on) {
-        m_unison_on = false;
-        IOsc<0>::set_unison(m_unison_on);
-        if (m_note_number[0] != NOTE_NUMBER_INVALID) {
-          IOsc<0>::note_on(0, m_note_number[0]);
-          IGate<0>::note_off(1);
-          IGate<0>::note_off(2);
-        } else {
-          all_note_off();
-        }
+      if (m_note_number[0] != NOTE_NUMBER_INVALID) {
+        IOsc<0>::note_on(0, m_note_number[0]);
+        IGate<0>::note_off(1);
+        IGate<0>::note_off(2);
+      } else {
+        all_note_off();
       }
     }
   }
@@ -123,47 +105,17 @@ public:
     uint8_t cutoff_v = high_sbyte((static_cast<int8_t>(velocity - 64) << 1) *
                                   m_cutoff_velocity_sensitivity) + 64;
 
-    if (m_unison_on) {
-      m_note_number[0] = note_number;
-      m_note_number[1] = NOTE_NUMBER_INVALID;
-      m_note_number[2] = NOTE_NUMBER_INVALID;
-      m_note_hold[0] = false;
-      m_note_hold[1] = false;
-      m_note_hold[2] = false;
-      IOsc<0>::note_on(0, note_number);
-      IGate<0>::note_on(0, v);
-      IGate<0>::note_on(1, v);
-      IGate<0>::note_on(2, v);
-      m_velocity[0] = v;
-    } else {
-      if (m_note_number[0] == note_number) {
-        m_note_hold[0] = false;
-        IGate<0>::note_on(0, v);
-        m_velocity[0] = v;
-      } else if (m_note_number[1] == note_number) {
-        m_note_hold[1] = false;
-        IGate<0>::note_on(1, v);
-      } else if (m_note_number[2] == note_number) {
-        m_note_hold[2] = false;
-        IGate<0>::note_on(2, v);
-      } else if ((m_note_number[0] == NOTE_NUMBER_INVALID) || m_note_hold[0]) {
-        m_note_number[0] = note_number;
-        m_note_hold[0] = false;
-        IOsc<0>::note_on(0, note_number);
-        IGate<0>::note_on(0, v);
-        m_velocity[0] = v;
-      } else if ((m_note_number[1] == NOTE_NUMBER_INVALID) || m_note_hold[1]) {
-        m_note_number[1] = note_number;
-        m_note_hold[1] = false;
-        IOsc<0>::note_on(1, note_number);
-        IGate<0>::note_on(1, v);
-      } else {
-        m_note_number[2] = note_number;
-        m_note_hold[2] = false;
-        IOsc<0>::note_on(2, note_number);
-        IGate<0>::note_on(2, v);
-      }
-    }
+    m_note_number[0] = note_number;
+    m_note_number[1] = NOTE_NUMBER_INVALID;
+    m_note_number[2] = NOTE_NUMBER_INVALID;
+    m_note_hold[0] = false;
+    m_note_hold[1] = false;
+    m_note_hold[2] = false;
+    IOsc<0>::note_on(0, note_number);
+    IGate<0>::note_on(0, v);
+    IGate<0>::note_on(1, v);
+    IGate<0>::note_on(2, v);
+    m_velocity[0] = v;
 
     IGate<0>::note_on(3, 127);
     IEnvGen<0>::note_on();
@@ -171,38 +123,13 @@ public:
   }
 
   INLINE static void note_off(uint8_t note_number) {
-    if (m_unison_on) {
-      if (m_note_number[0] == note_number) {
-        if (m_forced_hold || m_damper_pedal) {
-          m_note_hold[0] = true;
-          m_note_hold[1] = true;
-          m_note_hold[2] = true;
-        } else {
-          all_note_off();
-        }
-      }
-    } else {
-      if (m_note_number[0] == note_number) {
-        if (m_forced_hold || m_damper_pedal) {
-          m_note_hold[0] = true;
-        } else {
-          m_note_number[0] = NOTE_NUMBER_INVALID;
-          IGate<0>::note_off(0);
-        }
-      } else if (m_note_number[1] == note_number) {
-        if (m_forced_hold || m_damper_pedal) {
-          m_note_hold[1] = true;
-        } else {
-          m_note_number[1] = NOTE_NUMBER_INVALID;
-          IGate<0>::note_off(1);
-        }
-      } else if (m_note_number[2] == note_number) {
-        if (m_forced_hold || m_damper_pedal) {
-          m_note_hold[2] = true;
-        } else {
-          m_note_number[2] = NOTE_NUMBER_INVALID;
-          IGate<0>::note_off(2);
-        }
+    if (m_note_number[0] == note_number) {
+      if (m_forced_hold || m_damper_pedal) {
+        m_note_hold[0] = true;
+        m_note_hold[1] = true;
+        m_note_hold[2] = true;
+      } else {
+        all_note_off();
       }
     }
 
@@ -264,9 +191,6 @@ public:
       break;
     case DETUNE_EG_AMT:
       IOsc<0>::set_detune_env_amt(controller_value);
-      break;
-    case UNISON_OPTION:
-      IOsc<0>::set_unison_option(controller_value);
       break;
     case PORTAMENTO:
       IOsc<0>::set_portamento(controller_value);
@@ -410,7 +334,6 @@ private:
 };
 
 template <uint8_t T> uint8_t Voice<T>::m_count;
-template <uint8_t T> boolean Voice<T>::m_unison_on;
 template <uint8_t T> uint8_t Voice<T>::m_waveform;
 template <uint8_t T> uint8_t Voice<T>::m_amp_env_amt_current;
 template <uint8_t T> uint8_t Voice<T>::m_amp_env_amt_target;
