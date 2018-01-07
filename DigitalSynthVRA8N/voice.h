@@ -2,36 +2,28 @@
 
 template <uint8_t T>
 class Voice {
-  static uint8_t m_count;
   static uint8_t m_waveform;
   static uint8_t m_amp_env_amt;
   static boolean m_forced_hold;
   static boolean m_damper_pedal;
   static uint8_t m_note_number;
   static boolean m_note_hold;
-  static uint8_t m_velocity;
   static uint8_t m_output_error;
-  static uint8_t m_velocity_sensitivity;
-  static int8_t  m_cutoff_velocity_sensitivity;
 
 public:
   INLINE static void initialize() {
-    m_count = 3;
     m_waveform = OSC_WAVEFORM_SAW;
     m_amp_env_amt = 0;
     m_forced_hold = false;
     m_damper_pedal = false;
     m_note_number = NOTE_NUMBER_INVALID;
     m_note_hold = false;
-    m_velocity = 127;
     m_output_error = 0;
-    m_velocity_sensitivity = 0;
-    m_cutoff_velocity_sensitivity = 0;
     IOsc<0>::initialize();
     IFilter<0>::initialize();
     IAmp<0>::initialize();
-    IGate<0>::initialize();
     IEnvGen<0>::initialize();
+    IEnvGen<1>::initialize();
   }
 
   INLINE static void set_unison(uint8_t controller_value) {
@@ -80,19 +72,11 @@ public:
     }
 #endif
 
-    uint8_t v = high_byte((velocity + 1) * (m_velocity_sensitivity << 1)) +
-                          (127 - m_velocity_sensitivity);
-    uint8_t cutoff_v = high_sbyte((static_cast<int8_t>(velocity - 64) << 1) *
-                                  m_cutoff_velocity_sensitivity) + 64;
-
     m_note_number = note_number;
     m_note_hold = false;
     IOsc<0>::note_on(note_number);
-    m_velocity = v;
-
-    IGate<0>::note_on();
     IEnvGen<0>::note_on();
-    IFilter<0>::note_on(cutoff_v);
+    IEnvGen<1>::note_on();
   }
 
   INLINE static void note_off(uint8_t note_number) {
@@ -108,8 +92,8 @@ public:
   INLINE static void all_note_off() {
     m_note_number = NOTE_NUMBER_INVALID;
     m_note_hold = false;
-    IGate<0>::note_off();
     IEnvGen<0>::note_off();
+    IEnvGen<1>::note_off();
   }
 
   INLINE static void control_change(uint8_t controller_number, uint8_t controller_value) {
@@ -154,9 +138,11 @@ public:
       break;
     case EG_DECAY:
       IEnvGen<0>::set_decay(controller_value);
+      IEnvGen<1>::set_decay(controller_value);
       break;
     case EG_ATTACK:
       IEnvGen<0>::set_attack(controller_value);
+      IEnvGen<1>::set_attack(controller_value);
       break;
     case AMP_EG:
       if (controller_value < 64) {
@@ -171,10 +157,8 @@ public:
       }
       break;
     case VELOCITY_SENS:
-      m_velocity_sensitivity = controller_value;
       break;
     case CUTOFF_V_SENS:
-      m_cutoff_velocity_sensitivity = (controller_value - 64) << 1;
       break;
 #if 0
     case DAMPER_PEDAL:
@@ -201,17 +185,11 @@ public:
   }
 
   INLINE static int8_t clock() {
-    m_count++;
-
-    IGate<0>::clock();
-    uint8_t gate_output = IGate<0>::clock();
-    uint8_t env_gen_output = IEnvGen<0>::clock();
-    int16_t osc_output = IOsc<0>::clock(env_gen_output);
-    int16_t filter_output = IFilter<0>::clock(osc_output, env_gen_output);
-    uint8_t gain_control = high_byte((env_gen_output * m_amp_env_amt) +
-                                     ((gate_output << 2) *
-                                      (AMP_ENV_AMT_MAX - m_amp_env_amt)));
-    int16_t amp_output = IAmp<0>::clock(filter_output, gain_control);
+    int16_t osc_output = IOsc<0>::clock();
+    uint8_t env_gen_output_0 = IEnvGen<0>::clock();
+    int16_t filter_output = IFilter<0>::clock(osc_output, env_gen_output_0);
+    uint8_t env_gen_output_1 = IEnvGen<1>::clock();
+    int16_t amp_output = IAmp<0>::clock(filter_output, env_gen_output_1);
 
     // error diffusion
     int16_t output = amp_output + m_output_error;
@@ -249,19 +227,15 @@ private:
   INLINE static void turn_hold_off() {
     m_note_number = NOTE_NUMBER_INVALID;
     m_note_hold = false;
-    IGate<0>::note_off();
     IEnvGen<0>::note_off();
+    IEnvGen<1>::note_off();
   }
 };
 
-template <uint8_t T> uint8_t Voice<T>::m_count;
 template <uint8_t T> uint8_t Voice<T>::m_waveform;
 template <uint8_t T> uint8_t Voice<T>::m_amp_env_amt;
 template <uint8_t T> boolean Voice<T>::m_forced_hold;
 template <uint8_t T> boolean Voice<T>::m_damper_pedal;
 template <uint8_t T> uint8_t Voice<T>::m_note_number;
 template <uint8_t T> boolean Voice<T>::m_note_hold;
-template <uint8_t T> uint8_t Voice<T>::m_velocity;
 template <uint8_t T> uint8_t Voice<T>::m_output_error;
-template <uint8_t T> uint8_t Voice<T>::m_velocity_sensitivity;
-template <uint8_t T> int8_t  Voice<T>::m_cutoff_velocity_sensitivity;

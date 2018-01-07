@@ -24,7 +24,7 @@ public:
   INLINE static void initialize() {
     m_state = STATE_RELEASE;
     m_level = 0;
-    m_count = 3;
+    m_count = (T == 0) ? 3 : 1;
     set_attack(64);
     set_decay(64);
     m_rest = RELEASE_UPDATE_INTERVAL;

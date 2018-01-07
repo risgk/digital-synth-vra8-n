@@ -114,7 +114,7 @@ public:
 #endif
   }
 
-  INLINE static int16_t clock(uint8_t mod_input) {
+  INLINE static int16_t clock() {
     m_count++;
     if ((m_count & (OSC_CONTROL_INTERVAL - 1)) == 0) {
       uint8_t idx = (m_count >> OSC_CONTROL_INTERVAL_BITS) & 0x07;
@@ -123,7 +123,7 @@ public:
         update_freq();
         break;
       case 3:
-        update_freq_detune(mod_input);
+        update_freq_detune(0);
         break;
       case 4:
         update_pitch_current();

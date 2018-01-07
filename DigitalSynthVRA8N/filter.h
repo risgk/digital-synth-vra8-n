@@ -20,7 +20,6 @@ class Filter {
   static int16_t        m_y_2;
   static uint8_t        m_cutoff_current;
   static uint8_t        m_cutoff;
-  static uint8_t        m_cutoff_velocity;
   static uint8_t        m_mod_amt;
   static uint8_t        m_noise_gen_amt;
   static uint16_t       m_rnd;
@@ -35,7 +34,6 @@ public:
     m_y_1 = 0;
     m_y_2 = 0;
     m_cutoff_current = 127;
-    m_cutoff_velocity = 64;
     set_cutoff(127);
     set_resonance(0);
     set_env_amt(64);
@@ -58,10 +56,6 @@ public:
 
   INLINE static void set_noise_gen_amt(uint8_t controller_value) {
     m_noise_gen_amt = controller_value;
-  }
-
-  INLINE static void note_on(uint8_t cutoff_velocity) {
-    m_cutoff_velocity = cutoff_velocity;
   }
 
   INLINE static int16_t clock(int16_t audio_input, uint8_t mod_input) {
@@ -105,7 +99,7 @@ public:
 
 private:
   INLINE static void update_coefs(uint8_t mod_input) {
-    int16_t cutoff_candidate = m_cutoff + static_cast<int8_t>(m_cutoff_velocity - 64);
+    int16_t cutoff_candidate = m_cutoff;
     cutoff_candidate += high_sbyte(((m_mod_amt - 64) << 1) * mod_input);
     cutoff_candidate += high_sbyte(((m_noise_gen_amt - 64) << 1) * get_rnd8());
     uint8_t cutoff_target;
@@ -152,7 +146,6 @@ template <uint8_t T> int16_t        Filter<T>::m_y_1;
 template <uint8_t T> int16_t        Filter<T>::m_y_2;
 template <uint8_t T> uint8_t        Filter<T>::m_cutoff_current;
 template <uint8_t T> uint8_t        Filter<T>::m_cutoff;
-template <uint8_t T> uint8_t        Filter<T>::m_cutoff_velocity;
 template <uint8_t T> uint8_t        Filter<T>::m_mod_amt;
 template <uint8_t T> uint8_t        Filter<T>::m_noise_gen_amt;
 template <uint8_t T> uint16_t       Filter<T>::m_rnd;
