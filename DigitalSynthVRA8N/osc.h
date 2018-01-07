@@ -124,7 +124,7 @@ public:
 #endif
   }
 
-  INLINE static int16_t clock(uint8_t amp_0, uint8_t amp_1, uint8_t amp_2, uint8_t mod_input) {
+  INLINE static int16_t clock(uint8_t mod_input) {
     m_count++;
     if ((m_count & (OSC_CONTROL_INTERVAL - 1)) == 0) {
       uint8_t idx = (m_count >> OSC_CONTROL_INTERVAL_BITS) & 0x07;
@@ -144,23 +144,13 @@ public:
     m_phase_array[0] += m_freq_array[0];
     m_phase_detune += m_freq_detune;
 
-    int8_t wave_0_main,   wave_1_main,   wave_2_main;
-    int8_t wave_0_detune, wave_1_detune, wave_2_detune;
-    int16_t level_main;
-    int16_t level_detune;
-    int16_t result;
-    {
-      wave_0_main   = get_wave_level(m_wave_table[0],  m_phase_array[0]                   << 1);
-      wave_0_detune = get_wave_level(m_wave_table[0], (m_phase_array[0] + m_phase_detune) << 1);
+    int8_t wave_0_main   = get_wave_level(m_wave_table[0],  m_phase_array[0]                   << 1);
+    int8_t wave_0_detune = get_wave_level(m_wave_table[0], (m_phase_array[0] + m_phase_detune) << 1);
 
-      // amp and mix
-      {
-        amp_0 = amp_0 + (amp_0 >> 1);
-        level_main   = mul_q15_q7((wave_0_main   * amp_0), m_mix_main);
-        level_detune = mul_q15_q7((wave_0_detune * amp_0), m_mix_detune);
-      }
-      result = level_main + level_detune;
-    }
+    // amp and mix
+    int16_t level_main   = wave_0_main   * m_mix_main;
+    int16_t level_detune = wave_0_detune * m_mix_detune;
+    int16_t result = level_main + level_detune;
 
     return result;
   }

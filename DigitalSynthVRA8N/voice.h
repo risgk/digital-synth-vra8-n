@@ -4,8 +4,7 @@ template <uint8_t T>
 class Voice {
   static uint8_t m_count;
   static uint8_t m_waveform;
-  static uint8_t m_amp_env_amt_current;
-  static uint8_t m_amp_env_amt_target;
+  static uint8_t m_amp_env_amt;
   static boolean m_forced_hold;
   static boolean m_damper_pedal;
   static uint8_t m_note_number[3];
@@ -19,8 +18,7 @@ public:
   INLINE static void initialize() {
     m_count = 3;
     m_waveform = OSC_WAVEFORM_SAW;
-    m_amp_env_amt_current = 0;
-    m_amp_env_amt_target = 0;
+    m_amp_env_amt = 0;
     m_forced_hold = false;
     m_damper_pedal = false;
     m_note_number[0] = NOTE_NUMBER_INVALID;
@@ -203,9 +201,9 @@ public:
       break;
     case AMP_EG:
       if (controller_value < 64) {
-        m_amp_env_amt_target = 0;
+        m_amp_env_amt = 0;
       } else {
-        m_amp_env_amt_target = AMP_ENV_AMT_MAX;
+        m_amp_env_amt = AMP_ENV_AMT_MAX;
       }
       if ((32 <= controller_value) && (controller_value < 96)) {
         set_forced_hold(true);
@@ -245,25 +243,16 @@ public:
 
   INLINE static int8_t clock() {
     m_count++;
-    if ((m_count & (0x10 - 1)) == 0) {
-      update_amp_env_amt();
-    }
 
     uint8_t gate_output_array[4];
     IGate<0>::clock();
     gate_output_array[0] = IGate<0>::level<0>();
-    gate_output_array[1] = IGate<0>::level<1>();
-    gate_output_array[2] = IGate<0>::level<2>();
-    gate_output_array[3] = IGate<0>::level<3>();
     uint8_t env_gen_output = IEnvGen<0>::clock();
-    int16_t osc_output = IOsc<0>::clock(63,
-                                        63,
-                                        63,
-                                        env_gen_output);
+    int16_t osc_output = IOsc<0>::clock(env_gen_output);
     int16_t filter_output = IFilter<0>::clock(osc_output, env_gen_output);
-    uint8_t gain_control = high_byte((env_gen_output * m_amp_env_amt_current) +
+    uint8_t gain_control = high_byte((env_gen_output * m_amp_env_amt) +
                                      ((gate_output_array[0] << 2) *
-                                      (AMP_ENV_AMT_MAX - m_amp_env_amt_current)));
+                                      (AMP_ENV_AMT_MAX - m_amp_env_amt)));
     int16_t amp_output = IAmp<0>::clock(filter_output, gain_control);
 
     // error diffusion
@@ -273,14 +262,6 @@ public:
   }
 
 private:
-  INLINE static void update_amp_env_amt() {
-    if (m_amp_env_amt_current < m_amp_env_amt_target) {
-      m_amp_env_amt_current += AMP_ENV_AMT_STEP;
-    } else if (m_amp_env_amt_current > m_amp_env_amt_target) {
-      m_amp_env_amt_current -= AMP_ENV_AMT_STEP;
-    }
-  }
-
   INLINE static void set_forced_hold(boolean on) {
     if (on) {
       m_forced_hold = true;
@@ -335,8 +316,7 @@ private:
 
 template <uint8_t T> uint8_t Voice<T>::m_count;
 template <uint8_t T> uint8_t Voice<T>::m_waveform;
-template <uint8_t T> uint8_t Voice<T>::m_amp_env_amt_current;
-template <uint8_t T> uint8_t Voice<T>::m_amp_env_amt_target;
+template <uint8_t T> uint8_t Voice<T>::m_amp_env_amt;
 template <uint8_t T> boolean Voice<T>::m_forced_hold;
 template <uint8_t T> boolean Voice<T>::m_damper_pedal;
 template <uint8_t T> uint8_t Voice<T>::m_note_number[3];
