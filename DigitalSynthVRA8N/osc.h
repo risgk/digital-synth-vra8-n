@@ -9,7 +9,6 @@ static const uint8_t OSC_MIX_TABLE_LENGTH = 32 + 1;  // odd number
 
 template <uint8_t T>
 class Osc {
-  static uint8_t        m_count;
   static int8_t         m_mix_main;
   static int8_t         m_mix_detune;
   static int8_t         m_mix_sub;
@@ -31,7 +30,6 @@ class Osc {
 
 public:
   INLINE static void initialize() {
-    m_count = 0;
     for (uint8_t i = 0; i < OSC_MIX_TABLE_LENGTH; i++) {
       m_mix_table[i] = static_cast<uint8_t>(sqrtf(static_cast<float>(i) /
                                                   (OSC_MIX_TABLE_LENGTH - 1)) * 127);
@@ -114,10 +112,9 @@ public:
 #endif
   }
 
-  INLINE static int16_t clock() {
-    m_count++;
-    if ((m_count & (OSC_CONTROL_INTERVAL - 1)) == 0) {
-      uint8_t idx = (m_count >> OSC_CONTROL_INTERVAL_BITS) & 0x07;
+  INLINE static int16_t clock(uint8_t count) {
+    if ((count & (OSC_CONTROL_INTERVAL - 1)) == 0) {
+      uint8_t idx = (count >> OSC_CONTROL_INTERVAL_BITS) & 0x07;
       switch (idx) {
       case 0:
         update_freq();
@@ -239,7 +236,6 @@ private:
   }
 };
 
-template <uint8_t T> uint8_t         Osc<T>::m_count;
 template <uint8_t T> int8_t          Osc<T>::m_mix_main;
 template <uint8_t T> int8_t          Osc<T>::m_mix_detune;
 template <uint8_t T> int8_t          Osc<T>::m_mix_sub;

@@ -15,7 +15,6 @@ class EnvGen {
 
   static uint8_t  m_state;
   static uint16_t m_level;
-  static uint8_t  m_count;
   static uint16_t m_attack_step;
   static uint8_t  m_decay_update_interval;
   static uint8_t  m_rest;
@@ -24,7 +23,6 @@ public:
   INLINE static void initialize() {
     m_state = STATE_RELEASE;
     m_level = 0;
-    m_count = (T == 0) ? 3 : 1;
     set_attack(64);
     set_decay(64);
     m_rest = RELEASE_UPDATE_INTERVAL;
@@ -50,9 +48,8 @@ public:
     m_rest = RELEASE_UPDATE_INTERVAL;
   }
 
-  INLINE static uint8_t clock() {
-    m_count++;
-    if ((m_count & (ENV_GEN_CONTROL_INTERVAL - 1)) == 0) {
+  INLINE static uint8_t clock(uint8_t count) {
+    if ((count & (ENV_GEN_CONTROL_INTERVAL - 1)) == ((T << 1) + 1)) {
       switch (m_state) {
       case STATE_ATTACK:
         m_rest--;
@@ -101,7 +98,6 @@ public:
   }
 };
 
-template <uint8_t T> uint8_t  EnvGen<T>::m_count;
 template <uint8_t T> uint8_t  EnvGen<T>::m_state;
 template <uint8_t T> uint16_t EnvGen<T>::m_level;
 template <uint8_t T> uint16_t EnvGen<T>::m_attack_step;

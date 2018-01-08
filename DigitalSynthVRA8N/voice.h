@@ -2,6 +2,7 @@
 
 template <uint8_t T>
 class Voice {
+  static uint8_t m_count;
   static uint8_t m_waveform;
   static uint8_t m_amp_env_amt;
   static boolean m_forced_hold;
@@ -185,10 +186,12 @@ public:
   }
 
   INLINE static int8_t clock() {
-    int16_t osc_output = IOsc<0>::clock();
-    uint8_t env_gen_output_0 = IEnvGen<0>::clock();
-    int16_t filter_output = IFilter<0>::clock(osc_output, env_gen_output_0);
-    uint8_t env_gen_output_1 = IEnvGen<1>::clock();
+    m_count++;
+
+    int16_t osc_output = IOsc<0>::clock(m_count);
+    uint8_t env_gen_output_0 = IEnvGen<0>::clock(m_count);
+    int16_t filter_output = IFilter<0>::clock(m_count, osc_output, env_gen_output_0);
+    uint8_t env_gen_output_1 = IEnvGen<1>::clock(m_count);
     int16_t amp_output = IAmp<0>::clock(filter_output, env_gen_output_1);
 
     // error diffusion
@@ -232,6 +235,7 @@ private:
   }
 };
 
+template <uint8_t T> uint8_t Voice<T>::m_count;
 template <uint8_t T> uint8_t Voice<T>::m_waveform;
 template <uint8_t T> uint8_t Voice<T>::m_amp_env_amt;
 template <uint8_t T> boolean Voice<T>::m_forced_hold;

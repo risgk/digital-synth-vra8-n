@@ -8,7 +8,6 @@
 
 template <uint8_t T>
 class Filter {
-  static uint8_t        m_count;
   static const uint8_t* m_lpf_table;
   static uint8_t        m_b_2_over_a_0_low;
   static int8_t         m_b_2_over_a_0_high;
@@ -28,7 +27,6 @@ class Filter {
 
 public:
   INLINE static void initialize() {
-    m_count = 2;
     m_x_1 = 0;
     m_x_2 = 0;
     m_y_1 = 0;
@@ -58,12 +56,11 @@ public:
     m_noise_gen_amt = controller_value;
   }
 
-  INLINE static int16_t clock(int16_t audio_input, uint8_t mod_input) {
-    m_count++;
-    uint8_t count_and_interval = m_count & (FILTER_CONTROL_INTERVAL - 1);
-    if (count_and_interval == 0) {
+  INLINE static int16_t clock(uint8_t count, int16_t audio_input, uint8_t mod_input) {
+    uint8_t count_and_interval = count & (FILTER_CONTROL_INTERVAL - 1);
+    if (count_and_interval == 2) {
       update_coefs(mod_input);
-    } else if (count_and_interval == 3) {
+    } else if (count_and_interval == 1) {
       update_rnd();
     }
 
@@ -134,7 +131,6 @@ private:
   }
 };
 
-template <uint8_t T> uint8_t        Filter<T>::m_count;
 template <uint8_t T> const uint8_t* Filter<T>::m_lpf_table;
 template <uint8_t T> uint8_t        Filter<T>::m_b_2_over_a_0_low;
 template <uint8_t T> int8_t         Filter<T>::m_b_2_over_a_0_high;
