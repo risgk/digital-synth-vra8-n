@@ -4,8 +4,9 @@ template <uint8_t T>
 class Voice {
   static uint8_t m_count;
   static uint8_t m_waveform;
-  static uint8_t m_amp_env_amt;
-  static boolean m_forced_hold;
+  static uint8_t m_env_attack;
+  static uint8_t m_env_decay;
+  static uint8_t m_amp_env_sus;
   static boolean m_damper_pedal;
   static uint8_t m_note_number;
   static boolean m_note_hold;
@@ -14,8 +15,6 @@ class Voice {
 public:
   INLINE static void initialize() {
     m_waveform = OSC_WAVEFORM_SAW;
-    m_amp_env_amt = 0;
-    m_forced_hold = false;
     m_damper_pedal = false;
     m_note_number = NOTE_NUMBER_INVALID;
     m_note_hold = false;
@@ -25,6 +24,9 @@ public:
     IAmp<0>::initialize();
     IEnvGen<0>::initialize();
     IEnvGen<1>::initialize();
+    set_env_attack(0);
+    set_env_decay(0);
+    set_amp_env_sus(0);
   }
 
   INLINE static void set_unison(uint8_t controller_value) {
@@ -82,7 +84,7 @@ public:
 
   INLINE static void note_off(uint8_t note_number) {
     if (m_note_number == note_number) {
-      if (m_forced_hold || m_damper_pedal) {
+      if (m_damper_pedal) {
         m_note_hold = true;
       } else {
         all_note_off();
@@ -138,24 +140,13 @@ public:
       IOsc<0>::set_portamento(controller_value);
       break;
     case EG_DECAY:
-      IEnvGen<0>::set_decay(controller_value);
-      IEnvGen<1>::set_decay(controller_value);
+      set_env_decay(controller_value);
       break;
     case EG_ATTACK:
-      IEnvGen<0>::set_attack(controller_value);
-      IEnvGen<1>::set_attack(controller_value);
+      set_env_attack(controller_value);
       break;
     case AMP_EG:
-      if (controller_value < 64) {
-        m_amp_env_amt = 0;
-      } else {
-        m_amp_env_amt = AMP_ENV_AMT_MAX;
-      }
-      if ((32 <= controller_value) && (controller_value < 96)) {
-        set_forced_hold(true);
-      } else {
-        set_forced_hold(false);
-      }
+      set_amp_env_sus(controller_value);
       break;
     case VELOCITY_SENS:
       break;
@@ -201,16 +192,43 @@ public:
   }
 
 private:
-  INLINE static void set_forced_hold(boolean on) {
-    if (on) {
-      m_forced_hold = true;
+  INLINE static void set_env_attack(uint8_t controller_value) {
+    m_env_attack = controller_value;
+    update_env();
+  }
+
+  INLINE static void set_env_decay(uint8_t controller_value) {
+    m_env_decay = controller_value;
+    update_env();
+  }
+
+  INLINE static void set_amp_env_sus(uint8_t controller_value) {
+    m_amp_env_sus = controller_value;
+    update_env();
+  }
+
+  INLINE static void update_env() {
+    if (m_amp_env_sus < 32) {
+      IEnvGen<0>::set_attack(m_env_attack);
+      IEnvGen<0>::set_decay(m_env_decay);
+      IEnvGen<0>::set_sustain(false);
+      IEnvGen<1>::set_attack(0);
+      IEnvGen<1>::set_decay(0);
+      IEnvGen<1>::set_sustain(true);
+    } else if (m_amp_env_sus < 96) {
+      IEnvGen<0>::set_attack(m_env_attack);
+      IEnvGen<0>::set_decay(m_env_decay);
+      IEnvGen<0>::set_sustain(false);
+      IEnvGen<1>::set_attack(m_env_attack);
+      IEnvGen<1>::set_decay(m_env_decay);
+      IEnvGen<1>::set_sustain(false);
     } else {
-      if (m_forced_hold) {
-        m_forced_hold = false;
-        if (!m_damper_pedal) {
-          turn_hold_off();
-        }
-      }
+      IEnvGen<0>::set_attack(m_env_attack);
+      IEnvGen<0>::set_decay(m_env_decay);
+      IEnvGen<0>::set_sustain(true);
+      IEnvGen<1>::set_attack(m_env_attack);
+      IEnvGen<1>::set_decay(m_env_decay);
+      IEnvGen<1>::set_sustain(true);
     }
   }
 
@@ -220,9 +238,7 @@ private:
     } else {
       if (m_damper_pedal) {
         m_damper_pedal = false;
-        if (!m_forced_hold) {
-          turn_hold_off();
-        }
+        turn_hold_off();
       }
     }
   }
@@ -237,8 +253,9 @@ private:
 
 template <uint8_t T> uint8_t Voice<T>::m_count;
 template <uint8_t T> uint8_t Voice<T>::m_waveform;
-template <uint8_t T> uint8_t Voice<T>::m_amp_env_amt;
-template <uint8_t T> boolean Voice<T>::m_forced_hold;
+template <uint8_t T> uint8_t Voice<T>::m_env_attack;
+template <uint8_t T> uint8_t Voice<T>::m_env_decay;
+template <uint8_t T> uint8_t Voice<T>::m_amp_env_sus;
 template <uint8_t T> boolean Voice<T>::m_damper_pedal;
 template <uint8_t T> uint8_t Voice<T>::m_note_number;
 template <uint8_t T> boolean Voice<T>::m_note_hold;
