@@ -12,6 +12,7 @@ class Osc {
   static int8_t         m_mix_main;
   static int8_t         m_mix_detune;
   static int8_t         m_mix_sub;
+  static int16_t        m_level_sub;
   static int8_t         m_mix_table[OSC_MIX_TABLE_LENGTH];
   static uint8_t        m_detune;
   static uint8_t        m_detune_noise_gen_amt;
@@ -32,11 +33,12 @@ public:
   INLINE static void initialize() {
     for (uint8_t i = 0; i < OSC_MIX_TABLE_LENGTH; i++) {
       m_mix_table[i] = static_cast<uint8_t>(sqrtf(static_cast<float>(i) /
-                                                  (OSC_MIX_TABLE_LENGTH - 1)) * 127);
+                                                  (OSC_MIX_TABLE_LENGTH - 1)) * 80);
     }
     m_mix_main   = m_mix_table[(OSC_MIX_TABLE_LENGTH - 1) >> 1];
     m_mix_detune = m_mix_table[(OSC_MIX_TABLE_LENGTH - 1) >> 1];
     m_mix_sub = 0;
+    m_level_sub = 0;
     m_detune = 0;
     m_detune_noise_gen_amt = 0;
     m_detune_mod_amt = 0;
@@ -134,10 +136,15 @@ public:
     int8_t wave_0_main   = get_wave_level(m_wave_table,  m_phase                   << 1);
     int8_t wave_0_detune = get_wave_level(m_wave_table, (m_phase + m_phase_detune) << 1);
 
+    if ((count & 0x01) == 1) {
+      int8_t wave_0_sub = get_tri_wave_level(m_phase);
+      m_level_sub       = wave_0_sub * m_mix_sub;
+    }
+
     // amp and mix
     int16_t level_main   = wave_0_main   * m_mix_main;
     int16_t level_detune = wave_0_detune * m_mix_detune;
-    int16_t result = level_main + level_detune;
+    int16_t result       = level_main + level_detune + m_level_sub;
 
     return result;
   }
@@ -239,6 +246,7 @@ private:
 template <uint8_t T> int8_t          Osc<T>::m_mix_main;
 template <uint8_t T> int8_t          Osc<T>::m_mix_detune;
 template <uint8_t T> int8_t          Osc<T>::m_mix_sub;
+template <uint8_t T> int16_t         Osc<T>::m_level_sub;
 template <uint8_t T> int8_t          Osc<T>::m_mix_table[OSC_MIX_TABLE_LENGTH];
 template <uint8_t T> uint8_t         Osc<T>::m_detune;
 template <uint8_t T> uint8_t         Osc<T>::m_detune_noise_gen_amt;
