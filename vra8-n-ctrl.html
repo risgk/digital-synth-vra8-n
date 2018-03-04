@@ -268,7 +268,7 @@ function preset(number) {
   presetControllers[EG_ATTACK    ] = [0  , 0  , 32 , 96 , 0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
   presetControllers[DETUNE_NG_AMT] = [0  , 32 , 32 , 32 , 32 , 32 , 32 , 32 , 32 , 32 , 32 , 0  ];
   presetControllers[DETUNE_EG_AMT] = [0  , 48 , 48 , 48 , 64 , 64 , 64 , 48 , 48 , 48 , 48 , 64 ];
-  presetControllers[AMP_EG       ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  , 80 , 0  ];
+  presetControllers[AMP_EG       ] = [0  , 120, 120, 120, 120, 120, 120, 120, 120, 120, 120, 120];
 
   presetControllers[VELOCITY_SENS] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
   presetControllers[CUTOFF_V_SENS] = [0  , 127, 127, 127, 64 , 96 , 64 , 127, 127, 127, 96 , 64 ];
@@ -417,7 +417,7 @@ function noteOff(noteNumber) {
 <tr><td>CUTOFF                </td><td></td>
     <td>RESONANCE             </td><td></td>
     <td>CUTOFF EG AMT (-/+)   </td><td></td>
-    <td>EG DECAY              </td></tr>
+    <td>FEG DECAY/SUS         </td></tr>
 <tr><td><input id="inputCC20" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(20, value)"></td>
     <td><span id="spanCC20">-1</span></td>
     <td><input id="inputCC21" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(21, value)"></td>
@@ -426,10 +426,10 @@ function noteOff(noteNumber) {
     <td><span id="spanCC22">-1</span></td>
     <td><input id="inputCC23" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(23, value)"></td>
     <td><span id="spanCC23">-1</span></td></tr>
-<tr><td>EG ATTACK             </td><td></td>
+<tr><td>                      </td><td></td>
     <td>FLUCTUATION           </td><td></td>
     <td>DETUNE EG AMT (-/+)   </td><td></td>
-    <td>AMP EG/EG SUS (ON)    </td></tr>
+    <td>AEG DECAY/SUS         </td></tr>
 <tr><td><input id="inputCC24" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(24, value)"></td>
     <td><span id="spanCC24">-1</span></td>
     <td><input id="inputCC25" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(25, value)"></td>

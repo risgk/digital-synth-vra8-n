@@ -33,7 +33,7 @@ public:
   INLINE static void initialize() {
     for (uint8_t i = 0; i < OSC_MIX_TABLE_LENGTH; i++) {
       m_mix_table[i] = static_cast<uint8_t>(sqrtf(static_cast<float>(i) /
-                                                  (OSC_MIX_TABLE_LENGTH - 1)) * 80);
+                                                  (OSC_MIX_TABLE_LENGTH - 1)) * 40);
     }
     m_mix_main   = m_mix_table[(OSC_MIX_TABLE_LENGTH - 1) >> 1];
     m_mix_detune = m_mix_table[(OSC_MIX_TABLE_LENGTH - 1) >> 1];

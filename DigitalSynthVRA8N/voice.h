@@ -4,9 +4,8 @@ template <uint8_t T>
 class Voice {
   static uint8_t m_count;
   static uint8_t m_waveform;
-  static uint8_t m_env_attack;
-  static uint8_t m_env_decay;
-  static uint8_t m_amp_env_sus;
+  static uint8_t m_eg0_decay_sustain;
+  static uint8_t m_eg1_decay_sustain;
   static boolean m_damper_pedal;
   static uint8_t m_note_number;
   static boolean m_note_hold;
@@ -24,7 +23,6 @@ public:
     IAmp<0>::initialize();
     IEnvGen<0>::initialize();
     IEnvGen<1>::initialize();
-    set_env_attack(0);
     set_env_decay(0);
     set_amp_env_sus(0);
   }
@@ -142,9 +140,6 @@ public:
     case EG_DECAY:
       set_env_decay(controller_value);
       break;
-    case EG_ATTACK:
-      set_env_attack(controller_value);
-      break;
     case AMP_EG:
       set_amp_env_sus(controller_value);
       break;
@@ -192,42 +187,24 @@ public:
   }
 
 private:
-  INLINE static void set_env_attack(uint8_t controller_value) {
-    m_env_attack = controller_value;
-    update_env();
-  }
-
   INLINE static void set_env_decay(uint8_t controller_value) {
-    m_env_decay = controller_value;
-    update_env();
+    m_eg0_decay_sustain = controller_value;
+    if (m_eg0_decay_sustain < 64) {
+      IEnvGen<0>::set_decay(m_eg0_decay_sustain << 1);
+      IEnvGen<0>::set_sustain(false);
+    } else {
+      IEnvGen<0>::set_decay((127 - m_eg0_decay_sustain) << 1);
+      IEnvGen<0>::set_sustain(true);
+    }
   }
 
   INLINE static void set_amp_env_sus(uint8_t controller_value) {
-    m_amp_env_sus = controller_value;
-    update_env();
-  }
-
-  INLINE static void update_env() {
-    if (m_amp_env_sus < 32) {
-      IEnvGen<0>::set_attack(m_env_attack);
-      IEnvGen<0>::set_decay(m_env_decay);
-      IEnvGen<0>::set_sustain(false);
-      IEnvGen<1>::set_attack(0);
-      IEnvGen<1>::set_decay(0);
-      IEnvGen<1>::set_sustain(true);
-    } else if (m_amp_env_sus < 96) {
-      IEnvGen<0>::set_attack(m_env_attack);
-      IEnvGen<0>::set_decay(m_env_decay);
-      IEnvGen<0>::set_sustain(false);
-      IEnvGen<1>::set_attack(m_env_attack);
-      IEnvGen<1>::set_decay(m_env_decay);
+    m_eg1_decay_sustain = controller_value;
+    if (m_eg1_decay_sustain < 64) {
+      IEnvGen<1>::set_decay(m_eg1_decay_sustain << 1);
       IEnvGen<1>::set_sustain(false);
     } else {
-      IEnvGen<0>::set_attack(m_env_attack);
-      IEnvGen<0>::set_decay(m_env_decay);
-      IEnvGen<0>::set_sustain(true);
-      IEnvGen<1>::set_attack(m_env_attack);
-      IEnvGen<1>::set_decay(m_env_decay);
+      IEnvGen<1>::set_decay((127 - m_eg1_decay_sustain) << 1);
       IEnvGen<1>::set_sustain(true);
     }
   }
@@ -253,9 +230,8 @@ private:
 
 template <uint8_t T> uint8_t Voice<T>::m_count;
 template <uint8_t T> uint8_t Voice<T>::m_waveform;
-template <uint8_t T> uint8_t Voice<T>::m_env_attack;
-template <uint8_t T> uint8_t Voice<T>::m_env_decay;
-template <uint8_t T> uint8_t Voice<T>::m_amp_env_sus;
+template <uint8_t T> uint8_t Voice<T>::m_eg0_decay_sustain;
+template <uint8_t T> uint8_t Voice<T>::m_eg1_decay_sustain;
 template <uint8_t T> boolean Voice<T>::m_damper_pedal;
 template <uint8_t T> uint8_t Voice<T>::m_note_number;
 template <uint8_t T> boolean Voice<T>::m_note_hold;

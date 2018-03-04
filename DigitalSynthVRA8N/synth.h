@@ -39,7 +39,7 @@ public:
     ISynthCore<0>::control_change(EG_ATTACK    , 0  );
     ISynthCore<0>::control_change(DETUNE_NG_AMT, 32 );
     ISynthCore<0>::control_change(DETUNE_EG_AMT, 48 );
-    ISynthCore<0>::control_change(AMP_EG       , 0  );
+    ISynthCore<0>::control_change(AMP_EG       , 120);
 
     ISynthCore<0>::control_change(VELOCITY_SENS, 0  );
     ISynthCore<0>::control_change(CUTOFF_V_SENS, 127);
