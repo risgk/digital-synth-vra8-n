@@ -237,9 +237,9 @@ private:
       detune_target = detune_candidate;
     }
 
-    m_freq_detune = (static_cast<uint16_t>(high_byte((detune_target << 1) *
+    m_freq_detune = ((static_cast<uint16_t>(high_byte((detune_target << 1) *
                                            (detune_target << 1))) <<
-                     OSC_DETUNE_MUL_NUM_BITS) + OSC_DETUNE_FREQ_MIN;
+                      OSC_DETUNE_MUL_NUM_BITS) + OSC_DETUNE_FREQ_MIN) >> 1;
   }
 };
 
