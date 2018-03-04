@@ -207,8 +207,8 @@ private:
     m_wave_table = get_wave_table(m_waveform, pitch);
     __uint24 freq_base = g_osc_freq_table[pitch - NOTE_NUMBER_MIN];
     uint16_t freq_div_256 = freq_base >> 8;
-    uint8_t freq_div_4096 = freq_div_256 >> 4;
-    uint16_t freq_offset = freq_div_4096 * (g_osc_tune_table[pitch_fine >> (8 - OSC_TUNE_TABLE_STEPS_BITS)]);
+    uint8_t freq_div_2048 = freq_div_256 >> 3;
+    uint16_t freq_offset = freq_div_2048 * (g_osc_tune_table[pitch_fine >> (8 - OSC_TUNE_TABLE_STEPS_BITS)]);
     m_freq = freq_base + freq_offset;
   }
 
@@ -238,8 +238,8 @@ private:
     }
 
     uint16_t freq_div_256 = m_freq >> 8;
-    uint8_t freq_div_4096 = freq_div_256 >> 4;
-    m_freq_detune = freq_div_4096 * g_osc_tune_table[(detune_target + 1) >> (8 - OSC_TUNE_TABLE_STEPS_BITS)];
+    uint8_t freq_div_2048 = freq_div_256 >> 3;
+    m_freq_detune = freq_div_2048 * g_osc_tune_table[(detune_target + 2) >> (8 - OSC_TUNE_TABLE_STEPS_BITS)];
 
 // TODO: fixed f
 //    m_freq_detune = ((static_cast<uint16_t>(high_byte((detune_target << 1) *
