@@ -131,9 +131,6 @@ public:
     case DETUNE_NG_AMT:
       IOsc<0>::set_detune_noise_gen_amt(controller_value);
       break;
-    case DETUNE_EG_AMT:
-      IOsc<0>::set_detune_env_amt(controller_value);
-      break;
     case PORTAMENTO:
       IOsc<0>::set_portamento(controller_value);
       break;
@@ -142,10 +139,6 @@ public:
       break;
     case AMP_EG:
       set_amp_env_sus(controller_value);
-      break;
-    case VELOCITY_SENS:
-      break;
-    case CUTOFF_V_SENS:
       break;
 #if 0
     case DAMPER_PEDAL:
