@@ -8,7 +8,6 @@
 #define IOsc        Osc
 #define IFilter     Filter
 #define IAmp        Amp
-#define IGate       Gate
 #define IEnvGen     EnvGen
 #define IVoice      Voice
 #define ISynthCore  SynthCore
@@ -16,7 +15,6 @@
 #include "filter.h"
 #include "osc.h"
 #include "amp.h"
-#include "gate.h"
 #include "env-gen.h"
 #include "voice.h"
 #include "synth-core.h"
