@@ -34,7 +34,7 @@ public:
     ISynthCore<0>::control_change(FILTER_CUTOFF, 64 );
     ISynthCore<0>::control_change(FILTER_RESO  , 64 );
     ISynthCore<0>::control_change(FILTER_EG_AMT, 96 );
-    ISynthCore<0>::control_change(EG_DECAY     , 64 );
+    ISynthCore<0>::control_change(EG_DECAY     , 32 );
 
     ISynthCore<0>::control_change(EG_ATTACK    , 0  );
     ISynthCore<0>::control_change(DETUNE_NG_AMT, 32 );
