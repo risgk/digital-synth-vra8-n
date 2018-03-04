@@ -28,7 +28,7 @@ public:
     // DEFAULT
     ISynthCore<0>::control_change(UNISON       , 0  );
     ISynthCore<0>::control_change(OSC_WAVEFORM , 0  );
-    ISynthCore<0>::control_change(OSC_DETUNE   , 48 );
+    ISynthCore<0>::control_change(OSC_DETUNE   , 16 );
     ISynthCore<0>::control_change(FILTER_NG_AMT, 64 );
 
     ISynthCore<0>::control_change(FILTER_CUTOFF, 64 );

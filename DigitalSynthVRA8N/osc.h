@@ -122,7 +122,7 @@ public:
         update_freq();
         break;
       case 3:
-        update_freq_detune(0);
+        update_freq_detune();
         break;
       case 4:
         update_pitch_current();
@@ -220,13 +220,11 @@ private:
     }
   }
 
-  INLINE static void update_freq_detune(uint8_t mod_input) {
-    int16_t detune_candidate = m_detune +
-                               high_sbyte(((m_detune_mod_amt - 64) << 1) * mod_input);
+  INLINE static void update_freq_detune() {
     // TODO: Not to use IFilter
     uint8_t rnd = IFilter<0>::get_rnd8() >> 1;
     uint8_t red_noise = m_rnd_prev + rnd;
-    detune_candidate += high_byte(m_detune_noise_gen_amt * red_noise);
+    int16_t detune_candidate = m_detune + high_byte(m_detune_noise_gen_amt * red_noise);
     m_rnd_prev = rnd;
     uint8_t detune_target;
     if (detune_candidate > 127) {
@@ -237,9 +235,13 @@ private:
       detune_target = detune_candidate;
     }
 
-    m_freq_detune = ((static_cast<uint16_t>(high_byte((detune_target << 1) *
-                                           (detune_target << 1))) <<
-                      OSC_DETUNE_MUL_NUM_BITS) + OSC_DETUNE_FREQ_MIN) >> 1;
+    uint16_t freq_div_256 = m_freq >> 8;
+    m_freq_detune = freq_div_256 * g_osc_tune_table[(detune_candidate + 16) >> (8 - OSC_TUNE_TABLE_STEPS_BITS)];
+
+// TODO: fixed f
+//    m_freq_detune = ((static_cast<uint16_t>(high_byte((detune_target << 1) *
+//                                           (detune_target << 1))) <<
+//                      OSC_DETUNE_MUL_NUM_BITS) + OSC_DETUNE_FREQ_MIN) >> 1;
   }
 };
 
