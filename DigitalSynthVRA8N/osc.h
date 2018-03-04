@@ -121,7 +121,7 @@ public:
       case 0:
         update_freq();
         break;
-      case 3:
+      case 2:
         update_freq_detune();
         break;
       case 4:
@@ -196,9 +196,10 @@ private:
 #endif
     uint8_t pitch = high_byte(pitch_real);
     uint8_t pitch_fine = low_byte(pitch_real);
-    if (pitch < NOTE_NUMBER_MIN) {
+    if (pitch <= NOTE_NUMBER_MIN) {
       pitch = NOTE_NUMBER_MIN;
-    } else if (pitch > NOTE_NUMBER_MAX) {
+      pitch_fine = 0x00;
+    } else if (pitch >= NOTE_NUMBER_MAX) {
       pitch = NOTE_NUMBER_MAX;
       pitch_fine = 0x00;
     }
@@ -206,7 +207,8 @@ private:
     m_wave_table = get_wave_table(m_waveform, pitch);
     __uint24 freq_base = g_osc_freq_table[pitch - NOTE_NUMBER_MIN];
     uint16_t freq_div_256 = freq_base >> 8;
-    uint16_t freq_offset = freq_div_256 * g_osc_tune_table[pitch_fine >> (8 - OSC_TUNE_TABLE_STEPS_BITS)];
+    uint8_t freq_div_4096 = freq_div_256 >> 4;
+    uint16_t freq_offset = freq_div_4096 * (g_osc_tune_table[pitch_fine >> (8 - OSC_TUNE_TABLE_STEPS_BITS)]);
     m_freq = freq_base + freq_offset;
   }
 
@@ -236,7 +238,8 @@ private:
     }
 
     uint16_t freq_div_256 = m_freq >> 8;
-    m_freq_detune = freq_div_256 * g_osc_tune_table[(detune_candidate + 16) >> (8 - OSC_TUNE_TABLE_STEPS_BITS)];
+    uint8_t freq_div_4096 = freq_div_256 >> 4;
+    m_freq_detune = freq_div_4096 * g_osc_tune_table[(detune_target + 1) >> (8 - OSC_TUNE_TABLE_STEPS_BITS)];
 
 // TODO: fixed f
 //    m_freq_detune = ((static_cast<uint16_t>(high_byte((detune_target << 1) *
