@@ -55,8 +55,7 @@ public:
   }
 
   INLINE static int16_t clock(uint8_t count, int16_t audio_input, uint8_t mod_input) {
-    uint8_t count_and_interval = count & (FILTER_CONTROL_INTERVAL - 1);
-    if (count_and_interval == 4) {
+    if ((count & (FILTER_CONTROL_INTERVAL - 1)) == 4) {
       update_coefs(mod_input);
     }
 
@@ -92,21 +91,12 @@ private:
     cutoff_candidate += high_sbyte(((m_mod_amt - 64) << 1) * mod_input);
     // TODO: Not to use IOsc
     cutoff_candidate += high_sbyte(((m_noise_gen_amt - 64) << 1) * IOsc<0>::get_rnd8());
-    uint8_t cutoff_target;
     if (cutoff_candidate > 127) {
-      cutoff_target = 127;
+      m_cutoff_current = 127;
     } else if (cutoff_candidate < 0) {
-      cutoff_target = 0;
+      m_cutoff_current = 0;
     } else {
-      cutoff_target = cutoff_candidate;
-    }
-
-    if (m_cutoff_current + FILTER_CUTOFF_THROUGH_RATE < cutoff_target) {
-      m_cutoff_current += FILTER_CUTOFF_THROUGH_RATE;
-    } else if (m_cutoff_current > cutoff_target + FILTER_CUTOFF_THROUGH_RATE) {
-      m_cutoff_current -= FILTER_CUTOFF_THROUGH_RATE;
-    } else {
-      m_cutoff_current = cutoff_target;
+      m_cutoff_current = cutoff_candidate;
     }
 
     const uint8_t* p = m_lpf_table + (m_cutoff_current << 2);
