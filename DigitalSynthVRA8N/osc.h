@@ -234,6 +234,7 @@ private:
     } else if (coarse >= NOTE_NUMBER_MAX) {
       m_pitch_real = NOTE_NUMBER_MAX << 8;
     }
+    m_pitch_real += 128;
   }
 
   INLINE static void update_freq_first() {
@@ -246,7 +247,7 @@ private:
     uint8_t fine = low_byte(m_pitch_real);
     uint16_t freq_div_16 = m_freq_temp >> 8;
     freq_div_16 <<= 4;
-    uint16_t freq_offset = mul_q16_q8(freq_div_16, g_osc_tune_table[fine >> (8 - OSC_TUNE_TABLE_STEPS_BITS)]);
+    int16_t freq_offset = mul_q16_q7(freq_div_16, g_osc_tune_table[fine >> (8 - OSC_TUNE_TABLE_STEPS_BITS)]);
     m_freq = m_freq_temp + freq_offset;
     m_wave_table = m_wave_table_temp;
   }

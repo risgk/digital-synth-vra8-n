@@ -31,9 +31,9 @@ $file.printf("const __uint24 g_osc_freq_table[] = {\n  ")
 end
 $file.printf("};\n\n")
 
-$file.printf("const uint8_t g_osc_tune_table[] = {\n  ")
+$file.printf("const int8_t g_osc_tune_table[] = {\n  ")
 (0..(1 << OSC_TUNE_TABLE_STEPS_BITS) - 1).each do |i|
-  tune_rate = ((2.0 ** (i / (12.0 * (1 << OSC_TUNE_TABLE_STEPS_BITS)))) *
+  tune_rate = ((2.0 ** ((i - 128) / (12.0 * (1 << OSC_TUNE_TABLE_STEPS_BITS)))) *
                (1 << OSC_TUNE_DENOMINATOR_BITS) / 1.0).round -
               (1 << OSC_TUNE_DENOMINATOR_BITS) / 1.0
 
