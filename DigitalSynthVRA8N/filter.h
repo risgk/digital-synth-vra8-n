@@ -35,7 +35,8 @@ public:
     set_resonance(0);
     set_env_amt(64);
     set_noise_gen_amt(0);
-    update_coefs(0);
+    update_current(0);
+    update_coefs();
   }
 
   INLINE static void set_cutoff(uint8_t controller_value) {
@@ -55,8 +56,11 @@ public:
   }
 
   INLINE static int16_t clock(uint8_t count, int16_t audio_input, uint8_t mod_input) {
-    if ((count & (FILTER_CONTROL_INTERVAL - 1)) == 4) {
-      update_coefs(mod_input);
+    uint8_t count_and_interval = count & (FILTER_CONTROL_INTERVAL - 1);
+    if (count_and_interval == 4) {
+      update_current(mod_input);
+    } else if (count_and_interval == 6) {
+      update_coefs();
     }
 
     int16_t b_2_over_a_0 = m_b_2_over_a_0_low | (m_b_2_over_a_0_high << 8);
@@ -86,11 +90,11 @@ public:
   }
 
 private:
-  INLINE static void update_coefs(uint8_t mod_input) {
+  INLINE static void update_current(uint8_t mod_input) {
     int16_t cutoff_candidate = m_cutoff;
     cutoff_candidate += high_sbyte(((m_mod_amt - 64) << 1) * mod_input);
     // TODO: Not to use IOsc
-    cutoff_candidate += high_sbyte(((m_noise_gen_amt - 64) << 1) * IOsc<0>::get_rnd8());
+//    cutoff_candidate += high_sbyte(((m_noise_gen_amt - 64) << 1) * IOsc<0>::get_rnd8());
     if (cutoff_candidate > 127) {
       m_cutoff_current = 127;
     } else if (cutoff_candidate < 0) {
@@ -98,7 +102,9 @@ private:
     } else {
       m_cutoff_current = cutoff_candidate;
     }
+  }
 
+  INLINE static void update_coefs() {
     const uint8_t* p = m_lpf_table + (m_cutoff_current << 2);
     uint32_t four_data = pgm_read_dword(p);
     m_b_2_over_a_0_low  = (four_data >>  0) & 0xFF;
