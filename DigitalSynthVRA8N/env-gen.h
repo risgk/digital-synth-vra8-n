@@ -76,7 +76,7 @@ public:
         m_rest--;
         if (m_rest == 0) {
           m_rest = m_decay_update_interval;
-          if (m_level < 0x0100) {
+          if (m_level < ((T == 0) ? 0x0100 : 0x1000 /* gate for amp */)) {
             m_level = 0;
             m_state = STATE_IDLE;
           } else {
