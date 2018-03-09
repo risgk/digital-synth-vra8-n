@@ -22,13 +22,17 @@ class Osc {
   static int16_t        m_pitch_bend_normalized;
   static uint16_t       m_pitch_target;
   static uint16_t       m_pitch_current;
+  static uint16_t       m_pitch_real;
   static const uint8_t* m_wave_table;
+  static const uint8_t* m_wave_table_temp;
   static __uint24       m_freq;
+  static __uint24       m_freq_temp;
   static uint16_t       m_freq_detune;
   static __uint24       m_phase;
   static __uint24       m_phase_detune;
+  static uint16_t       m_rnd_temp;
+  static uint8_t        m_rnd;
   static uint8_t        m_rnd_prev;
-  static uint16_t       m_rnd;
 
 public:
   INLINE static void initialize() {
@@ -48,13 +52,17 @@ public:
     m_pitch_bend_normalized = 0;
     m_pitch_target = (NOTE_NUMBER_MIN + 0) << 8;
     m_pitch_current = m_pitch_target;
+    m_pitch_real = m_pitch_target;
     m_wave_table = g_osc_saw_wave_tables[0];
+    m_wave_table_temp = g_osc_saw_wave_tables[0];
     m_freq = g_osc_freq_table[0];
+    m_freq_temp = g_osc_freq_table[0];
     m_freq_detune = 0;
     m_phase = 0;
     m_phase_detune = 0;
+    m_rnd_temp = 1;
+    m_rnd = 0;
     m_rnd_prev = 0;
-    m_rnd = 1;
   }
 
   INLINE static void set_mix(uint8_t controller_value) {
@@ -121,16 +129,25 @@ public:
       uint8_t idx = (count >> OSC_CONTROL_INTERVAL_BITS) & 0x07;
       switch (idx) {
       case 0:
-        update_freq();
-        break;
-      case 2:
-        update_freq_detune();
-        break;
-      case 4:
         update_pitch_current();
         break;
+      case 1:
+        update_freq_first();
+        break;
+      case 2:
+        update_freq_latter();
+        break;
+      case 4:
+//        update_freq_detune();
+        break;
+      case 5:
+//        update_freq_detune();
+        break;
       case 6:
-        update_rnd();
+        update_rnd_first();
+        break;
+      case 7:
+        update_rnd_latter();
         break;
       }
     }
@@ -155,7 +172,7 @@ public:
   }
 
   INLINE static uint8_t get_rnd8() {
-    return low_byte(m_rnd);
+    return m_rnd;
   }
 
 private:
@@ -196,31 +213,6 @@ private:
     return high_sbyte(level << 1);
   }
 
-  INLINE static void update_freq() {
-#if defined(TRANSPOSE)
-    int16_t transpose = (TRANSPOSE << 8) | 0x00;
-    uint16_t pitch_real = m_pitch_current + m_pitch_bend_normalized + transpose;
-#else
-    uint16_t pitch_real = m_pitch_current + m_pitch_bend_normalized;
-#endif
-    uint8_t pitch = high_byte(pitch_real);
-    uint8_t pitch_fine = low_byte(pitch_real);
-    if (pitch <= NOTE_NUMBER_MIN) {
-      pitch = NOTE_NUMBER_MIN;
-      pitch_fine = 0x00;
-    } else if (pitch >= NOTE_NUMBER_MAX) {
-      pitch = NOTE_NUMBER_MAX;
-      pitch_fine = 0x00;
-    }
-
-    m_wave_table = get_wave_table(m_waveform, pitch);
-    __uint24 freq_base = g_osc_freq_table[pitch - NOTE_NUMBER_MIN];
-    uint16_t freq_div_512 = freq_base >> 8;
-    freq_div_512 >>= 1;
-    uint16_t freq_offset = freq_div_512 * g_osc_tune_table[pitch_fine >> (8 - OSC_TUNE_TABLE_STEPS_BITS)];
-    m_freq = freq_base + freq_offset;
-  }
-
   INLINE static void update_pitch_current() {
     if (m_pitch_current + m_portamento < m_pitch_target) {
       m_pitch_current += m_portamento;
@@ -229,6 +221,34 @@ private:
     } else {
       m_pitch_current = m_pitch_target;
     }
+
+#if defined(TRANSPOSE)
+    int16_t transpose = (TRANSPOSE << 8) | 0x00;
+    m_pitch_real = m_pitch_current + m_pitch_bend_normalized + transpose;
+#else
+    m_pitch_real = m_pitch_current + m_pitch_bend_normalized;
+#endif
+    uint8_t coarse = high_byte(m_pitch_real);
+    if (coarse <= NOTE_NUMBER_MIN) {
+      m_pitch_real = NOTE_NUMBER_MIN << 8;
+    } else if (coarse >= NOTE_NUMBER_MAX) {
+      m_pitch_real = NOTE_NUMBER_MAX << 8;
+    }
+  }
+
+  INLINE static void update_freq_first() {
+    uint8_t coarse = high_byte(m_pitch_real);
+    m_freq_temp = g_osc_freq_table[coarse - NOTE_NUMBER_MIN];
+    m_wave_table_temp = get_wave_table(m_waveform, coarse);
+  }
+
+  INLINE static void update_freq_latter() {
+    uint8_t fine = low_byte(m_pitch_real);
+    uint16_t freq_div_16 = m_freq_temp >> 8;
+    freq_div_16 <<= 4;
+    uint16_t freq_offset = mul_q16_q8(freq_div_16, g_osc_tune_table[fine >> (8 - OSC_TUNE_TABLE_STEPS_BITS)]);
+    m_freq = m_freq_temp + freq_offset;
+    m_wave_table = m_wave_table_temp;
   }
 
   INLINE static void update_freq_detune() {
@@ -248,17 +268,16 @@ private:
     uint16_t freq_div_512 = m_freq >> 8;
     freq_div_512 >>= 1;
     m_freq_detune = freq_div_512 * g_osc_tune_table[(detune_target + 9) >> (8 - OSC_TUNE_TABLE_STEPS_BITS)];
-
-// TODO: fixed f
-//    m_freq_detune = ((static_cast<uint16_t>(high_byte((detune_target << 1) *
-//                                           (detune_target << 1))) <<
-//                      OSC_DETUNE_MUL_NUM_BITS) + OSC_DETUNE_FREQ_MIN) >> 1;
   }
 
-  INLINE static void update_rnd() {
-    m_rnd = m_rnd ^ (m_rnd << 5);
-    m_rnd = m_rnd ^ (m_rnd >> 9);
-    m_rnd = m_rnd ^ (m_rnd << 8);
+  INLINE static void update_rnd_first() {
+    m_rnd_temp = m_rnd_temp ^ (m_rnd_temp << 5);
+    m_rnd_temp = m_rnd_temp ^ (m_rnd_temp >> 9);
+  }
+
+  INLINE static void update_rnd_latter() {
+    m_rnd_temp = m_rnd_temp ^ (m_rnd_temp << 8);
+    m_rnd = low_byte(m_rnd_temp);
   }
 };
 
@@ -275,10 +294,14 @@ template <uint8_t T> uint8_t         Osc<T>::m_waveform;
 template <uint8_t T> int16_t         Osc<T>::m_pitch_bend_normalized;
 template <uint8_t T> uint16_t        Osc<T>::m_pitch_target;
 template <uint8_t T> uint16_t        Osc<T>::m_pitch_current;
+template <uint8_t T> uint16_t        Osc<T>::m_pitch_real;
 template <uint8_t T> const uint8_t*  Osc<T>::m_wave_table;
+template <uint8_t T> const uint8_t*  Osc<T>::m_wave_table_temp;
 template <uint8_t T> __uint24        Osc<T>::m_freq;
+template <uint8_t T> __uint24        Osc<T>::m_freq_temp;
 template <uint8_t T> uint16_t        Osc<T>::m_freq_detune;
 template <uint8_t T> __uint24        Osc<T>::m_phase;
 template <uint8_t T> __uint24        Osc<T>::m_phase_detune;
+template <uint8_t T> uint16_t        Osc<T>::m_rnd_temp;
+template <uint8_t T> uint8_t         Osc<T>::m_rnd;
 template <uint8_t T> uint8_t         Osc<T>::m_rnd_prev;
-template <uint8_t T> uint16_t        Osc<T>::m_rnd;
