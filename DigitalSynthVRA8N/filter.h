@@ -94,7 +94,7 @@ private:
     int16_t cutoff_candidate = m_cutoff;
     cutoff_candidate += high_sbyte(((m_mod_amt - 64) << 1) * mod_input);
     // TODO: Not to use IOsc
-    cutoff_candidate += high_sbyte(((m_noise_gen_amt - 64) << 1) * IOsc<0>::get_rnd8());
+//    cutoff_candidate += high_sbyte(((m_noise_gen_amt - 64) << 1) * IOsc<0>::get_rnd8());
     if (cutoff_candidate > 127) {
       m_cutoff_current = 127;
     } else if (cutoff_candidate < 0) {

@@ -228,6 +228,10 @@ private:
 #else
     m_pitch_real = m_pitch_current + m_pitch_bend_normalized;
 #endif
+    m_pitch_real += high_sbyte(m_detune_noise_gen_amt * static_cast<int8_t>(get_rnd8()));
+  }
+
+  INLINE static void update_freq_first() {
     uint8_t coarse = high_byte(m_pitch_real);
     if (coarse <= NOTE_NUMBER_MIN) {
       m_pitch_real = NOTE_NUMBER_MIN << 8;
@@ -235,10 +239,8 @@ private:
       m_pitch_real = NOTE_NUMBER_MAX << 8;
     }
     m_pitch_real += 128;
-  }
 
-  INLINE static void update_freq_first() {
-    uint8_t coarse = high_byte(m_pitch_real);
+    coarse = high_byte(m_pitch_real);
     m_freq_temp = g_osc_freq_table[coarse - NOTE_NUMBER_MIN];
     m_wave_table_temp = get_wave_table(m_waveform, coarse);
   }
