@@ -18,7 +18,6 @@ class Osc {
   static uint8_t        m_detune_noise_gen_amt;
   static uint8_t        m_detune_mod_amt;
   static uint16_t       m_portamento;
-  static uint8_t        m_rnd_prev;
   static uint8_t        m_waveform;
   static int16_t        m_pitch_bend_normalized;
   static uint16_t       m_pitch_target;
@@ -28,6 +27,8 @@ class Osc {
   static uint16_t       m_freq_detune;
   static __uint24       m_phase;
   static __uint24       m_phase_detune;
+  static uint8_t        m_rnd_prev;
+  static uint16_t       m_rnd;
 
 public:
   INLINE static void initialize() {
@@ -43,7 +44,6 @@ public:
     m_detune_noise_gen_amt = 0;
     m_detune_mod_amt = 0;
     m_portamento = 0x4000;
-    m_rnd_prev = 0;
     m_waveform = OSC_WAVEFORM_SAW;
     m_pitch_bend_normalized = 0;
     m_pitch_target = (NOTE_NUMBER_MIN + 0) << 8;
@@ -53,6 +53,8 @@ public:
     m_freq_detune = 0;
     m_phase = 0;
     m_phase_detune = 0;
+    m_rnd_prev = 0;
+    m_rnd = 1;
   }
 
   INLINE static void set_mix(uint8_t controller_value) {
@@ -127,6 +129,9 @@ public:
       case 4:
         update_pitch_current();
         break;
+      case 6:
+        update_rnd();
+        break;
       }
     }
 
@@ -147,6 +152,10 @@ public:
     int16_t result       = level_main + level_detune + m_level_sub;
 
     return result;
+  }
+
+  INLINE static uint8_t get_rnd8() {
+    return low_byte(m_rnd);
   }
 
 private:
@@ -223,8 +232,7 @@ private:
   }
 
   INLINE static void update_freq_detune() {
-    // TODO: Not to use IFilter
-    uint8_t rnd = IFilter<0>::get_rnd8() >> 1;
+    uint8_t rnd = get_rnd8() >> 1;
     uint8_t red_noise = m_rnd_prev + rnd;
     int16_t detune_candidate = m_detune + high_byte(m_detune_noise_gen_amt * red_noise);
     m_rnd_prev = rnd;
@@ -246,6 +254,12 @@ private:
 //                                           (detune_target << 1))) <<
 //                      OSC_DETUNE_MUL_NUM_BITS) + OSC_DETUNE_FREQ_MIN) >> 1;
   }
+
+  INLINE static void update_rnd() {
+    m_rnd = m_rnd ^ (m_rnd << 5);
+    m_rnd = m_rnd ^ (m_rnd >> 9);
+    m_rnd = m_rnd ^ (m_rnd << 8);
+  }
 };
 
 template <uint8_t T> int8_t          Osc<T>::m_mix_main;
@@ -257,7 +271,6 @@ template <uint8_t T> uint8_t         Osc<T>::m_detune;
 template <uint8_t T> uint8_t         Osc<T>::m_detune_noise_gen_amt;
 template <uint8_t T> uint8_t         Osc<T>::m_detune_mod_amt;
 template <uint8_t T> uint16_t        Osc<T>::m_portamento;
-template <uint8_t T> uint8_t         Osc<T>::m_rnd_prev;
 template <uint8_t T> uint8_t         Osc<T>::m_waveform;
 template <uint8_t T> int16_t         Osc<T>::m_pitch_bend_normalized;
 template <uint8_t T> uint16_t        Osc<T>::m_pitch_target;
@@ -267,3 +280,5 @@ template <uint8_t T> __uint24        Osc<T>::m_freq;
 template <uint8_t T> uint16_t        Osc<T>::m_freq_detune;
 template <uint8_t T> __uint24        Osc<T>::m_phase;
 template <uint8_t T> __uint24        Osc<T>::m_phase_detune;
+template <uint8_t T> uint8_t         Osc<T>::m_rnd_prev;
+template <uint8_t T> uint16_t        Osc<T>::m_rnd;

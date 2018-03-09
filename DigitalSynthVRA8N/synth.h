@@ -12,8 +12,8 @@
 #define IVoice      Voice
 #define ISynthCore  SynthCore
 
-#include "filter.h"
 #include "osc.h"
+#include "filter.h"
 #include "amp.h"
 #include "env-gen.h"
 #include "voice.h"

@@ -21,7 +21,6 @@ class Filter {
   static uint8_t        m_cutoff;
   static uint8_t        m_mod_amt;
   static uint8_t        m_noise_gen_amt;
-  static uint16_t       m_rnd;
 
   static const uint8_t AUDIO_FRACTION_BITS = 14;
 
@@ -37,7 +36,6 @@ public:
     set_env_amt(64);
     set_noise_gen_amt(0);
     update_coefs(0);
-    m_rnd = 1;
   }
 
   INLINE static void set_cutoff(uint8_t controller_value) {
@@ -60,8 +58,6 @@ public:
     uint8_t count_and_interval = count & (FILTER_CONTROL_INTERVAL - 1);
     if (count_and_interval == 4) {
       update_coefs(mod_input);
-    } else if (count_and_interval == 2) {
-      update_rnd();
     }
 
     int16_t b_2_over_a_0 = m_b_2_over_a_0_low | (m_b_2_over_a_0_high << 8);
@@ -90,15 +86,12 @@ public:
     return y_0 << (16 - AUDIO_FRACTION_BITS);
   }
 
-  INLINE static uint8_t get_rnd8() {
-    return low_byte(m_rnd);
-  }
-
 private:
   INLINE static void update_coefs(uint8_t mod_input) {
     int16_t cutoff_candidate = m_cutoff;
     cutoff_candidate += high_sbyte(((m_mod_amt - 64) << 1) * mod_input);
-    cutoff_candidate += high_sbyte(((m_noise_gen_amt - 64) << 1) * get_rnd8());
+    // TODO: Not to use IOsc
+    cutoff_candidate += high_sbyte(((m_noise_gen_amt - 64) << 1) * IOsc<0>::get_rnd8());
     uint8_t cutoff_target;
     if (cutoff_candidate > 127) {
       cutoff_target = 127;
@@ -123,12 +116,6 @@ private:
     m_a_1_over_a_0_low  = (four_data >> 16) & 0xFF;
     m_a_1_over_a_0_high = (four_data >> 24) & 0xFF;
   }
-
-  INLINE static void update_rnd() {
-    m_rnd = m_rnd ^ (m_rnd << 5);
-    m_rnd = m_rnd ^ (m_rnd >> 9);
-    m_rnd = m_rnd ^ (m_rnd << 8);
-  }
 };
 
 template <uint8_t T> const uint8_t* Filter<T>::m_lpf_table;
@@ -144,4 +131,3 @@ template <uint8_t T> uint8_t        Filter<T>::m_cutoff_current;
 template <uint8_t T> uint8_t        Filter<T>::m_cutoff;
 template <uint8_t T> uint8_t        Filter<T>::m_mod_amt;
 template <uint8_t T> uint8_t        Filter<T>::m_noise_gen_amt;
-template <uint8_t T> uint16_t       Filter<T>::m_rnd;
