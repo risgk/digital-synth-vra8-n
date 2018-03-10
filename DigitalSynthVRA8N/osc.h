@@ -125,7 +125,11 @@ public:
   }
 
   INLINE static int16_t clock(uint8_t count) {
-    if ((count & (OSC_CONTROL_INTERVAL - 1)) == 0) {
+    if ((count & 0x01) == 1) {
+      int8_t wave_0_sub = get_tri_wave_level(m_phase);
+      m_level_sub       = wave_0_sub * m_mix_sub;
+    }
+    else if ((count & (OSC_CONTROL_INTERVAL - 1)) == 0) {
       uint8_t idx = (count >> OSC_CONTROL_INTERVAL_BITS) & 0x07;
       switch (idx) {
       case 0:
@@ -157,11 +161,6 @@ public:
 
     int8_t wave_0_main   = get_wave_level(m_wave_table,  m_phase                   << 1);
     int8_t wave_0_detune = get_wave_level(m_wave_table, (m_phase + m_phase_detune) << 1);
-
-    if ((count & 0x01) == 1) {
-      int8_t wave_0_sub = get_tri_wave_level(m_phase);
-      m_level_sub       = wave_0_sub * m_mix_sub;
-    }
 
     // amp and mix
     int16_t level_main   = wave_0_main   * m_mix_main;
