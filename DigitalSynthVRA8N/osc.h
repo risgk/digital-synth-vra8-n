@@ -5,7 +5,7 @@
 #include "mul-q.h"
 #include <math.h>
 
-static const uint8_t OSC_MIX_TABLE_LENGTH = 32 + 1;  // odd number
+static const uint8_t OSC_MIX_TABLE_LENGTH = 32;
 
 template <uint8_t T>
 class Osc {
@@ -37,9 +37,8 @@ public:
       m_mix_table[i] = static_cast<uint8_t>(sqrtf(static_cast<float>(i) /
                                                   (OSC_MIX_TABLE_LENGTH - 1)) * 40);
     }
-    m_mix_main   = m_mix_table[(OSC_MIX_TABLE_LENGTH - 1) >> 1];
-    m_mix_detune = m_mix_table[(OSC_MIX_TABLE_LENGTH - 1) >> 1];
-    m_mix_sub = 0;
+    set_mix(0);
+    set_sub(0);
     m_level_sub = 0;
     m_detune = 0;
     m_fluctuation = 0;
@@ -66,21 +65,8 @@ public:
   }
 
   INLINE static void set_mix(uint8_t controller_value) {
-    uint8_t c = controller_value >> 1;
-    const uint8_t L = (OSC_MIX_TABLE_LENGTH - 1) >> 1;
-    if (c < 16) {
-      m_mix_main   = +m_mix_table[L + c];
-      m_mix_detune = +m_mix_table[L - c];
-    } else if (c < 32) {
-      m_mix_main   = +m_mix_table[L + 16];
-      m_mix_detune = +m_mix_table[L - 16];
-    } else if (c < 48) {
-      m_mix_main   = +m_mix_table[L + (48 - c)];
-      m_mix_detune = -m_mix_table[L - (48 - c)];
-    } else {
-      m_mix_main   = +m_mix_table[L];
-      m_mix_detune = -m_mix_table[L];
-    }
+    m_mix_main   = m_mix_table[(OSC_MIX_TABLE_LENGTH - 1) - (controller_value >> 2)];
+    m_mix_detune = m_mix_table[                             (controller_value >> 2)];
   }
 
   INLINE static void set_waveform(uint8_t waveform) {
@@ -232,7 +218,7 @@ private:
     uint16_t pitch_real = m_pitch_current + m_pitch_bend_normalized;
 #endif
 
-    m_pitch_real[N] = pitch_real + high_sbyte(m_fluctuation * static_cast<int8_t>(get_rnd8()));
+    m_pitch_real[N] = pitch_real + high_sbyte((m_fluctuation >> 1) * static_cast<int8_t>(get_rnd8()));
   }
 
   template <uint8_t N>
@@ -246,7 +232,7 @@ private:
 
     if (N == 1) {
       /* For OSC 2 */
-      m_pitch_real[N] += m_detune;
+      m_pitch_real[N] += (m_detune >> 1);
     }
 
     m_pitch_real[N] += 128;

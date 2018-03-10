@@ -49,7 +49,7 @@ const FILTER_RESO   = 21;
 const FILTER_EG_AMT = 22;
 const FILTER_EG     = 23;
 
-const EG_ATTACK     = 24;
+const CC24          = 24;
 const FLUCTUATION   = 25;
 const PORTAMENTO    = 26;
 const AMP_EG        = 27;
@@ -255,7 +255,7 @@ function preset(number) {
   allNotesOff();
   var presetControllers = {};
 
-  presetControllers[OSC_MODE     ] = [0  , 0  , 8  , 0  , 0  , 0  , 0  , 127, 127, 127, 119, 24 ];
+  presetControllers[OSC_MODE     ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
   presetControllers[OSC_COLOR    ] = [0  , 0  , 16 , 0  , 48 , 48 , 80 , 0  , 0  , 127, 0  , 48 ];
   presetControllers[MOD_RATE     ] = [0  , 16 , 32 , 32 , 16 , 16 , 16 , 16 , 16 , 16 , 0  , 16 ];
   presetControllers[MOD_DEPTH    ] = [0  , 64 , 64 , 64 , 64 , 64 , 64 , 30 , 30 , 98 , 30 , 64 ];
@@ -265,7 +265,7 @@ function preset(number) {
   presetControllers[FILTER_EG_AMT] = [0  , 96 , 16 , 96 , 64 , 64 , 64 , 96 , 96 , 96 , 96 , 64 ];
   presetControllers[FILTER_EG    ] = [0  , 32 , 16 , 16 , 32 , 32 , 32 , 16 , 16 , 63 , 24 , 0  ];
 
-  presetControllers[EG_ATTACK    ] = [0  , 0  , 32 , 96 , 0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
+  presetControllers[CC24         ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
   presetControllers[FLUCTUATION  ] = [0  , 32 , 32 , 32 , 32 , 32 , 32 , 32 , 32 , 32 , 32 , 0  ];
   presetControllers[PORTAMENTO   ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
   presetControllers[AMP_EG       ] = [0  , 120, 120, 120, 120, 120, 120, 120, 120, 120, 120, 120];
@@ -402,7 +402,7 @@ function noteOff(noteNumber) {
 </table>
 
 <table>
-<tr><td>OSC MODE              </td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+<tr><td>????                  </td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
     <td>OSC COLOR             </td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
     <td>MOD RATE              </td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
     <td>MOD DEPTH             </td></tr>

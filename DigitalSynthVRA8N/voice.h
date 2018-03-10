@@ -27,14 +27,6 @@ public:
     set_amp_env_sus(0);
   }
 
-  INLINE static void set_unison(uint8_t controller_value) {
-    if (controller_value >= 64) {
-      IOsc<0>::set_mix((127 - controller_value) << 1);
-    } else {
-      IOsc<0>::set_mix(controller_value << 1);
-    }
-  }
-
   INLINE static void set_waveform(uint8_t controller_value) {
     uint8_t waveform;
     if (controller_value < 64) {
@@ -108,16 +100,17 @@ public:
     case FILTER_EG_AMT:
       IFilter<0>::set_env_amt(controller_value);
       break;
-    case MOD_DEPTH:
-      break;
     case OSC_MODE:
-      set_unison(controller_value);
+      // TODO
       break;
     case OSC_COLOR:
       set_waveform(controller_value);
       break;
     case MOD_RATE:
       IOsc<0>::set_detune(controller_value);
+      break;
+    case MOD_DEPTH:
+      IOsc<0>::set_mix(controller_value);
       break;
     case FLUCTUATION:
       IOsc<0>::set_detune_noise_gen_amt(controller_value);

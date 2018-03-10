@@ -58,7 +58,7 @@ const uint8_t   FILTER_RESO   = 21;
 const uint8_t   FILTER_EG_AMT = 22;
 const uint8_t   FILTER_EG     = 23;
 
-const uint8_t   EG_ATTACK     = 24;
+const uint8_t   CC24          = 24;
 const uint8_t   FLUCTUATION   = 25;
 const uint8_t   PORTAMENTO    = 26;
 const uint8_t   AMP_EG        = 27;

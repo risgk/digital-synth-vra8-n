@@ -75,7 +75,7 @@ control_change(FILTER_RESO  , 64 )
 control_change(FILTER_EG_AMT, 96 )
 control_change(FILTER_EG    , 32 )
 
-control_change(EG_ATTACK    , 0  )
+control_change(CC24         , 0  )
 control_change(FLUCTUATION  , 32 )
 control_change(PORTAMENTO   , 0  )
 control_change(AMP_EG       , 120)

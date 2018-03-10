@@ -58,7 +58,7 @@ FILTER_RESO   = 21
 FILTER_EG_AMT = 22
 FILTER_EG     = 23
 
-EG_ATTACK     = 24
+CC24          = 24
 FLUCTUATION   = 25
 PORTAMENTO    = 26
 AMP_EG        = 27
