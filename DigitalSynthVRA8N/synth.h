@@ -28,7 +28,7 @@ public:
     // DEFAULT
     ISynthCore<0>::control_change(OSC_MODE     , 0  );
     ISynthCore<0>::control_change(OSC_COLOR    , 0  );
-    ISynthCore<0>::control_change(MOD_RATE     , 32 );
+    ISynthCore<0>::control_change(MOD_RATE     , 16 );
     ISynthCore<0>::control_change(MOD_DEPTH    , 64 );
 
     ISynthCore<0>::control_change(FILTER_CUTOFF, 64 );
@@ -37,7 +37,7 @@ public:
     ISynthCore<0>::control_change(FILTER_EG    , 32 );
 
     ISynthCore<0>::control_change(CC24         , 0  );
-    ISynthCore<0>::control_change(FLUCTUATION  , 127);
+    ISynthCore<0>::control_change(FLUCTUATION  , 64 );
     ISynthCore<0>::control_change(PORTAMENTO   , 32 );
     ISynthCore<0>::control_change(AMP_EG       , 120);
 

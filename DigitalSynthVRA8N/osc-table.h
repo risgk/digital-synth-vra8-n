@@ -1,6 +1,7 @@
 #pragma once
 
 const __uint24 g_osc_freq_table[] = {
+  0x00205D,
   0x00224B, 0x002455, 0x00267D, 0x0028C7, 0x002B35, 0x002DC7,
   0x00307F, 0x003361, 0x00366F, 0x0039AB, 0x003D19, 0x0040BB,
   0x004495, 0x0048A9, 0x004CFB, 0x00518F, 0x005669, 0x005B8D,
@@ -11,7 +12,7 @@ const __uint24 g_osc_freq_table[] = {
   0x0183F7, 0x019B09, 0x01B37B, 0x01CD5F, 0x01E8CF, 0x0205DF,
   0x0224AB, 0x02454B, 0x0267DD, 0x028C7B, 0x02B347, 0x02DC63,
   0x0307EF, 0x033613, 0x0366F5, 0x039ABF, 0x03D19D, 0x040BBF,
-  0x044957, };
+  0x044957, 0x048A97, };
 
 const int8_t g_osc_tune_table[] = {
    -117,  -116,  -115,  -114,  -113,  -112,  -111,  -110,
@@ -716,20 +717,21 @@ const uint8_t* g_osc_saw_wave_tables[] = {
   g_osc_saw_wave_table_h127, g_osc_saw_wave_table_h127, g_osc_saw_wave_table_h127,
   g_osc_saw_wave_table_h127, g_osc_saw_wave_table_h127, g_osc_saw_wave_table_h127,
   g_osc_saw_wave_table_h127, g_osc_saw_wave_table_h127, g_osc_saw_wave_table_h127,
-  g_osc_saw_wave_table_h119, g_osc_saw_wave_table_h119, g_osc_saw_wave_table_h119,
-  g_osc_saw_wave_table_h100, g_osc_saw_wave_table_h100, g_osc_saw_wave_table_h100,
-  g_osc_saw_wave_table_h84 , g_osc_saw_wave_table_h84 , g_osc_saw_wave_table_h84 ,
-  g_osc_saw_wave_table_h71 , g_osc_saw_wave_table_h71 , g_osc_saw_wave_table_h71 ,
-  g_osc_saw_wave_table_h59 , g_osc_saw_wave_table_h59 , g_osc_saw_wave_table_h59 ,
-  g_osc_saw_wave_table_h50 , g_osc_saw_wave_table_h50 , g_osc_saw_wave_table_h50 ,
-  g_osc_saw_wave_table_h42 , g_osc_saw_wave_table_h42 , g_osc_saw_wave_table_h42 ,
-  g_osc_saw_wave_table_h35 , g_osc_saw_wave_table_h35 , g_osc_saw_wave_table_h35 ,
-  g_osc_saw_wave_table_h29 , g_osc_saw_wave_table_h29 , g_osc_saw_wave_table_h29 ,
-  g_osc_saw_wave_table_h25 , g_osc_saw_wave_table_h25 , g_osc_saw_wave_table_h25 ,
-  g_osc_saw_wave_table_h21 , g_osc_saw_wave_table_h21 , g_osc_saw_wave_table_h21 ,
-  g_osc_saw_wave_table_h17 , g_osc_saw_wave_table_h17 , g_osc_saw_wave_table_h17 ,
-  g_osc_saw_wave_table_h14 , g_osc_saw_wave_table_h14 , g_osc_saw_wave_table_h14 ,
-  g_osc_saw_wave_table_h12 , };
+  g_osc_saw_wave_table_h127, g_osc_saw_wave_table_h119, g_osc_saw_wave_table_h119,
+  g_osc_saw_wave_table_h119, g_osc_saw_wave_table_h100, g_osc_saw_wave_table_h100,
+  g_osc_saw_wave_table_h100, g_osc_saw_wave_table_h84 , g_osc_saw_wave_table_h84 ,
+  g_osc_saw_wave_table_h84 , g_osc_saw_wave_table_h71 , g_osc_saw_wave_table_h71 ,
+  g_osc_saw_wave_table_h71 , g_osc_saw_wave_table_h59 , g_osc_saw_wave_table_h59 ,
+  g_osc_saw_wave_table_h59 , g_osc_saw_wave_table_h50 , g_osc_saw_wave_table_h50 ,
+  g_osc_saw_wave_table_h50 , g_osc_saw_wave_table_h42 , g_osc_saw_wave_table_h42 ,
+  g_osc_saw_wave_table_h42 , g_osc_saw_wave_table_h35 , g_osc_saw_wave_table_h35 ,
+  g_osc_saw_wave_table_h35 , g_osc_saw_wave_table_h29 , g_osc_saw_wave_table_h29 ,
+  g_osc_saw_wave_table_h29 , g_osc_saw_wave_table_h25 , g_osc_saw_wave_table_h25 ,
+  g_osc_saw_wave_table_h25 , g_osc_saw_wave_table_h21 , g_osc_saw_wave_table_h21 ,
+  g_osc_saw_wave_table_h21 , g_osc_saw_wave_table_h17 , g_osc_saw_wave_table_h17 ,
+  g_osc_saw_wave_table_h17 , g_osc_saw_wave_table_h14 , g_osc_saw_wave_table_h14 ,
+  g_osc_saw_wave_table_h14 , g_osc_saw_wave_table_h12 , g_osc_saw_wave_table_h12 ,
+  };
 
 const uint8_t* g_osc_sq_wave_tables[] = {
   g_osc_sq_wave_table_h127, g_osc_sq_wave_table_h127, g_osc_sq_wave_table_h127,
@@ -739,18 +741,19 @@ const uint8_t* g_osc_sq_wave_tables[] = {
   g_osc_sq_wave_table_h127, g_osc_sq_wave_table_h127, g_osc_sq_wave_table_h127,
   g_osc_sq_wave_table_h127, g_osc_sq_wave_table_h127, g_osc_sq_wave_table_h127,
   g_osc_sq_wave_table_h127, g_osc_sq_wave_table_h127, g_osc_sq_wave_table_h127,
-  g_osc_sq_wave_table_h119, g_osc_sq_wave_table_h119, g_osc_sq_wave_table_h119,
-  g_osc_sq_wave_table_h100, g_osc_sq_wave_table_h100, g_osc_sq_wave_table_h100,
-  g_osc_sq_wave_table_h84 , g_osc_sq_wave_table_h84 , g_osc_sq_wave_table_h84 ,
-  g_osc_sq_wave_table_h71 , g_osc_sq_wave_table_h71 , g_osc_sq_wave_table_h71 ,
-  g_osc_sq_wave_table_h59 , g_osc_sq_wave_table_h59 , g_osc_sq_wave_table_h59 ,
-  g_osc_sq_wave_table_h50 , g_osc_sq_wave_table_h50 , g_osc_sq_wave_table_h50 ,
-  g_osc_sq_wave_table_h42 , g_osc_sq_wave_table_h42 , g_osc_sq_wave_table_h42 ,
-  g_osc_sq_wave_table_h35 , g_osc_sq_wave_table_h35 , g_osc_sq_wave_table_h35 ,
-  g_osc_sq_wave_table_h29 , g_osc_sq_wave_table_h29 , g_osc_sq_wave_table_h29 ,
-  g_osc_sq_wave_table_h25 , g_osc_sq_wave_table_h25 , g_osc_sq_wave_table_h25 ,
-  g_osc_sq_wave_table_h21 , g_osc_sq_wave_table_h21 , g_osc_sq_wave_table_h21 ,
-  g_osc_sq_wave_table_h17 , g_osc_sq_wave_table_h17 , g_osc_sq_wave_table_h17 ,
-  g_osc_sq_wave_table_h14 , g_osc_sq_wave_table_h14 , g_osc_sq_wave_table_h14 ,
-  g_osc_sq_wave_table_h12 , };
+  g_osc_sq_wave_table_h127, g_osc_sq_wave_table_h119, g_osc_sq_wave_table_h119,
+  g_osc_sq_wave_table_h119, g_osc_sq_wave_table_h100, g_osc_sq_wave_table_h100,
+  g_osc_sq_wave_table_h100, g_osc_sq_wave_table_h84 , g_osc_sq_wave_table_h84 ,
+  g_osc_sq_wave_table_h84 , g_osc_sq_wave_table_h71 , g_osc_sq_wave_table_h71 ,
+  g_osc_sq_wave_table_h71 , g_osc_sq_wave_table_h59 , g_osc_sq_wave_table_h59 ,
+  g_osc_sq_wave_table_h59 , g_osc_sq_wave_table_h50 , g_osc_sq_wave_table_h50 ,
+  g_osc_sq_wave_table_h50 , g_osc_sq_wave_table_h42 , g_osc_sq_wave_table_h42 ,
+  g_osc_sq_wave_table_h42 , g_osc_sq_wave_table_h35 , g_osc_sq_wave_table_h35 ,
+  g_osc_sq_wave_table_h35 , g_osc_sq_wave_table_h29 , g_osc_sq_wave_table_h29 ,
+  g_osc_sq_wave_table_h29 , g_osc_sq_wave_table_h25 , g_osc_sq_wave_table_h25 ,
+  g_osc_sq_wave_table_h25 , g_osc_sq_wave_table_h21 , g_osc_sq_wave_table_h21 ,
+  g_osc_sq_wave_table_h21 , g_osc_sq_wave_table_h17 , g_osc_sq_wave_table_h17 ,
+  g_osc_sq_wave_table_h17 , g_osc_sq_wave_table_h14 , g_osc_sq_wave_table_h14 ,
+  g_osc_sq_wave_table_h14 , g_osc_sq_wave_table_h12 , g_osc_sq_wave_table_h12 ,
+  };
 

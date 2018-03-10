@@ -7,10 +7,9 @@ template <uint8_t T>
 class EnvGen {
   static const uint8_t STATE_ATTACK  = 0;
   static const uint8_t STATE_SUSTAIN = 1;
-  static const uint8_t STATE_RELEASE = 2;
-  static const uint8_t STATE_IDLE    = 4;
+  static const uint8_t STATE_IDLE    = 2;
 
-  static const uint16_t ATTACK_STEP            = 4068;
+  static const uint16_t ATTACK_STEP            = 4096;
   static const uint8_t ATTACK_UPDATE_INTERVAL  = 1;
 
   static uint8_t  m_state;
@@ -45,7 +44,7 @@ public:
   }
 
   INLINE static void note_off() {
-    m_state = STATE_RELEASE;
+    m_state = STATE_IDLE;
     m_rest = m_decay_update_interval;
   }
 
@@ -68,24 +67,20 @@ public:
       case STATE_SUSTAIN:
         m_level = ENV_GEN_LEVEL_MAX;
         if (!m_sustain) {
-          m_state = STATE_RELEASE;
+          m_state = STATE_IDLE;
           m_rest = m_decay_update_interval;
         }
         break;
-      case STATE_RELEASE:
+      case STATE_IDLE:
         m_rest--;
         if (m_rest == 0) {
           m_rest = m_decay_update_interval;
           if (m_level < ((T == 0) ? 0x0100 : 0x1000 /* gate for amp */)) {
             m_level = 0;
-            m_state = STATE_IDLE;
           } else {
             m_level = mul_q16_q8(m_level, ENV_GEN_DECAY_FACTOR);
           }
         }
-        break;
-      case STATE_IDLE:
-        m_level = 0;
         break;
       }
     }

@@ -67,7 +67,7 @@ sound_off
 
 control_change(OSC_MODE     , 0  )
 control_change(OSC_COLOR    , 0  )
-control_change(MOD_RATE     , 32 )
+control_change(MOD_RATE     , 16 )
 control_change(MOD_DEPTH    , 64 )
 
 control_change(FILTER_CUTOFF, 64 )
@@ -76,7 +76,7 @@ control_change(FILTER_EG_AMT, 96 )
 control_change(FILTER_EG    , 32 )
 
 control_change(CC24         , 0  )
-control_change(FLUCTUATION  , 127)
+control_change(FLUCTUATION  , 64 )
 control_change(PORTAMENTO   , 32 )
 control_change(AMP_EG       , 120)
 
