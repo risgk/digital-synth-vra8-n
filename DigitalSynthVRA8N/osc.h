@@ -232,7 +232,7 @@ private:
 
     if (N == 1) {
       /* For OSC 2 */
-      m_pitch_real[N] += (m_detune >> 1);
+      m_pitch_real[N] += (m_detune >> 1) + 2;
     }
 
     m_pitch_real[N] += 128;
