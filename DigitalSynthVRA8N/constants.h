@@ -51,7 +51,7 @@ const uint8_t   ACTIVE_SENSING        = 0xFE;
 const uint8_t   UNISON        = 16;
 const uint8_t   OSC_WAVEFORM  = 17;
 const uint8_t   OSC_DETUNE    = 18;
-const uint8_t   FILTER_NG_AMT = 19;
+const uint8_t   LFO_DEPTH     = 19;
 
 const uint8_t   FILTER_CUTOFF = 20;
 const uint8_t   FILTER_RESO   = 21;
@@ -60,13 +60,13 @@ const uint8_t   EG_DECAY      = 23;
 
 const uint8_t   EG_ATTACK     = 24;
 const uint8_t   DETUNE_NG_AMT = 25;
-const uint8_t   DETUNE_EG_AMT = 26;
+const uint8_t   PORTAMENTO    = 26;
 const uint8_t   AMP_EG        = 27;
 
-const uint8_t   VELOCITY_SENS = 28;
-const uint8_t   CUTOFF_V_SENS = 29;
-const uint8_t   PORTAMENTO    = 30;
-const uint8_t   UNISON_OPTION = 31;
+const uint8_t   CC28          = 28;
+const uint8_t   CC29          = 29;
+const uint8_t   CC30          = 30;
+const uint8_t   CC31          = 31;
 
 const uint8_t   DAMPER_PEDAL  = 64;
 

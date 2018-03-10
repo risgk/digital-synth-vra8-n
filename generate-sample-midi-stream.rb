@@ -68,7 +68,7 @@ sound_off
 control_change(UNISON       , 0  )
 control_change(OSC_WAVEFORM , 0  )
 control_change(OSC_DETUNE   , 16 )
-control_change(FILTER_NG_AMT, 64 )
+control_change(LFO_DEPTH    , 64 )
 
 control_change(FILTER_CUTOFF, 64 )
 control_change(FILTER_RESO  , 64 )
@@ -77,13 +77,13 @@ control_change(EG_DECAY     , 32 )
 
 control_change(EG_ATTACK    , 0  )
 control_change(DETUNE_NG_AMT, 32 )
-control_change(DETUNE_EG_AMT, 48 )
+control_change(PORTAMENTO   , 0  )
 control_change(AMP_EG       , 120)
 
-control_change(VELOCITY_SENS, 0  )
-control_change(CUTOFF_V_SENS, 127)
-control_change(PORTAMENTO   , 32 )
-control_change(UNISON_OPTION, 0  )
+control_change(CC28         , 0  )
+control_change(CC39         , 0  )
+control_change(CC30         , 0  )
+control_change(CC31         , 0  )
 
 play_a(4)
 play_b(3)

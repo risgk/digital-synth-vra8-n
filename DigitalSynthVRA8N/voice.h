@@ -108,7 +108,8 @@ public:
     case FILTER_EG_AMT:
       IFilter<0>::set_env_amt(controller_value);
       break;
-    case FILTER_NG_AMT:
+    case LFO_DEPTH:
+#if 0
       uint8_t noise_gen_amt;
       if (controller_value < 32) {
         noise_gen_amt = controller_value << 1;
@@ -118,6 +119,7 @@ public:
         noise_gen_amt = ((controller_value - 96) << 2) + 64;
       }
       IFilter<0>::set_noise_gen_amt(noise_gen_amt);
+#endif
       break;
     case UNISON:
       set_unison(controller_value);

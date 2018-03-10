@@ -29,7 +29,7 @@ public:
     ISynthCore<0>::control_change(UNISON       , 0  );
     ISynthCore<0>::control_change(OSC_WAVEFORM , 0  );
     ISynthCore<0>::control_change(OSC_DETUNE   , 16 );
-    ISynthCore<0>::control_change(FILTER_NG_AMT, 64 );
+    ISynthCore<0>::control_change(LFO_DEPTH    , 64 );
 
     ISynthCore<0>::control_change(FILTER_CUTOFF, 64 );
     ISynthCore<0>::control_change(FILTER_RESO  , 64 );
@@ -38,13 +38,13 @@ public:
 
     ISynthCore<0>::control_change(EG_ATTACK    , 0  );
     ISynthCore<0>::control_change(DETUNE_NG_AMT, 32 );
-    ISynthCore<0>::control_change(DETUNE_EG_AMT, 48 );
+    ISynthCore<0>::control_change(PORTAMENTO   , 0  );
     ISynthCore<0>::control_change(AMP_EG       , 120);
 
-    ISynthCore<0>::control_change(VELOCITY_SENS, 0  );
-    ISynthCore<0>::control_change(CUTOFF_V_SENS, 127);
-    ISynthCore<0>::control_change(PORTAMENTO   , 32 );
-    ISynthCore<0>::control_change(UNISON_OPTION, 0  );
+    ISynthCore<0>::control_change(CC28         , 0  );
+    ISynthCore<0>::control_change(CC29         , 0  );
+    ISynthCore<0>::control_change(CC30         , 0  );
+    ISynthCore<0>::control_change(CC31         , 0  );
   }
 
   INLINE static void receive_midi_byte(uint8_t b) {
