@@ -108,35 +108,24 @@ public:
     case FILTER_EG_AMT:
       IFilter<0>::set_env_amt(controller_value);
       break;
-    case LFO_DEPTH:
-#if 0
-      uint8_t noise_gen_amt;
-      if (controller_value < 32) {
-        noise_gen_amt = controller_value << 1;
-      } else if (controller_value < 96) {
-        noise_gen_amt = 64;
-      } else {
-        noise_gen_amt = ((controller_value - 96) << 2) + 64;
-      }
-      IFilter<0>::set_noise_gen_amt(noise_gen_amt);
-#endif
+    case MOD_DEPTH:
       break;
-    case UNISON:
+    case OSC_MODE:
       set_unison(controller_value);
       break;
-    case OSC_WAVEFORM:
+    case OSC_COLOR:
       set_waveform(controller_value);
       break;
-    case OSC_DETUNE:
+    case MOD_RATE:
       IOsc<0>::set_detune(controller_value);
       break;
-    case DETUNE_NG_AMT:
+    case FLUCTUATION:
       IOsc<0>::set_detune_noise_gen_amt(controller_value);
       break;
     case PORTAMENTO:
       IOsc<0>::set_portamento(controller_value);
       break;
-    case EG_DECAY:
+    case FILTER_EG:
       set_env_decay(controller_value);
       break;
     case AMP_EG:

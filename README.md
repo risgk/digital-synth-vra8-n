@@ -37,32 +37,7 @@
 
 ## Controllers
 
-    +----------------+------+----------------+---------------+----------------+------------------------------+
-    | Controller     | INIT | Value 0        | Value 64      | Value 127      | Notes                        |
-    +----------------+------+----------------+---------------+----------------+------------------------------+
-    | UNISON/MIX     | 0    | OFF            | ON            | ON             | 3 Voice UNISON               |
-    |                |      | +70.7%/+70.7%  | +70.7%/-70.7% | +70.7%/+70.7%  | Main/DETUNE MIX Level        |
-    | WAVEFORM/SUB   | 0    | SAWtooth       | SQuare        | SQuare         | WAVEFORM                     |
-    |                |      | 100%           | 0%            | 100%           | SUB Osc Level                |
-    | DETUNE         | 48   | 0.06 Hz        | 1.0 Hz        | 3.8 Hz         |                              |
-    | DETUNE S&H AMT | 32   | Avg. 0         | Avg. +32      | Avg. +63.5     | S&H: 488.3 Hz (Red Noise)    |
-    | DETUNE EG AMT  | 48   | -126 (EG 100%) | 0             | +125 (EG 100%) | Modulates DETUNE             |
-    | PORTAMENTO     | 32   | Off            | 0.09 s/Oct    | 0.8 s/Oct      | PORTAMENTO Time              |
-    | UNI TO MONO    | 0    | OFF            | ON            | ON             | Change UNISON => MONO        |
-    +----------------+------+----------------+---------------+----------------+------------------------------+
-    | CUTOFF         | 64   | 0.44 kHz (A4)  | 2.5 kHz       | 14.1 kHz (A9)  | Range: 4 to 124              |
-    | RESONANCE      | 64   | Q = 0.7        | Q = 2.8       | Q = 8.0        | 8 steps                      |
-    | CUTOFF EG AMT  | 96   | -126 (EG 100%) | 0             | +125 (EG 100%) | EnvGen Modulates CUTOFF      |
-    | CUTOFF NG AMT  | 64   | Avg. -32       | 0             | Avg. +31       | NoiseGen (White) Mods CUTOFF |
-    +----------------+------+----------------+---------------+----------------+------------------------------+
-    | EG ATTACK      | 0    | 4 ms           | 60 ms         | 4.2 s          | EnvGen ATTACK Time           |
-    | EG DECAY       | 64   | 34 ms          | 2.2 s         | Infinity       | EnvGen DECAY Time            |
-    | AMP EG/HOLD    | 0    | AMP EG OFF     | AMP EG ON     | AMP EG ON      | AMP EG ON: 64-127            |
-    |                |      | HOLD OFF       | HOLD ON       | HOLD OFF       | HOLD ON: 32-95               |
-    +----------------+------+----------------+---------------+----------------+------------------------------+
-    | VELOCITY SENS  | 0    | 0%             | 50.4%         | 100%           | Gain VELOCITY SENSitivity    |
-    | CUTOFF V SENS  | 127  | -128 (V 127)   | 0 (V 127)     | +126 (V 127)   | CUTOFF Velocity SENSitivity  |
-    +----------------+------+----------------+---------------+----------------+------------------------------+
+    TODO
 
 ## MIDI Implementation Chart
 
@@ -89,22 +64,22 @@
     +-------------------------------+---------------+---------------+-----------------------+
     | Pitch Bend                    | x             | o             | Range: 2 (or 12)      |
     +-------------------------------+---------------+---------------+-----------------------+
-    | Control                    16 | x             | o             | UNISON/MIX            |
-    | Change                     17 | x             | o             | WAVEFORM/SUB          |
-    |                            18 | x             | o             | DETUNE                |
-    |                            19 | x             | o             | CUTOFF NG AMT         |
+    | Control                    16 | x             | o             | OSC MODE              |
+    | Change                     17 | x             | o             | OSC COLOR             |
+    |                            18 | x             | o             | MOD RATE              |
+    |                            19 | x             | o             | MOD DEPTH             |
     |                            20 | x             | o             | CUTOFF                |
     |                            21 | x             | o             | RESONANCE             |
-    |                            22 | x             | o             | CUTOFF EG AMT         |
-    |                            23 | x             | o             | EG DECAY              |
-    |                            24 | x             | o             | EG ATTACK             |
-    |                            25 | x             | o             | DETUNE S&H AMT        |
-    |                            26 | x             | o             | DETUNE EG AMT         |
-    |                            27 | x             | o             | AMP EG/HOLD           |
-    |                            28 | x             | o             | VELOCITY SENS         |
-    |                            29 | x             | o             | CUTOFF V SENS         |
-    |                            30 | x             | o             | PORTAMENTO            |
-    |                            31 | x             | o             | UNI TO MONO           |
+    |                            22 | x             | o             | FEG AMT               |
+    |                            23 | x             | o             | FEG DECAY/SUS         |
+    |                            24 | x             | o             | ????                  |
+    |                            25 | x             | o             | FLUCTUATION           |
+    |                            26 | x             | o             | PORTAMENTO            |
+    |                            27 | x             | o             | AEG DECAY/SUS         |
+    |                            28 | x             | o             | ????                  |
+    |                            29 | x             | o             | ????                  |
+    |                            30 | x             | o             | ????                  |
+    |                            31 | x             | o             | ????                  |
     +-------------------------------+---------------+---------------+-----------------------+
     | Program                       | x             | x             |                       |
     | Change       : True #         | ************* |               |                       |

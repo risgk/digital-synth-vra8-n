@@ -48,18 +48,18 @@ const uint8_t   EOX                   = 0xF7;
 const uint8_t   REAL_TIME_MESSAGE_MIN = 0xF8;
 const uint8_t   ACTIVE_SENSING        = 0xFE;
 
-const uint8_t   UNISON        = 16;
-const uint8_t   OSC_WAVEFORM  = 17;
-const uint8_t   OSC_DETUNE    = 18;
-const uint8_t   LFO_DEPTH     = 19;
+const uint8_t   OSC_MODE      = 16;
+const uint8_t   OSC_COLOR     = 17;
+const uint8_t   MOD_RATE      = 18;
+const uint8_t   MOD_DEPTH     = 19;
 
 const uint8_t   FILTER_CUTOFF = 20;
 const uint8_t   FILTER_RESO   = 21;
 const uint8_t   FILTER_EG_AMT = 22;
-const uint8_t   EG_DECAY      = 23;
+const uint8_t   FILTER_EG     = 23;
 
 const uint8_t   EG_ATTACK     = 24;
-const uint8_t   DETUNE_NG_AMT = 25;
+const uint8_t   FLUCTUATION   = 25;
 const uint8_t   PORTAMENTO    = 26;
 const uint8_t   AMP_EG        = 27;
 

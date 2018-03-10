@@ -26,18 +26,18 @@ public:
     ISynthCore<0>::initialize();
 
     // DEFAULT
-    ISynthCore<0>::control_change(UNISON       , 0  );
-    ISynthCore<0>::control_change(OSC_WAVEFORM , 0  );
-    ISynthCore<0>::control_change(OSC_DETUNE   , 16 );
-    ISynthCore<0>::control_change(LFO_DEPTH    , 64 );
+    ISynthCore<0>::control_change(OSC_MODE     , 0  );
+    ISynthCore<0>::control_change(OSC_COLOR    , 0  );
+    ISynthCore<0>::control_change(MOD_RATE     , 16 );
+    ISynthCore<0>::control_change(MOD_DEPTH    , 64 );
 
     ISynthCore<0>::control_change(FILTER_CUTOFF, 64 );
     ISynthCore<0>::control_change(FILTER_RESO  , 64 );
     ISynthCore<0>::control_change(FILTER_EG_AMT, 96 );
-    ISynthCore<0>::control_change(EG_DECAY     , 32 );
+    ISynthCore<0>::control_change(FILTER_EG    , 32 );
 
     ISynthCore<0>::control_change(EG_ATTACK    , 0  );
-    ISynthCore<0>::control_change(DETUNE_NG_AMT, 32 );
+    ISynthCore<0>::control_change(FLUCTUATION  , 32 );
     ISynthCore<0>::control_change(PORTAMENTO   , 0  );
     ISynthCore<0>::control_change(AMP_EG       , 120);
 
