@@ -230,19 +230,17 @@ private:
     } else if (coarse >= NOTE_NUMBER_MAX) {
       m_pitch_real[N] = NOTE_NUMBER_MAX << 8;
     }
+  }
 
-    m_pitch_real[N] += high_sbyte(m_fluctuation * static_cast<int8_t>(get_rnd8()));
-
+  template <uint8_t N>
+  INLINE static void update_freq_first() {
     if (N == 1) {
       /* For OSC 2 */
       m_pitch_real[N] += m_detune + 16;
     }
 
+    m_pitch_real[N] += high_sbyte(m_fluctuation * static_cast<int8_t>(get_rnd8()));
     m_pitch_real[N] += 128;
-  }
-
-  template <uint8_t N>
-  INLINE static void update_freq_first() {
     uint8_t coarse = high_byte(m_pitch_real[N]);
     m_freq_temp[N] = g_osc_freq_table[coarse - (NOTE_NUMBER_MIN - 1)];
     m_wave_table_temp[N] = get_wave_table(m_waveform, coarse);
