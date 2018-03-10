@@ -5,7 +5,7 @@
 #include "mul-q.h"
 #include <math.h>
 
-static const uint8_t OSC_MIX_TABLE_LENGTH = 32;
+static const uint8_t OSC_MIX_TABLE_LENGTH = 31;
 
 template <uint8_t T>
 class Osc {
@@ -65,8 +65,8 @@ public:
   }
 
   INLINE static void set_mix(uint8_t controller_value) {
-    m_mix_main   = m_mix_table[(OSC_MIX_TABLE_LENGTH - 1) - (controller_value >> 2)];
-    m_mix_detune = m_mix_table[                             (controller_value >> 2)];
+    m_mix_main   = m_mix_table[(OSC_MIX_TABLE_LENGTH - 1) - (controller_value >> 3)];
+    m_mix_detune = m_mix_table[                             (controller_value >> 3)];
   }
 
   INLINE static void set_waveform(uint8_t waveform) {
@@ -74,7 +74,7 @@ public:
   }
 
   INLINE static void set_sub(uint8_t controller_value) {
-    m_mix_sub = m_mix_table[controller_value >> 2];
+    m_mix_sub = m_mix_table[(controller_value >> 2) - 1];
   }
 
   INLINE static void set_detune(uint8_t controller_value) {
