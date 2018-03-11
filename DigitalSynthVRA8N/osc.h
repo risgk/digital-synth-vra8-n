@@ -14,7 +14,7 @@ class Osc {
   static int8_t         m_mix_sub;
   static int16_t        m_level_sub;
   static int8_t         m_mix_table[OSC_MIX_TABLE_LENGTH];
-  static uint8_t        m_detune;
+  static uint16_t       m_detune;
   static uint8_t        m_fluctuation;
   static uint8_t        m_detune_mod_amt;
   static uint16_t       m_portamento;
@@ -78,10 +78,13 @@ public:
   }
 
   INLINE static void set_detune(uint8_t controller_value) {
-    if (controller_value >= 108) {
-      controller_value = 108;
+    if (controller_value >= 15) {
+      m_detune = (controller_value - 11) << 4;
+    } else if (controller_value >= 2) {
+      m_detune = (controller_value << 2) + 4;
+    } else {
+      m_detune = 9;
     }
-    m_detune = (controller_value >> 1) + 9;
   }
 
   INLINE static void set_detune_noise_gen_amt(uint8_t controller_value) {
@@ -275,7 +278,7 @@ template <uint8_t T> int8_t          Osc<T>::m_mix_detune;
 template <uint8_t T> int8_t          Osc<T>::m_mix_sub;
 template <uint8_t T> int16_t         Osc<T>::m_level_sub;
 template <uint8_t T> int8_t          Osc<T>::m_mix_table[OSC_MIX_TABLE_LENGTH];
-template <uint8_t T> uint8_t         Osc<T>::m_detune;
+template <uint8_t T> uint16_t        Osc<T>::m_detune;
 template <uint8_t T> uint8_t         Osc<T>::m_fluctuation;
 template <uint8_t T> uint8_t         Osc<T>::m_detune_mod_amt;
 template <uint8_t T> uint16_t        Osc<T>::m_portamento;
