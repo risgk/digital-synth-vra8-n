@@ -3,8 +3,8 @@
 #define SERIAL_SPEED (38400)    // for Serial MIDI
 //#define SERIAL_SPEED (31250)    // for MIDI Shield
 
-#define PITCH_BEND_RANGE (2)
-//#define PITCH_BEND_RANGE (12)
+//#define PITCH_BEND_RANGE (2)
+#define PITCH_BEND_RANGE (12)
 
 //#define TRANSPOSE (-24)
 

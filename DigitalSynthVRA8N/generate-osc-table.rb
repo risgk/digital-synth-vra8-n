@@ -13,8 +13,8 @@ def freq_from_note_number(note_number)
 end
 
 $file.printf("const __uint24 g_osc_freq_table[] = {\n  ")
-((NOTE_NUMBER_MIN - 1)..(NOTE_NUMBER_MAX + 1)).each do |note_number|
-  if (note_number < (NOTE_NUMBER_MIN - 1)) || (note_number > (NOTE_NUMBER_MAX + 1))
+((NOTE_NUMBER_MIN - 13)..(NOTE_NUMBER_MAX + 25)).each do |note_number|
+  if (note_number < (NOTE_NUMBER_MIN - 13)) || (note_number > (NOTE_NUMBER_MAX + 25))
     freq = 0
   else
     freq = freq_from_note_number(note_number)
@@ -73,7 +73,7 @@ end
 
 $osc_harmonics_restriction_table = []
 
-((NOTE_NUMBER_MIN - 1)..(NOTE_NUMBER_MAX + 1)).each do |note_number|
+((NOTE_NUMBER_MIN - 13)..(NOTE_NUMBER_MAX + 37)).each do |note_number|
   freq = freq_from_note_number((note_number / 3) * 3 + 3)
   $osc_harmonics_restriction_table << freq
 end
@@ -150,7 +150,7 @@ def generate_osc_wave_tables_array(name, organ = false, organ_last = 8)
     $file.printf("g_osc_#{name}_wave_table_h%-3d,", last_harmonic(freq, organ, organ_last))
     if idx == DATA_BYTE_MAX
       $file.printf("\n")
-    elsif idx % 3 == (3 - 1)
+    elsif (idx + 2) % 3 == (3 - 1)
       $file.printf("\n  ")
     else
       $file.printf(" ")
