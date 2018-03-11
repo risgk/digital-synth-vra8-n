@@ -78,11 +78,14 @@ public:
   }
 
   INLINE static void set_detune(uint8_t controller_value) {
-    m_detune = controller_value;
+    if (controller_value >= 108) {
+      controller_value = 108;
+    }
+    m_detune = (controller_value >> 1) + 9;
   }
 
   INLINE static void set_detune_noise_gen_amt(uint8_t controller_value) {
-    m_fluctuation = controller_value;
+    m_fluctuation = controller_value >> 1;
   }
 
   INLINE static void set_detune_env_amt(uint8_t controller_value) {
@@ -236,7 +239,7 @@ private:
   INLINE static void update_freq_first() {
     if (N == 1) {
       /* For OSC 2 */
-      m_pitch_real[N] += m_detune + 16;
+      m_pitch_real[N] += m_detune;
     }
 
     m_pitch_real[N] += high_sbyte(m_fluctuation * static_cast<int8_t>(get_rnd8()));
@@ -249,9 +252,9 @@ private:
   template <uint8_t N>
   INLINE static void update_freq_latter() {
     uint8_t fine = low_byte(m_pitch_real[N]);
-    uint16_t freq_div_16 = m_freq_temp[N] >> 8;
-    freq_div_16 <<= 4;
-    int16_t freq_offset = mul_q16_q7(freq_div_16, g_osc_tune_table[fine >> (8 - OSC_TUNE_TABLE_STEPS_BITS)]);
+    uint16_t freq_div_512 = m_freq_temp[N] >> 8;
+    freq_div_512 >>= 1;
+    int16_t freq_offset = freq_div_512 * g_osc_tune_table[fine >> (8 - OSC_TUNE_TABLE_STEPS_BITS)];
     m_freq[N] = m_freq_temp[N] + freq_offset;
     m_wave_table[N] = m_wave_table_temp[N];
   }

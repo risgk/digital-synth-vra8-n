@@ -33,7 +33,7 @@ $file.printf("};\n\n")
 
 $file.printf("const int8_t g_osc_tune_table[] = {\n  ")
 (0..(1 << OSC_TUNE_TABLE_STEPS_BITS) - 1).each do |i|
-  tune_rate = ((2.0 ** ((i - 128) / (12.0 * (1 << OSC_TUNE_TABLE_STEPS_BITS)))) *
+  tune_rate = ((2.0 ** ((i - (1 << (OSC_TUNE_TABLE_STEPS_BITS - 1))) / (12.0 * (1 << OSC_TUNE_TABLE_STEPS_BITS)))) *
                (1 << OSC_TUNE_DENOMINATOR_BITS) / 1.0).round -
               (1 << OSC_TUNE_DENOMINATOR_BITS) / 1.0
 
