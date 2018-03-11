@@ -38,7 +38,7 @@ public:
 
     ISynthCore<0>::control_change(CC24         , 0  );
     ISynthCore<0>::control_change(FLUCTUATION  , 64 );
-    ISynthCore<0>::control_change(PORTAMENTO   , 32 );
+    ISynthCore<0>::control_change(PORTAMENTO   , 0  );
     ISynthCore<0>::control_change(AMP_EG       , 120);
 
     ISynthCore<0>::control_change(CC28         , 0  );
