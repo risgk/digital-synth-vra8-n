@@ -3,7 +3,6 @@
 template <uint8_t T>
 class Voice {
   static uint8_t m_count;
-  static uint8_t m_waveform;
   static uint8_t m_eg0_decay_sustain;
   static uint8_t m_eg1_decay_sustain;
   static boolean m_damper_pedal;
@@ -13,7 +12,6 @@ class Voice {
 
 public:
   INLINE static void initialize() {
-    m_waveform = OSC_WAVEFORM_SAW;
     m_damper_pedal = false;
     m_note_number = NOTE_NUMBER_INVALID;
     m_note_hold = false;
@@ -28,27 +26,26 @@ public:
   }
 
   INLINE static void set_waveform(uint8_t controller_value) {
-    uint8_t waveform;
     if (controller_value < 64) {
-      waveform = OSC_WAVEFORM_SAW;
+      IOsc<0>::set_waveform(OSC_WAVEFORM_SAW);
     } else {
-      waveform = OSC_WAVEFORM_SQ;
-    }
-
-    if (m_waveform != waveform) {
-      m_waveform = waveform;
-      IOsc<0>::set_waveform(m_waveform);
-      if (m_note_number != NOTE_NUMBER_INVALID) {
-        IOsc<0>::note_on(m_note_number);
-      }
+      IOsc<0>::set_waveform(OSC_WAVEFORM_SQ);
     }
 
     if (controller_value < 32) {
-      IOsc<0>::set_sub((31 - controller_value) << 2);
+      IOsc<0>::set_sub_osc_level((31 - controller_value) << 2);
     } else if (controller_value >= 96) {
-      IOsc<0>::set_sub((controller_value - 96) << 2);
+      IOsc<0>::set_sub_osc_level((controller_value - 96) << 2);
     } else {
-      IOsc<0>::set_sub(0);
+      IOsc<0>::set_sub_osc_level(0);
+    }
+  }
+
+  INLINE static void set_sub_osc(uint8_t controller_value) {
+    if (controller_value < 64) {
+      IOsc<0>::set_waveform_sub(SUB_OSC_WAVEFORM_TRI);
+    } else {
+      IOsc<0>::set_waveform_sub(SUB_OSC_WAVEFORM_SAW_OR_SQ);
     }
   }
 
@@ -106,7 +103,7 @@ public:
       set_waveform(controller_value);
       break;
     case OSC_COLOR_2:
-      // TODO
+      set_sub_osc(controller_value);
       break;
     case MOD_RATE:
       IOsc<0>::set_detune(controller_value);
@@ -208,7 +205,6 @@ private:
 };
 
 template <uint8_t T> uint8_t Voice<T>::m_count;
-template <uint8_t T> uint8_t Voice<T>::m_waveform;
 template <uint8_t T> uint8_t Voice<T>::m_eg0_decay_sustain;
 template <uint8_t T> uint8_t Voice<T>::m_eg1_decay_sustain;
 template <uint8_t T> boolean Voice<T>::m_damper_pedal;

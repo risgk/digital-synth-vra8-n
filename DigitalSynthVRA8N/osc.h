@@ -19,6 +19,7 @@ class Osc {
   static uint8_t        m_detune_mod_amt;
   static uint16_t       m_portamento;
   static uint8_t        m_waveform;
+  static uint8_t        m_waveform_sub;
   static int16_t        m_pitch_bend_normalized;
   static uint16_t       m_pitch_target;
   static uint16_t       m_pitch_current;
@@ -28,6 +29,7 @@ class Osc {
   static __uint24       m_freq[2];
   static __uint24       m_freq_temp[2];
   static __uint24       m_phase[2];
+  static uint16_t       m_phase_sub_detune;
   static uint8_t        m_rnd_cnt;
   static uint16_t       m_rnd_temp;
   static uint8_t        m_rnd;
@@ -40,13 +42,14 @@ public:
                                                   (OSC_MIX_TABLE_LENGTH - 1)) * 40);
     }
     set_mix(0);
-    set_sub(0);
+    set_sub_osc_level(0);
     m_level_sub = 0;
     m_detune = 0;
     m_fluctuation = 0;
     m_detune_mod_amt = 0;
     m_portamento = 0x4000;
     m_waveform = OSC_WAVEFORM_SAW;
+    m_waveform_sub = SUB_OSC_WAVEFORM_TRI;
     m_pitch_bend_normalized = 0;
     m_pitch_target = (NOTE_NUMBER_MIN - 13) << 8;
     m_pitch_current = m_pitch_target;
@@ -62,6 +65,7 @@ public:
     m_freq_temp[1] = g_osc_freq_table[0];
     m_phase[0] = 0;
     m_phase[1] = 0;
+    m_phase_sub_detune = 0;
     m_rnd_cnt = 0;
     m_rnd_temp = 1;
     m_rnd = 0;
@@ -85,8 +89,12 @@ public:
     m_waveform = waveform;
   }
 
-  INLINE static void set_sub(uint8_t controller_value) {
+  INLINE static void set_sub_osc_level(uint8_t controller_value) {
     m_mix_sub = m_mix_table[(controller_value >> 2) - 1];
+  }
+
+  INLINE static void set_waveform_sub(uint8_t waveform_sub) {
+    m_waveform_sub = waveform_sub;
   }
 
   INLINE static void set_detune(uint8_t controller_value) {
@@ -130,7 +138,15 @@ public:
 
   INLINE static int16_t clock(uint8_t count) {
     if ((count & 0x01) == 1) {
-      int8_t wave_0_sub = get_tri_wave_level(m_phase[0] >> 8);
+//      m_phase_sub_detune += 1;
+
+      int8_t wave_0_sub = 0;
+      if (m_waveform_sub == SUB_OSC_WAVEFORM_TRI) {
+        wave_0_sub = get_tri_wave_level(m_phase[0] >> 8);
+      } else {
+        wave_0_sub = get_wave_level(m_wave_table[0], (m_phase[0] >> 8) + m_phase_sub_detune);
+      }
+
       m_level_sub       = wave_0_sub * m_mix_sub;
     }
     else if ((count & (OSC_CONTROL_INTERVAL - 1)) == 0) {
@@ -309,6 +325,7 @@ template <uint8_t T> uint8_t         Osc<T>::m_fluctuation;
 template <uint8_t T> uint8_t         Osc<T>::m_detune_mod_amt;
 template <uint8_t T> uint16_t        Osc<T>::m_portamento;
 template <uint8_t T> uint8_t         Osc<T>::m_waveform;
+template <uint8_t T> uint8_t         Osc<T>::m_waveform_sub;
 template <uint8_t T> int16_t         Osc<T>::m_pitch_bend_normalized;
 template <uint8_t T> uint16_t        Osc<T>::m_pitch_target;
 template <uint8_t T> uint16_t        Osc<T>::m_pitch_current;
@@ -318,6 +335,7 @@ template <uint8_t T> const uint8_t*  Osc<T>::m_wave_table_temp[2];
 template <uint8_t T> __uint24        Osc<T>::m_freq[2];
 template <uint8_t T> __uint24        Osc<T>::m_freq_temp[2];
 template <uint8_t T> __uint24        Osc<T>::m_phase[2];
+template <uint8_t T> uint16_t        Osc<T>::m_phase_sub_detune;
 template <uint8_t T> uint8_t         Osc<T>::m_rnd_cnt;
 template <uint8_t T> uint16_t        Osc<T>::m_rnd_temp;
 template <uint8_t T> uint8_t         Osc<T>::m_rnd;
