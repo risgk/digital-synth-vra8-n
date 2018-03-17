@@ -1,6 +1,6 @@
-# Digital Synth VRA8-N v0.1.0
+# Digital Synth VRA8-N v0.0.0
 
-- 2018-03-17 ISGK Instruments
+- 2018-00-00 ISGK Instruments
 - <https://github.com/risgk/digital-synth-vra8-n>
 
 ## Concept
@@ -33,12 +33,13 @@
 - We recommend Google Chrome, which implements Web MIDI API
 - VRA8-N CTRL includes PRESET programs
 - Recommending [loopMIDI](http://www.tobias-erichsen.de/software/loopmidi.html) (virtual loopback MIDI cable) to connect VRA8-N
+- **CAUTION**: Click sounds may occur when you change the controllers
 - **CAUTION**: Low CUTOFF with high RESONANCE can damage the speakers
 
 ## MIDI Implementation Chart
 
-      [Monophonic Synthesizer]                                        Date: 2018-03-17       
-      Model: Digital Synth VRA8-N     MIDI Implementation Chart       Version: 0.1.0         
+      [Monophonic Synthesizer]                                        Date: 2018-00-00       
+      Model: Digital Synth VRA8-N     MIDI Implementation Chart       Version: 0.0.0         
     +-------------------------------+---------------+---------------+-----------------------+
     | Function...                   | Transmitted   | Recognized    | Remarks               |
     +-------------------------------+---------------+---------------+-----------------------+
