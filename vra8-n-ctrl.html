@@ -39,8 +39,8 @@ const NOTE_OFF       = 0x80;
 const NOTE_ON        = 0x90;
 const CONTROL_CHANGE = 0xB0;
 
-const OSC_MODE      = 16;
-const OSC_COLOR     = 17;
+const OSC_COLOR_1   = 16;
+const OSC_COLOR_2   = 17;
 const MOD_RATE      = 18;
 const MOD_DEPTH     = 19;
 
@@ -255,8 +255,8 @@ function preset(number) {
   allNotesOff();
   var presetControllers = {};
 
-  presetControllers[OSC_MODE     ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  ];
-  presetControllers[OSC_COLOR    ] = [0  , 0  , 0  , 16 , 0  , 80 , 48 ];
+  presetControllers[OSC_COLOR_1  ] = [0  , 0  , 0  , 16 , 0  , 80 , 48 ];
+  presetControllers[OSC_COLOR_2  ] = [0  , 64 , 64 , 64 , 64 , 64 , 64 ];
   presetControllers[MOD_RATE     ] = [0  , 8  , 125, 12 , 0  , 8  , 8  ];
   presetControllers[MOD_DEPTH    ] = [0  , 64 , 127, 127, 127, 64 , 0  ];
 
@@ -395,10 +395,10 @@ function noteOff(noteNumber) {
 </table>
 
 <table>
-<tr><td>----                  </td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-    <td>OSC COLOR             </td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-    <td>MOD RATE              </td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-    <td>MOD DEPTH             </td></tr>
+<tr><td>OSC WAVE/SUB          </td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>----                  </td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>OSC2 PITCH            </td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>OSC MIX               </td></tr>
 <tr><td><input id="inputCC16" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(16, value)"></td>
     <td><span id="spanCC16">-1</span></td>
     <td><input id="inputCC17" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(17, value)"></td>

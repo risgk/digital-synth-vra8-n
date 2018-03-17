@@ -48,8 +48,8 @@ EOX                   = 0xF7
 REAL_TIME_MESSAGE_MIN = 0xF8
 ACTIVE_SENSING        = 0xFE
 
-OSC_MODE      = 16
-OSC_COLOR     = 17
+OSC_COLOR_1   = 16
+OSC_COLOR_2   = 17
 MOD_RATE      = 18
 MOD_DEPTH     = 19
 

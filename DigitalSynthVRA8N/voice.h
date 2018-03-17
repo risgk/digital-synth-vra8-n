@@ -102,11 +102,11 @@ public:
     case FILTER_EG_AMT:
       IFilter<0>::set_env_amt(controller_value);
       break;
-    case OSC_MODE:
-      // TODO
-      break;
-    case OSC_COLOR:
+    case OSC_COLOR_1:
       set_waveform(controller_value);
+      break;
+    case OSC_COLOR_2:
+      // TODO
       break;
     case MOD_RATE:
       IOsc<0>::set_detune(controller_value);

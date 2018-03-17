@@ -48,8 +48,8 @@ const uint8_t   EOX                   = 0xF7;
 const uint8_t   REAL_TIME_MESSAGE_MIN = 0xF8;
 const uint8_t   ACTIVE_SENSING        = 0xFE;
 
-const uint8_t   OSC_MODE      = 16;
-const uint8_t   OSC_COLOR     = 17;
+const uint8_t   OSC_COLOR_1   = 16;
+const uint8_t   OSC_COLOR_2   = 17;
 const uint8_t   MOD_RATE      = 18;
 const uint8_t   MOD_DEPTH     = 19;
 
