@@ -118,7 +118,7 @@ public:
 
   INLINE static int16_t clock(uint8_t count) {
     if ((count & 0x01) == 1) {
-      int8_t wave_0_sub = get_tri_wave_level(m_phase[0]);
+      int8_t wave_0_sub = get_tri_wave_level(m_phase[0] >> 8);
       m_level_sub       = wave_0_sub * m_mix_sub;
     }
     else if ((count & (OSC_CONTROL_INTERVAL - 1)) == 0) {
@@ -160,8 +160,8 @@ public:
     m_phase[0] += m_freq[0];
     m_phase[1] += m_freq[1];
 
-    int8_t wave_0_main   = get_wave_level(m_wave_table[0], m_phase[0] << 1);
-    int8_t wave_0_detune = get_wave_level(m_wave_table[1], m_phase[1] << 1);
+    int8_t wave_0_main   = get_wave_level(m_wave_table[0], static_cast<uint16_t>(m_phase[0] >> 8) << 1);
+    int8_t wave_0_detune = get_wave_level(m_wave_table[1], static_cast<uint16_t>(m_phase[1] >> 8) << 1);
 
     // amp and mix
     int16_t level_main   = wave_0_main   * m_mix_main;
@@ -186,9 +186,9 @@ private:
     return result;
   }
 
-  INLINE static int8_t get_wave_level(const uint8_t* wave_table, __uint24 phase) {
-    uint8_t curr_index = hhigh_byte(phase);
-    uint8_t next_weight = high_byte(phase);
+  INLINE static int8_t get_wave_level(const uint8_t* wave_table, uint16_t phase) {
+    uint8_t curr_index = high_byte(phase);
+    uint8_t next_weight = low_byte(phase);
     uint16_t two_data = pgm_read_word(wave_table + curr_index);
     uint8_t curr_data = low_byte(two_data);
     uint8_t next_data = high_byte(two_data);
@@ -204,8 +204,8 @@ private:
     return result;
   }
 
-  INLINE static int8_t get_tri_wave_level(__uint24 phase) {
-    uint16_t level = phase >> 8;
+  INLINE static int8_t get_tri_wave_level(uint16_t phase) {
+    uint16_t level = phase;
     if ((level & 0x8000) != 0) {
       level = ~level;
     }
