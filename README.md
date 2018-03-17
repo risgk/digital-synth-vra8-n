@@ -1,6 +1,6 @@
-# Digital Synth VRA8-N v0.0.0
+# Digital Synth VRA8-N v0.1.0
 
-- 2018-01-04 ISGK Instruments
+- 2018-03-17 ISGK Instruments
 - <https://github.com/risgk/digital-synth-vra8-n>
 
 ## Concept
@@ -35,14 +35,10 @@
 - Recommending [loopMIDI](http://www.tobias-erichsen.de/software/loopmidi.html) (virtual loopback MIDI cable) to connect VRA8-N
 - **CAUTION**: Low CUTOFF with high RESONANCE can damage the speakers
 
-## Controllers
-
-    TODO
-
 ## MIDI Implementation Chart
 
-      [Paraphonic Synthesizer]                                        Date: 2018-01-04       
-      Model: Digital Synth VRA8-N     MIDI Implementation Chart       Version: 0.0.0         
+      [Monophonic Synthesizer]                                        Date: 2018-03-17       
+      Model: Digital Synth VRA8-N     MIDI Implementation Chart       Version: 0.1.0         
     +-------------------------------+---------------+---------------+-----------------------+
     | Function...                   | Transmitted   | Recognized    | Remarks               |
     +-------------------------------+---------------+---------------+-----------------------+
@@ -62,15 +58,15 @@
     | After        Key's            | x             | x             |                       |
     | Touch        Ch's             | x             | x             |                       |
     +-------------------------------+---------------+---------------+-----------------------+
-    | Pitch Bend                    | x             | o             | Range: 2 (or 12)      |
+    | Pitch Bend                    | x             | o             | Range: 12 (or 2)      |
     +-------------------------------+---------------+---------------+-----------------------+
-    | Control                    16 | x             | o             | OSC MODE              |
-    | Change                     17 | x             | o             | OSC COLOR             |
-    |                            18 | x             | o             | MOD RATE              |
-    |                            19 | x             | o             | MOD DEPTH             |
+    | Control                    16 | x             | o             | OSC WAVE (SAW/SQ)     |
+    | Change                     17 | x             | o             | SUB OSC (TRI)         |
+    |                            18 | x             | o             | OSC2 PITCH            |
+    |                            19 | x             | o             | OSC MIX (1/2)         |
     |                            20 | x             | o             | CUTOFF                |
     |                            21 | x             | o             | RESONANCE             |
-    |                            22 | x             | o             | FEG AMT               |
+    |                            22 | x             | o             | FEG AMT (-/+)         |
     |                            23 | x             | o             | FEG DECAY/SUS         |
     |                            24 | x             | o             | ----                  |
     |                            25 | x             | o             | FLUCTUATION           |
