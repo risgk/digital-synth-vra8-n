@@ -28,8 +28,10 @@ class Osc {
   static __uint24       m_freq[2];
   static __uint24       m_freq_temp[2];
   static __uint24       m_phase[2];
+  static uint8_t        m_rnd_cnt;
   static uint16_t       m_rnd_temp;
   static uint8_t        m_rnd;
+  static uint8_t        m_rnd_prev;
 
 public:
   INLINE static void initialize() {
@@ -60,13 +62,23 @@ public:
     m_freq_temp[1] = g_osc_freq_table[0];
     m_phase[0] = 0;
     m_phase[1] = 0;
+    m_rnd_cnt = 0;
     m_rnd_temp = 1;
     m_rnd = 0;
+    m_rnd_prev = 0;
   }
 
   INLINE static void set_mix(uint8_t controller_value) {
-    m_mix_main   = m_mix_table[(OSC_MIX_TABLE_LENGTH - 1) - (controller_value >> 3)];
-    m_mix_detune = m_mix_table[                             (controller_value >> 3)];
+    if (controller_value >= 2) {
+      controller_value -= 2;
+    }
+
+    if (controller_value > 123) {
+      controller_value = 123;
+    }
+
+    m_mix_main   = m_mix_table[(OSC_MIX_TABLE_LENGTH - 1) - (controller_value >> 2)];
+    m_mix_detune = m_mix_table[                             (controller_value >> 2)];
   }
 
   INLINE static void set_waveform(uint8_t waveform) {
@@ -80,10 +92,10 @@ public:
   INLINE static void set_detune(uint8_t controller_value) {
     if (controller_value >= 15) {
       m_detune = (controller_value - 11) << 4;
-    } else if (controller_value >= 2) {
-      m_detune = (controller_value << 2) + 4;
+    } else if (controller_value == 14) {
+      m_detune = 58;
     } else {
-      m_detune = 9;
+      m_detune = controller_value << 2;
     }
   }
 
@@ -134,10 +146,15 @@ public:
         update_freq_latter<0>();
         break;
       case 0x4:
-        update_rnd_first();
+        m_rnd_cnt++;
+        if ((m_rnd_cnt & 0x03) == 0x00) {
+          update_rnd_first();
+        }
         break;
       case 0x5:
-        update_rnd_latter();
+        if ((m_rnd_cnt & 0x03) == 0x00) {
+          update_rnd_latter();
+        }
         break;
       case 0x8:
         update_pitch_current<1>();
@@ -149,10 +166,14 @@ public:
         update_freq_latter<1>();
         break;
       case 0xC:
-        update_rnd_first();
+        if ((m_rnd_cnt & 0x03) == 0x00) {
+          update_rnd_first();
+        }
         break;
       case 0xD:
-        update_rnd_latter();
+        if ((m_rnd_cnt & 0x03) == 0x00) {
+          update_rnd_latter();
+        }
         break;
       }
     }
@@ -171,8 +192,12 @@ public:
     return result;
   }
 
-  INLINE static uint8_t get_rnd8() {
+  INLINE static uint8_t get_white_noise_7() {
     return m_rnd;
+  }
+
+  INLINE static uint8_t get_red_noise_8() {
+    return (m_rnd_prev + m_rnd);
   }
 
 private:
@@ -245,7 +270,7 @@ private:
       m_pitch_real[N] += m_detune;
     }
 
-    m_pitch_real[N] += high_sbyte(m_fluctuation * static_cast<int8_t>(get_rnd8()));
+    m_pitch_real[N] += high_sbyte((m_fluctuation >> 2) * static_cast<int8_t>(get_red_noise_8()));
     m_pitch_real[N] += 128;
     uint8_t coarse = high_byte(m_pitch_real[N]);
     m_freq_temp[N] = g_osc_freq_table[coarse - (NOTE_NUMBER_MIN - 13)];
@@ -257,7 +282,7 @@ private:
     uint8_t fine = low_byte(m_pitch_real[N]);
     uint16_t freq_div_512 = m_freq_temp[N] >> 8;
     freq_div_512 >>= 1;
-    int16_t freq_offset = freq_div_512 * g_osc_tune_table[fine >> (8 - OSC_TUNE_TABLE_STEPS_BITS)];
+    int16_t freq_offset = (freq_div_512 * g_osc_tune_table[fine >> (8 - OSC_TUNE_TABLE_STEPS_BITS)]) + (N << 1);
     m_freq[N] = m_freq_temp[N] + freq_offset;
     m_wave_table[N] = m_wave_table_temp[N];
   }
@@ -269,7 +294,8 @@ private:
 
   INLINE static void update_rnd_latter() {
     m_rnd_temp = m_rnd_temp ^ (m_rnd_temp << 8);
-    m_rnd = low_byte(m_rnd_temp);
+    m_rnd_prev = m_rnd;
+    m_rnd = low_byte(m_rnd_temp) >> 1;
   }
 };
 
@@ -292,5 +318,7 @@ template <uint8_t T> const uint8_t*  Osc<T>::m_wave_table_temp[2];
 template <uint8_t T> __uint24        Osc<T>::m_freq[2];
 template <uint8_t T> __uint24        Osc<T>::m_freq_temp[2];
 template <uint8_t T> __uint24        Osc<T>::m_phase[2];
+template <uint8_t T> uint8_t         Osc<T>::m_rnd_cnt;
 template <uint8_t T> uint16_t        Osc<T>::m_rnd_temp;
 template <uint8_t T> uint8_t         Osc<T>::m_rnd;
+template <uint8_t T> uint8_t         Osc<T>::m_rnd_prev;
