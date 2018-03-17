@@ -53,6 +53,8 @@ public:
   }
 
   INLINE static void note_on(uint8_t note_number, uint8_t velocity) {
+    static_cast<void>(velocity);
+
 #if defined(TRANSPOSE)
     if ((note_number < NOTE_NUMBER_MIN - TRANSPOSE) ||
         (note_number > NOTE_NUMBER_MAX - TRANSPOSE)) {
