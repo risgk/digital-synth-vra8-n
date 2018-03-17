@@ -90,7 +90,11 @@ public:
   }
 
   INLINE static void set_sub_osc_level(uint8_t controller_value) {
-    m_mix_sub = m_mix_table[(controller_value - 4) >> 2];
+    uint8_t idx = controller_value >> 2;
+    if (idx > 0) {
+      idx -= 1;
+    }
+    m_mix_sub = m_mix_table[idx];
   }
 
   INLINE static void set_detune(uint8_t controller_value) {
