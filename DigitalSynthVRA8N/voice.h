@@ -32,9 +32,9 @@ public:
       IOsc<0>::set_waveform(OSC_WAVEFORM_SQ);
     }
 
-    if (controller_value < 32) {
+    if (controller_value < 31) {
       IOsc<0>::set_sub_osc_level((31 - controller_value) << 2);
-    } else if (controller_value >= 96) {
+    } else if (controller_value > 96) {
       IOsc<0>::set_sub_osc_level((controller_value - 96) << 2);
     } else {
       IOsc<0>::set_sub_osc_level(0);
@@ -44,8 +44,10 @@ public:
   INLINE static void set_sub_osc(uint8_t controller_value) {
     if (controller_value < 64) {
       IOsc<0>::set_waveform_sub(SUB_OSC_WAVEFORM_TRI);
+      IOsc<0>::set_detune_sub(0);
     } else {
       IOsc<0>::set_waveform_sub(SUB_OSC_WAVEFORM_SAW_OR_SQ);
+      IOsc<0>::set_detune_sub((controller_value - 64) << 1);
     }
   }
 

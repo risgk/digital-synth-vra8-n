@@ -255,25 +255,25 @@ function preset(number) {
   allNotesOff();
   var presetControllers = {};
 
-  presetControllers[OSC_COLOR_1  ] = [0  , 0  , 0  , 16 , 0  , 80 , 48 ];
-  presetControllers[OSC_COLOR_2  ] = [0  , 48 , 48 , 48 , 48 , 48 , 48 ];
-  presetControllers[MOD_RATE     ] = [0  , 8  , 125, 12 , 0  , 8  , 0  ];
-  presetControllers[MOD_DEPTH    ] = [0  , 32 , 64 , 64 , 64 , 32 , 0  ];
+  presetControllers[OSC_COLOR_1  ] = [0  , 0  , 0  , 0  , 16 , 0  , 80 , 48 ];
+  presetControllers[OSC_COLOR_2  ] = [0  , 0  , 127, 0  , 0  , 0  , 0  , 0  ];
+  presetControllers[MOD_RATE     ] = [0  , 8  , 12 , 125, 12 , 0  , 8  , 0  ];
+  presetControllers[MOD_DEPTH    ] = [0  , 32 , 64 , 64 , 64 , 64 , 32 , 0  ];
 
-  presetControllers[FILTER_CUTOFF] = [0  , 64 , 80 , 96 , 0  , 127, 127];
-  presetControllers[FILTER_RESO  ] = [0  , 64 , 80 , 96 , 127, 0  , 0  ];
-  presetControllers[FILTER_EG_AMT] = [0  , 96 , 80 , 16 , 112, 64 , 64 ];
-  presetControllers[FILTER_EG    ] = [0  , 32 , 8  , 16 , 24 , 32 , 0  ];
+  presetControllers[FILTER_CUTOFF] = [0  , 64 , 80 , 80 , 96 , 0  , 127, 127];
+  presetControllers[FILTER_RESO  ] = [0  , 64 , 48 , 80 , 96 , 127, 0  , 0  ];
+  presetControllers[FILTER_EG_AMT] = [0  , 96 , 80 , 80 , 16 , 112, 64 , 64 ];
+  presetControllers[FILTER_EG    ] = [0  , 32 , 16 , 8  , 16 , 24 , 32 , 0  ];
 
-  presetControllers[CC24         ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  ];
-  presetControllers[FLUCTUATION  ] = [0  , 127, 127, 127, 127, 127, 127];
-  presetControllers[PORTAMENTO   ] = [0  , 0  , 0  , 32 , 0  , 0  , 0  ];
-  presetControllers[AMP_EG       ] = [0  , 120, 120, 120, 24 , 120, 127];
+  presetControllers[CC24         ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
+  presetControllers[FLUCTUATION  ] = [0  , 127, 127, 127, 127, 127, 127, 127];
+  presetControllers[PORTAMENTO   ] = [0  , 0  , 0  , 0  , 32 , 0  , 0  , 0  ];
+  presetControllers[AMP_EG       ] = [0  , 120, 120, 120, 120, 24 , 120, 127];
 
-  presetControllers[CC28         ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  ];
-  presetControllers[CC29         ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  ];
-  presetControllers[CC30         ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  ];
-  presetControllers[CC31         ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  ];
+  presetControllers[CC28         ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
+  presetControllers[CC29         ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
+  presetControllers[CC30         ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
+  presetControllers[CC31         ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
 
   for (var i = CONTROLLERS_FIRST; i <= CONTROLLERS_LAST; i++) {
     onChangeControlChange(i, presetControllers[i][number]);
@@ -361,12 +361,13 @@ function noteOff(noteNumber) {
 <table>
 <tr><td>PRESET</td>
     <td><input type="button" value="LEAD"          onclick="preset(1)"></td>
-    <td><input type="button" value="5TH"           onclick="preset(2)"></td>
-    <td><input type="button" value="SOFT"          onclick="preset(3)"></td>
-    <td><input type="button" value="BASS"          onclick="preset(4)"></td>
-    <td><input type="button" value="SQ"            onclick="preset(5)"></td>
+    <td><input type="button" value="3S"            onclick="preset(2)"></td>
+    <td><input type="button" value="5TH"           onclick="preset(3)"></td>
+    <td><input type="button" value="SOFT"          onclick="preset(4)"></td>
+    <td><input type="button" value="BASS"          onclick="preset(5)"></td>
+    <td><input type="button" value="SQ"            onclick="preset(6)"></td>
     <td>&nbsp;</td>
-    <td><input type="button" value="NEUTRAL"       onclick="preset(6)"></td></tr>
+    <td><input type="button" value="NEUTRAL"       onclick="preset(7)"></td></tr>
 </table>
 
 <table>
@@ -396,7 +397,7 @@ function noteOff(noteNumber) {
 
 <table>
 <tr><td>OSC WAVE/SUB LV       </td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-    <td>SUB OSC WAVE/DETUNE   </td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>SUB OSC/DETUNE        </td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
     <td>OSC2 PITCH            </td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
     <td>OSC MIX (1/2)         </td></tr>
 <tr><td><input id="inputCC16" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(16, value)"></td>
