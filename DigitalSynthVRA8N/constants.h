@@ -78,6 +78,3 @@ const uint8_t   POLY_MODE_ON  = 127;
 
 const uint8_t   OSC_WAVEFORM_SAW     = 0;
 const uint8_t   OSC_WAVEFORM_SQ      = 127;
-
-const uint8_t   SUB_OSC_WAVEFORM_TRI       = 0;
-const uint8_t   SUB_OSC_WAVEFORM_SAW_OR_SQ = 127;

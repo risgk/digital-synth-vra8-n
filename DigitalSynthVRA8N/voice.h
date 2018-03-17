@@ -41,16 +41,6 @@ public:
     }
   }
 
-  INLINE static void set_sub_osc(uint8_t controller_value) {
-    if (controller_value < 64) {
-      IOsc<0>::set_waveform_sub(SUB_OSC_WAVEFORM_TRI);
-      IOsc<0>::set_detune_sub(0);
-    } else {
-      IOsc<0>::set_waveform_sub(SUB_OSC_WAVEFORM_SAW_OR_SQ);
-      IOsc<0>::set_detune_sub((controller_value - 64) << 1);
-    }
-  }
-
   INLINE static void note_on(uint8_t note_number, uint8_t velocity) {
     static_cast<void>(velocity);
 
@@ -105,7 +95,6 @@ public:
       set_waveform(controller_value);
       break;
     case OSC_COLOR_2:
-      set_sub_osc(controller_value);
       break;
     case MOD_RATE:
       IOsc<0>::set_detune(controller_value);
