@@ -81,12 +81,16 @@ public:
     m_mix_detune = m_mix_table[                             (controller_value >> 2)];
   }
 
-  INLINE static void set_waveform(uint8_t waveform) {
-    m_waveform = waveform;
+  INLINE static void set_waveform(uint8_t controller_value) {
+    if (controller_value < 64) {
+      m_waveform = OSC_WAVEFORM_SAW;
+    } else {
+      m_waveform = OSC_WAVEFORM_SQ;
+    }
   }
 
   INLINE static void set_sub_osc_level(uint8_t controller_value) {
-    m_mix_sub = m_mix_table[(controller_value >> 2) - 1];
+    m_mix_sub = m_mix_table[(controller_value - 4) >> 2];
   }
 
   INLINE static void set_detune(uint8_t controller_value) {

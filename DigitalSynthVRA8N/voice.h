@@ -25,22 +25,6 @@ public:
     set_amp_env_sus(0);
   }
 
-  INLINE static void set_waveform(uint8_t controller_value) {
-    if (controller_value < 64) {
-      IOsc<0>::set_waveform(OSC_WAVEFORM_SAW);
-    } else {
-      IOsc<0>::set_waveform(OSC_WAVEFORM_SQ);
-    }
-
-    if (controller_value < 31) {
-      IOsc<0>::set_sub_osc_level((31 - controller_value) << 2);
-    } else if (controller_value > 96) {
-      IOsc<0>::set_sub_osc_level((controller_value - 96) << 2);
-    } else {
-      IOsc<0>::set_sub_osc_level(0);
-    }
-  }
-
   INLINE static void note_on(uint8_t note_number, uint8_t velocity) {
     static_cast<void>(velocity);
 
@@ -92,9 +76,10 @@ public:
       IFilter<0>::set_env_amt(controller_value);
       break;
     case OSC_COLOR_1:
-      set_waveform(controller_value);
+      IOsc<0>::set_waveform(controller_value);
       break;
     case OSC_COLOR_2:
+      IOsc<0>::set_sub_osc_level(controller_value);
       break;
     case MOD_RATE:
       IOsc<0>::set_detune(controller_value);
