@@ -31,24 +31,6 @@ $file.printf("const __uint24 g_osc_freq_table[] = {\n  ")
 end
 $file.printf("};\n\n")
 
-$file.printf("const uint16_t g_osc_sync_table[] = {\n  ")
-(0..35).each do |note_number|
-  freq = freq_from_note_number(note_number)
-
-  cent = (note_number * 100.0)
-  ratio = (2.0 ** (cent / 1200.0))
-  ratio_minus_1 = ((ratio - 1.0) * 256).floor.to_i
-  $file.printf("0x%04X,", ratio_minus_1)
-  if note_number == DATA_BYTE_MAX
-    $file.printf("\n")
-  elsif note_number % 6 == (6 - 1)
-    $file.printf("\n  ")
-  else
-    $file.printf(" ")
-  end
-end
-$file.printf("};\n\n")
-
 $file.printf("const int8_t g_osc_tune_table[] = {\n  ")
 (0..(1 << OSC_TUNE_TABLE_STEPS_BITS) - 1).each do |i|
   tune_rate = ((2.0 ** ((i - (1 << (OSC_TUNE_TABLE_STEPS_BITS - 1))) / (12.0 * (1 << OSC_TUNE_TABLE_STEPS_BITS)))) *
@@ -59,6 +41,21 @@ $file.printf("const int8_t g_osc_tune_table[] = {\n  ")
   if i == (1 << OSC_TUNE_TABLE_STEPS_BITS) - 1
     $file.printf("\n")
   elsif i % 8 == 7
+    $file.printf("\n  ")
+  else
+    $file.printf(" ")
+  end
+end
+$file.printf("};\n\n")
+
+$file.printf("const uint16_t g_osc_sync_table[] = {\n  ")
+(0..((40 * 8) - 1)).each do |idx|
+  cent = ((idx / 8.0) * 100.0)
+  ratio = (2.0 ** (cent / 1200.0))
+  ratio_minus_1 = ((ratio - 1.0) * 256).floor.to_i
+
+  $file.printf("0x%04X,", ratio_minus_1)
+  if idx % 8 == (8 - 1)
     $file.printf("\n  ")
   else
     $file.printf(" ")
