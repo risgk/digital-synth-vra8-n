@@ -19,7 +19,7 @@ class Osc {
   static uint8_t        m_detune_mod_amt;
   static uint16_t       m_portamento;
   static uint8_t        m_waveform;
-  static boolean        m_sync;
+  static uint8_t        m_sync;
   static int16_t        m_pitch_bend_normalized;
   static uint16_t       m_pitch_target;
   static uint16_t       m_pitch_current;
@@ -51,7 +51,7 @@ public:
     m_detune_mod_amt = 0;
     m_portamento = 0x4000;
     m_waveform = OSC_WAVEFORM_SAW;
-    m_sync = false;
+    m_sync = 0;
     m_pitch_bend_normalized = 0;
     m_pitch_target = (NOTE_NUMBER_MIN - 13) << 8;
     m_pitch_current = m_pitch_target;
@@ -98,9 +98,9 @@ public:
     }
 
     if ((32 <= controller_value) && (controller_value < 96)) {
-      m_sync = true;
+      m_sync = 31;
     } else {
-      m_sync = false;
+      m_sync = 0;
     }
   }
 
@@ -206,7 +206,7 @@ public:
       case 0xE:
         {
           m_mod_input = mod_input;
-          uint16_t pitch_diff = m_detune + (31 * m_mod_input);
+          uint16_t pitch_diff = m_detune + (m_sync * m_mod_input);
           pitch_diff >>= 5;
           m_phase_ratio_for_sync = g_osc_sync_table[pitch_diff];
         }
@@ -219,13 +219,8 @@ public:
     m_phase[1] += m_freq[1];
 
     uint16_t p_1 = 0;
-    if (m_sync) {
-      // TODO: OSC SYNC
-      p_1 = static_cast<uint16_t>(m_phase[1] >> 8) << 1;
-      p_1 += high_byte(p_1) * m_phase_ratio_for_sync;
-    } else {
-      p_1 = static_cast<uint16_t>(m_phase[1] >> 8) << 1;
-    }
+    p_1 = static_cast<uint16_t>(m_phase[1] >> 8) << 1;
+    p_1 += high_byte(p_1) * m_phase_ratio_for_sync;
     int8_t wave_0_detune = get_wave_level(m_wave_table[1], p_1);
 
     // amp and mix
@@ -309,18 +304,13 @@ private:
       m_pitch_real[N] = (NOTE_NUMBER_MAX + 12) << 8;
     }
 
-    if (N == 1) {
-      /* For OSC 2 */
+    if (N == 1) {  // For OSC 2
       m_pitch_real[N] += m_detune;
     }
 
     m_pitch_real[N] += 128;
     if (N == 1) {
-      if (m_sync) {
-        m_wave_table_pitch[N] = high_byte(m_pitch_real[N] + (31 * m_mod_input));
-      } else {
-        m_wave_table_pitch[N] = high_byte(m_pitch_real[N]);
-      }
+      m_wave_table_pitch[N] = high_byte(m_pitch_real[N] + (m_sync * m_mod_input));
     } else {
       m_wave_table_pitch[N] = high_byte(m_pitch_real[N]);
     }
@@ -366,7 +356,7 @@ template <uint8_t T> uint8_t         Osc<T>::m_fluctuation;
 template <uint8_t T> uint8_t         Osc<T>::m_detune_mod_amt;
 template <uint8_t T> uint16_t        Osc<T>::m_portamento;
 template <uint8_t T> uint8_t         Osc<T>::m_waveform;
-template <uint8_t T> boolean         Osc<T>::m_sync;
+template <uint8_t T> uint8_t         Osc<T>::m_sync;
 template <uint8_t T> int16_t         Osc<T>::m_pitch_bend_normalized;
 template <uint8_t T> uint16_t        Osc<T>::m_pitch_target;
 template <uint8_t T> uint16_t        Osc<T>::m_pitch_current;
