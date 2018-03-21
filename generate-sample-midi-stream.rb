@@ -37,7 +37,7 @@ end
 sound_off
 
 control_change(OSC_COLOR_1  , 0  )
-control_change(OSC_COLOR_2  , 127)
+control_change(OSC_COLOR_2  , 0  )
 control_change(MOD_RATE     , 8  )
 control_change(MOD_DEPTH    , 32 )
 

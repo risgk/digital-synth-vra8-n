@@ -255,25 +255,25 @@ function preset(number) {
   allNotesOff();
   var presetControllers = {};
 
-  presetControllers[OSC_COLOR_1  ] = [0  , 0  , 0  , 0  , 0  , 127, 0  ];
-  presetControllers[OSC_COLOR_2  ] = [0  , 127, 127, 64 , 127, 0  , 0  ];
-  presetControllers[MOD_RATE     ] = [0  , 8  , 125, 12 , 0  , 8  , 0  ];
-  presetControllers[MOD_DEPTH    ] = [0  , 32 , 64 , 64 , 64 , 32 , 0  ];
+  presetControllers[OSC_COLOR_1  ] = [0  , 0  , 0  , 16 , 0  , 80 , 80 , 48 ];
+  presetControllers[OSC_COLOR_2  ] = [0  , 0  , 0  , 0  , 0  , 0  , 125, 0  ];
+  presetControllers[MOD_RATE     ] = [0  , 8  , 125, 12 , 0  , 8  , 8  , 0  ];
+  presetControllers[MOD_DEPTH    ] = [0  , 32 , 64 , 64 , 64 , 32 , 32 , 0  ];
 
-  presetControllers[FILTER_CUTOFF] = [0  , 64 , 80 , 96 , 0  , 127, 127];
-  presetControllers[FILTER_RESO  ] = [0  , 64 , 80 , 96 , 127, 0  , 0  ];
-  presetControllers[FILTER_EG_AMT] = [0  , 96 , 80 , 16 , 112, 64 , 64 ];
-  presetControllers[FILTER_EG    ] = [0  , 32 , 8  , 16 , 24 , 32 , 0  ];
+  presetControllers[FILTER_CUTOFF] = [0  , 64 , 80 , 96 , 0  , 127, 127, 127];
+  presetControllers[FILTER_RESO  ] = [0  , 64 , 80 , 96 , 96 , 0  , 0  , 0  ];
+  presetControllers[FILTER_EG_AMT] = [0  , 96 , 80 , 16 , 112, 64 , 64 , 64 ];
+  presetControllers[FILTER_EG    ] = [0  , 32 , 32 , 16 , 24 , 32 , 32 , 0  ];
 
-  presetControllers[CC24         ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  ];
-  presetControllers[FLUCTUATION  ] = [0  , 127, 127, 127, 127, 127, 127];
-  presetControllers[PORTAMENTO   ] = [0  , 0  , 0  , 32 , 0  , 0  , 0  ];
-  presetControllers[AMP_EG       ] = [0  , 120, 120, 120, 24 , 120, 127];
+  presetControllers[CC24         ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
+  presetControllers[FLUCTUATION  ] = [0  , 127, 127, 127, 127, 127, 127, 127];
+  presetControllers[PORTAMENTO   ] = [0  , 0  , 0  , 32 , 0  , 0  , 0  , 0  ];
+  presetControllers[AMP_EG       ] = [0  , 120, 120, 112, 24 , 120, 120, 127];
 
-  presetControllers[CC28         ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  ];
-  presetControllers[CC29         ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  ];
-  presetControllers[CC30         ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  ];
-  presetControllers[CC31         ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  ];
+  presetControllers[CC28         ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
+  presetControllers[CC29         ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
+  presetControllers[CC30         ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
+  presetControllers[CC31         ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
 
   for (var i = CONTROLLERS_FIRST; i <= CONTROLLERS_LAST; i++) {
     onChangeControlChange(i, presetControllers[i][number]);
@@ -337,7 +337,7 @@ function noteOff(noteNumber) {
 <body>
 
 <table>
-<tr><td><strong>VRA8-N CTRL v0.1.1</strong>&nbsp;&nbsp;Digital Synth VRA8-N Controller (<a href="https://github.com/risgk/digital-synth-vra8-n">View on GitHub</a>), We recommend Google Chrome</td></tr>
+<tr><td><strong>VRA8-N CTRL v0.2.0</strong>&nbsp;&nbsp;Digital Synth VRA8-N Controller (<a href="https://github.com/risgk/digital-synth-vra8-n">View on GitHub</a>), We recommend Google Chrome</td></tr>
 </table>
 
 <table>
@@ -365,8 +365,9 @@ function noteOff(noteNumber) {
     <td><input type="button" value="SOFT"          onclick="preset(3)"></td>
     <td><input type="button" value="BASS"          onclick="preset(4)"></td>
     <td><input type="button" value="SQ"            onclick="preset(5)"></td>
+    <td><input type="button" value="SYNC"          onclick="preset(6)"></td>
     <td>&nbsp;</td>
-    <td><input type="button" value="NEUTRAL"       onclick="preset(6)"></td></tr>
+    <td><input type="button" value="NEUTRAL"       onclick="preset(7)"></td></tr>
 </table>
 
 <table>
@@ -395,8 +396,8 @@ function noteOff(noteNumber) {
 </table>
 
 <table>
-<tr><td>OSC WAVE (SAW/SQ)     </td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-    <td>SUB OSC (TRI)         </td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+<tr><td>WAVEFORM/SUB OSC      </td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>OSC1 SHAPE EG AMT     </td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
     <td>OSC2 PITCH            </td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
     <td>OSC MIX (1/2)         </td></tr>
 <tr><td><input id="inputCC16" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(16, value)"></td>
@@ -409,8 +410,8 @@ function noteOff(noteNumber) {
     <td><span id="spanCC19">-1</span></td></tr>
 <tr><td>CUTOFF                </td><td></td>
     <td>RESONANCE             </td><td></td>
-    <td>FEG AMT (-/+)         </td><td></td>
-    <td>FEG DECAY/SUS         </td></tr>
+    <td>CUTOFF EG AMT (-/+)   </td><td></td>
+    <td>EG DECAY/SUS          </td></tr>
 <tr><td><input id="inputCC20" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(20, value)"></td>
     <td><span id="spanCC20">-1</span></td>
     <td><input id="inputCC21" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(21, value)"></td>
@@ -422,7 +423,7 @@ function noteOff(noteNumber) {
 <tr><td>----                  </td><td></td>
     <td>FLUCTUATION           </td><td></td>
     <td>PORTAMENTO            </td><td></td>
-    <td>AEG DECAY/SUS         </td></tr>
+    <td>AMP EG DECAY/SUS      </td></tr>
 <tr><td><input id="inputCC24" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(24, value)"></td>
     <td><span id="spanCC24">-1</span></td>
     <td><input id="inputCC25" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(25, value)"></td>

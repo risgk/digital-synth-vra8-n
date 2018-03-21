@@ -48,6 +48,21 @@ $file.printf("const int8_t g_osc_tune_table[] = {\n  ")
 end
 $file.printf("};\n\n")
 
+$file.printf("const uint16_t g_osc_sync_table[] = {\n  ")
+(0..((32 * 8) - 1)).each do |idx|
+  cent = ((idx / 8.0) * 100.0)
+  ratio = (2.0 ** (cent / 1200.0))
+  ratio_minus_1 = ((ratio - 1.0) * 256).floor.to_i
+
+  $file.printf("0x%04X,", ratio_minus_1)
+  if idx % 8 == (8 - 1)
+    $file.printf("\n  ")
+  else
+    $file.printf(" ")
+  end
+end
+$file.printf("};\n\n")
+
 def generate_osc_wave_table(name, last, amp, organ = false)
   $file.printf("const uint8_t g_osc_#{name}_wave_table_h%d[] PROGMEM = {\n  ", last)
   (0..(1 << OSC_WAVE_TABLE_SAMPLES_BITS)).each do |n|

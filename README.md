@@ -1,4 +1,4 @@
-# Digital Synth VRA8-N v0.1.1
+# Digital Synth VRA8-N v0.2.0
 
 - 2018-03-21 ISGK Instruments
 - <https://github.com/risgk/digital-synth-vra8-n>
@@ -39,7 +39,7 @@
 ## MIDI Implementation Chart
 
       [Monophonic Synthesizer]                                        Date: 2018-03-21       
-      Model: Digital Synth VRA8-N     MIDI Implementation Chart       Version: 0.1.1         
+      Model: Digital Synth VRA8-N     MIDI Implementation Chart       Version: 0.2.0         
     +-------------------------------+---------------+---------------+-----------------------+
     | Function...                   | Transmitted   | Recognized    | Remarks               |
     +-------------------------------+---------------+---------------+-----------------------+
@@ -61,18 +61,18 @@
     +-------------------------------+---------------+---------------+-----------------------+
     | Pitch Bend                    | x             | o             | Range: 12 (or 2)      |
     +-------------------------------+---------------+---------------+-----------------------+
-    | Control                    16 | x             | o             | OSC WAVE (SAW/SQ)     |
-    | Change                     17 | x             | o             | SUB OSC (TRI)         |
+    | Control                    16 | x             | o             | WAVEFORM/SUB OSC      |
+    | Change                     17 | x             | o             | OSC1 SHAPE EG AMT     |
     |                            18 | x             | o             | OSC2 PITCH            |
     |                            19 | x             | o             | OSC MIX (1/2)         |
     |                            20 | x             | o             | CUTOFF                |
     |                            21 | x             | o             | RESONANCE             |
-    |                            22 | x             | o             | FEG AMT (-/+)         |
-    |                            23 | x             | o             | FEG DECAY/SUS         |
+    |                            22 | x             | o             | CUTOFF EG AMT (-/+)   |
+    |                            23 | x             | o             | EG DECAY/SUS          |
     |                            24 | x             | o             | ----                  |
     |                            25 | x             | o             | FLUCTUATION           |
     |                            26 | x             | o             | PORTAMENTO            |
-    |                            27 | x             | o             | AEG DECAY/SUS         |
+    |                            27 | x             | o             | AMP EG DECAY/SUS      |
     |                            28 | x             | o             | ----                  |
     |                            29 | x             | o             | ----                  |
     |                            30 | x             | o             | ----                  |
