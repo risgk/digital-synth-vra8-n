@@ -17,8 +17,7 @@ const __uint24 g_osc_freq_table[] = {
   0x044957, 0x048A97, 0x04CFB9, 0x0518F7, 0x05668F, 0x05B8C5,
   0x060FDF, 0x066C25, 0x06CDEB, 0x07357F, 0x07A33B, 0x08177F,
   0x0892AD, 0x09152D, 0x099F71, 0x0A31ED, 0x0ACD1D, 0x0B7189,
-  0x0C1FBD, 0x0CD84B, 0x0D9BD5, 0x0E6AFD, 0x0F4677, 0x102EFF,
-  0x112559, 0x122A5B, };
+  0x0C1FBD, 0x0CD84B, 0x0D9BD5, };
 
 const int8_t g_osc_tune_table[] = {
     -15,   -14,   -14,   -14,   -14,   -14,   -14,   -14,
@@ -1053,7 +1052,10 @@ const uint8_t* g_osc_saw_wave_tables[] = {
   g_osc_saw_wave_table_h2  , g_osc_saw_wave_table_h2  , g_osc_saw_wave_table_h2  ,
   g_osc_saw_wave_table_h2  , g_osc_saw_wave_table_h2  , g_osc_saw_wave_table_h2  ,
   g_osc_saw_wave_table_h1  , g_osc_saw_wave_table_h1  , g_osc_saw_wave_table_h1  ,
-  g_osc_saw_wave_table_h1  , g_osc_saw_wave_table_h1  , };
+  g_osc_saw_wave_table_h1  , g_osc_saw_wave_table_h1  , g_osc_saw_wave_table_h1  ,
+  g_osc_saw_wave_table_h1  , g_osc_saw_wave_table_h1  , g_osc_saw_wave_table_h1  ,
+  g_osc_saw_wave_table_h1  , g_osc_saw_wave_table_h1  , g_osc_saw_wave_table_h1  ,
+  };
 
 const uint8_t* g_osc_sq_wave_tables[] = {
   g_osc_sq_wave_table_h127,
@@ -1093,5 +1095,8 @@ const uint8_t* g_osc_sq_wave_tables[] = {
   g_osc_sq_wave_table_h2  , g_osc_sq_wave_table_h2  , g_osc_sq_wave_table_h2  ,
   g_osc_sq_wave_table_h2  , g_osc_sq_wave_table_h2  , g_osc_sq_wave_table_h2  ,
   g_osc_sq_wave_table_h1  , g_osc_sq_wave_table_h1  , g_osc_sq_wave_table_h1  ,
-  g_osc_sq_wave_table_h1  , g_osc_sq_wave_table_h1  , };
+  g_osc_sq_wave_table_h1  , g_osc_sq_wave_table_h1  , g_osc_sq_wave_table_h1  ,
+  g_osc_sq_wave_table_h1  , g_osc_sq_wave_table_h1  , g_osc_sq_wave_table_h1  ,
+  g_osc_sq_wave_table_h1  , g_osc_sq_wave_table_h1  , g_osc_sq_wave_table_h1  ,
+  };
 
