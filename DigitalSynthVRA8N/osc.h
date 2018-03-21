@@ -19,6 +19,7 @@ class Osc {
   static uint8_t        m_detune_mod_amt;
   static uint16_t       m_portamento;
   static uint8_t        m_waveform;
+  static boolean        m_sync;
   static int16_t        m_pitch_bend_normalized;
   static uint16_t       m_pitch_target;
   static uint16_t       m_pitch_current;
@@ -47,6 +48,7 @@ public:
     m_detune_mod_amt = 0;
     m_portamento = 0x4000;
     m_waveform = OSC_WAVEFORM_SAW;
+    m_sync = false;
     m_pitch_bend_normalized = 0;
     m_pitch_target = (NOTE_NUMBER_MIN - 13) << 8;
     m_pitch_current = m_pitch_target;
@@ -86,6 +88,12 @@ public:
       m_waveform = OSC_WAVEFORM_SAW;
     } else {
       m_waveform = OSC_WAVEFORM_SQ;
+    }
+
+    if ((32 <= controller_value) && (controller_value < 96)) {
+      m_sync = true;
+    } else {
+      m_sync = false;
     }
   }
 
@@ -136,7 +144,7 @@ public:
 #endif
   }
 
-  INLINE static int16_t clock(uint8_t count) {
+  INLINE static int16_t clock(uint8_t count, uint8_t mod_input) {
     if ((count & 0x01) == 1) {
       int16_t wave_0_sub = get_tri_wave_level(m_phase[0] >> 8);
       m_level_sub = wave_0_sub * m_mix_sub;
@@ -193,7 +201,13 @@ public:
     }
 
     m_phase[0] += m_freq[0];
-    m_phase[1] += m_freq[1];
+
+    if (m_sync) {
+      // TODO: OSC SYNC
+      m_phase[1] = m_phase[0];
+    } else {
+      m_phase[1] += m_freq[1];
+    }
 
     int8_t wave_0_main   = get_wave_level(m_wave_table[0], static_cast<uint16_t>(m_phase[0] >> 8) << 1);
     int8_t wave_0_detune = get_wave_level(m_wave_table[1], static_cast<uint16_t>(m_phase[1] >> 8) << 1);
@@ -327,6 +341,7 @@ template <uint8_t T> uint8_t         Osc<T>::m_fluctuation;
 template <uint8_t T> uint8_t         Osc<T>::m_detune_mod_amt;
 template <uint8_t T> uint16_t        Osc<T>::m_portamento;
 template <uint8_t T> uint8_t         Osc<T>::m_waveform;
+template <uint8_t T> boolean         Osc<T>::m_sync;
 template <uint8_t T> int16_t         Osc<T>::m_pitch_bend_normalized;
 template <uint8_t T> uint16_t        Osc<T>::m_pitch_target;
 template <uint8_t T> uint16_t        Osc<T>::m_pitch_current;
