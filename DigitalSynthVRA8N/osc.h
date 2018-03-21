@@ -198,6 +198,11 @@ public:
         if ((m_rnd_cnt & 0x03) == 0x00) {
           update_rnd_latter();
         }
+      case 0xE:
+        {
+          uint16_t pitch_diff = m_detune + (5 * mod_input);
+          m_phase_ratio_for_sync = g_osc_sync_table[high_byte(pitch_diff)];
+        }
         break;
       }
     }
@@ -210,7 +215,7 @@ public:
       // TODO: OSC SYNC
       m_phase[1] = m_phase[0];
       p_1 = static_cast<uint16_t>(m_phase[0] >> 8) << 1;
-      p_1 += high_byte(p_1) * m_detune;  // m_phase_ratio_for_sync;
+      p_1 += high_byte(p_1) * m_phase_ratio_for_sync;
     } else {
       m_phase[1] += m_freq[1];
       p_1 = static_cast<uint16_t>(m_phase[1] >> 8) << 1;
