@@ -99,7 +99,7 @@ public:
   }
 
   INLINE static void set_sync(uint8_t controller_value) {
-    m_sync = controller_value >> 2;
+    m_sync = controller_value;
   }
 
   INLINE static void set_sub_osc_level(uint8_t controller_value) {
@@ -204,7 +204,7 @@ public:
       case 0xE:
         {
           m_mod_input = mod_input;
-          uint16_t pitch_diff = (m_sync * m_mod_input);
+          uint16_t pitch_diff = (m_sync * m_mod_input) >> 2;
           pitch_diff >>= 5;
           m_phase_ratio_for_sync = g_osc_sync_table[pitch_diff];
         }
@@ -291,24 +291,24 @@ private:
 #else
     m_pitch_real[N] = m_pitch_current + m_pitch_bend_normalized;
 #endif
-  }
 
-  template <uint8_t N>
-  INLINE static void update_freq_first() {
     uint8_t coarse = high_byte(m_pitch_real[N]);
     if (coarse <= (NOTE_NUMBER_MIN - 12)) {
       m_pitch_real[N] = (NOTE_NUMBER_MIN - 12) << 8;
     } else if (coarse >= (NOTE_NUMBER_MAX + 12)) {
       m_pitch_real[N] = (NOTE_NUMBER_MAX + 12) << 8;
     }
+  }
 
+  template <uint8_t N>
+  INLINE static void update_freq_first() {
     if (N == 1) {  // For OSC 2
       m_pitch_real[N] += m_detune;
     }
 
     m_pitch_real[N] += 128;
     if (N == 0) {
-      m_wave_table_pitch[N] = high_byte(m_pitch_real[N] + (m_sync * m_mod_input));
+      m_wave_table_pitch[N] = high_byte(m_pitch_real[N] + ((m_sync * m_mod_input) >> 2));
     } else {
       m_wave_table_pitch[N] = high_byte(m_pitch_real[N]);
     }
