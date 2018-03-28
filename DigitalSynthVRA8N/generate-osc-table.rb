@@ -49,7 +49,7 @@ end
 $file.printf("};\n\n")
 
 $file.printf("const uint16_t g_osc_sync_table[] = {\n  ")
-(0..((32 * 8) - 1)).each do |idx|
+(0..((40 * 8) - 1)).each do |idx|
   cent = ((idx / 8.0) * 100.0)
   ratio = (2.0 ** (cent / 1200.0))
   ratio_minus_1 = ((ratio - 1.0) * 256).floor.to_i
