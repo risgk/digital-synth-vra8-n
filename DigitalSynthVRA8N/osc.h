@@ -29,7 +29,6 @@ class Osc {
   static __uint24       m_freq[2];
   static __uint24       m_freq_temp[2];
   static __uint24       m_phase[2];
-  static uint16_t       m_phase_ratio_for_sync;
   static uint8_t        m_rnd_cnt;
   static uint16_t       m_rnd_temp;
   static uint8_t        m_rnd;
@@ -65,7 +64,6 @@ public:
     m_freq_temp[1] = g_osc_freq_table[0];
     m_phase[0] = 0;
     m_phase[1] = 0;
-    m_phase_ratio_for_sync = 0;
     m_rnd_cnt = 0;
     m_rnd_temp = 1;
     m_rnd = 0;
@@ -203,19 +201,16 @@ public:
     }
 
     m_phase[0] += m_freq[0];
-    int8_t wave_0_main   = get_wave_level(m_wave_table[0], static_cast<uint16_t>(m_phase[0] >> 8) << 1);
 
-    uint16_t p_1 = 0;
     if (m_sync) {
       // TODO: OSC SYNC
       m_phase[1] = m_phase[0];
-      p_1 = static_cast<uint16_t>(m_phase[0] >> 8) << 1;
-      p_1 += high_byte(p_1) * m_detune;  // m_phase_ratio_for_sync;
     } else {
       m_phase[1] += m_freq[1];
-      p_1 = static_cast<uint16_t>(m_phase[1] >> 8) << 1;
     }
-    int8_t wave_0_detune = get_wave_level(m_wave_table[1], p_1);
+
+    int8_t wave_0_main   = get_wave_level(m_wave_table[0], static_cast<uint16_t>(m_phase[0] >> 8) << 1);
+    int8_t wave_0_detune = get_wave_level(m_wave_table[1], static_cast<uint16_t>(m_phase[1] >> 8) << 1);
 
     // amp and mix
     int16_t level_main   = wave_0_main   * m_mix_main;
@@ -356,7 +351,6 @@ template <uint8_t T> const uint8_t*  Osc<T>::m_wave_table_temp[2];
 template <uint8_t T> __uint24        Osc<T>::m_freq[2];
 template <uint8_t T> __uint24        Osc<T>::m_freq_temp[2];
 template <uint8_t T> __uint24        Osc<T>::m_phase[2];
-template <uint8_t T> uint16_t        Osc<T>::m_phase_ratio_for_sync;
 template <uint8_t T> uint8_t         Osc<T>::m_rnd_cnt;
 template <uint8_t T> uint16_t        Osc<T>::m_rnd_temp;
 template <uint8_t T> uint8_t         Osc<T>::m_rnd;
