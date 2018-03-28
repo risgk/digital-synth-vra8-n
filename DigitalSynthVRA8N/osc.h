@@ -96,10 +96,12 @@ public:
     } else {
       m_waveform = OSC_WAVEFORM_SQ;
     }
-  }
 
-  INLINE static void set_sync(uint8_t controller_value) {
-    m_sync = controller_value >> 2;
+    if ((32 <= controller_value) && (controller_value < 96)) {
+      m_sync = 31;
+    } else {
+      m_sync = 0;
+    }
   }
 
   INLINE static void set_sub_osc_level(uint8_t controller_value) {
@@ -204,7 +206,7 @@ public:
       case 0xE:
         {
           m_mod_input = mod_input;
-          uint16_t pitch_diff = (m_sync * m_mod_input);
+          uint16_t pitch_diff = m_detune + (m_sync * m_mod_input);
           pitch_diff >>= 5;
           m_phase_ratio_for_sync = g_osc_sync_table[pitch_diff];
         }
@@ -213,12 +215,12 @@ public:
     }
 
     m_phase[0] += m_freq[0];
-    uint16_t p_0 = static_cast<uint16_t>(m_phase[0] >> 8) << 1;
-    p_0 += high_byte(p_0) * m_phase_ratio_for_sync;
-    int8_t wave_0_main   = get_wave_level(m_wave_table[0], p_0);
-
+    int8_t wave_0_main   = get_wave_level(m_wave_table[0], static_cast<uint16_t>(m_phase[0] >> 8) << 1);
     m_phase[1] += m_freq[1];
-    uint16_t p_1 = static_cast<uint16_t>(m_phase[1] >> 8) << 1;
+
+    uint16_t p_1 = 0;
+    p_1 = static_cast<uint16_t>(m_phase[1] >> 8) << 1;
+    p_1 += high_byte(p_1) * m_phase_ratio_for_sync;
     int8_t wave_0_detune = get_wave_level(m_wave_table[1], p_1);
 
     // amp and mix
@@ -307,7 +309,7 @@ private:
     }
 
     m_pitch_real[N] += 128;
-    if (N == 0) {
+    if (N == 1) {
       m_wave_table_pitch[N] = high_byte(m_pitch_real[N] + (m_sync * m_mod_input));
     } else {
       m_wave_table_pitch[N] = high_byte(m_pitch_real[N]);

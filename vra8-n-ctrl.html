@@ -255,8 +255,8 @@ function preset(number) {
   allNotesOff();
   var presetControllers = {};
 
-  presetControllers[OSC_COLOR_1  ] = [0  , 0  , 0  , 16 , 0  , 80 , 48 ];
-  presetControllers[OSC_COLOR_2  ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  ];
+  presetControllers[OSC_COLOR_1  ] = [0  , 0  , 0  , 0  , 0  , 127, 0  ];
+  presetControllers[OSC_COLOR_2  ] = [0  , 127, 127, 64 , 127, 0  , 0  ];
   presetControllers[MOD_RATE     ] = [0  , 8  , 125, 12 , 0  , 8  , 0  ];
   presetControllers[MOD_DEPTH    ] = [0  , 32 , 64 , 64 , 64 , 32 , 0  ];
 
@@ -395,8 +395,8 @@ function noteOff(noteNumber) {
 </table>
 
 <table>
-<tr><td>WAVEFORM/SUB OSC      </td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-    <td>OSC1 SHAPE EG AMT     </td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+<tr><td>OSC WAVE (SAW/SQ)     </td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>SUB OSC (TRI)         </td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
     <td>OSC2 PITCH            </td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
     <td>OSC MIX (1/2)         </td></tr>
 <tr><td><input id="inputCC16" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(16, value)"></td>
@@ -409,8 +409,8 @@ function noteOff(noteNumber) {
     <td><span id="spanCC19">-1</span></td></tr>
 <tr><td>CUTOFF                </td><td></td>
     <td>RESONANCE             </td><td></td>
-    <td>CUTOFF EG AMT (-/+)   </td><td></td>
-    <td>EG DECAY/SUS          </td></tr>
+    <td>FEG AMT (-/+)         </td><td></td>
+    <td>FEG DECAY/SUS         </td></tr>
 <tr><td><input id="inputCC20" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(20, value)"></td>
     <td><span id="spanCC20">-1</span></td>
     <td><input id="inputCC21" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(21, value)"></td>
@@ -422,7 +422,7 @@ function noteOff(noteNumber) {
 <tr><td>----                  </td><td></td>
     <td>FLUCTUATION           </td><td></td>
     <td>PORTAMENTO            </td><td></td>
-    <td>AMP EG DECAY/SUS      </td></tr>
+    <td>AEG DECAY/SUS         </td></tr>
 <tr><td><input id="inputCC24" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(24, value)"></td>
     <td><span id="spanCC24">-1</span></td>
     <td><input id="inputCC25" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(25, value)"></td>

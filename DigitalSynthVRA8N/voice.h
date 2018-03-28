@@ -77,18 +77,9 @@ public:
       break;
     case OSC_COLOR_1:
       IOsc<0>::set_waveform(controller_value);
-      if (controller_value == 0) {
-        IOsc<0>::set_sub_osc_level(31 << 2);
-      } else if (controller_value <= 32) {
-        IOsc<0>::set_sub_osc_level((32 - controller_value) << 2);
-      } else if (controller_value >= 96) {
-        IOsc<0>::set_sub_osc_level((controller_value - 96) << 2);
-      } else {
-        IOsc<0>::set_sub_osc_level(0);
-      }
       break;
     case OSC_COLOR_2:
-      IOsc<0>::set_sync(controller_value);
+      IOsc<0>::set_sub_osc_level(controller_value);
       break;
     case MOD_RATE:
       IOsc<0>::set_detune(controller_value);

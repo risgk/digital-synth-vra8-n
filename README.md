@@ -61,18 +61,18 @@
     +-------------------------------+---------------+---------------+-----------------------+
     | Pitch Bend                    | x             | o             | Range: 12 (or 2)      |
     +-------------------------------+---------------+---------------+-----------------------+
-    | Control                    16 | x             | o             | WAVEFORM/SUB OSC      |
-    | Change                     17 | x             | o             | OSC1 SHAPE EG AMT     |
+    | Control                    16 | x             | o             | OSC WAVE (SAW/SQ)     |
+    | Change                     17 | x             | o             | SUB OSC (TRI)         |
     |                            18 | x             | o             | OSC2 PITCH            |
     |                            19 | x             | o             | OSC MIX (1/2)         |
     |                            20 | x             | o             | CUTOFF                |
     |                            21 | x             | o             | RESONANCE             |
-    |                            22 | x             | o             | CUTOFF EG AMT (-/+)   |
-    |                            23 | x             | o             | EG DECAY/SUS          |
+    |                            22 | x             | o             | FEG AMT (-/+)         |
+    |                            23 | x             | o             | FEG DECAY/SUS         |
     |                            24 | x             | o             | ----                  |
     |                            25 | x             | o             | FLUCTUATION           |
     |                            26 | x             | o             | PORTAMENTO            |
-    |                            27 | x             | o             | AMP EG DECAY/SUS      |
+    |                            27 | x             | o             | AEG DECAY/SUS         |
     |                            28 | x             | o             | ----                  |
     |                            29 | x             | o             | ----                  |
     |                            30 | x             | o             | ----                  |
