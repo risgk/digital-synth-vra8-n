@@ -200,9 +200,8 @@ public:
         }
       case 0xE:
         {
-          uint16_t pitch_diff = m_detune + (31 * mod_input);
-          pitch_diff >>= 5;
-          m_phase_ratio_for_sync = g_osc_sync_table[pitch_diff];
+          uint16_t pitch_diff = m_detune + (5 * mod_input);
+          m_phase_ratio_for_sync = g_osc_sync_table[high_byte(pitch_diff)];
         }
         break;
       }
@@ -210,14 +209,15 @@ public:
 
     m_phase[0] += m_freq[0];
     int8_t wave_0_main   = get_wave_level(m_wave_table[0], static_cast<uint16_t>(m_phase[0] >> 8) << 1);
-    m_phase[1] += m_freq[1];
 
     uint16_t p_1 = 0;
     if (m_sync) {
       // TODO: OSC SYNC
-      p_1 = static_cast<uint16_t>(m_phase[1] >> 8) << 1;
+      m_phase[1] = m_phase[0];
+      p_1 = static_cast<uint16_t>(m_phase[0] >> 8) << 1;
       p_1 += high_byte(p_1) * m_phase_ratio_for_sync;
     } else {
+      m_phase[1] += m_freq[1];
       p_1 = static_cast<uint16_t>(m_phase[1] >> 8) << 1;
     }
     int8_t wave_0_detune = get_wave_level(m_wave_table[1], p_1);
