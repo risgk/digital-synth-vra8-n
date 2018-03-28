@@ -126,8 +126,8 @@ public:
   INLINE static int8_t clock() {
     m_count++;
 
+    int16_t osc_output = IOsc<0>::clock(m_count);
     uint8_t env_gen_output_0 = IEnvGen<0>::clock(m_count);
-    int16_t osc_output = IOsc<0>::clock(m_count, env_gen_output_0);
     int16_t filter_output = IFilter<0>::clock(m_count, osc_output, env_gen_output_0);
     uint8_t env_gen_output_1 = IEnvGen<1>::clock(m_count);
     int16_t amp_output = IAmp<0>::clock(filter_output, env_gen_output_1);
