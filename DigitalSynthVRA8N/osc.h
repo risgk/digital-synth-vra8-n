@@ -156,12 +156,7 @@ public:
       case 0x4:
         m_rnd_cnt++;
         if ((m_rnd_cnt & 0x03) == 0x00) {
-          update_rnd_first();
-        }
-        break;
-      case 0x5:
-        if ((m_rnd_cnt & 0x03) == 0x00) {
-          update_rnd_latter();
+          update_rnd();
         }
         break;
       case 0x8:
@@ -175,12 +170,7 @@ public:
         break;
       case 0xC:
         if ((m_rnd_cnt & 0x03) == 0x00) {
-          update_rnd_first();
-        }
-        break;
-      case 0xD:
-        if ((m_rnd_cnt & 0x03) == 0x00) {
-          update_rnd_latter();
+          update_rnd();
         }
         break;
       }
@@ -198,14 +188,6 @@ public:
     int16_t result       = level_main + level_detune + m_level_sub;
 
     return result;
-  }
-
-  INLINE static uint8_t get_white_noise_7() {
-    return m_rnd;
-  }
-
-  INLINE static uint8_t get_red_noise_8() {
-    return (m_rnd_prev + m_rnd);
   }
 
 private:
@@ -295,15 +277,16 @@ private:
     m_wave_table[N] = m_wave_table_temp[N];
   }
 
-  INLINE static void update_rnd_first() {
+  INLINE static void update_rnd() {
     m_rnd_temp = m_rnd_temp ^ (m_rnd_temp << 5);
     m_rnd_temp = m_rnd_temp ^ (m_rnd_temp >> 9);
-  }
-
-  INLINE static void update_rnd_latter() {
     m_rnd_temp = m_rnd_temp ^ (m_rnd_temp << 8);
     m_rnd_prev = m_rnd;
     m_rnd = low_byte(m_rnd_temp) >> 1;
+  }
+
+  INLINE static uint8_t get_red_noise_8() {
+    return (m_rnd_prev + m_rnd);
   }
 };
 
