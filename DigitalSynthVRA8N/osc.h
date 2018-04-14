@@ -90,7 +90,7 @@ public:
   }
 
   INLINE static void set_sub_osc_level(uint8_t controller_value) {
-    uint8_t idx = controller_value >> 2;
+    uint8_t idx = (static_cast<uint16_t>(controller_value) + (controller_value << 1)) >> 4;
     if (idx > 0) {
       idx -= 1;
     }
