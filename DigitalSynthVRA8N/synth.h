@@ -29,7 +29,7 @@ public:
     ISynthCore<0>::control_change(OSC_COLOR_1  , 0  );
     ISynthCore<0>::control_change(OSC_COLOR_2  , 127);
     ISynthCore<0>::control_change(MOD_RATE     , 8  );
-    ISynthCore<0>::control_change(MOD_DEPTH    , 32 );
+    ISynthCore<0>::control_change(MOD_DEPTH    , 64 );
 
     ISynthCore<0>::control_change(FILTER_CUTOFF, 64 );
     ISynthCore<0>::control_change(FILTER_RESO  , 64 );
