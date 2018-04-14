@@ -9,7 +9,7 @@ class EnvGen {
   static const uint8_t STATE_SUSTAIN = 1;
   static const uint8_t STATE_IDLE    = 2;
 
-  static const uint16_t ATTACK_STEP            = 4096;
+  static const uint16_t ATTACK_STEP            = 0x4000;
   static const uint8_t ATTACK_UPDATE_INTERVAL  = 1;
 
   static uint8_t  m_state;
