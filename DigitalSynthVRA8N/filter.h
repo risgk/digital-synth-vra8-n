@@ -21,8 +21,6 @@ class Filter {
   static uint8_t        m_cutoff;
   static uint8_t        m_cutoff_velocity;
   static uint8_t        m_mod_amt;
-  static uint8_t        m_noise_gen_amt;
-  static uint16_t       m_rnd_temp;
 
   static const uint8_t AUDIO_FRACTION_BITS = 14;
 
@@ -34,11 +32,9 @@ public:
     m_y_2 = 0;
     m_cutoff_current = 127;
     m_cutoff_velocity = 64;
-    m_rnd_temp = 1;
     set_cutoff(127);
     set_resonance(0);
     set_env_amt(64);
-    set_noise_gen_amt(127);
     update_current(0);
     update_coefs();
   }
@@ -55,10 +51,6 @@ public:
     m_mod_amt = controller_value;
   }
 
-  INLINE static void set_noise_gen_amt(uint8_t controller_value) {
-    m_noise_gen_amt = controller_value;
-  }
-
   INLINE static void note_on(uint8_t cutoff_velocity) {
     m_cutoff_velocity = cutoff_velocity;
   }
@@ -69,7 +61,7 @@ public:
       update_current(mod_input);
       update_coefs();
     } else if (count_and_interval == 6) {
-      update_rnd();
+      // do nothing
     }
 
     int16_t b_2_over_a_0 = m_b_2_over_a_0_low | (m_b_2_over_a_0_high << 8);
@@ -95,7 +87,6 @@ private:
   INLINE static void update_current(uint8_t mod_input) {
     int16_t cutoff_candidate = m_cutoff + static_cast<int8_t>(m_cutoff_velocity - 64);
     cutoff_candidate += high_sbyte(((m_mod_amt - 64) << 1) * mod_input);
-//  cutoff_candidate += high_sbyte((mod_input >> 0) * static_cast<int8_t>(get_white_noise_8()));
     uint8_t cutoff_target;
     if (cutoff_candidate > 127) {
       cutoff_target = 127;
@@ -122,16 +113,6 @@ private:
     m_a_1_over_a_0_low  = (four_data >> 16) & 0xFF;
     m_a_1_over_a_0_high = (four_data >> 24) & 0xFF;
   }
-
-  INLINE static void update_rnd() {
-    m_rnd_temp = m_rnd_temp ^ (m_rnd_temp << 5);
-    m_rnd_temp = m_rnd_temp ^ (m_rnd_temp >> 9);
-    m_rnd_temp = m_rnd_temp ^ (m_rnd_temp << 8);
-  }
-
-  INLINE static uint8_t get_white_noise_8() {
-    return low_byte(m_rnd_temp);
-  }
 };
 
 template <uint8_t T> const uint8_t* Filter<T>::m_lpf_table;
@@ -147,5 +128,3 @@ template <uint8_t T> uint8_t        Filter<T>::m_cutoff_current;
 template <uint8_t T> uint8_t        Filter<T>::m_cutoff;
 template <uint8_t T> uint8_t        Filter<T>::m_cutoff_velocity;
 template <uint8_t T> uint8_t        Filter<T>::m_mod_amt;
-template <uint8_t T> uint8_t        Filter<T>::m_noise_gen_amt;
-template <uint8_t T> uint16_t       Filter<T>::m_rnd_temp;
