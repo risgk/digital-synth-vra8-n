@@ -13,8 +13,8 @@ def freq_from_note_number(note_number)
 end
 
 $file.printf("const __uint24 g_osc_freq_table[] = {\n  ")
-((NOTE_NUMBER_MIN - 13)..(NOTE_NUMBER_MAX + 13 + 7)).each do |note_number|
-  if (note_number < (NOTE_NUMBER_MIN - 13)) || (note_number > (NOTE_NUMBER_MAX + 13 + 7))
+((NOTE_NUMBER_MIN - (12 + 2))..(NOTE_NUMBER_MAX + (12 + 2) + 12)).each do |note_number|
+  if (note_number < (NOTE_NUMBER_MIN - (12 + 2))) || (note_number > (NOTE_NUMBER_MAX + (12 + 2) + 12))
     freq = 0
   else
     freq = freq_from_note_number(note_number)
@@ -73,8 +73,8 @@ end
 
 $osc_harmonics_restriction_table = []
 
-((NOTE_NUMBER_MIN - 13)..(NOTE_NUMBER_MAX + 13 + 7 + 24)).each do |note_number|
-  freq = freq_from_note_number((note_number / 3) * 3 + 3)
+((NOTE_NUMBER_MIN - (12 + 2))..(NOTE_NUMBER_MAX + (12 + 2) + 12)).each do |note_number|
+  freq = freq_from_note_number((note_number / 3) * 3 + 6)
   $osc_harmonics_restriction_table << freq
 end
 

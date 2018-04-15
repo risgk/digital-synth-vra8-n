@@ -85,7 +85,11 @@ public:
         IOsc<0>::set_sub_osc_level(0);
       }
       break;
-    case OSC_COLOR_2:
+    case CC30:
+      IOsc<0>::set_lfo_rate(controller_value);
+      break;
+    case CC31:
+      IOsc<0>::set_lfo_depth(controller_value);
       break;
     case MOD_RATE:
       IOsc<0>::set_detune(controller_value);

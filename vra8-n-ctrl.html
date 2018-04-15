@@ -272,7 +272,7 @@ function preset(number) {
 
   presetControllers[CC28         ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  ];
   presetControllers[CC29         ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  ];
-  presetControllers[CC30         ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  ];
+  presetControllers[CC30         ] = [0  , 64 , 64 , 64 , 64 , 64 , 64 ];
   presetControllers[CC31         ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  ];
 
   for (var i = CONTROLLERS_FIRST; i <= CONTROLLERS_LAST; i++) {
@@ -433,8 +433,8 @@ function noteOff(noteNumber) {
     <td><span id="spanCC27">-1</span></td>
 <tr><td>----                  </td><td></td>
     <td>----                  </td><td></td>
-    <td>----                  </td><td></td>
-    <td>----                  </td></tr>
+    <td>LFO RATE              </td><td></td>
+    <td>LFO DEPTH             </td></tr>
 <tr><td><input id="inputCC28" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(28, value)"></td>
     <td><span id="spanCC28">-1</span></td>
     <td><input id="inputCC29" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(29, value)"></td>
