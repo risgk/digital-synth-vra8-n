@@ -27,7 +27,7 @@ public:
 
     // DEFAULT
     ISynthCore<0>::control_change(OSC_COLOR_1  , 0  );
-    ISynthCore<0>::control_change(OSC_COLOR_2  , 127);
+    ISynthCore<0>::control_change(OSC_COLOR_2  , 0  );
     ISynthCore<0>::control_change(MOD_RATE     , 8  );
     ISynthCore<0>::control_change(MOD_DEPTH    , 64 );
 
@@ -43,7 +43,7 @@ public:
 
     ISynthCore<0>::control_change(CC28         , 0  );
     ISynthCore<0>::control_change(CC29         , 0  );
-    ISynthCore<0>::control_change(CC30         , 0  );
+    ISynthCore<0>::control_change(CC30         , 64 );
     ISynthCore<0>::control_change(CC31         , 0  );
   }
 

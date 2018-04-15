@@ -37,7 +37,7 @@ end
 sound_off
 
 control_change(OSC_COLOR_1  , 0  )
-control_change(OSC_COLOR_2  , 127)
+control_change(OSC_COLOR_2  , 0  )
 control_change(MOD_RATE     , 8  )
 control_change(MOD_DEPTH    , 64 )
 
@@ -53,7 +53,7 @@ control_change(AMP_EG       , 120)
 
 control_change(CC28         , 0  )
 control_change(CC29         , 0  )
-control_change(CC30         , 0  )
+control_change(CC30         , 64 )
 control_change(CC31         , 0  )
 
 play_cegbdfac(3)
