@@ -75,6 +75,13 @@ public:
     tmp         -= mul_q15_q15(m_y_2,                      a_2_over_a_0);
     int16_t y_0  = tmp << (16 - FILTER_TABLE_FRACTION_BITS);
 
+    if (y_0 > ((1 << (AUDIO_FRACTION_BITS - 1)) - 1)) {
+      y_0 = ((1 << (AUDIO_FRACTION_BITS - 1)) - 1);
+    }
+    if (y_0 < -(1 << (AUDIO_FRACTION_BITS - 1))) {
+      y_0 = -(1 << (AUDIO_FRACTION_BITS - 1));
+    }
+
     m_x_2 = m_x_1;
     m_y_2 = m_y_1;
     m_x_1 = x_0;

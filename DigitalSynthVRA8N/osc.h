@@ -42,7 +42,7 @@ public:
   INLINE static void initialize() {
     for (uint8_t i = 0; i < OSC_MIX_TABLE_LENGTH; i++) {
       m_mix_table[i] = static_cast<uint8_t>(sqrtf(static_cast<float>(i) /
-                                                  (OSC_MIX_TABLE_LENGTH - 1)) * 40);
+                                                  (OSC_MIX_TABLE_LENGTH - 1)) * 80);
     }
     set_mix(0);
     set_sub_osc_level(0);
@@ -101,7 +101,7 @@ public:
   }
 
   INLINE static void set_sub_osc_level(uint8_t controller_value) {
-    uint8_t idx = (static_cast<uint16_t>(controller_value) + (controller_value << 1)) >> 4;
+    uint8_t idx = controller_value >> 2;
     if (idx > 0) {
       idx -= 1;
     }
