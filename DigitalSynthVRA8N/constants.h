@@ -21,7 +21,7 @@ const uint8_t   OSC_DETUNE_MUL_NUM_BITS     = 4;
 const uint16_t  OSC_DETUNE_FREQ_MIN         = 64;
 const uint16_t  OSC_DETUNE_FREQ_MAX         = 0;
 const uint8_t   FILTER_CONTROL_INTERVAL     = 0x08;
-const uint8_t   FILTER_CUTOFF_THROUGH_RATE  = 8;
+const uint8_t   FILTER_CUTOFF_THROUGH_RATE  = 16;
 const uint8_t   FILTER_TABLE_FRACTION_BITS  = 14;
 const uint8_t   ENV_GEN_CONTROL_INTERVAL    = 0x08;
 const uint16_t  ENV_GEN_LEVEL_MAX           = 0xFFFF;
@@ -47,6 +47,8 @@ const uint8_t   TUNE_REQUEST          = 0xF6;
 const uint8_t   EOX                   = 0xF7;
 const uint8_t   REAL_TIME_MESSAGE_MIN = 0xF8;
 const uint8_t   ACTIVE_SENSING        = 0xFE;
+
+const uint8_t   MODULATION    = 1;
 
 const uint8_t   OSC_COLOR_1   = 16;
 const uint8_t   OSC_COLOR_2   = 17;

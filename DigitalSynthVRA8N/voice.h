@@ -89,7 +89,10 @@ public:
       IOsc<0>::set_lfo_rate(controller_value);
       break;
     case CC31:
-      IOsc<0>::set_lfo_depth(controller_value);
+      IOsc<0>::set_lfo_depth<0>(controller_value);
+      break;
+    case MODULATION:
+      IOsc<0>::set_lfo_depth<1>(controller_value);
       break;
     case MOD_RATE:
       IOsc<0>::set_detune(controller_value);

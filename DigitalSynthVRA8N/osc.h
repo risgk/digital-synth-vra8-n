@@ -22,7 +22,7 @@ class Osc {
   static uint16_t       m_lfo_phase;
   static int8_t         m_lfo_level;
   static uint16_t       m_lfo_rate;
-  static uint8_t        m_lfo_depth;
+  static uint8_t        m_lfo_depth[2];
   static uint8_t        m_waveform;
   static int16_t        m_pitch_bend_normalized;
   static uint16_t       m_pitch_target;
@@ -55,7 +55,8 @@ public:
     m_lfo_phase = 0;
     m_lfo_level = 0;
     m_lfo_rate = 0;
-    m_lfo_depth = 0;
+    m_lfo_depth[0] = 0;
+    m_lfo_depth[1] = 0;
     m_waveform = OSC_WAVEFORM_SAW;
     m_pitch_bend_normalized = 0;
     m_pitch_target = (NOTE_NUMBER_MIN - (12 + 2)) << 8;
@@ -137,8 +138,9 @@ public:
     m_lfo_rate = (controller_value + 1) * 25;
   }
 
+  template <uint8_t N>
   INLINE static void set_lfo_depth(uint8_t controller_value) {
-    m_lfo_depth = controller_value;
+    m_lfo_depth[N] = controller_value;
   }
 
   INLINE static void note_on(uint8_t note_number) {
@@ -278,6 +280,7 @@ private:
       m_pitch_real[N] += m_detune;
     }
     m_pitch_real[N] += m_mod_level;
+    m_pitch_real[N] += m_mod_level;
   }
 
   template <uint8_t N>
@@ -314,7 +317,11 @@ private:
   INLINE static void update_lfo() {
     m_lfo_phase += m_lfo_rate;
     m_lfo_level = get_tri_wave_level(m_lfo_phase);
-    m_mod_level = high_sbyte((m_lfo_depth << 1) * m_lfo_level);
+    uint8_t lfo_depth = m_lfo_depth[0] + m_lfo_depth[1];
+    if (lfo_depth > 127) {
+      lfo_depth = 127;
+    }
+    m_mod_level = high_sbyte((lfo_depth << 1) * m_lfo_level);
   }
 };
 
@@ -331,7 +338,7 @@ template <uint8_t T> int8_t          Osc<T>::m_mod_level;
 template <uint8_t T> uint16_t        Osc<T>::m_lfo_phase;
 template <uint8_t T> int8_t          Osc<T>::m_lfo_level;
 template <uint8_t T> uint16_t        Osc<T>::m_lfo_rate;
-template <uint8_t T> uint8_t         Osc<T>::m_lfo_depth;
+template <uint8_t T> uint8_t         Osc<T>::m_lfo_depth[2];
 template <uint8_t T> uint8_t         Osc<T>::m_waveform;
 template <uint8_t T> int16_t         Osc<T>::m_pitch_bend_normalized;
 template <uint8_t T> uint16_t        Osc<T>::m_pitch_target;
