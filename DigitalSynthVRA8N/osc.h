@@ -14,7 +14,7 @@ class Osc {
   static int8_t         m_mix_sub;
   static int16_t        m_level_sub;
   static int8_t         m_mix_table[OSC_MIX_TABLE_LENGTH];
-  static uint16_t       m_detune;
+  static int16_t        m_detune;
   static uint8_t        m_fluctuation;
   static uint8_t        m_detune_mod_amt;
   static uint16_t       m_portamento;
@@ -109,12 +109,28 @@ public:
   }
 
   INLINE static void set_detune(uint8_t controller_value) {
-    if (controller_value >= 15) {
-      m_detune = (controller_value - 11) << 4;
-    } else if (controller_value >= 2) {
-      m_detune = (controller_value << 2) + 4;
+    if (controller_value < 16) {
+      m_detune = (-5 << 8);
+    } else if (controller_value < 21) {
+      m_detune = ((controller_value - 16) << 3) + (-5 << 8);
+    } else if (controller_value < 22) {
+      m_detune = ((controller_value - 18) << 4) + (-5 << 8);
+    } else if (controller_value < 59) {
+      m_detune = ((controller_value - 60) << 5);
+    } else if (controller_value < 60) {
+      m_detune = ((controller_value - 62) << 4);
+    } else if (controller_value < 64) {
+      m_detune = ((controller_value - 64) << 3);
+    } else if (controller_value < 68) {
+      m_detune = ((controller_value - 63) << 3);
+    } else if (controller_value < 69) {
+      m_detune = ((controller_value - 65) << 4);
+    } else if (controller_value < 122) {
+      m_detune = ((controller_value - 67) << 5);
+    } else if (controller_value < 123) {
+      m_detune = ((controller_value - 125) << 4) + (7 << 8);
     } else {
-      m_detune = 9;
+      m_detune = ((controller_value - 127) << 3) + (7 << 8);
     }
   }
 
@@ -330,7 +346,7 @@ template <uint8_t T> int8_t          Osc<T>::m_mix_detune;
 template <uint8_t T> int8_t          Osc<T>::m_mix_sub;
 template <uint8_t T> int16_t         Osc<T>::m_level_sub;
 template <uint8_t T> int8_t          Osc<T>::m_mix_table[OSC_MIX_TABLE_LENGTH];
-template <uint8_t T> uint16_t        Osc<T>::m_detune;
+template <uint8_t T> int16_t         Osc<T>::m_detune;
 template <uint8_t T> uint8_t         Osc<T>::m_fluctuation;
 template <uint8_t T> uint8_t         Osc<T>::m_detune_mod_amt;
 template <uint8_t T> uint16_t        Osc<T>::m_portamento;
