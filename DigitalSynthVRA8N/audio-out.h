@@ -35,18 +35,20 @@ public:
     if (m_count == 0x7F) {
       UDR0 = 0xDF;
     } else if (m_count == 0xFF) {
+      uint8_t cnt = TCNT1 >> 2;
 #if 0
       static uint8_t s_maxCnt = 0;
-      uint8_t cnt = TCNT1 >> 3;
       if ((cnt < 64) && (cnt > s_maxCnt)) {
         s_maxCnt = cnt;
       }
-      UDR0 = s_maxCnt;
-      m_count = 0;
-#else
-      UDR0 = TCNT1 >> 3;
-      m_count = 0;
+      cnt = s_maxCnt;
+#elif 1
+      if (cnt >= 64) {
+        cnt = 99;   // Not Over
+      }
 #endif
+      UDR0 = cnt;
+      m_count = 0;
     }
 #endif
     if (TIFR1 & _BV(TOV1)) {
