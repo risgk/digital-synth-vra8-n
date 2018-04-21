@@ -181,13 +181,16 @@ public:
       uint8_t idx = (count >> OSC_CONTROL_INTERVAL_BITS) & 0x0F;
       switch (idx) {
       case 0x0:
-        update_pitch_current<0>();
+        update_freq_0th<0>();
         break;
       case 0x1:
-        update_freq_first<0>();
+        update_freq_1st<0>();
         break;
       case 0x2:
-        update_freq_latter<0>();
+        update_freq_2nd<0>();
+        break;
+      case 0x3:
+        update_freq_3rd<0>();
         break;
       case 0x4:
         m_rnd_cnt++;
@@ -196,13 +199,16 @@ public:
         }
         break;
       case 0x8:
-        update_pitch_current<1>();
+        update_freq_0th<1>();
         break;
       case 0x9:
-        update_freq_first<1>();
+        update_freq_1st<1>();
         break;
       case 0xA:
-        update_freq_latter<1>();
+        update_freq_2nd<1>();
+        break;
+      case 0xB:
+        update_freq_3rd<1>();
         break;
       case 0xC:
         if ((m_rnd_cnt & 0x03) == 0x00) {
@@ -268,7 +274,7 @@ private:
   }
 
   template <uint8_t N>
-  INLINE static void update_pitch_current() {
+  INLINE static void update_freq_0th() {
     if (m_pitch_current + m_portamento < m_pitch_target) {
       m_pitch_current += m_portamento;
     } else if (m_pitch_current > m_pitch_target + m_portamento) {
@@ -290,26 +296,30 @@ private:
     } else if (coarse >= (NOTE_NUMBER_MAX + 12)) {
       m_pitch_real[N] = (NOTE_NUMBER_MAX + 12) << 8;
     }
+  }
 
+  template <uint8_t N>
+  INLINE static void update_freq_1st() {
     if (N == 1) {
       /* For OSC 2 */
       m_pitch_real[N] += m_detune;
     }
+
     m_pitch_real[N] += m_mod_level;
     m_pitch_real[N] += m_mod_level;
+    m_pitch_real[N] += high_sbyte((m_fluctuation >> 2) * static_cast<int8_t>(get_red_noise_8()));
+    m_pitch_real[N] += 128;
   }
 
   template <uint8_t N>
-  INLINE static void update_freq_first() {
-    m_pitch_real[N] += high_sbyte((m_fluctuation >> 2) * static_cast<int8_t>(get_red_noise_8()));
-    m_pitch_real[N] += 128;
+  INLINE static void update_freq_2nd() {
     uint8_t coarse = high_byte(m_pitch_real[N]);
     m_freq_temp[N] = g_osc_freq_table[coarse - (NOTE_NUMBER_MIN - (12 + 2))];
     m_wave_table_temp[N] = get_wave_table(m_waveform, coarse);
   }
 
   template <uint8_t N>
-  INLINE static void update_freq_latter() {
+  INLINE static void update_freq_3rd() {
     uint8_t fine = low_byte(m_pitch_real[N]);
     uint16_t freq_div_512 = m_freq_temp[N] >> 8;
     freq_div_512 >>= 1;
