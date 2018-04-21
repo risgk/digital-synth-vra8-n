@@ -30,8 +30,12 @@ public:
   }
 
   INLINE static void set_decay(uint8_t controller_value) {
-    m_decay_update_interval = high_byte((controller_value << 1) *
-                                        (controller_value << 1)) + 1;
+    if (controller_value < 32) {
+      m_decay_update_interval = (controller_value >> 1) + 1;
+    } else {
+      m_decay_update_interval = high_byte((controller_value << 1) *
+                                          (controller_value << 1)) + 1;
+    }
   }
 
   INLINE static void set_sustain(boolean on) {
