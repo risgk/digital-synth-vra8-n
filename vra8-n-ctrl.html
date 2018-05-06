@@ -8,29 +8,36 @@
   -webkit-user-select: none;
   -webkit-touch-callout: none;
 }
-td {
+table td {
   text-align: left;
 }
 td.key {
   color: lightcoral;
   text-align: center;
-  width: 46px;
-  height: 46px;
+  width: 42px;
+  height: 42px;
   border: 1px solid lightcoral;
 }
 td.keyb {
   color: white;
   background-color: lightcoral;
   text-align: center;
-  width: 46px;
-  height: 46px;
+  width: 42px;
+  height: 42px;
   border: 1px solid lightcoral;
+}
+td.keyp {
+  color: lightcoral;
+  text-align: center;
+  width: 42px;
+  height: 42px;
+  border: 1px solid transparent;
 }
 td.keyh {
   text-align: center;
-  width: 20px;
-  height: 46px;
-  border: 1px solid lightcoral;
+  width: 18px;
+  height: 42px;
+  border: 1px solid transparent;
 }
 </style>
 <script>
@@ -61,12 +68,25 @@ const CC29          = 29;
 const CC30          = 30;
 const CC31          = 31;
 
+const CC104         = 104;
+const CC105         = 105;
+const CC106         = 106;
+const CC107         = 107;
+
+const CC108         = 108;
+const CC109         = 109;
+const CC110         = 110;
+const CC111         = 111;
+
 const DAMPER_PEDAL  = 64;
 
 const ALL_NOTES_OFF = 123;
 
-const CONTROLLERS_FIRST = 16;
-const CONTROLLERS_LAST  = 31;
+const CONTROLLERS_FIRST_0 = 16;
+const CONTROLLERS_LAST_0  = 31;
+
+const CONTROLLERS_FIRST_1 = 104;
+const CONTROLLERS_LAST_1  = 111;
 </script>
 <script>
 var transpose = 0;
@@ -110,7 +130,14 @@ function allNotesOff() {
 function restoreControllers() {
   allNotesOff();
   var value;
-  for (var i = CONTROLLERS_FIRST; i <= CONTROLLERS_LAST; i++) {
+  for (var i = CONTROLLERS_FIRST_0; i <= CONTROLLERS_LAST_0; i++) {
+    value = localStorage.getItem("keyCC" + String(i));
+    if (!value) {
+      return false;
+    }
+    onChangeControlChange(i, value);
+  }
+  for (var i = CONTROLLERS_FIRST_1; i <= CONTROLLERS_LAST_1; i++) {
     value = localStorage.getItem("keyCC" + String(i));
     if (!value) {
       return false;
@@ -149,7 +176,10 @@ function onMIDIMessage(event) {
   if (event.data[0] == (CONTROL_CHANGE | MIDI_CH)) {
     var number = event.data[1];
     var value = event.data[2];
-    if (number >= CONTROLLERS_FIRST && number <= CONTROLLERS_LAST) {
+    if (number >= CONTROLLERS_FIRST_0 && number <= CONTROLLERS_LAST_0) {
+      updateDisplayOfControl(number, value);
+    }
+    if (number >= CONTROLLERS_FIRST_1 && number <= CONTROLLERS_LAST_1) {
       updateDisplayOfControl(number, value);
     }
     else if (number == MODULATION) {
@@ -280,14 +310,30 @@ function preset(number) {
   presetControllers[CC30         ] = [0  , 64 , 64 , 64 , 64 , 64 , 64 , 64 ];
   presetControllers[CC31         ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
 
-  for (var i = CONTROLLERS_FIRST; i <= CONTROLLERS_LAST; i++) {
+  presetControllers[CC104        ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
+  presetControllers[CC105        ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
+  presetControllers[CC106        ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
+  presetControllers[CC107        ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
+
+  presetControllers[CC108        ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
+  presetControllers[CC109        ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
+  presetControllers[CC110        ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
+  presetControllers[CC111        ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
+
+  for (var i = CONTROLLERS_FIRST_0; i <= CONTROLLERS_LAST_0; i++) {
+    onChangeControlChange(i, presetControllers[i][number]);
+  }
+  for (var i = CONTROLLERS_FIRST_1; i <= CONTROLLERS_LAST_1; i++) {
     onChangeControlChange(i, presetControllers[i][number]);
   }
 }
 
 function setRandom() {
   allNotesOff();
-  for (var i = CONTROLLERS_FIRST; i <= CONTROLLERS_LAST; i++) {
+  for (var i = CONTROLLERS_FIRST_0; i <= CONTROLLERS_LAST_0; i++) {
+    onChangeControlChange(i, rand(128));
+  }
+  for (var i = CONTROLLERS_FIRST_1; i <= CONTROLLERS_LAST_1; i++) {
     onChangeControlChange(i, rand(128));
   }
 }
@@ -298,12 +344,19 @@ function rand(n) {
 
 function loadControllers(number) {
   var value;
-  value = localStorage.getItem("keyMemory" + String(number) + "CC" + String(CONTROLLERS_FIRST));
+  value = localStorage.getItem("keyMemory" + String(number) + "CC" + String(CONTROLLERS_FIRST_0));
   if (!value) {
     return;
   }
   allNotesOff();
-  for (var i = CONTROLLERS_FIRST; i <= CONTROLLERS_LAST; i++) {
+  for (var i = CONTROLLERS_FIRST_0; i <= CONTROLLERS_LAST_0; i++) {
+    value = localStorage.getItem("keyMemory" + String(number) + "CC" + String(i));
+    if (!value) {
+      return;
+    }
+    onChangeControlChange(i, value);
+  }
+  for (var i = CONTROLLERS_FIRST_1; i <= CONTROLLERS_LAST_1; i++) {
     value = localStorage.getItem("keyMemory" + String(number) + "CC" + String(i));
     if (!value) {
       return;
@@ -318,7 +371,11 @@ function saveControllers(number) {
     return;
   }
 
-  for (var i = CONTROLLERS_FIRST; i <= CONTROLLERS_LAST; i++) {
+  for (var i = CONTROLLERS_FIRST_0; i <= CONTROLLERS_LAST_0; i++) {
+    var value = document.getElementById("inputCC" + String(i)).value;
+    localStorage.setItem("keyMemory" + String(number) + "CC" + String(i), value);
+  }
+  for (var i = CONTROLLERS_FIRST_1; i <= CONTROLLERS_LAST_1; i++) {
     var value = document.getElementById("inputCC" + String(i)).value;
     localStorage.setItem("keyMemory" + String(number) + "CC" + String(i), value);
   }
@@ -403,54 +460,82 @@ function noteOff(noteNumber) {
 </table>
 
 <table>
+<tr><td>&nbsp;</td></tr>
 <tr><td>WAVE/SUB OSC          </td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
     <td>----                  </td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
     <td>OSC2 PITCH            </td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
     <td>OSC MIX (1/2)         </td></tr>
 <tr><td><input id="inputCC16" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(16, value)"></td>
-    <td><span id="spanCC16">-1</span></td>
+    <td><span   id="spanCC16">-1</span></td>
     <td><input id="inputCC17" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(17, value)"></td>
-    <td><span id="spanCC17">-1</span></td>
+    <td><span   id="spanCC17">-1</span></td>
     <td><input id="inputCC18" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(18, value)"></td>
-    <td><span id="spanCC18">-1</span></td>
+    <td><span   id="spanCC18">-1</span></td>
     <td><input id="inputCC19" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(19, value)"></td>
-    <td><span id="spanCC19">-1</span></td></tr>
+    <td><span   id="spanCC19">-1</span></td></tr>
 <tr><td>CUTOFF                </td><td></td>
     <td>RESONANCE             </td><td></td>
     <td>FEG AMT (-/+)         </td><td></td>
     <td>FEG DECAY/SUS         </td></tr>
 <tr><td><input id="inputCC20" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(20, value)"></td>
-    <td><span id="spanCC20">-1</span></td>
+    <td><span   id="spanCC20">-1</span></td>
     <td><input id="inputCC21" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(21, value)"></td>
-    <td><span id="spanCC21">-1</span></td>
+    <td><span   id="spanCC21">-1</span></td>
     <td><input id="inputCC22" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(22, value)"></td>
-    <td><span id="spanCC22">-1</span></td>
+    <td><span   id="spanCC22">-1</span></td>
     <td><input id="inputCC23" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(23, value)"></td>
-    <td><span id="spanCC23">-1</span></td></tr>
+    <td><span   id="spanCC23">-1</span></td></tr>
+<tr><td>&nbsp;</td></tr>
 <tr><td>----                  </td><td></td>
     <td>FLUCTUATION           </td><td></td>
     <td>PORTAMENTO            </td><td></td>
     <td>AEG DECAY/SUS         </td></tr>
 <tr><td><input id="inputCC24" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(24, value)"></td>
-    <td><span id="spanCC24">-1</span></td>
+    <td><span   id="spanCC24">-1</span></td>
     <td><input id="inputCC25" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(25, value)"></td>
-    <td><span id="spanCC25">-1</span></td>
+    <td><span   id="spanCC25">-1</span></td>
     <td><input id="inputCC26" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(26, value)"></td>
-    <td><span id="spanCC26">-1</span></td>
+    <td><span   id="spanCC26">-1</span></td>
     <td><input id="inputCC27" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(27, value)"></td>
-    <td><span id="spanCC27">-1</span></td>
+    <td><span   id="spanCC27">-1</span></td>
 <tr><td>----                  </td><td></td>
     <td>----                  </td><td></td>
     <td>VIBRATO RATE          </td><td></td>
     <td>VIBRATO DEPTH         </td></tr>
 <tr><td><input id="inputCC28" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(28, value)"></td>
-    <td><span id="spanCC28">-1</span></td>
+    <td><span   id="spanCC28">-1</span></td>
     <td><input id="inputCC29" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(29, value)"></td>
-    <td><span id="spanCC29">-1</span></td>
+    <td><span   id="spanCC29">-1</span></td>
     <td><input id="inputCC30" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(30, value)"></td>
-    <td><span id="spanCC30">-1</span></td>
+    <td><span   id="spanCC30">-1</span></td>
     <td><input id="inputCC31" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(31, value)"></td>
-    <td><span id="spanCC31">-1</span></td>
+    <td><span   id="spanCC31">-1</span></td>
+<tr><td>&nbsp;</td></tr>
+<tr><td>----                  </td><td></td>
+    <td>----                  </td><td></td>
+    <td>----                  </td><td></td>
+    <td>----                  </td></tr>
+<tr><td><input id="inputCC104" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(104, value)"></td>
+    <td><span   id="spanCC104">-1</span></td>
+    <td><input id="inputCC105" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(105, value)"></td>
+    <td><span   id="spanCC105">-1</span></td>
+    <td><input id="inputCC106" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(106, value)"></td>
+    <td><span   id="spanCC106">-1</span></td>
+    <td><input id="inputCC107" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(107, value)"></td>
+    <td><span   id="spanCC107">-1</span></td>
+<tr><td>----                  </td><td></td>
+    <td>----                  </td><td></td>
+    <td>----                  </td><td></td>
+    <td>----                  </td></tr>
+<tr><td><input id="inputCC108" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(108, value)"></td>
+    <td><span   id="spanCC108">-1</span></td>
+    <td><input id="inputCC109" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(109, value)"></td>
+    <td><span   id="spanCC109">-1</span></td>
+    <td><input id="inputCC110" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(110, value)"></td>
+    <td><span   id="spanCC110">-1</span></td>
+    <td><input id="inputCC111" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(111, value)"></td>
+    <td><span   id="spanCC111">-1</span></td>
+<tr><td>&nbsp;</td></tr>
 </table>
 
 <table>
@@ -458,22 +543,18 @@ function noteOff(noteNumber) {
 <td class="keyh"></td>
 <td class="keyb" onContextmenu="return false" onmousedown="noteOn(49)" onmouseup="noteOff(49)" ontouchstart="noteOn(49)" ontouchend="noteOff(49)">C#3</td>
 <td class="keyb" onContextmenu="return false" onmousedown="noteOn(51)" onmouseup="noteOff(51)" ontouchstart="noteOn(51)" ontouchend="noteOff(51)">D#3</td>
-<td class="keyh"></td>
-<td class="keyh"></td>
+<td class="keyp"></td>
 <td class="keyb" onContextmenu="return false" onmousedown="noteOn(54)" onmouseup="noteOff(54)" ontouchstart="noteOn(54)" ontouchend="noteOff(54)">F#3</td>
 <td class="keyb" onContextmenu="return false" onmousedown="noteOn(56)" onmouseup="noteOff(56)" ontouchstart="noteOn(56)" ontouchend="noteOff(56)">G#3</td>
 <td class="keyb" onContextmenu="return false" onmousedown="noteOn(58)" onmouseup="noteOff(58)" ontouchstart="noteOn(58)" ontouchend="noteOff(58)">A#3</td>
-<td class="keyh"></td>
-<td class="keyh"></td>
+<td class="keyp"></td>
 <td class="keyb" onContextmenu="return false" onmousedown="noteOn(61)" onmouseup="noteOff(61)" ontouchstart="noteOn(61)" ontouchend="noteOff(61)">C#4</td>
 <td class="keyb" onContextmenu="return false" onmousedown="noteOn(63)" onmouseup="noteOff(63)" ontouchstart="noteOn(63)" ontouchend="noteOff(63)">D#4</td>
-<td class="keyh"></td>
-<td class="keyh"></td>
+<td class="keyp"></td>
 <td class="keyb" onContextmenu="return false" onmousedown="noteOn(66)" onmouseup="noteOff(66)" ontouchstart="noteOn(66)" ontouchend="noteOff(66)">F#4</td>
 <td class="keyb" onContextmenu="return false" onmousedown="noteOn(68)" onmouseup="noteOff(68)" ontouchstart="noteOn(68)" ontouchend="noteOff(68)">G#4</td>
 <td class="keyb" onContextmenu="return false" onmousedown="noteOn(70)" onmouseup="noteOff(70)" ontouchstart="noteOn(70)" ontouchend="noteOff(70)">A#4</td>
-<td class="keyh"></td>
-<td class="keyh"></td>
+<td class="keyp"></td>
 <td class="keyh"></td>
 </tr>
 </table>
