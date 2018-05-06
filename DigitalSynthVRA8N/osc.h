@@ -164,12 +164,13 @@ public:
   }
 
   INLINE static void set_pitch_bend(int16_t pitch_bend) {
-    pitch_bend++;
-#if (PITCH_BEND_RANGE == 12)
-    m_pitch_bend_normalized = ((pitch_bend << 1) + pitch_bend) >> 3;
-#else  // (PITCH_BEND_RANGE == 2)
-    m_pitch_bend_normalized = pitch_bend >> 4;
-#endif
+    int16_t b = pitch_bend + 1;
+    b >>= 3;
+    if (b < 0) {
+      m_pitch_bend_normalized = (b * PITCH_BEND_MINUS_RANGE) >> 2;
+    } else {
+      m_pitch_bend_normalized = (b * PITCH_BEND_PLUS_RANGE) >> 2;
+    }
   }
 
   INLINE static int16_t clock(uint8_t count) {
@@ -283,12 +284,8 @@ private:
       m_pitch_current = m_pitch_target;
     }
 
-#if defined(TRANSPOSE)
-    int16_t transpose = TRANSPOSE << 8;
-    m_pitch_real[N] = (64 << 8) + m_pitch_current + m_pitch_bend_normalized + transpose;
-#else
-    m_pitch_real[N] = (64 << 8) + m_pitch_current + m_pitch_bend_normalized;
-#endif
+    int16_t t = TRANSPOSE << 8;
+    m_pitch_real[N] = (64 << 8) + m_pitch_current + m_pitch_bend_normalized + t;
 
     uint8_t coarse = high_byte(m_pitch_real[N]);
     if (coarse <= (NOTE_NUMBER_MIN + 64)) {
