@@ -40,11 +40,16 @@ public:
     }
 #endif
 
-    m_note_number = note_number;
-    m_note_hold = false;
-    IOsc<0>::note_on(note_number);
-    IEnvGen<0>::note_on();
-    IEnvGen<1>::note_on();
+    // Single Trigger
+    if (m_note_number != NOTE_NUMBER_INVALID) {
+      IOsc<0>::note_on(note_number);
+    } else {
+      m_note_number = note_number;
+      m_note_hold = false;
+      IOsc<0>::note_on(note_number);
+      IEnvGen<0>::note_on();
+      IEnvGen<1>::note_on();
+    }
   }
 
   INLINE static void note_off(uint8_t note_number) {
