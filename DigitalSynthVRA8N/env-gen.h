@@ -30,11 +30,14 @@ public:
   }
 
   INLINE static void set_decay(uint8_t controller_value) {
-    if (controller_value < 32) {
-      m_decay_update_interval = (controller_value >> 1) + 1;
-    } else {
+    if (controller_value >= 126) {
+      // No Decay
+      m_decay_update_interval = 0;
+    } else if (controller_value >= 32) {
       m_decay_update_interval = high_byte((controller_value << 1) *
                                           (controller_value << 1)) + 1;
+    } else {
+      m_decay_update_interval = (controller_value >> 1) + 1;
     }
   }
 
@@ -76,6 +79,9 @@ public:
         }
         break;
       case STATE_IDLE:
+        if (m_decay_update_interval == 0) {
+          break;
+        }
         m_rest--;
         if (m_rest == 0) {
           m_rest = m_decay_update_interval;
