@@ -78,8 +78,6 @@ const CC109         = 109;
 const CC110         = 110;
 const CC111         = 111;
 
-const DAMPER_PEDAL  = 64;
-
 const ALL_NOTES_OFF = 123;
 
 const CONTROLLERS_FIRST_0 = 16;
@@ -271,13 +269,6 @@ function updateDisplayOfControl(number, value) {
   localStorage.setItem("keyCC" + String(number), value);
 }
 
-function onChangeSustain(value) {
-  if (midiOutput) {
-    midiOutput.send([(CONTROL_CHANGE | MIDI_CH), DAMPER_PEDAL, value ? 127 : 0]);
-    sleep(2);
-  }
-}
-
 function onChangeControlChange(number, value) {
   updateDisplayOfControl(number, value);
   if (midiOutput) {
@@ -407,10 +398,7 @@ function noteOff(noteNumber) {
     <td><select id="selectInputPort1" size="1" onchange="onChangeInputPort1()"></select></td>
     <td>&nbsp;</td>
     <td>MIDI OUT</td>
-    <td><select id="selectOutputPort" size="1" onchange="onChangeOutputPort()"></select></td>
-    <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-    <td style="display:none">SUSTAIN</td><td>
-    <td style="display:none"><input type="checkbox" value=0 onclick="onChangeSustain(this.checked)"></td></tr>
+    <td><select id="selectOutputPort" size="1" onchange="onChangeOutputPort()"></select></td></tr>
 <tr><td>MIDI IN 2</td>
     <td><select id="selectInputPort2" size="1" onchange="onChangeInputPort2()"></select></td>
     <td>&nbsp;</td>

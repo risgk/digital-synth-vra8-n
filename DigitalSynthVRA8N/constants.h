@@ -80,8 +80,6 @@ const uint8_t   CC109         = 109;
 const uint8_t   CC110         = 110;
 const uint8_t   CC111         = 111;
 
-const uint8_t   DAMPER_PEDAL  = 64;
-
 const uint8_t   ALL_NOTES_OFF = 123;
 const uint8_t   OMNI_MODE_OFF = 124;
 const uint8_t   OMNI_MODE_ON  = 125;

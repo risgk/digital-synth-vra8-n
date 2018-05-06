@@ -5,18 +5,14 @@ class Voice {
   static uint8_t m_count;
   static uint8_t m_eg0_decay_sustain;
   static uint8_t m_eg1_decay_sustain;
-  static boolean m_damper_pedal;
   static uint8_t m_note_number;
-  static boolean m_note_hold;
   static uint8_t m_output_error;
   static uint8_t m_portamento;
   static boolean m_legato;
 
 public:
   INLINE static void initialize() {
-    m_damper_pedal = false;
     m_note_number = NOTE_NUMBER_INVALID;
-    m_note_hold = false;
     m_output_error = 0;
     m_portamento = 0;
     m_legato = true;
@@ -64,22 +60,16 @@ public:
       IEnvGen<0>::note_on();
       IEnvGen<1>::note_on();
     }
-    m_note_hold = false;
   }
 
   INLINE static void note_off(uint8_t note_number) {
     if (m_note_number == note_number) {
-      if (m_damper_pedal) {
-        m_note_hold = true;
-      } else {
-        all_note_off();
-      }
+      all_note_off();
     }
   }
 
   INLINE static void all_note_off() {
     m_note_number = NOTE_NUMBER_INVALID;
-    m_note_hold = false;
     IEnvGen<0>::note_off();
     IEnvGen<1>::note_off();
   }
@@ -139,15 +129,6 @@ public:
     case AMP_EG:
       set_amp_env_sus(controller_value);
       break;
-#if 0
-    case DAMPER_PEDAL:
-      if (controller_value < 64) {
-        set_damper_pedal(false);
-      } else {
-        set_damper_pedal(true);
-      }
-      break;
-#endif
     case ALL_NOTES_OFF:
     case OMNI_MODE_OFF:
     case OMNI_MODE_ON:
@@ -188,32 +169,12 @@ private:
     IEnvGen<1>::set_decay(controller_value);
     IEnvGen<1>::set_sustain(true);
   }
-
-  INLINE static void set_damper_pedal(uint8_t on) {
-    if (on) {
-      m_damper_pedal = true;
-    } else {
-      if (m_damper_pedal) {
-        m_damper_pedal = false;
-        turn_hold_off();
-      }
-    }
-  }
-
-  INLINE static void turn_hold_off() {
-    m_note_number = NOTE_NUMBER_INVALID;
-    m_note_hold = false;
-    IEnvGen<0>::note_off();
-    IEnvGen<1>::note_off();
-  }
 };
 
 template <uint8_t T> uint8_t Voice<T>::m_count;
 template <uint8_t T> uint8_t Voice<T>::m_eg0_decay_sustain;
 template <uint8_t T> uint8_t Voice<T>::m_eg1_decay_sustain;
-template <uint8_t T> boolean Voice<T>::m_damper_pedal;
 template <uint8_t T> uint8_t Voice<T>::m_note_number;
-template <uint8_t T> boolean Voice<T>::m_note_hold;
 template <uint8_t T> uint8_t Voice<T>::m_output_error;
 template <uint8_t T> uint8_t Voice<T>::m_portamento;
 template <uint8_t T> boolean Voice<T>::m_legato;
