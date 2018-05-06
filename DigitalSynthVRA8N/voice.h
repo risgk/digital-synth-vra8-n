@@ -9,6 +9,8 @@ class Voice {
   static uint8_t m_note_number;
   static boolean m_note_hold;
   static uint8_t m_output_error;
+  static uint8_t m_portamento;
+  static boolean m_legato;
 
 public:
   INLINE static void initialize() {
@@ -16,6 +18,8 @@ public:
     m_note_number = NOTE_NUMBER_INVALID;
     m_note_hold = false;
     m_output_error = 0;
+    m_portamento = 0;
+    m_legato = true;
     IOsc<0>::initialize();
     IFilter<0>::initialize();
     IAmp<0>::initialize();
@@ -40,16 +44,27 @@ public:
     }
 #endif
 
-    // Single Trigger
-    if (m_note_number != NOTE_NUMBER_INVALID) {
-      IOsc<0>::note_on(note_number);
+    if (m_legato) {
+      // Single Trigger and Auto Portamento
+      if (m_note_number != NOTE_NUMBER_INVALID) {
+        IOsc<0>::set_portamento(m_portamento);
+        IOsc<0>::note_on(note_number);
+      } else {
+        m_note_number = note_number;
+        IOsc<0>::set_portamento(0);
+        IOsc<0>::note_on(note_number);
+        IEnvGen<0>::note_on();
+        IEnvGen<1>::note_on();
+      }
     } else {
+      // Multi Trigger and Portamento On
       m_note_number = note_number;
-      m_note_hold = false;
+      IOsc<0>::set_portamento(m_portamento);
       IOsc<0>::note_on(note_number);
       IEnvGen<0>::note_on();
       IEnvGen<1>::note_on();
     }
+    m_note_hold = false;
   }
 
   INLINE static void note_off(uint8_t note_number) {
@@ -109,7 +124,14 @@ public:
       IOsc<0>::set_detune_noise_gen_amt(controller_value);
       break;
     case PORTAMENTO:
-      IOsc<0>::set_portamento(controller_value);
+      m_portamento = controller_value;
+      break;
+    case CC24:
+      if (controller_value < 64) {
+        m_legato = false;
+      } else {
+        m_legato = true;
+      }
       break;
     case FILTER_EG:
       set_env_decay(controller_value);
@@ -193,3 +215,5 @@ template <uint8_t T> boolean Voice<T>::m_damper_pedal;
 template <uint8_t T> uint8_t Voice<T>::m_note_number;
 template <uint8_t T> boolean Voice<T>::m_note_hold;
 template <uint8_t T> uint8_t Voice<T>::m_output_error;
+template <uint8_t T> uint8_t Voice<T>::m_portamento;
+template <uint8_t T> boolean Voice<T>::m_legato;

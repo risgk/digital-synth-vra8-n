@@ -70,6 +70,16 @@ const uint8_t   CC29          = 29;
 const uint8_t   CC30          = 30;
 const uint8_t   CC31          = 31;
 
+const uint8_t   CC104         = 104;
+const uint8_t   CC105         = 105;
+const uint8_t   CC106         = 106;
+const uint8_t   CC107         = 107;
+
+const uint8_t   CC108         = 108;
+const uint8_t   CC109         = 109;
+const uint8_t   CC110         = 110;
+const uint8_t   CC111         = 111;
+
 const uint8_t   DAMPER_PEDAL  = 64;
 
 const uint8_t   ALL_NOTES_OFF = 123;

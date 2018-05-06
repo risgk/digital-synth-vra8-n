@@ -17,7 +17,7 @@ class Osc {
   static int16_t        m_detune;
   static uint8_t        m_fluctuation;
   static uint8_t        m_detune_mod_amt;
-  static uint16_t       m_portamento;
+  static uint16_t       m_portamento_rate;
   static int8_t         m_mod_level;
   static uint16_t       m_lfo_phase;
   static int8_t         m_lfo_level;
@@ -50,7 +50,7 @@ public:
     m_detune = 0;
     m_fluctuation = 0;
     m_detune_mod_amt = 0;
-    m_portamento = 0x4000;
+    m_portamento_rate = 0x4000;
     m_mod_level = 0;
     m_lfo_phase = 0;
     m_lfo_level = 0;
@@ -144,9 +144,9 @@ public:
 
   INLINE static void set_portamento(uint8_t controller_value) {
     if (controller_value < 4) {
-      m_portamento = 0x4000;
+      m_portamento_rate = 0x4000;
     } else {
-      m_portamento = 134 - ((controller_value >> 1) << 1);
+      m_portamento_rate = 134 - ((controller_value >> 1) << 1);
     }
   }
 
@@ -275,10 +275,10 @@ private:
 
   template <uint8_t N>
   INLINE static void update_freq_0th() {
-    if (m_pitch_current + m_portamento < m_pitch_target) {
-      m_pitch_current += m_portamento;
-    } else if (m_pitch_current > m_pitch_target + m_portamento) {
-      m_pitch_current -= m_portamento;
+    if (m_pitch_current + m_portamento_rate < m_pitch_target) {
+      m_pitch_current += m_portamento_rate;
+    } else if (m_pitch_current > m_pitch_target + m_portamento_rate) {
+      m_pitch_current -= m_portamento_rate;
     } else {
       m_pitch_current = m_pitch_target;
     }
@@ -359,7 +359,7 @@ template <uint8_t T> int8_t          Osc<T>::m_mix_table[OSC_MIX_TABLE_LENGTH];
 template <uint8_t T> int16_t         Osc<T>::m_detune;
 template <uint8_t T> uint8_t         Osc<T>::m_fluctuation;
 template <uint8_t T> uint8_t         Osc<T>::m_detune_mod_amt;
-template <uint8_t T> uint16_t        Osc<T>::m_portamento;
+template <uint8_t T> uint16_t        Osc<T>::m_portamento_rate;
 template <uint8_t T> int8_t          Osc<T>::m_mod_level;
 template <uint8_t T> uint16_t        Osc<T>::m_lfo_phase;
 template <uint8_t T> int8_t          Osc<T>::m_lfo_level;
