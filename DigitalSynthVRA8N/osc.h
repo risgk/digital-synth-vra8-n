@@ -59,7 +59,7 @@ public:
     m_lfo_depth[1] = 0;
     m_waveform = OSC_WAVEFORM_SAW;
     m_pitch_bend_normalized = 0;
-    m_pitch_target = (NOTE_NUMBER_MIN - (12 + 2)) << 8;
+    m_pitch_target = (NOTE_NUMBER_MIN - (12 + 3)) << 8;
     m_pitch_current = m_pitch_target;
     m_pitch_real[0] = m_pitch_target;
     m_pitch_real[1] = m_pitch_target;
@@ -239,9 +239,9 @@ private:
   INLINE static const uint8_t* get_wave_table(uint8_t waveform, uint8_t note_number) {
     const uint8_t* result;
     if (waveform == OSC_WAVEFORM_SAW) {
-      result = g_osc_saw_wave_tables[note_number - (NOTE_NUMBER_MIN - (12 + 2))];
+      result = g_osc_saw_wave_tables[note_number - (NOTE_NUMBER_MIN - (12 + 3))];
     } else {
-      result = g_osc_sq_wave_tables[note_number - (NOTE_NUMBER_MIN - (12 + 2))];
+      result = g_osc_sq_wave_tables[note_number - (NOTE_NUMBER_MIN - (12 + 3))];
     }
     return result;
   }
@@ -314,7 +314,7 @@ private:
   template <uint8_t N>
   INLINE static void update_freq_2nd() {
     uint8_t coarse = high_byte(m_pitch_real[N]);
-    m_freq_temp[N] = g_osc_freq_table[coarse - (NOTE_NUMBER_MIN - (12 + 2))];
+    m_freq_temp[N] = g_osc_freq_table[coarse - (NOTE_NUMBER_MIN - (12 + 3))];
     m_wave_table_temp[N] = get_wave_table(m_waveform, coarse);
   }
 
