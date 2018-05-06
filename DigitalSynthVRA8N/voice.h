@@ -31,11 +31,6 @@ public:
 
   INLINE static void note_on(uint8_t note_number, uint8_t velocity) {
     static_cast<void>(velocity);
-    if ((note_number < NOTE_NUMBER_MIN) ||
-        (note_number > NOTE_NUMBER_MAX)) {
-      return;
-    }
-
     set_on_note(note_number);
     if (m_legato) {
       // Single Trigger and Auto Portamento
