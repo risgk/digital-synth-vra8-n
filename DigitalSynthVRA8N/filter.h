@@ -40,7 +40,7 @@ public:
   }
 
   INLINE static void set_cutoff(uint8_t controller_value) {
-    m_cutoff = controller_value;
+    m_cutoff = ((controller_value >> 1) << 1) + 1;
   }
 
   INLINE static void set_resonance(uint8_t controller_value) {
