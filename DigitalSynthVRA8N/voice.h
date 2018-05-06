@@ -43,6 +43,7 @@ public:
     if (m_legato) {
       // Single Trigger and Auto Portamento
       if (m_note_number != NOTE_NUMBER_INVALID) {
+        m_note_number = note_number;
         IOsc<0>::set_portamento(m_portamento);
         IOsc<0>::note_on(note_number);
       } else {
