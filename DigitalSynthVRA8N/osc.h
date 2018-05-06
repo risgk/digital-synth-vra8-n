@@ -175,7 +175,7 @@ public:
 
   INLINE static int16_t clock(uint8_t count) {
     if ((count & 0x01) == 1) {
-      int16_t wave_0_sub = get_tri_wave_level(m_phase[0] >> 8);
+      int16_t wave_0_sub = get_wave_level(g_osc_sin_wave_table_h1, m_phase[0] >> 8);
       m_level_sub = wave_0_sub * m_mix_sub;
     }
     else if ((count & (OSC_CONTROL_INTERVAL - 1)) == 0) {
@@ -265,15 +265,6 @@ private:
     return result;
   }
 
-  INLINE static int8_t get_tri_wave_level(uint16_t phase) {
-    uint16_t level = phase;
-    if ((level & 0x8000) != 0) {
-      level = ~level;
-    }
-    level -= 0x4000;
-    return high_sbyte(level << 1);
-  }
-
   template <uint8_t N>
   INLINE static void update_freq_0th() {
     if (m_pitch_current + m_portamento_rate < m_pitch_target) {
@@ -341,7 +332,7 @@ private:
 
   INLINE static void update_lfo() {
     m_lfo_phase += m_lfo_rate;
-    m_lfo_level = get_tri_wave_level(m_lfo_phase);
+    m_lfo_level = get_wave_level(g_osc_sin_wave_table_h1, m_lfo_phase);
     uint8_t lfo_depth = m_lfo_depth[0] + m_lfo_depth[1];
     if (lfo_depth > 127) {
       lfo_depth = 127;

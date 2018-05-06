@@ -107,6 +107,10 @@ generate_osc_wave_table_arrays do |last|
   end
 end
 
+generate_osc_wave_table("sin", 1, 4.0 / 3.0) do |n, k|
+  Math.sin((2.0 * Math::PI) * ((n + 0.5) / (1 << OSC_WAVE_TABLE_SAMPLES_BITS)) * k)
+end
+
 def generate_osc_wave_tables_array(name, organ = false, organ_last = 8)
   $file.printf("const uint8_t* g_osc_#{name}_wave_tables[] = {\n  ")
   $osc_harmonics_restriction_table.each_with_index do |freq, idx|
