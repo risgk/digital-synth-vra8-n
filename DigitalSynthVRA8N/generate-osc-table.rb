@@ -91,14 +91,14 @@ def generate_osc_wave_table_arrays(organ = false, organ_last = 8)
 end
 
 generate_osc_wave_table_arrays do |last|
-  generate_osc_wave_table("saw", last, 1.0) do |n, k|
+  generate_osc_wave_table("saw", last, 3.0 / 6.0) do |n, k|
     (2.0 / Math::PI) * Math.sin((2.0 * Math::PI) * ((n + 0.5) /
     (1 << OSC_WAVE_TABLE_SAMPLES_BITS)) * k) / k
   end
 end
 
 generate_osc_wave_table_arrays do |last|
-  generate_osc_wave_table("tri", last, 4.0 / 3.0) do |n, k|
+  generate_osc_wave_table("tri", last, 8.0 / 6.0) do |n, k|
     if k % 4 == 1
       (8.0 / (Math::PI ** 2)) * Math::sin((2.0 * Math::PI) * ((n + 0.5) /
         (1 << OSC_WAVE_TABLE_SAMPLES_BITS)) * k) / (k ** 2.0)
@@ -112,7 +112,7 @@ generate_osc_wave_table_arrays do |last|
 end
 
 generate_osc_wave_table_arrays do |last|
-  generate_osc_wave_table("sq", last, 1.0 / 1.5) do |n, k|
+  generate_osc_wave_table("sq", last, 2.0 / 6.0) do |n, k|
     if k % 2 == 1
       (4.0 / Math::PI) * Math.sin((2.0 * Math::PI) * ((n + 0.5) /
         (1 << OSC_WAVE_TABLE_SAMPLES_BITS)) * k) / k
@@ -122,7 +122,7 @@ generate_osc_wave_table_arrays do |last|
   end
 end
 
-generate_osc_wave_table("sin", 1, 4.0 / 3.0) do |n, k|
+generate_osc_wave_table("sin", 1, 8.0 / 6.0) do |n, k|
   Math.sin((2.0 * Math::PI) * ((n + 0.5) / (1 << OSC_WAVE_TABLE_SAMPLES_BITS)) * k)
 end
 
