@@ -153,25 +153,13 @@ public:
 
 private:
   INLINE static void set_env_decay(uint8_t controller_value) {
-    m_eg0_decay_sustain = controller_value;
-    if (m_eg0_decay_sustain < 64) {
-      IEnvGen<0>::set_decay(m_eg0_decay_sustain << 1);
-      IEnvGen<0>::set_sustain(false);
-    } else {
-      IEnvGen<0>::set_decay((127 - m_eg0_decay_sustain) << 1);
-      IEnvGen<0>::set_sustain(true);
-    }
+    IEnvGen<0>::set_decay(controller_value);
+    IEnvGen<0>::set_sustain(false);
   }
 
   INLINE static void set_amp_env_sus(uint8_t controller_value) {
-    m_eg1_decay_sustain = controller_value;
-    if (m_eg1_decay_sustain < 64) {
-      IEnvGen<1>::set_decay(m_eg1_decay_sustain << 1);
-      IEnvGen<1>::set_sustain(false);
-    } else {
-      IEnvGen<1>::set_decay((127 - m_eg1_decay_sustain) << 1);
-      IEnvGen<1>::set_sustain(true);
-    }
+    IEnvGen<1>::set_decay(controller_value);
+    IEnvGen<1>::set_sustain(true);
   }
 
   INLINE static void set_damper_pedal(uint8_t on) {

@@ -34,12 +34,12 @@ public:
     ISynthCore<0>::control_change(FILTER_CUTOFF, 64 );
     ISynthCore<0>::control_change(FILTER_RESO  , 64 );
     ISynthCore<0>::control_change(FILTER_EG_AMT, 96 );
-    ISynthCore<0>::control_change(FILTER_EG    , 32 );
+    ISynthCore<0>::control_change(FILTER_EG    , 64 );
 
     ISynthCore<0>::control_change(CC24         , 0  );
     ISynthCore<0>::control_change(FLUCTUATION  , 127);
     ISynthCore<0>::control_change(PORTAMENTO   , 0  );
-    ISynthCore<0>::control_change(AMP_EG       , 120);
+    ISynthCore<0>::control_change(AMP_EG       , 16 );
 
     ISynthCore<0>::control_change(CC28         , 0  );
     ISynthCore<0>::control_change(CC29         , 0  );
