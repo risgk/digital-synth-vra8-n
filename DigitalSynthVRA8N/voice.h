@@ -7,6 +7,7 @@ class Voice {
   static uint8_t m_eg1_decay_sustain;
   static boolean m_damper_pedal;
   static uint8_t m_note_number;
+  static uint8_t m_pre_note_number;
   static boolean m_note_hold;
   static uint8_t m_output_error;
   static uint8_t m_portamento;
@@ -16,6 +17,7 @@ public:
   INLINE static void initialize() {
     m_damper_pedal = false;
     m_note_number = NOTE_NUMBER_INVALID;
+    m_pre_note_number = NOTE_NUMBER_INVALID;
     m_note_hold = false;
     m_output_error = 0;
     m_portamento = 0;
@@ -47,20 +49,24 @@ public:
     if (m_legato) {
       // Single Trigger and Auto Portamento
       if (m_note_number != NOTE_NUMBER_INVALID) {
+        m_pre_note_number = m_note_number;
+        m_note_number = note_number;
         IOsc<0>::set_portamento(m_portamento);
-        IOsc<0>::note_on(note_number);
+        IOsc<0>::note_on(m_note_number);
       } else {
+        m_pre_note_number = NOTE_NUMBER_INVALID;
         m_note_number = note_number;
         IOsc<0>::set_portamento(0);
-        IOsc<0>::note_on(note_number);
+        IOsc<0>::note_on(m_note_number);
         IEnvGen<0>::note_on();
         IEnvGen<1>::note_on();
       }
     } else {
       // Multi Trigger and Portamento On
+      m_pre_note_number = NOTE_NUMBER_INVALID;
       m_note_number = note_number;
       IOsc<0>::set_portamento(m_portamento);
-      IOsc<0>::note_on(note_number);
+      IOsc<0>::note_on(m_note_number);
       IEnvGen<0>::note_on();
       IEnvGen<1>::note_on();
     }
@@ -71,14 +77,22 @@ public:
     if (m_note_number == note_number) {
       if (m_damper_pedal) {
         m_note_hold = true;
+      } else if (m_legato && (m_pre_note_number != NOTE_NUMBER_INVALID)) {
+        m_note_number = m_pre_note_number;
+        m_pre_note_number = NOTE_NUMBER_INVALID;
+        IOsc<0>::set_portamento(m_portamento);
+        IOsc<0>::note_on(m_note_number);
       } else {
         all_note_off();
       }
+    } else if (m_pre_note_number == note_number) {
+      m_pre_note_number = NOTE_NUMBER_INVALID;
     }
   }
 
   INLINE static void all_note_off() {
     m_note_number = NOTE_NUMBER_INVALID;
+    m_pre_note_number = NOTE_NUMBER_INVALID;
     m_note_hold = false;
     IEnvGen<0>::note_off();
     IEnvGen<1>::note_off();
@@ -202,6 +216,7 @@ private:
 
   INLINE static void turn_hold_off() {
     m_note_number = NOTE_NUMBER_INVALID;
+    m_pre_note_number = NOTE_NUMBER_INVALID;
     m_note_hold = false;
     IEnvGen<0>::note_off();
     IEnvGen<1>::note_off();
@@ -213,6 +228,7 @@ template <uint8_t T> uint8_t Voice<T>::m_eg0_decay_sustain;
 template <uint8_t T> uint8_t Voice<T>::m_eg1_decay_sustain;
 template <uint8_t T> boolean Voice<T>::m_damper_pedal;
 template <uint8_t T> uint8_t Voice<T>::m_note_number;
+template <uint8_t T> uint8_t Voice<T>::m_pre_note_number;
 template <uint8_t T> boolean Voice<T>::m_note_hold;
 template <uint8_t T> uint8_t Voice<T>::m_output_error;
 template <uint8_t T> uint8_t Voice<T>::m_portamento;
