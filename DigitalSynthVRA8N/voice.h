@@ -5,14 +5,18 @@ class Voice {
   static uint8_t m_count;
   static uint8_t m_eg0_decay_sustain;
   static uint8_t m_eg1_decay_sustain;
-  static uint8_t m_note_number;
+  static uint8_t m_active_note_number;
+  static uint8_t m_on_note[16];
   static uint8_t m_output_error;
   static uint8_t m_portamento;
   static boolean m_legato;
 
 public:
   INLINE static void initialize() {
-    m_note_number = NOTE_NUMBER_INVALID;
+    m_active_note_number = NOTE_NUMBER_INVALID;
+    for (uint8_t i = 0; i < 16; ++i) {
+      m_on_note[i] = 0x00;
+    }
     m_output_error = 0;
     m_portamento = 0;
     m_legato = true;
@@ -27,35 +31,29 @@ public:
 
   INLINE static void note_on(uint8_t note_number, uint8_t velocity) {
     static_cast<void>(velocity);
-
-#if defined(TRANSPOSE)
-    if ((note_number < NOTE_NUMBER_MIN - TRANSPOSE) ||
-        (note_number > NOTE_NUMBER_MAX - TRANSPOSE)) {
-      return;
-    }
-#else
     if ((note_number < NOTE_NUMBER_MIN) ||
         (note_number > NOTE_NUMBER_MAX)) {
       return;
     }
-#endif
 
+    set_on_note(note_number);
     if (m_legato) {
       // Single Trigger and Auto Portamento
-      if (m_note_number != NOTE_NUMBER_INVALID) {
-        m_note_number = note_number;
+      uint8_t n = get_active_on_note();
+      if (m_active_note_number != NOTE_NUMBER_INVALID) {
+        m_active_note_number = n;
         IOsc<0>::set_portamento(m_portamento);
-        IOsc<0>::note_on(note_number);
+        IOsc<0>::note_on(n);
       } else {
-        m_note_number = note_number;
+        m_active_note_number = n;
         IOsc<0>::set_portamento(0);
-        IOsc<0>::note_on(note_number);
+        IOsc<0>::note_on(n);
         IEnvGen<0>::note_on();
         IEnvGen<1>::note_on();
       }
     } else {
       // Multi Trigger and Portamento On
-      m_note_number = note_number;
+      m_active_note_number = note_number;
       IOsc<0>::set_portamento(m_portamento);
       IOsc<0>::note_on(note_number);
       IEnvGen<0>::note_on();
@@ -64,13 +62,29 @@ public:
   }
 
   INLINE static void note_off(uint8_t note_number) {
-    if (m_note_number == note_number) {
-      all_note_off();
+    if (m_legato) {
+      clear_on_note(note_number);
+      uint8_t n = get_active_on_note();
+      if (n == NOTE_NUMBER_INVALID) {
+        all_note_off();
+      }
+      else {
+        m_active_note_number = n;
+        IOsc<0>::set_portamento(m_portamento);
+        IOsc<0>::note_on(n);
+      }
+    } else {
+      if (m_active_note_number == note_number) {
+        all_note_off();
+      }
     }
   }
 
   INLINE static void all_note_off() {
-    m_note_number = NOTE_NUMBER_INVALID;
+    for (uint8_t i = 0; i < 16; ++i) {
+      m_on_note[i] = 0x00;
+    }
+    m_active_note_number = NOTE_NUMBER_INVALID;
     IEnvGen<0>::note_off();
     IEnvGen<1>::note_off();
   }
@@ -119,9 +133,15 @@ public:
       break;
     case CC24:
       if (controller_value < 64) {
-        m_legato = false;
+        if (m_legato) {
+          m_legato = false;
+          all_note_off();
+        }
       } else {
-        m_legato = true;
+        if (!m_legato) {
+          m_legato = true;
+          all_note_off();
+        }
       }
       break;
     case FILTER_EG:
@@ -170,12 +190,79 @@ private:
     IEnvGen<1>::set_decay(controller_value);
     IEnvGen<1>::set_sustain(true);
   }
+
+  INLINE static void set_on_note(uint8_t note_number) {
+    m_on_note[note_number >> 3] |= (1 << (note_number & 0x07));
+  }
+
+  INLINE static void clear_on_note(uint8_t note_number) {
+    m_on_note[note_number >> 3] &= ~(1 << (note_number & 0x07));
+  }
+
+  INLINE static uint8_t get_active_on_note() {
+    return get_lowest_on_note();
+  }
+
+  INLINE static uint8_t get_highest_on_note() {
+    uint8_t highest_on_note = NOTE_NUMBER_INVALID;
+    for (int8_t i = 15; i >= 0; --i) {
+      if (m_on_note[i] != 0x00) {
+        if        (m_on_note[i] & 0x80) {
+          highest_on_note = (i << 3) + 7;
+        } else if (m_on_note[i] & 0x40) {
+          highest_on_note = (i << 3) + 6;
+        } else if (m_on_note[i] & 0x20) {
+          highest_on_note = (i << 3) + 5;
+        } else if (m_on_note[i] & 0x10) {
+          highest_on_note = (i << 3) + 4;
+        } else if (m_on_note[i] & 0x08) {
+          highest_on_note = (i << 3) + 3;
+        } else if (m_on_note[i] & 0x04) {
+          highest_on_note = (i << 3) + 2;
+        } else if (m_on_note[i] & 0x02) {
+          highest_on_note = (i << 3) + 1;
+        } else if (m_on_note[i] & 0x01) {
+          highest_on_note = (i << 3) + 0;
+        }
+        break;
+      }
+    }
+    return highest_on_note;
+  }
+
+  INLINE static uint8_t get_lowest_on_note() {
+    uint8_t lowest_on_note = NOTE_NUMBER_INVALID;
+    for (uint8_t i = 0; i < 16; ++i) {
+      if (m_on_note[i] != 0x00) {
+        if        (m_on_note[i] & 0x01) {
+          lowest_on_note = (i << 3) + 0;
+        } else if (m_on_note[i] & 0x02) {
+          lowest_on_note = (i << 3) + 1;
+        } else if (m_on_note[i] & 0x04) {
+          lowest_on_note = (i << 3) + 2;
+        } else if (m_on_note[i] & 0x08) {
+          lowest_on_note = (i << 3) + 3;
+        } else if (m_on_note[i] & 0x10) {
+          lowest_on_note = (i << 3) + 4;
+        } else if (m_on_note[i] & 0x20) {
+          lowest_on_note = (i << 3) + 5;
+        } else if (m_on_note[i] & 0x40) {
+          lowest_on_note = (i << 3) + 6;
+        } else if (m_on_note[i] & 0x80) {
+          lowest_on_note = (i << 3) + 7;
+        }
+        break;
+      }
+    }
+    return lowest_on_note;
+  }
 };
 
 template <uint8_t T> uint8_t Voice<T>::m_count;
 template <uint8_t T> uint8_t Voice<T>::m_eg0_decay_sustain;
 template <uint8_t T> uint8_t Voice<T>::m_eg1_decay_sustain;
-template <uint8_t T> uint8_t Voice<T>::m_note_number;
+template <uint8_t T> uint8_t Voice<T>::m_active_note_number;
+template <uint8_t T> uint8_t Voice<T>::m_on_note[16];
 template <uint8_t T> uint8_t Voice<T>::m_output_error;
 template <uint8_t T> uint8_t Voice<T>::m_portamento;
 template <uint8_t T> boolean Voice<T>::m_legato;
