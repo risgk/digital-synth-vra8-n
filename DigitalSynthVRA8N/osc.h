@@ -28,7 +28,7 @@ class Osc {
   static uint16_t       m_pitch_target;
   static uint16_t       m_pitch_current;
   static uint16_t       m_pitch_real[2];
-  static const uint8_t* m_wave_table[2];
+  static const uint8_t* m_wave_table[3];
   static const uint8_t* m_wave_table_temp[2];
   static __uint24       m_freq[2];
   static __uint24       m_freq_temp[2];
@@ -65,6 +65,7 @@ public:
     m_pitch_real[1] = m_pitch_target;
     m_wave_table[0] = g_osc_saw_wave_tables[0];
     m_wave_table[1] = g_osc_saw_wave_tables[0];
+    m_wave_table[2] = g_osc_tri_wave_tables[0];
     m_wave_table_temp[0] = g_osc_saw_wave_tables[0];
     m_wave_table_temp[1] = g_osc_saw_wave_tables[0];
     m_freq[0] = g_osc_freq_table[0];
@@ -175,7 +176,7 @@ public:
 
   INLINE static int16_t clock(uint8_t count) {
     if ((count & 0x01) == 1) {
-      int16_t wave_0_sub = get_wave_level(g_osc_sin_wave_table_h1, m_phase[0] >> 8);
+      int16_t wave_0_sub = get_wave_level(m_wave_table[2], m_phase[0] >> 8);
       m_level_sub = wave_0_sub * m_mix_sub;
     }
     else if ((count & (OSC_CONTROL_INTERVAL - 1)) == 0) {
@@ -194,6 +195,9 @@ public:
         update_freq_3rd<0>();
         break;
       case 0x4:
+        update_waveform_sub();
+        break;
+      case 0x5:
         m_rnd_cnt++;
         if ((m_rnd_cnt & 0x03) == 0x00) {
           update_rnd();
@@ -211,7 +215,7 @@ public:
       case 0xB:
         update_freq_3rd<1>();
         break;
-      case 0xC:
+      case 0xD:
         if ((m_rnd_cnt & 0x03) == 0x00) {
           update_rnd();
         }
@@ -318,6 +322,11 @@ private:
     m_wave_table[N] = m_wave_table_temp[N];
   }
 
+  INLINE static void update_waveform_sub() {
+    uint8_t coarse = high_byte(m_pitch_real[0]);
+    m_wave_table[2] = g_osc_tri_wave_tables[coarse - NOTE_NUMBER_MIN];
+  }
+
   INLINE static void update_rnd() {
     m_rnd_temp = m_rnd_temp ^ (m_rnd_temp << 5);
     m_rnd_temp = m_rnd_temp ^ (m_rnd_temp >> 9);
@@ -360,7 +369,7 @@ template <uint8_t T> int16_t         Osc<T>::m_pitch_bend_normalized;
 template <uint8_t T> uint16_t        Osc<T>::m_pitch_target;
 template <uint8_t T> uint16_t        Osc<T>::m_pitch_current;
 template <uint8_t T> uint16_t        Osc<T>::m_pitch_real[2];
-template <uint8_t T> const uint8_t*  Osc<T>::m_wave_table[2];
+template <uint8_t T> const uint8_t*  Osc<T>::m_wave_table[3];
 template <uint8_t T> const uint8_t*  Osc<T>::m_wave_table_temp[2];
 template <uint8_t T> __uint24        Osc<T>::m_freq[2];
 template <uint8_t T> __uint24        Osc<T>::m_freq_temp[2];
