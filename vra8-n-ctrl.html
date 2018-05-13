@@ -53,8 +53,8 @@ const FILTER_RES    = 17;
 const FILTER_EG_AMT = 18;
 const FILTER_EG     = 19;
 
-const CC104         = 20;
-const CC105         = 21;
+const LFO_RATE      = 20;
+const LFO_DEPTH     = 21;
 const CC106         = 22;
 const CC107         = 23;
 
@@ -75,26 +75,26 @@ const AMP_EG        = 27;
 
 const CC28          = 28;
 const CC29          = 29;
-const LFO_RATE      = 30;
-const LFO_DEPTH     = 31;
+const CC104         = 30;
+const CC105         = 31;
 
 const ALL_NOTES_OFF = 123;
 
 var controllersInLocalStorage = [
-  OSC_COLOR_1  ,
-  OSC_COLOR_2  ,
-  MOD_RATE     ,
-  MOD_DEPTH    ,
-
   FILTER_CUTOFF,
   FILTER_RES   ,
   FILTER_EG_AMT,
   FILTER_EG    ,
 
-  CC104        ,
-  CC105        ,
+  LFO_RATE     ,
+  LFO_DEPTH    ,
   CC106        ,
   CC107        ,
+
+  OSC_COLOR_1  ,
+  OSC_COLOR_2  ,
+  MOD_RATE     ,
+  MOD_DEPTH    ,
 
   CC108        ,
   CC109        ,
@@ -108,8 +108,8 @@ var controllersInLocalStorage = [
 
   CC28         ,
   CC29         ,
-  LFO_RATE     ,
-  LFO_DEPTH    ,
+  CC104        ,
+  CC105        ,
 ];
 </script>
 <script>
@@ -456,8 +456,8 @@ function noteOff(noteNumber) {
     <td><span   id="spanCC18">-1</span></td>
     <td><input id="inputCC19" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(19, value)"></td>
     <td><span   id="spanCC19">-1</span></td></tr>
-<tr><td>----                  </td><td></td>
-    <td>----                  </td><td></td>
+<tr><td>LFO RATE              </td><td></td>
+    <td>LFO DEPTH             </td><td></td>
     <td>----                  </td><td></td>
     <td>----                  </td></tr>
 <tr><td><input id="inputCC20" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(20, value)"></td>
@@ -508,8 +508,8 @@ function noteOff(noteNumber) {
     <td><span   id="spanCC27">-1</span></td>
 <tr><td>----                  </td><td></td>
     <td>----                  </td><td></td>
-    <td>VIBRATO RATE          </td><td></td>
-    <td>VIBRATO DEPTH         </td></tr>
+    <td>----                  </td><td></td>
+    <td>----                  </td></tr>
 <tr><td><input id="inputCC28" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(28, value)"></td>
     <td><span   id="spanCC28">-1</span></td>
     <td><input id="inputCC29" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(29, value)"></td>

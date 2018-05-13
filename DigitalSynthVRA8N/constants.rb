@@ -55,8 +55,8 @@ FILTER_RES    = 17
 FILTER_EG_AMT = 18
 FILTER_EG     = 19
 
-CC104         = 20
-CC105         = 21
+LFO_RATE      = 20
+LFO_DEPTH     = 21
 CC106         = 22
 CC107         = 23
 
@@ -77,8 +77,8 @@ AMP_EG        = 27
 
 CC28          = 28
 CC29          = 29
-LFO_RATE      = 30
-LFO_DEPTH     = 31
+CC104         = 30
+CC105         = 31
 
 ALL_NOTES_OFF = 123
 OMNI_MODE_OFF = 124

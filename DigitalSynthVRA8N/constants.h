@@ -55,8 +55,8 @@ const uint8_t   FILTER_RES    = 17;
 const uint8_t   FILTER_EG_AMT = 18;
 const uint8_t   FILTER_EG     = 19;
 
-const uint8_t   CC104         = 20;
-const uint8_t   CC105         = 21;
+const uint8_t   LFO_RATE      = 20;
+const uint8_t   LFO_DEPTH     = 21;
 const uint8_t   CC106         = 22;
 const uint8_t   CC107         = 23;
 
@@ -77,8 +77,8 @@ const uint8_t   AMP_EG        = 27;
 
 const uint8_t   CC28          = 28;
 const uint8_t   CC29          = 29;
-const uint8_t   LFO_RATE      = 30;
-const uint8_t   LFO_DEPTH     = 31;
+const uint8_t   CC104         = 30;
+const uint8_t   CC105         = 31;
 
 const uint8_t   ALL_NOTES_OFF = 123;
 const uint8_t   OMNI_MODE_OFF = 124;
