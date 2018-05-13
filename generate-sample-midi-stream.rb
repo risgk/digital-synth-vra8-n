@@ -53,8 +53,8 @@ control_change(AMP_EG       , 16 )
 
 control_change(CC28         , 0  )
 control_change(CC29         , 0  )
-control_change(CC30         , 64 )
-control_change(CC31         , 0  )
+control_change(LFO_RATE     , 64 )
+control_change(LFO_DEPTH    , 0  )
 
 play_cegbdfac(3)
 

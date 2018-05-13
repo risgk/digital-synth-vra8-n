@@ -32,7 +32,7 @@ public:
     ISynthCore<0>::control_change(MOD_DEPTH    , 64 );
 
     ISynthCore<0>::control_change(FILTER_CUTOFF, 64 );
-    ISynthCore<0>::control_change(FILTER_RESO  , 64 );
+    ISynthCore<0>::control_change(FILTER_RES   , 64 );
     ISynthCore<0>::control_change(FILTER_EG_AMT, 96 );
     ISynthCore<0>::control_change(FILTER_EG    , 64 );
 
@@ -43,8 +43,8 @@ public:
 
     ISynthCore<0>::control_change(CC28         , 0  );
     ISynthCore<0>::control_change(CC29         , 0  );
-    ISynthCore<0>::control_change(CC30         , 64 );
-    ISynthCore<0>::control_change(CC31         , 0  );
+    ISynthCore<0>::control_change(LFO_RATE     , 64 );
+    ISynthCore<0>::control_change(LFO_DEPTH    , 0  );
   }
 
   INLINE static void receive_midi_byte(uint8_t b) {

@@ -89,7 +89,7 @@ public:
     case FILTER_CUTOFF:
       IFilter<0>::set_cutoff(controller_value);
       break;
-    case FILTER_RESO:
+    case FILTER_RES:
       IFilter<0>::set_resonance(controller_value);
       break;
     case FILTER_EG_AMT:
@@ -105,10 +105,10 @@ public:
         IOsc<0>::set_sub_osc_level(0);
       }
       break;
-    case CC30:
+    case LFO_RATE:
       IOsc<0>::set_lfo_rate(controller_value);
       break;
-    case CC31:
+    case LFO_DEPTH:
       IOsc<0>::set_lfo_depth<0>(controller_value);
       break;
     case MODULATION:

@@ -50,15 +50,15 @@ ACTIVE_SENSING        = 0xFE
 
 MODULATION    = 1
 
-CC104         = 16
-CC105         = 17
-CC106         = 18
-CC107         = 19
+FILTER_CUTOFF = 16
+FILTER_RES    = 17
+FILTER_EG_AMT = 18
+FILTER_EG     = 19
 
-FILTER_CUTOFF = 20
-FILTER_RESO   = 21
-FILTER_EG_AMT = 22
-FILTER_EG     = 23
+CC104         = 20
+CC105         = 21
+CC106         = 22
+CC107         = 23
 
 OSC_COLOR_1   = 80
 OSC_COLOR_2   = 81
@@ -77,8 +77,8 @@ AMP_EG        = 27
 
 CC28          = 28
 CC29          = 29
-CC30          = 30
-CC31          = 31
+LFO_RATE      = 30
+LFO_DEPTH     = 31
 
 ALL_NOTES_OFF = 123
 OMNI_MODE_OFF = 124

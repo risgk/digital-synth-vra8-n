@@ -48,15 +48,15 @@ const CONTROL_CHANGE = 0xB0;
 
 const MODULATION    = 1;
 
-const CC104         = 16;
-const CC105         = 17;
-const CC106         = 18;
-const CC107         = 19;
+const FILTER_CUTOFF = 16;
+const FILTER_RES    = 17;
+const FILTER_EG_AMT = 18;
+const FILTER_EG     = 19;
 
-const FILTER_CUTOFF = 20;
-const FILTER_RESO   = 21;
-const FILTER_EG_AMT = 22;
-const FILTER_EG     = 23;
+const CC104         = 20;
+const CC105         = 21;
+const CC106         = 22;
+const CC107         = 23;
 
 const OSC_COLOR_1   = 80;
 const OSC_COLOR_2   = 81;
@@ -75,8 +75,8 @@ const AMP_EG        = 27;
 
 const CC28          = 28;
 const CC29          = 29;
-const CC30          = 30;
-const CC31          = 31;
+const LFO_RATE      = 30;
+const LFO_DEPTH     = 31;
 
 const ALL_NOTES_OFF = 123;
 
@@ -87,7 +87,7 @@ var controllersInLocalStorage = [
   MOD_DEPTH    ,
 
   FILTER_CUTOFF,
-  FILTER_RESO  ,
+  FILTER_RES   ,
   FILTER_EG_AMT,
   FILTER_EG    ,
 
@@ -108,8 +108,8 @@ var controllersInLocalStorage = [
 
   CC28         ,
   CC29         ,
-  CC30         ,
-  CC31         ,
+  LFO_RATE     ,
+  LFO_DEPTH    ,
 ];
 </script>
 <script>
@@ -303,7 +303,7 @@ function preset(number) {
   presetControllers[MOD_DEPTH    ] = [0  , 64 , 64 , 64 , 64 , 64 , 32 , 0  ];
 
   presetControllers[FILTER_CUTOFF] = [0  , 64 , 80 , 80 , 96 , 0  , 127, 127];
-  presetControllers[FILTER_RESO  ] = [0  , 64 , 80 , 80 , 96 , 127, 0  , 0  ];
+  presetControllers[FILTER_RES   ] = [0  , 64 , 80 , 80 , 96 , 127, 0  , 0  ];
   presetControllers[FILTER_EG_AMT] = [0  , 96 , 80 , 80 , 16 , 112, 64 , 64 ];
   presetControllers[FILTER_EG    ] = [0  , 64 , 16 , 16 , 32 , 48 , 64 , 0  ];
 
@@ -324,8 +324,8 @@ function preset(number) {
 
   presetControllers[CC28         ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
   presetControllers[CC29         ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
-  presetControllers[CC30         ] = [0  , 64 , 64 , 64 , 64 , 64 , 64 , 64 ];
-  presetControllers[CC31         ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
+  presetControllers[LFO_RATE     ] = [0  , 64 , 64 , 64 , 64 , 64 , 64 , 64 ];
+  presetControllers[LFO_DEPTH    ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
 
   controllersInLocalStorage.forEach(function(i) {
     onChangeControlChange(i, presetControllers[i][number]);
@@ -444,10 +444,10 @@ function noteOff(noteNumber) {
 
 <table>
 <tr><td>&nbsp;</td></tr>
-<tr><td>----                  </td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-    <td>----                  </td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-    <td>----                  </td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-    <td>----                  </td></tr>
+<tr><td>CUTOFF                </td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>RESONANCE             </td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>FEG AMT (-/+)         </td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>FEG DECAY             </td></tr>
 <tr><td><input id="inputCC16" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(16, value)"></td>
     <td><span   id="spanCC16">-1</span></td>
     <td><input id="inputCC17" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(17, value)"></td>
@@ -456,10 +456,10 @@ function noteOff(noteNumber) {
     <td><span   id="spanCC18">-1</span></td>
     <td><input id="inputCC19" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(19, value)"></td>
     <td><span   id="spanCC19">-1</span></td></tr>
-<tr><td>CUTOFF                </td><td></td>
-    <td>RESONANCE             </td><td></td>
-    <td>FEG AMT (-/+)         </td><td></td>
-    <td>FEG DECAY             </td></tr>
+<tr><td>----                  </td><td></td>
+    <td>----                  </td><td></td>
+    <td>----                  </td><td></td>
+    <td>----                  </td></tr>
 <tr><td><input id="inputCC20" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(20, value)"></td>
     <td><span   id="spanCC20">-1</span></td>
     <td><input id="inputCC21" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(21, value)"></td>
