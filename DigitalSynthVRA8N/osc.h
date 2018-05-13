@@ -94,10 +94,8 @@ public:
   }
 
   INLINE static void set_waveform(uint8_t controller_value) {
-    if (controller_value < 56) {
+    if (controller_value < 64) {
       m_waveform = OSC_WAVEFORM_SAW;
-    } else if (controller_value < 72) {
-      m_waveform = OSC_WAVEFORM_TRI;
     } else {
       m_waveform = OSC_WAVEFORM_SQ;
     }
@@ -247,8 +245,6 @@ private:
     const uint8_t* result;
     if (waveform == OSC_WAVEFORM_SAW) {
       result = g_osc_saw_wave_tables[note_number - NOTE_NUMBER_MIN];
-    } else if (waveform == OSC_WAVEFORM_TRI) {
-      result = g_osc_tri_wave_tables[note_number - NOTE_NUMBER_MIN];
     } else {
       result = g_osc_sq_wave_tables[note_number - NOTE_NUMBER_MIN];
     }
