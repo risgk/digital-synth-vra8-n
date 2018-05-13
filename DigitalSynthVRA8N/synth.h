@@ -37,7 +37,7 @@ public:
     ISynthCore<0>::control_change(FILTER_EG    , 64 );
 
     ISynthCore<0>::control_change(CC24         , 0  );
-    ISynthCore<0>::control_change(FLUCTUATION  , 127);
+    ISynthCore<0>::control_change(CC25         , 127);
     ISynthCore<0>::control_change(PORTAMENTO   , 0  );
     ISynthCore<0>::control_change(AMP_EG       , 16 );
 

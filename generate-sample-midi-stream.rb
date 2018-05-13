@@ -47,7 +47,7 @@ control_change(FILTER_EG_AMT, 96 )
 control_change(FILTER_EG    , 64 )
 
 control_change(CC24         , 0  )
-control_change(FLUCTUATION  , 127)
+control_change(CC25         , 127)
 control_change(PORTAMENTO   , 0  )
 control_change(AMP_EG       , 16 )
 

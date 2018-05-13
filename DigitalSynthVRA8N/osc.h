@@ -48,7 +48,7 @@ public:
     set_sub_osc_level(0);
     m_level_sub = 0;
     m_detune = 0;
-    m_fluctuation = 0;
+    m_fluctuation = FLUCTUATION_INIT;
     m_detune_mod_amt = 0;
     m_portamento_rate = 0x4000;
     m_mod_level = 0;

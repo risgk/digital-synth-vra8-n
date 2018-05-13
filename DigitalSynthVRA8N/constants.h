@@ -71,7 +71,7 @@ const uint8_t   CC110         = 86;
 const uint8_t   CC111         = 87;
 
 const uint8_t   CC24          = 24;
-const uint8_t   FLUCTUATION   = 25;
+const uint8_t   CC25          = 25;
 const uint8_t   PORTAMENTO    = 26;
 const uint8_t   AMP_EG        = 27;
 

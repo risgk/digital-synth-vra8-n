@@ -71,7 +71,7 @@ CC110         = 86
 CC111         = 87
 
 CC24          = 24
-FLUCTUATION   = 25
+CC25          = 25
 PORTAMENTO    = 26
 AMP_EG        = 27
 

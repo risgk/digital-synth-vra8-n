@@ -120,7 +120,7 @@ public:
     case MOD_DEPTH:
       IOsc<0>::set_mix(controller_value);
       break;
-    case FLUCTUATION:
+    case CC25:
       IOsc<0>::set_detune_noise_gen_amt(controller_value);
       break;
     case PORTAMENTO:

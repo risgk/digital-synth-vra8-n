@@ -69,7 +69,7 @@ const CC110         = 86;
 const CC111         = 87;
 
 const CC24          = 24;
-const FLUCTUATION   = 25;
+const CC25          = 25;
 const PORTAMENTO    = 26;
 const AMP_EG        = 27;
 
@@ -102,7 +102,7 @@ var controllersInLocalStorage = [
   CC111        ,
 
   CC24         ,
-  FLUCTUATION  ,
+  CC25         ,
   PORTAMENTO   ,
   AMP_EG       ,
 
@@ -318,7 +318,7 @@ function preset(number) {
   presetControllers[CC111        ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
 
   presetControllers[CC24         ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
-  presetControllers[FLUCTUATION  ] = [0  , 127, 127, 127, 127, 127, 127, 127];
+  presetControllers[CC25         ] = [0  , 127, 127, 127, 127, 127, 127, 127];
   presetControllers[PORTAMENTO   ] = [0  , 0  , 0  , 0  , 32 , 0  , 0  , 0  ];
   presetControllers[AMP_EG       ] = [0  , 16 , 16 , 16 , 16 , 48 , 16 , 0  ];
 
@@ -495,7 +495,7 @@ function noteOff(noteNumber) {
     <td><span   id="spanCC87">-1</span></td>
 <tr><td>&nbsp;</td></tr>
 <tr><td>LEGATO                </td><td></td>
-    <td>FLUCTUATION           </td><td></td>
+    <td>----                  </td><td></td>
     <td>PORTAMENTO            </td><td></td>
     <td>AEG RELEASE           </td></tr>
 <tr><td><input id="inputCC24" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(24, value)"></td>
