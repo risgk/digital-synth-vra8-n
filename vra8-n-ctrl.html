@@ -58,15 +58,15 @@ const FILTER_RESO   = 21;
 const FILTER_EG_AMT = 22;
 const FILTER_EG     = 23;
 
-const CC104         = 104;
-const CC105         = 105;
-const CC106         = 106;
-const CC107         = 107;
+const CC104         = 80;
+const CC105         = 81;
+const CC106         = 82;
+const CC107         = 83;
 
-const CC108         = 108;
-const CC109         = 109;
-const CC110         = 110;
-const CC111         = 111;
+const CC108         = 90;
+const CC109         = 85;
+const CC110         = 86;
+const CC111         = 87;
 
 const CC24          = 24;
 const FLUCTUATION   = 25;
@@ -345,15 +345,11 @@ function rand(n) {
 
 function loadControllers(number) {
   var value;
-  value = localStorage.getItem("keyMemory" + String(number) + "CC" + String(controllersInLocalStorage[0]));
-  if (!value) {
-    return;
-  }
   allNotesOff();
   controllersInLocalStorage.forEach(function(i) {
     value = localStorage.getItem("keyMemory" + String(number) + "CC" + String(i));
     if (!value) {
-      return;
+      value = 0;
     }
     onChangeControlChange(i, value);
   });
@@ -477,26 +473,26 @@ function noteOff(noteNumber) {
     <td>----                  </td><td></td>
     <td>----                  </td><td></td>
     <td>----                  </td></tr>
-<tr><td><input id="inputCC104" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(104, value)"></td>
-    <td><span   id="spanCC104">-1</span></td>
-    <td><input id="inputCC105" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(105, value)"></td>
-    <td><span   id="spanCC105">-1</span></td>
-    <td><input id="inputCC106" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(106, value)"></td>
-    <td><span   id="spanCC106">-1</span></td>
-    <td><input id="inputCC107" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(107, value)"></td>
-    <td><span   id="spanCC107">-1</span></td>
+<tr><td><input id="inputCC80" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(80, value)"></td>
+    <td><span   id="spanCC80">-1</span></td>
+    <td><input id="inputCC81" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(81, value)"></td>
+    <td><span   id="spanCC81">-1</span></td>
+    <td><input id="inputCC82" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(82, value)"></td>
+    <td><span   id="spanCC82">-1</span></td>
+    <td><input id="inputCC83" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(83, value)"></td>
+    <td><span   id="spanCC83">-1</span></td>
 <tr><td>----                  </td><td></td>
     <td>----                  </td><td></td>
     <td>----                  </td><td></td>
     <td>----                  </td></tr>
-<tr><td><input id="inputCC108" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(108, value)"></td>
-    <td><span   id="spanCC108">-1</span></td>
-    <td><input id="inputCC109" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(109, value)"></td>
-    <td><span   id="spanCC109">-1</span></td>
-    <td><input id="inputCC110" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(110, value)"></td>
-    <td><span   id="spanCC110">-1</span></td>
-    <td><input id="inputCC111" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(111, value)"></td>
-    <td><span   id="spanCC111">-1</span></td>
+<tr><td><input id="inputCC90" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(90, value)"></td>
+    <td><span   id="spanCC90">-1</span></td>
+    <td><input id="inputCC85" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(85, value)"></td>
+    <td><span   id="spanCC85">-1</span></td>
+    <td><input id="inputCC86" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(86, value)"></td>
+    <td><span   id="spanCC86">-1</span></td>
+    <td><input id="inputCC87" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(87, value)"></td>
+    <td><span   id="spanCC87">-1</span></td>
 <tr><td>&nbsp;</td></tr>
 <tr><td>LEGATO                </td><td></td>
     <td>FLUCTUATION           </td><td></td>

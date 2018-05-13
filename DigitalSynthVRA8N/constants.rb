@@ -60,15 +60,15 @@ FILTER_RESO   = 21
 FILTER_EG_AMT = 22
 FILTER_EG     = 23
 
-CC104         = 104
-CC105         = 105
-CC106         = 106
-CC107         = 107
+CC104         = 80
+CC105         = 81
+CC106         = 82
+CC107         = 83
 
-CC108         = 108
-CC109         = 109
-CC110         = 110
-CC111         = 111
+CC108         = 90
+CC109         = 85
+CC110         = 86
+CC111         = 87
 
 CC24          = 24
 FLUCTUATION   = 25

@@ -60,15 +60,15 @@ const uint8_t   FILTER_RESO   = 21;
 const uint8_t   FILTER_EG_AMT = 22;
 const uint8_t   FILTER_EG     = 23;
 
-const uint8_t   CC104         = 104;
-const uint8_t   CC105         = 105;
-const uint8_t   CC106         = 106;
-const uint8_t   CC107         = 107;
+const uint8_t   CC104         = 80;
+const uint8_t   CC105         = 81;
+const uint8_t   CC106         = 82;
+const uint8_t   CC107         = 83;
 
-const uint8_t   CC108         = 108;
-const uint8_t   CC109         = 109;
-const uint8_t   CC110         = 110;
-const uint8_t   CC111         = 111;
+const uint8_t   CC108         = 90;
+const uint8_t   CC109         = 85;
+const uint8_t   CC110         = 86;
+const uint8_t   CC111         = 87;
 
 const uint8_t   CC24          = 24;
 const uint8_t   FLUCTUATION   = 25;
