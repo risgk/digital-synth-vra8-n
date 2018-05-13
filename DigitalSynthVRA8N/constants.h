@@ -60,16 +60,6 @@ const uint8_t   FILTER_RESO   = 21;
 const uint8_t   FILTER_EG_AMT = 22;
 const uint8_t   FILTER_EG     = 23;
 
-const uint8_t   CC24          = 24;
-const uint8_t   FLUCTUATION   = 25;
-const uint8_t   PORTAMENTO    = 26;
-const uint8_t   AMP_EG        = 27;
-
-const uint8_t   CC28          = 28;
-const uint8_t   CC29          = 29;
-const uint8_t   CC30          = 30;
-const uint8_t   CC31          = 31;
-
 const uint8_t   CC104         = 104;
 const uint8_t   CC105         = 105;
 const uint8_t   CC106         = 106;
@@ -79,6 +69,16 @@ const uint8_t   CC108         = 108;
 const uint8_t   CC109         = 109;
 const uint8_t   CC110         = 110;
 const uint8_t   CC111         = 111;
+
+const uint8_t   CC24          = 24;
+const uint8_t   FLUCTUATION   = 25;
+const uint8_t   PORTAMENTO    = 26;
+const uint8_t   AMP_EG        = 27;
+
+const uint8_t   CC28          = 28;
+const uint8_t   CC29          = 29;
+const uint8_t   CC30          = 30;
+const uint8_t   CC31          = 31;
 
 const uint8_t   ALL_NOTES_OFF = 123;
 const uint8_t   OMNI_MODE_OFF = 124;

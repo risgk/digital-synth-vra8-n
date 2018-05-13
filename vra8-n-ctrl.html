@@ -58,16 +58,6 @@ const FILTER_RESO   = 21;
 const FILTER_EG_AMT = 22;
 const FILTER_EG     = 23;
 
-const CC24          = 24;
-const FLUCTUATION   = 25;
-const PORTAMENTO    = 26;
-const AMP_EG        = 27;
-
-const CC28          = 28;
-const CC29          = 29;
-const CC30          = 30;
-const CC31          = 31;
-
 const CC104         = 104;
 const CC105         = 105;
 const CC106         = 106;
@@ -78,13 +68,49 @@ const CC109         = 109;
 const CC110         = 110;
 const CC111         = 111;
 
+const CC24          = 24;
+const FLUCTUATION   = 25;
+const PORTAMENTO    = 26;
+const AMP_EG        = 27;
+
+const CC28          = 28;
+const CC29          = 29;
+const CC30          = 30;
+const CC31          = 31;
+
 const ALL_NOTES_OFF = 123;
 
-const CONTROLLERS_FIRST_0 = 16;
-const CONTROLLERS_LAST_0  = 31;
+var controllersInLocalStorage = [
+  OSC_COLOR_1  ,
+  OSC_COLOR_2  ,
+  MOD_RATE     ,
+  MOD_DEPTH    ,
 
-const CONTROLLERS_FIRST_1 = 104;
-const CONTROLLERS_LAST_1  = 111;
+  FILTER_CUTOFF,
+  FILTER_RESO  ,
+  FILTER_EG_AMT,
+  FILTER_EG    ,
+
+  CC104        ,
+  CC105        ,
+  CC106        ,
+  CC107        ,
+
+  CC108        ,
+  CC109        ,
+  CC110        ,
+  CC111        ,
+
+  CC24         ,
+  FLUCTUATION  ,
+  PORTAMENTO   ,
+  AMP_EG       ,
+
+  CC28         ,
+  CC29         ,
+  CC30         ,
+  CC31         ,
+];
 </script>
 <script>
 var transpose = 0;
@@ -128,20 +154,14 @@ function allNotesOff() {
 function restoreControllers() {
   allNotesOff();
   var value;
-  for (var i = CONTROLLERS_FIRST_0; i <= CONTROLLERS_LAST_0; i++) {
+
+  controllersInLocalStorage.forEach(function(i) {
     value = localStorage.getItem("keyCC" + String(i));
     if (!value) {
       return false;
     }
     onChangeControlChange(i, value);
-  }
-  for (var i = CONTROLLERS_FIRST_1; i <= CONTROLLERS_LAST_1; i++) {
-    value = localStorage.getItem("keyCC" + String(i));
-    if (!value) {
-      return false;
-    }
-    onChangeControlChange(i, value);
-  }
+  });
 
   value = localStorage.getItem("keyTranspose");
   if (!value) {
@@ -174,13 +194,9 @@ function onMIDIMessage(event) {
   if (event.data[0] == (CONTROL_CHANGE | MIDI_CH)) {
     var number = event.data[1];
     var value = event.data[2];
-    if (number >= CONTROLLERS_FIRST_0 && number <= CONTROLLERS_LAST_0) {
+    if (controllersInLocalStorage.indexOf(number) >= 0) {
       updateDisplayOfControl(number, value);
-    }
-    if (number >= CONTROLLERS_FIRST_1 && number <= CONTROLLERS_LAST_1) {
-      updateDisplayOfControl(number, value);
-    }
-    else if (number == MODULATION) {
+    } else if (number == MODULATION) {
       document.getElementById("spanCC1").innerHTML = value;
     }
   }
@@ -291,16 +307,6 @@ function preset(number) {
   presetControllers[FILTER_EG_AMT] = [0  , 96 , 80 , 80 , 16 , 112, 64 , 64 ];
   presetControllers[FILTER_EG    ] = [0  , 64 , 16 , 16 , 32 , 48 , 64 , 0  ];
 
-  presetControllers[CC24         ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
-  presetControllers[FLUCTUATION  ] = [0  , 127, 127, 127, 127, 127, 127, 127];
-  presetControllers[PORTAMENTO   ] = [0  , 0  , 0  , 0  , 32 , 0  , 0  , 0  ];
-  presetControllers[AMP_EG       ] = [0  , 16 , 16 , 16 , 16 , 48 , 16 , 0  ];
-
-  presetControllers[CC28         ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
-  presetControllers[CC29         ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
-  presetControllers[CC30         ] = [0  , 64 , 64 , 64 , 64 , 64 , 64 , 64 ];
-  presetControllers[CC31         ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
-
   presetControllers[CC104        ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
   presetControllers[CC105        ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
   presetControllers[CC106        ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
@@ -311,22 +317,26 @@ function preset(number) {
   presetControllers[CC110        ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
   presetControllers[CC111        ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
 
-  for (var i = CONTROLLERS_FIRST_0; i <= CONTROLLERS_LAST_0; i++) {
+  presetControllers[CC24         ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
+  presetControllers[FLUCTUATION  ] = [0  , 127, 127, 127, 127, 127, 127, 127];
+  presetControllers[PORTAMENTO   ] = [0  , 0  , 0  , 0  , 32 , 0  , 0  , 0  ];
+  presetControllers[AMP_EG       ] = [0  , 16 , 16 , 16 , 16 , 48 , 16 , 0  ];
+
+  presetControllers[CC28         ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
+  presetControllers[CC29         ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
+  presetControllers[CC30         ] = [0  , 64 , 64 , 64 , 64 , 64 , 64 , 64 ];
+  presetControllers[CC31         ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
+
+  controllersInLocalStorage.forEach(function(i) {
     onChangeControlChange(i, presetControllers[i][number]);
-  }
-  for (var i = CONTROLLERS_FIRST_1; i <= CONTROLLERS_LAST_1; i++) {
-    onChangeControlChange(i, presetControllers[i][number]);
-  }
+  });
 }
 
 function setRandom() {
   allNotesOff();
-  for (var i = CONTROLLERS_FIRST_0; i <= CONTROLLERS_LAST_0; i++) {
+  controllersInLocalStorage.forEach(function(i) {
     onChangeControlChange(i, rand(128));
-  }
-  for (var i = CONTROLLERS_FIRST_1; i <= CONTROLLERS_LAST_1; i++) {
-    onChangeControlChange(i, rand(128));
-  }
+  });
 }
 
 function rand(n) {
@@ -335,25 +345,18 @@ function rand(n) {
 
 function loadControllers(number) {
   var value;
-  value = localStorage.getItem("keyMemory" + String(number) + "CC" + String(CONTROLLERS_FIRST_0));
+  value = localStorage.getItem("keyMemory" + String(number) + "CC" + String(controllersInLocalStorage[0]));
   if (!value) {
     return;
   }
   allNotesOff();
-  for (var i = CONTROLLERS_FIRST_0; i <= CONTROLLERS_LAST_0; i++) {
+  controllersInLocalStorage.forEach(function(i) {
     value = localStorage.getItem("keyMemory" + String(number) + "CC" + String(i));
     if (!value) {
       return;
     }
     onChangeControlChange(i, value);
-  }
-  for (var i = CONTROLLERS_FIRST_1; i <= CONTROLLERS_LAST_1; i++) {
-    value = localStorage.getItem("keyMemory" + String(number) + "CC" + String(i));
-    if (!value) {
-      return;
-    }
-    onChangeControlChange(i, value);
-  }
+  });
 }
 
 function saveControllers(number) {
@@ -362,14 +365,10 @@ function saveControllers(number) {
     return;
   }
 
-  for (var i = CONTROLLERS_FIRST_0; i <= CONTROLLERS_LAST_0; i++) {
+  controllersInLocalStorage.forEach(function(i) {
     var value = document.getElementById("inputCC" + String(i)).value;
     localStorage.setItem("keyMemory" + String(number) + "CC" + String(i), value);
-  }
-  for (var i = CONTROLLERS_FIRST_1; i <= CONTROLLERS_LAST_1; i++) {
-    var value = document.getElementById("inputCC" + String(i)).value;
-    localStorage.setItem("keyMemory" + String(number) + "CC" + String(i), value);
-  }
+  });
 }
 
 function noteOn(noteNumber) {
@@ -474,31 +473,6 @@ function noteOff(noteNumber) {
     <td><input id="inputCC23" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(23, value)"></td>
     <td><span   id="spanCC23">-1</span></td></tr>
 <tr><td>&nbsp;</td></tr>
-<tr><td>LEGATO                </td><td></td>
-    <td>FLUCTUATION           </td><td></td>
-    <td>PORTAMENTO            </td><td></td>
-    <td>AEG RELEASE           </td></tr>
-<tr><td><input id="inputCC24" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(24, value)"></td>
-    <td><span   id="spanCC24">-1</span></td>
-    <td><input id="inputCC25" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(25, value)"></td>
-    <td><span   id="spanCC25">-1</span></td>
-    <td><input id="inputCC26" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(26, value)"></td>
-    <td><span   id="spanCC26">-1</span></td>
-    <td><input id="inputCC27" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(27, value)"></td>
-    <td><span   id="spanCC27">-1</span></td>
-<tr><td>----                  </td><td></td>
-    <td>----                  </td><td></td>
-    <td>VIBRATO RATE          </td><td></td>
-    <td>VIBRATO DEPTH         </td></tr>
-<tr><td><input id="inputCC28" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(28, value)"></td>
-    <td><span   id="spanCC28">-1</span></td>
-    <td><input id="inputCC29" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(29, value)"></td>
-    <td><span   id="spanCC29">-1</span></td>
-    <td><input id="inputCC30" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(30, value)"></td>
-    <td><span   id="spanCC30">-1</span></td>
-    <td><input id="inputCC31" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(31, value)"></td>
-    <td><span   id="spanCC31">-1</span></td>
-<tr><td>&nbsp;</td></tr>
 <tr><td>----                  </td><td></td>
     <td>----                  </td><td></td>
     <td>----                  </td><td></td>
@@ -523,6 +497,31 @@ function noteOff(noteNumber) {
     <td><span   id="spanCC110">-1</span></td>
     <td><input id="inputCC111" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(111, value)"></td>
     <td><span   id="spanCC111">-1</span></td>
+<tr><td>&nbsp;</td></tr>
+<tr><td>LEGATO                </td><td></td>
+    <td>FLUCTUATION           </td><td></td>
+    <td>PORTAMENTO            </td><td></td>
+    <td>AEG RELEASE           </td></tr>
+<tr><td><input id="inputCC24" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(24, value)"></td>
+    <td><span   id="spanCC24">-1</span></td>
+    <td><input id="inputCC25" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(25, value)"></td>
+    <td><span   id="spanCC25">-1</span></td>
+    <td><input id="inputCC26" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(26, value)"></td>
+    <td><span   id="spanCC26">-1</span></td>
+    <td><input id="inputCC27" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(27, value)"></td>
+    <td><span   id="spanCC27">-1</span></td>
+<tr><td>----                  </td><td></td>
+    <td>----                  </td><td></td>
+    <td>VIBRATO RATE          </td><td></td>
+    <td>VIBRATO DEPTH         </td></tr>
+<tr><td><input id="inputCC28" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(28, value)"></td>
+    <td><span   id="spanCC28">-1</span></td>
+    <td><input id="inputCC29" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(29, value)"></td>
+    <td><span   id="spanCC29">-1</span></td>
+    <td><input id="inputCC30" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(30, value)"></td>
+    <td><span   id="spanCC30">-1</span></td>
+    <td><input id="inputCC31" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(31, value)"></td>
+    <td><span   id="spanCC31">-1</span></td>
 <tr><td>&nbsp;</td></tr>
 </table>
 

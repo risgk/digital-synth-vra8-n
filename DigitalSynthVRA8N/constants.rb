@@ -60,16 +60,6 @@ FILTER_RESO   = 21
 FILTER_EG_AMT = 22
 FILTER_EG     = 23
 
-CC24          = 24
-FLUCTUATION   = 25
-PORTAMENTO    = 26
-AMP_EG        = 27
-
-CC28          = 28
-CC29          = 29
-CC30          = 30
-CC31          = 31
-
 CC104         = 104
 CC105         = 105
 CC106         = 106
@@ -79,6 +69,16 @@ CC108         = 108
 CC109         = 109
 CC110         = 110
 CC111         = 111
+
+CC24          = 24
+FLUCTUATION   = 25
+PORTAMENTO    = 26
+AMP_EG        = 27
+
+CC28          = 28
+CC29          = 29
+CC30          = 30
+CC31          = 31
 
 ALL_NOTES_OFF = 123
 OMNI_MODE_OFF = 124
