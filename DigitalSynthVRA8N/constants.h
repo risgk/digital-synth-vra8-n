@@ -50,20 +50,20 @@ const uint8_t   ACTIVE_SENSING        = 0xFE;
 
 const uint8_t   MODULATION    = 1;
 
-const uint8_t   OSC_COLOR_1   = 16;
-const uint8_t   OSC_COLOR_2   = 17;
-const uint8_t   MOD_RATE      = 18;
-const uint8_t   MOD_DEPTH     = 19;
+const uint8_t   CC104         = 16;
+const uint8_t   CC105         = 17;
+const uint8_t   CC106         = 18;
+const uint8_t   CC107         = 19;
 
 const uint8_t   FILTER_CUTOFF = 20;
 const uint8_t   FILTER_RESO   = 21;
 const uint8_t   FILTER_EG_AMT = 22;
 const uint8_t   FILTER_EG     = 23;
 
-const uint8_t   CC104         = 80;
-const uint8_t   CC105         = 81;
-const uint8_t   CC106         = 82;
-const uint8_t   CC107         = 83;
+const uint8_t   OSC_COLOR_1   = 80;
+const uint8_t   OSC_COLOR_2   = 81;
+const uint8_t   MOD_RATE      = 82;
+const uint8_t   MOD_DEPTH     = 83;
 
 const uint8_t   CC108         = 90;
 const uint8_t   CC109         = 85;

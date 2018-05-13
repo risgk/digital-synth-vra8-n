@@ -50,20 +50,20 @@ ACTIVE_SENSING        = 0xFE
 
 MODULATION    = 1
 
-OSC_COLOR_1   = 16
-OSC_COLOR_2   = 17
-MOD_RATE      = 18
-MOD_DEPTH     = 19
+CC104         = 16
+CC105         = 17
+CC106         = 18
+CC107         = 19
 
 FILTER_CUTOFF = 20
 FILTER_RESO   = 21
 FILTER_EG_AMT = 22
 FILTER_EG     = 23
 
-CC104         = 80
-CC105         = 81
-CC106         = 82
-CC107         = 83
+OSC_COLOR_1   = 80
+OSC_COLOR_2   = 81
+MOD_RATE      = 82
+MOD_DEPTH     = 83
 
 CC108         = 90
 CC109         = 85
