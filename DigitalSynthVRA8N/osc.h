@@ -25,9 +25,9 @@ class Osc {
   static uint8_t        m_lfo_depth[2];
   static uint8_t        m_waveform;
   static int16_t        m_pitch_bend_normalized;
-  static int16_t        m_pitch_target;
-  static int16_t        m_pitch_current;
-  static int16_t        m_pitch_real[2];
+  static uint16_t       m_pitch_target;
+  static uint16_t       m_pitch_current;
+  static uint16_t       m_pitch_real[2];
   static const uint8_t* m_wave_table[3];
   static const uint8_t* m_wave_table_temp[2];
   static __uint24       m_freq[2];
@@ -121,12 +121,12 @@ public:
     if (controller_value < 4) {
       m_portamento_rate = 0x4000;
     } else {
-      m_portamento_rate = 134 - ((controller_value >> 1) << 1);
+      m_portamento_rate = (134 - ((controller_value >> 1) << 1)) >> 1;
     }
   }
 
   INLINE static void set_lfo_rate(uint8_t controller_value) {
-    m_lfo_rate = (controller_value + 1) * 25;
+    m_lfo_rate = ((controller_value + 1) * 25) >> 1;
   }
 
   template <uint8_t N>
@@ -365,9 +365,9 @@ template <uint8_t T> uint16_t        Osc<T>::m_lfo_rate;
 template <uint8_t T> uint8_t         Osc<T>::m_lfo_depth[2];
 template <uint8_t T> uint8_t         Osc<T>::m_waveform;
 template <uint8_t T> int16_t         Osc<T>::m_pitch_bend_normalized;
-template <uint8_t T> int16_t         Osc<T>::m_pitch_target;
-template <uint8_t T> int16_t         Osc<T>::m_pitch_current;
-template <uint8_t T> int16_t         Osc<T>::m_pitch_real[2];
+template <uint8_t T> uint16_t        Osc<T>::m_pitch_target;
+template <uint8_t T> uint16_t        Osc<T>::m_pitch_current;
+template <uint8_t T> uint16_t        Osc<T>::m_pitch_real[2];
 template <uint8_t T> const uint8_t*  Osc<T>::m_wave_table[3];
 template <uint8_t T> const uint8_t*  Osc<T>::m_wave_table_temp[2];
 template <uint8_t T> __uint24        Osc<T>::m_freq[2];
