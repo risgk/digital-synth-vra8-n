@@ -46,8 +46,10 @@ public:
       }
     } else {
       IOsc<0>::set_portamento(m_portamento);
-      IEnvGen<0>::note_on();
-      IEnvGen<1>::note_on();
+      if (m_key_assign_last || (m_current_note_number == NOTE_NUMBER_INVALID)) {
+        IEnvGen<0>::note_on();
+        IEnvGen<1>::note_on();
+      }
     }
 
     set_on_note(note_number);
@@ -81,8 +83,10 @@ public:
           }
         } else {
           IOsc<0>::set_portamento(m_portamento);
-          IEnvGen<0>::note_on();
-          IEnvGen<1>::note_on();
+          if (m_key_assign_last || (m_current_note_number == NOTE_NUMBER_INVALID)) {
+            IEnvGen<0>::note_on();
+            IEnvGen<1>::note_on();
+          }
         }
 
         m_current_note_number = active_on_note;
