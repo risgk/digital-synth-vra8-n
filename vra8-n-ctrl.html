@@ -297,14 +297,14 @@ function preset(number) {
   allNotesOff();
   var presetControllers = {};
 
-  presetControllers[FILTER_CUTOFF] = [64 , 0  , 0  , 0  , 0  , 0  , 0  , 127];
+  presetControllers[FILTER_CUTOFF] = [96 , 0  , 0  , 0  , 0  , 0  , 0  , 127];
   presetControllers[FILTER_RESO  ] = [64 , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
   presetControllers[FILTER_ENV   ] = [96 , 0  , 0  , 0  , 0  , 0  , 0  , 64 ];
-  presetControllers[FILTER_DECAY ] = [64 , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
+  presetControllers[FILTER_DECAY ] = [32 , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
 
   presetControllers[OSC2_PITCH   ] = [64 , 0  , 0  , 0  , 0  , 0  , 0  , 64 ];
   presetControllers[OSC2_DETUNE  ] = [16 , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
-  presetControllers[PORTAMENTO   ] = [32 , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
+  presetControllers[PORTAMENTO   ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
   presetControllers[AMP_DECAY    ] = [32 , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
 
   presetControllers[OSC_WAVE     ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
@@ -314,7 +314,7 @@ function preset(number) {
 
   presetControllers[CC90         ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
   presetControllers[OSC2_ON      ] = [127, 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
-  presetControllers[LEGATO       ] = [127, 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
+  presetControllers[LEGATO       ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
   presetControllers[AMP_SUSTAIN  ] = [127, 0  , 0  , 0  , 0  , 0  , 0  , 127];
 
   presetControllers[LFO_RATE     ] = [64 , 0  , 0  , 0  , 0  , 0  , 0  , 64 ];
@@ -324,7 +324,7 @@ function preset(number) {
 
   presetControllers[BENDM_RANGE  ] = [66 , 0  , 0  , 0  , 0  , 0  , 0  , 66 ];
   presetControllers[BENDP_RANGE  ] = [66 , 0  , 0  , 0  , 0  , 0  , 0  , 66 ];
-  presetControllers[BEND_TARGET  ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
+  presetControllers[BEND_TARGET  ] = [127, 0  , 0  , 0  , 0  , 0  , 0  , 127];
   presetControllers[KEY_ASSIGN   ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
 
   controllersInLocalStorage.forEach(function(i) {
@@ -496,7 +496,7 @@ function noteOff(noteNumber) {
 <tr><td>&nbsp;</td></tr>
 <tr><td>LFO RATE              </td><td></td>
     <td>LFO DEPTH             </td><td></td>
-    <td>LFO > PITCH (1+2/2)   </td><td></td>
+    <td>LFO > PITCH (2/1+2)   </td><td></td>
     <td>LFO > CUTOFF (-/+)    </td></tr>
 <tr><td><input id="inputCC24" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(24, value)"></td>
     <td><span   id="spanCC24">-1</span></td>
@@ -508,8 +508,8 @@ function noteOff(noteNumber) {
     <td><span   id="spanCC27">-1</span></td>
 <tr><td>PBEND- RANGE (+/-)    </td><td></td>
     <td>PBEND+ RANGE (-/+)    </td><td></td>
-    <td>PBEND TGT (1+2/2)     </td><td></td>
-    <td>KEY ASN (R/L/H/D)     </td></tr>
+    <td>PBEND TRGT (2/1+2)    </td><td></td>
+    <td>KEY ASGN (LO/LAST)    </td></tr>
 <tr><td><input id="inputCC102" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(102, value)"></td>
     <td><span   id="spanCC102">-1</span></td>
     <td><input id="inputCC103" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(103, value)"></td>

@@ -26,14 +26,14 @@ public:
     ISynthCore<0>::initialize();
 
     // DEFAULT
-    ISynthCore<0>::control_change(FILTER_CUTOFF, 64 );
+    ISynthCore<0>::control_change(FILTER_CUTOFF, 96 );
     ISynthCore<0>::control_change(FILTER_RESO  , 64 );
     ISynthCore<0>::control_change(FILTER_ENV   , 96 );
-    ISynthCore<0>::control_change(FILTER_DECAY , 64 );
+    ISynthCore<0>::control_change(FILTER_DECAY , 32 );
 
     ISynthCore<0>::control_change(OSC2_PITCH   , 64 );
     ISynthCore<0>::control_change(OSC2_DETUNE  , 16 );
-    ISynthCore<0>::control_change(PORTAMENTO   , 32 );
+    ISynthCore<0>::control_change(PORTAMENTO   , 0  );
     ISynthCore<0>::control_change(AMP_DECAY    , 32 );
 
     ISynthCore<0>::control_change(OSC_WAVE     , 0  );
@@ -43,7 +43,7 @@ public:
 
     ISynthCore<0>::control_change(CC90         , 0  );
     ISynthCore<0>::control_change(OSC2_ON      , 127);
-    ISynthCore<0>::control_change(LEGATO       , 127);
+    ISynthCore<0>::control_change(LEGATO       , 0  );
     ISynthCore<0>::control_change(AMP_SUSTAIN  , 127);
 
     ISynthCore<0>::control_change(LFO_RATE     , 64 );
@@ -53,7 +53,7 @@ public:
 
     ISynthCore<0>::control_change(BENDM_RANGE  , 66 );
     ISynthCore<0>::control_change(BENDP_RANGE  , 66 );
-    ISynthCore<0>::control_change(BEND_TARGET  , 0  );
+    ISynthCore<0>::control_change(BEND_TARGET  , 127);
     ISynthCore<0>::control_change(KEY_ASSIGN   , 0  );
   }
 
