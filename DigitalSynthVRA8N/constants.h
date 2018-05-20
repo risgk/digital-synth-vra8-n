@@ -51,34 +51,34 @@ const uint8_t   ACTIVE_SENSING        = 0xFE;
 const uint8_t   MODULATION    = 1;
 
 const uint8_t   FILTER_CUTOFF = 16;
-const uint8_t   FILTER_RES    = 17;
-const uint8_t   FILTER_EG_AMT = 18;
-const uint8_t   FILTER_EG     = 19;
+const uint8_t   FILTER_RESO   = 17;
+const uint8_t   FILTER_ENV    = 18;
+const uint8_t   FILTER_DECAY  = 19;
 
-const uint8_t   LFO_RATE      = 20;
-const uint8_t   LFO_DEPTH     = 21;
-const uint8_t   CC106         = 22;
-const uint8_t   CC107         = 23;
+const uint8_t   OSC2_PITCH    = 20;
+const uint8_t   OSC2_DETUNE   = 21;
+const uint8_t   PORTAMENTO    = 22;
+const uint8_t   AMP_DECAY     = 23;
 
-const uint8_t   OSC_COLOR_1   = 80;
-const uint8_t   OSC_COLOR_2   = 81;
-const uint8_t   MOD_RATE      = 82;
-const uint8_t   MOD_DEPTH     = 83;
+const uint8_t   OSC_WAVE      = 80;
+const uint8_t   SUB_OSC_ON    = 81;
+const uint8_t   OSC2_P5TH     = 82;
+const uint8_t   OSC2_POCT     = 83;
 
-const uint8_t   CC108         = 90;
-const uint8_t   CC109         = 85;
-const uint8_t   CC110         = 86;
-const uint8_t   CC111         = 87;
+const uint8_t   CC90          = 90;
+const uint8_t   OSC2_ON       = 85;
+const uint8_t   LEGATO        = 86;
+const uint8_t   AMP_SUSTAIN   = 87;
 
-const uint8_t   CC24          = 24;
-const uint8_t   CC25          = 25;
-const uint8_t   PORTAMENTO    = 26;
-const uint8_t   AMP_EG        = 27;
+const uint8_t   LFO_RATE      = 24;
+const uint8_t   LFO_DEPTH     = 25;
+const uint8_t   LFO_PITCH     = 26;
+const uint8_t   LFO_CUTOFF    = 27;
 
-const uint8_t   CC28          = 28;
-const uint8_t   CC29          = 29;
-const uint8_t   CC104         = 30;
-const uint8_t   CC105         = 31;
+const uint8_t   BENDM_RANGE   = 102;
+const uint8_t   BENDP_RANGE   = 103;
+const uint8_t   BEND_TARGET   = 104;
+const uint8_t   KEY_ASSIGN    = 105;
 
 const uint8_t   ALL_NOTES_OFF = 123;
 const uint8_t   OMNI_MODE_OFF = 124;

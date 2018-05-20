@@ -51,34 +51,34 @@ ACTIVE_SENSING        = 0xFE
 MODULATION    = 1
 
 FILTER_CUTOFF = 16
-FILTER_RES    = 17
-FILTER_EG_AMT = 18
-FILTER_EG     = 19
+FILTER_RESO   = 17
+FILTER_ENV    = 18
+FILTER_DECAY  = 19
 
-LFO_RATE      = 20
-LFO_DEPTH     = 21
-CC106         = 22
-CC107         = 23
+OSC2_PITCH    = 20
+OSC2_DETUNE   = 21
+PORTAMENTO    = 22
+AMP_DECAY     = 23
 
-OSC_COLOR_1   = 80
-OSC_COLOR_2   = 81
-MOD_RATE      = 82
-MOD_DEPTH     = 83
+OSC_WAVE      = 80
+SUB_OSC_ON    = 81
+OSC2_P5TH     = 82
+OSC2_POCT     = 83
 
-CC108         = 90
-CC109         = 85
-CC110         = 86
-CC111         = 87
+CC90          = 90
+OSC2_ON       = 85
+LEGATO        = 86
+AMP_SUSTAIN   = 87
 
-CC24          = 24
-CC25          = 25
-PORTAMENTO    = 26
-AMP_EG        = 27
+LFO_RATE      = 24
+LFO_DEPTH     = 25
+LFO_PITCH     = 26
+LFO_CUTOFF    = 27
 
-CC28          = 28
-CC29          = 29
-CC104         = 30
-CC105         = 31
+BENDM_RANGE   = 102
+BENDP_RANGE   = 103
+BEND_TARGET   = 104
+KEY_ASSIGN    = 105
 
 ALL_NOTES_OFF = 123
 OMNI_MODE_OFF = 124

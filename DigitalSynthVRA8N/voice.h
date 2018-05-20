@@ -25,8 +25,10 @@ public:
     IAmp<0>::initialize();
     IEnvGen<0>::initialize();
     IEnvGen<1>::initialize();
-    set_env_decay(0);
-    set_amp_env_sus(0);
+    IEnvGen<0>::set_decay(0);
+    IEnvGen<0>::set_sustain(false);
+    IEnvGen<1>::set_decay(0);
+    IEnvGen<1>::set_sustain(true);
   }
 
   INLINE static void note_on(uint8_t note_number, uint8_t velocity) {
@@ -86,16 +88,40 @@ public:
 
   INLINE static void control_change(uint8_t controller_number, uint8_t controller_value) {
     switch (controller_number) {
+    case MODULATION:
+      IOsc<0>::set_lfo_depth<1>(controller_value);
+      break;
+
     case FILTER_CUTOFF:
       IFilter<0>::set_cutoff(controller_value);
       break;
-    case FILTER_RES:
+    case FILTER_RESO:
       IFilter<0>::set_resonance(controller_value);
       break;
-    case FILTER_EG_AMT:
+    case FILTER_ENV:
       IFilter<0>::set_env_amt(controller_value);
       break;
-    case OSC_COLOR_1:
+    case FILTER_DECAY:
+      IEnvGen<0>::set_decay(controller_value);
+      IEnvGen<0>::set_sustain(false);
+      break;
+
+    case OSC2_PITCH:
+      // TODO
+      IOsc<0>::set_detune(controller_value);
+      break;
+    case OSC2_DETUNE:
+      // TODO
+      break;
+    case PORTAMENTO:
+      m_portamento = controller_value;
+      break;
+    case AMP_DECAY:
+      IEnvGen<1>::set_decay(controller_value);
+      break;
+
+    case OSC_WAVE:
+      // TODO
       IOsc<0>::set_waveform(controller_value);
       if (controller_value < 32) {
         IOsc<0>::set_sub_osc_level((31 - controller_value) << 2);
@@ -105,28 +131,24 @@ public:
         IOsc<0>::set_sub_osc_level(0);
       }
       break;
-    case LFO_RATE:
-      IOsc<0>::set_lfo_rate(controller_value);
+    case SUB_OSC_ON:
+      // TODO
       break;
-    case LFO_DEPTH:
-      IOsc<0>::set_lfo_depth<0>(controller_value);
+    case OSC2_P5TH:
+      // TODO
       break;
-    case MODULATION:
-      IOsc<0>::set_lfo_depth<1>(controller_value);
+    case OSC2_POCT:
+      // TODO
       break;
-    case MOD_RATE:
-      IOsc<0>::set_detune(controller_value);
+
+    case CC90:
+      // TODO
       break;
-    case MOD_DEPTH:
+    case OSC2_ON:
+      // TODO
       IOsc<0>::set_mix(controller_value);
       break;
-    case CC25:
-      IOsc<0>::set_detune_noise_gen_amt(controller_value);
-      break;
-    case PORTAMENTO:
-      m_portamento = controller_value;
-      break;
-    case CC24:
+    case LEGATO:
       if (controller_value < 64) {
         if (m_legato) {
           m_legato = false;
@@ -139,12 +161,44 @@ public:
         }
       }
       break;
-    case FILTER_EG:
-      set_env_decay(controller_value);
+    case AMP_SUSTAIN:
+      if (controller_value < 64) {
+        IEnvGen<1>::set_sustain(false);
+      } else {
+        IEnvGen<1>::set_sustain(true);
+      }
       break;
-    case AMP_EG:
-      set_amp_env_sus(controller_value);
+
+    case LFO_RATE:
+      IOsc<0>::set_lfo_rate(controller_value);
       break;
+    case LFO_DEPTH:
+      IOsc<0>::set_lfo_depth<0>(controller_value);
+      break;
+    case LFO_PITCH:
+      if (controller_value < 64) {
+        // TODO
+      } else {
+        // TODO
+      }
+      break;
+    case LFO_CUTOFF:
+      // TODO
+      break;
+
+    case BENDM_RANGE:
+      // TODO
+      break;
+    case BENDP_RANGE:
+      // TODO
+      break;
+    case BEND_TARGET:
+      // TODO
+      break;
+    case KEY_ASSIGN:
+      // TODO
+      break;
+
     case ALL_NOTES_OFF:
     case OMNI_MODE_OFF:
     case OMNI_MODE_ON:
@@ -176,16 +230,6 @@ public:
   }
 
 private:
-  INLINE static void set_env_decay(uint8_t controller_value) {
-    IEnvGen<0>::set_decay(controller_value);
-    IEnvGen<0>::set_sustain(false);
-  }
-
-  INLINE static void set_amp_env_sus(uint8_t controller_value) {
-    IEnvGen<1>::set_decay(controller_value);
-    IEnvGen<1>::set_sustain(true);
-  }
-
   INLINE static void set_on_note(uint8_t note_number) {
     m_on_note[note_number >> 3] |= (1 << (note_number & 0x07));
   }
