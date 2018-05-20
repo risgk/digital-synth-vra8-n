@@ -40,11 +40,13 @@ public:
       if (m_active_note_number != NOTE_NUMBER_INVALID) {
         m_active_note_number = n;
         IOsc<0>::set_portamento(m_portamento);
-        IOsc<0>::note_on(n);
+        IOsc<0>::note_on<0>(n);
+        IOsc<0>::note_on<1>(n);
       } else {
         m_active_note_number = n;
         IOsc<0>::set_portamento(0);
-        IOsc<0>::note_on(n);
+        IOsc<0>::note_on<0>(n);
+        IOsc<0>::note_on<1>(n);
         IEnvGen<0>::note_on();
         IEnvGen<1>::note_on();
       }
@@ -52,7 +54,8 @@ public:
       // Multi Trigger and Portamento On
       m_active_note_number = note_number;
       IOsc<0>::set_portamento(m_portamento);
-      IOsc<0>::note_on(note_number);
+      IOsc<0>::note_on<0>(note_number);
+      IOsc<0>::note_on<1>(note_number);
       IEnvGen<0>::note_on();
       IEnvGen<1>::note_on();
     }
@@ -68,7 +71,8 @@ public:
       else {
         m_active_note_number = n;
         IOsc<0>::set_portamento(m_portamento);
-        IOsc<0>::note_on(n);
+        IOsc<0>::note_on<0>(n);
+        IOsc<0>::note_on<1>(n);
       }
     } else {
       if (m_active_note_number == note_number) {
