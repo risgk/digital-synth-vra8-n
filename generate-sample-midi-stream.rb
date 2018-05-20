@@ -64,7 +64,7 @@ control_change(LFO_CUTOFF   , 68 )
 control_change(BENDM_RANGE  , 66 )
 control_change(BENDP_RANGE  , 66 )
 control_change(BEND_TARGET  , 127)
-control_change(KEY_ASSIGN   , 127)
+control_change(KEY_ASSIGN   , 0  )
 
 play_cegbdfac(3)
 

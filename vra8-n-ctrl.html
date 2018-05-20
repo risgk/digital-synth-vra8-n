@@ -325,7 +325,7 @@ function preset(number) {
   presetControllers[BENDM_RANGE  ] = [66 , 0  , 0  , 0  , 0  , 0  , 0  , 66 ];
   presetControllers[BENDP_RANGE  ] = [66 , 0  , 0  , 0  , 0  , 0  , 0  , 66 ];
   presetControllers[BEND_TARGET  ] = [127, 0  , 0  , 0  , 0  , 0  , 0  , 127];
-  presetControllers[KEY_ASSIGN   ] = [127, 0  , 0  , 0  , 0  , 0  , 0  , 127];
+  presetControllers[KEY_ASSIGN   ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
 
   controllersInLocalStorage.forEach(function(i) {
     onChangeControlChange(i, presetControllers[i][number]);
