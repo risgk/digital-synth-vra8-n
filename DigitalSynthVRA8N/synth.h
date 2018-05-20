@@ -54,7 +54,7 @@ public:
     ISynthCore<0>::control_change(BENDM_RANGE  , 66 );
     ISynthCore<0>::control_change(BENDP_RANGE  , 66 );
     ISynthCore<0>::control_change(BEND_TARGET  , 127);
-    ISynthCore<0>::control_change(KEY_ASSIGN   , 0  );
+    ISynthCore<0>::control_change(KEY_ASSIGN   , 127);
   }
 
   INLINE static void receive_midi_byte(uint8_t b) {
