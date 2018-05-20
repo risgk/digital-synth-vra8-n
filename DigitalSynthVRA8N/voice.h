@@ -107,11 +107,10 @@ public:
       break;
 
     case OSC2_PITCH:
-      // TODO
-      IOsc<0>::set_detune(controller_value);
+      IOsc<0>::set_pitch_offset_1(controller_value);
       break;
     case OSC2_DETUNE:
-      // TODO
+      IOsc<0>::set_detune(controller_value);
       break;
     case PORTAMENTO:
       m_portamento = controller_value;
@@ -121,18 +120,14 @@ public:
       break;
 
     case OSC_WAVE:
-      // TODO
       IOsc<0>::set_waveform(controller_value);
-      if (controller_value < 32) {
-        IOsc<0>::set_sub_osc_level((31 - controller_value) << 2);
-      } else if (controller_value >= 96) {
-        IOsc<0>::set_sub_osc_level((controller_value - 96) << 2);
-      } else {
-        IOsc<0>::set_sub_osc_level(0);
-      }
       break;
     case SUB_OSC_ON:
-      // TODO
+      if (controller_value < 64) {
+        IOsc<0>::set_sub_osc_level(0);
+      } else {
+        IOsc<0>::set_sub_osc_level(127);
+      }
       break;
     case OSC2_P5TH:
       // TODO
@@ -145,8 +140,11 @@ public:
       // TODO
       break;
     case OSC2_ON:
-      // TODO
-      IOsc<0>::set_mix(controller_value);
+      if (controller_value < 64) {
+        IOsc<0>::set_osc_mix(0);
+      } else {
+        IOsc<0>::set_osc_mix(64);
+      }
       break;
     case LEGATO:
       if (controller_value < 64) {

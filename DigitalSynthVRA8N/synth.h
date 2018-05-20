@@ -42,7 +42,7 @@ public:
     ISynthCore<0>::control_change(OSC2_POCT    , 0  );
 
     ISynthCore<0>::control_change(CC90         , 0  );
-    ISynthCore<0>::control_change(OSC2_ON      , 0  );
+    ISynthCore<0>::control_change(OSC2_ON      , 127);
     ISynthCore<0>::control_change(LEGATO       , 127);
     ISynthCore<0>::control_change(AMP_SUSTAIN  , 127);
 
