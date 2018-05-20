@@ -32,7 +32,7 @@ public:
     ISynthCore<0>::control_change(FILTER_DECAY , 64 );
 
     ISynthCore<0>::control_change(OSC2_PITCH   , 64 );
-    ISynthCore<0>::control_change(OSC2_DETUNE  , 0  );
+    ISynthCore<0>::control_change(OSC2_DETUNE  , 16 );
     ISynthCore<0>::control_change(PORTAMENTO   , 32 );
     ISynthCore<0>::control_change(AMP_DECAY    , 32 );
 

@@ -42,7 +42,7 @@ control_change(FILTER_ENV   , 96 )
 control_change(FILTER_DECAY , 64 )
 
 control_change(OSC2_PITCH   , 64 )
-control_change(OSC2_DETUNE  , 0  )
+control_change(OSC2_DETUNE  , 16 )
 control_change(PORTAMENTO   , 32 )
 control_change(AMP_DECAY    , 32 )
 

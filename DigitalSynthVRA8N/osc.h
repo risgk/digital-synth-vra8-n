@@ -25,9 +25,9 @@ class Osc {
   static uint8_t        m_lfo_depth[2];
   static uint8_t        m_waveform;
   static int16_t        m_pitch_bend_normalized;
-  static uint16_t       m_pitch_target;
-  static uint16_t       m_pitch_current;
-  static __int24        m_pitch_real[2];
+  static int16_t        m_pitch_target;
+  static int16_t        m_pitch_current;
+  static int16_t        m_pitch_real[2];
   static const uint8_t* m_wave_table[3];
   static const uint8_t* m_wave_table_temp[2];
   static __uint24       m_freq[2];
@@ -260,21 +260,36 @@ private:
     }
 
     int16_t t = TRANSPOSE << 8;
-    m_pitch_real[N] = m_pitch_current + m_pitch_bend_normalized + t;
+    m_pitch_real[N] = (64 << 8) + m_pitch_current + m_pitch_bend_normalized + t;
+
+    uint8_t coarse = high_byte(m_pitch_real[N]);
+    if (coarse <= (NOTE_NUMBER_MIN + 64)) {
+      m_pitch_real[N] = NOTE_NUMBER_MIN << 8;
+    } else if (coarse >= (NOTE_NUMBER_MAX + 64)) {
+      m_pitch_real[N] = NOTE_NUMBER_MAX << 8;
+    } else {
+      m_pitch_real[N] -= (64 << 8);
+    }
   }
 
   template <uint8_t N>
   INLINE static void update_freq_1st() {
-    m_pitch_real[N] += high_sbyte((m_fluctuation >> 2) * static_cast<int8_t>(get_red_noise_8()));
+    m_pitch_real[N] += (64 << 8) + high_sbyte((m_fluctuation >> 2) * static_cast<int8_t>(get_red_noise_8()));
+    m_pitch_real[N] += (m_mod_level << 1);
 
     if (N == 1) {
       /* For OSC 2 */
-      m_pitch_real[N] += m_pitch_offset_1 << 8;
-      m_pitch_real[N] += m_detune;
+      m_pitch_real[N] += (m_pitch_offset_1 << 8) + m_detune;
     }
 
-    m_pitch_real[N] += m_mod_level;
-    m_pitch_real[N] += m_mod_level;
+    uint8_t coarse = high_byte(m_pitch_real[N]);
+    if (coarse <= (NOTE_NUMBER_MIN + 64)) {
+      m_pitch_real[N] = NOTE_NUMBER_MIN << 8;
+    } else if (coarse >= (NOTE_NUMBER_MAX + 64)) {
+      m_pitch_real[N] = NOTE_NUMBER_MAX << 8;
+    } else {
+      m_pitch_real[N] -= (64 << 8);
+    }
   }
 
   template <uint8_t N>
@@ -350,9 +365,9 @@ template <uint8_t T> uint16_t        Osc<T>::m_lfo_rate;
 template <uint8_t T> uint8_t         Osc<T>::m_lfo_depth[2];
 template <uint8_t T> uint8_t         Osc<T>::m_waveform;
 template <uint8_t T> int16_t         Osc<T>::m_pitch_bend_normalized;
-template <uint8_t T> uint16_t        Osc<T>::m_pitch_target;
-template <uint8_t T> uint16_t        Osc<T>::m_pitch_current;
-template <uint8_t T> __int24         Osc<T>::m_pitch_real[2];
+template <uint8_t T> int16_t         Osc<T>::m_pitch_target;
+template <uint8_t T> int16_t         Osc<T>::m_pitch_current;
+template <uint8_t T> int16_t         Osc<T>::m_pitch_real[2];
 template <uint8_t T> const uint8_t*  Osc<T>::m_wave_table[3];
 template <uint8_t T> const uint8_t*  Osc<T>::m_wave_table_temp[2];
 template <uint8_t T> __uint24        Osc<T>::m_freq[2];

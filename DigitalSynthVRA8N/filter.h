@@ -57,11 +57,9 @@ public:
 
   INLINE static int16_t clock(uint8_t count, int16_t audio_input, uint8_t mod_input) {
     uint8_t count_and_interval = count & (FILTER_CONTROL_INTERVAL - 1);
-    if (count_and_interval == 4) {
+    if (count_and_interval == 6) {
       update_current(mod_input);
       update_coefs();
-    } else if (count_and_interval == 6) {
-      // do nothing
     }
 
     int16_t b_2_over_a_0 = m_b_2_over_a_0_low | (m_b_2_over_a_0_high << 8);
