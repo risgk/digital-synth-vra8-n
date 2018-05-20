@@ -9,8 +9,8 @@ static const uint8_t OSC_MIX_TABLE_LENGTH = 31;
 
 template <uint8_t T>
 class Osc {
-  static int8_t         m_mix_main;
-  static int8_t         m_mix_detune;
+  static int8_t         m_mix_0;
+  static int8_t         m_mix_1;
   static int8_t         m_mix_sub;
   static int16_t        m_level_sub;
   static int8_t         m_mix_table[OSC_MIX_TABLE_LENGTH];
@@ -89,8 +89,8 @@ public:
       controller_value = 123;
     }
 
-    m_mix_main   = m_mix_table[(OSC_MIX_TABLE_LENGTH - 1) - (controller_value >> 2)];
-    m_mix_detune = m_mix_table[                             (controller_value >> 2)];
+    m_mix_0   = m_mix_table[(OSC_MIX_TABLE_LENGTH - 1) - (controller_value >> 2)];
+    m_mix_1 = m_mix_table[                             (controller_value >> 2)];
   }
 
   INLINE static void set_waveform(uint8_t controller_value) {
@@ -213,8 +213,8 @@ public:
     int8_t wave_0_detune = get_wave_level(m_wave_table[1], static_cast<uint16_t>(m_phase[1] >> 8) << 1);
 
     // amp and mix
-    int16_t level_main   = wave_0_main   * m_mix_main;
-    int16_t level_detune = wave_0_detune * m_mix_detune;
+    int16_t level_main   = wave_0_main   * m_mix_0;
+    int16_t level_detune = wave_0_detune * m_mix_1;
     int16_t result       = level_main + level_detune + m_level_sub;
 
     return result;
@@ -279,7 +279,7 @@ private:
 
     if (N == 1) {
       /* For OSC 2 */
-      m_pitch_real[N] += (m_pitch_offset_1 << 8) + m_detune;
+      m_pitch_real[N] += (m_pitch_offset_1 << 8) + m_detune + 8;
     }
 
     uint8_t coarse = high_byte(m_pitch_real[N]);
@@ -349,8 +349,8 @@ private:
   }
 };
 
-template <uint8_t T> int8_t          Osc<T>::m_mix_main;
-template <uint8_t T> int8_t          Osc<T>::m_mix_detune;
+template <uint8_t T> int8_t          Osc<T>::m_mix_0;
+template <uint8_t T> int8_t          Osc<T>::m_mix_1;
 template <uint8_t T> int8_t          Osc<T>::m_mix_sub;
 template <uint8_t T> int16_t         Osc<T>::m_level_sub;
 template <uint8_t T> int8_t          Osc<T>::m_mix_table[OSC_MIX_TABLE_LENGTH];
