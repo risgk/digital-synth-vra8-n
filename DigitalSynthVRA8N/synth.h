@@ -51,8 +51,8 @@ public:
     ISynthCore<0>::control_change(PITCH_LFO_AMT, 68 );
     ISynthCore<0>::control_change(CO_VEL_AMT   , 0  );
 
-    ISynthCore<0>::control_change(PB_M_RANGE   , 66 );
-    ISynthCore<0>::control_change(PB_P_RANGE   , 66 );
+    ISynthCore<0>::control_change(PB_M_RANGE   , 2  );
+    ISynthCore<0>::control_change(PB_P_RANGE   , 2  );
     ISynthCore<0>::control_change(PB_TARGET    , 127);
     ISynthCore<0>::control_change(NOTE_ASSIGN  , 0  );
   }
