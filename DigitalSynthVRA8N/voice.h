@@ -204,13 +204,13 @@ public:
       break;
 
     case PB_M_RANGE:
-      // TODO
+      IOsc<0>::set_pitch_bend_minus_range(controller_value);
       break;
     case PB_P_RANGE:
-      // TODO
+      IOsc<0>::set_pitch_bend_plus_range(controller_value);
       break;
     case PB_TARGET:
-      // TODO
+      IOsc<0>::set_pitch_bend_target(controller_value);
       break;
     case NOTE_ASSIGN:
       if (controller_value < 64) {

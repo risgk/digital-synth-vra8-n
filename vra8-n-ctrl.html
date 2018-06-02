@@ -45,6 +45,7 @@ const MIDI_CH        = 0;       // Basic Channel 1
 const NOTE_OFF       = 0x80;
 const NOTE_ON        = 0x90;
 const CONTROL_CHANGE = 0xB0;
+const PITCH_BEND     = 0xE0;
 
 const MODULATION    = 1;
 
@@ -199,6 +200,9 @@ function onMIDIMessage(event) {
     } else if (number == MODULATION) {
       document.getElementById("spanCC1").innerHTML = value;
     }
+  } else if (event.data[0] == (PITCH_BEND | MIDI_CH)) {
+    var value = (event.data[1] - 64) * 128 + event.data[2];
+    document.getElementById("spanPB").innerHTML = value;
   }
 
   const PROGRAM_CHANGE = 0xC0;
@@ -394,6 +398,11 @@ function noteOff(noteNumber) {
     <td>&nbsp;</td>
     <td>MIDI OUT</td>
     <td><select id="selectOutputPort" size="1" onchange="onChangeOutputPort()"></select></td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>&nbsp;</td>
     <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
 <tr><td>MIDI IN 2</td>
     <td><select id="selectInputPort2" size="1" onchange="onChangeInputPort2()"></select></td>
@@ -402,7 +411,10 @@ function noteOff(noteNumber) {
     <td><input id="inputTranspose" type="range" min="-60" max="60" step="12" oninput="onChangeTranspose(value)" ></td>
     <td><span id="spanTranspose" >-1</span></td>
     <td>&nbsp;</td>
-    <td>MOD&nbsp;</td>
+    <td>P.BEND</td>
+    <td><span id="spanPB">-</span></td>
+    <td>&nbsp;</td>
+    <td>MOD</td>
     <td><span id="spanCC1">-</span></td></tr>
 </table>
 
