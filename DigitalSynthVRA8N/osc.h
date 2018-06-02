@@ -179,7 +179,7 @@ public:
         break;
       case 0x6:
         m_rnd_cnt++;
-        if ((m_rnd_cnt & 0x03) == 0x00) {
+        if ((m_rnd_cnt & 0x07) == 0x00) {
           update_rnd();
         }
         break;
@@ -199,7 +199,7 @@ public:
         update_freq_4th<1>();
         break;
       case 0xE:
-        if ((m_rnd_cnt & 0x03) == 0x00) {
+        if ((m_rnd_cnt & 0x07) == 0x00) {
           update_rnd();
         }
         break;
