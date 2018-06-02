@@ -38,33 +38,33 @@ sound_off
 
 control_change(FILTER_CUTOFF, 96 )
 control_change(FILTER_RESO  , 64 )
-control_change(FILTER_ENV   , 96 )
-control_change(FILTER_DECAY , 32 )
+control_change(CUTOFF_EG_AMT, 96 )
+control_change(EG_DECAY     , 32 )
 
 control_change(OSC2_PITCH   , 64 )
 control_change(OSC2_DETUNE  , 16 )
 control_change(PORTAMENTO   , 0  )
-control_change(AMP_DECAY    , 32 )
+control_change(EG_ATTACK    , 32 )
 
 control_change(OSC_WAVE     , 0  )
+control_change(OSC2_ON      , 127)
 control_change(SUB_OSC_ON   , 127)
+control_change(EG_SUSTAIN   , 127)
+
 control_change(OSC2_P5TH    , 0  )
 control_change(OSC2_POCT    , 0  )
-
-control_change(CC90         , 0  )
-control_change(OSC2_ON      , 127)
 control_change(LEGATO       , 0  )
-control_change(AMP_SUSTAIN  , 127)
+control_change(AMP_EG_ON    , 127)
 
 control_change(LFO_RATE     , 64 )
 control_change(LFO_DEPTH    , 16 )
-control_change(LFO_PITCH    , 68 )
-control_change(LFO_CUTOFF   , 68 )
+control_change(PITCH_LFO_AMT, 68 )
+control_change(CO_VEL_AMT   , 0  )
 
-control_change(BENDM_RANGE  , 66 )
-control_change(BENDP_RANGE  , 66 )
-control_change(BEND_TARGET  , 127)
-control_change(KEY_ASSIGN   , 0  )
+control_change(PB_M_RANGE   , 66 )
+control_change(PB_P_RANGE   , 66 )
+control_change(PB_TARGET    , 127)
+control_change(NOTE_ASSIGN  , 0  )
 
 play_cegbdfac(3)
 

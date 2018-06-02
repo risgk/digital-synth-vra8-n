@@ -50,66 +50,66 @@ const MODULATION    = 1;
 
 const FILTER_CUTOFF = 16;
 const FILTER_RESO   = 17;
-const FILTER_ENV    = 18;
-const FILTER_DECAY  = 19;
+const CUTOFF_EG_AMT = 18;
+const EG_DECAY      = 19;
 
 const OSC2_PITCH    = 20;
 const OSC2_DETUNE   = 21;
 const PORTAMENTO    = 22;
-const AMP_DECAY     = 23;
+const EG_ATTACK     = 23;
 
 const OSC_WAVE      = 80;
-const SUB_OSC_ON    = 81;
-const OSC2_P5TH     = 82;
-const OSC2_POCT     = 83;
+const OSC2_ON       = 81;
+const SUB_OSC_ON    = 82;
+const EG_SUSTAIN    = 83;
 
-const CC90          = 90;
-const OSC2_ON       = 85;
+const OSC2_P5TH     = 90;
+const OSC2_POCT     = 85;
 const LEGATO        = 86;
-const AMP_SUSTAIN   = 87;
+const AMP_EG_ON     = 87;
 
 const LFO_RATE      = 24;
 const LFO_DEPTH     = 25;
-const LFO_PITCH     = 26;
-const LFO_CUTOFF    = 27;
+const PITCH_LFO_AMT = 26;
+const CO_VEL_AMT    = 27;
 
-const BENDM_RANGE   = 102;
-const BENDP_RANGE   = 103;
-const BEND_TARGET   = 104;
-const KEY_ASSIGN    = 105;
+const PB_M_RANGE    = 102;
+const PB_P_RANGE    = 103;
+const PB_TARGET     = 104;
+const NOTE_ASSIGN   = 105;
 
 const ALL_NOTES_OFF = 123;
 
 var controllersInLocalStorage = [
   FILTER_CUTOFF,
   FILTER_RESO  ,
-  FILTER_ENV   ,
-  FILTER_DECAY ,
+  CUTOFF_EG_AMT,
+  EG_DECAY     ,
 
   OSC2_PITCH   ,
   OSC2_DETUNE  ,
   PORTAMENTO   ,
-  AMP_DECAY    ,
+  EG_ATTACK    ,
 
   OSC_WAVE     ,
+  OSC2_ON      ,
   SUB_OSC_ON   ,
+  EG_SUSTAIN   ,
+
   OSC2_P5TH    ,
   OSC2_POCT    ,
-
-  CC90         ,
-  OSC2_ON      ,
   LEGATO       ,
-  AMP_SUSTAIN  ,
+  AMP_EG_ON    ,
 
   LFO_RATE     ,
   LFO_DEPTH    ,
-  LFO_PITCH    ,
-  LFO_CUTOFF   ,
+  PITCH_LFO_AMT,
+  CO_VEL_AMT   ,
 
-  BENDM_RANGE  ,
-  BENDP_RANGE  ,
-  BEND_TARGET  ,
-  KEY_ASSIGN   ,
+  PB_M_RANGE   ,
+  PB_P_RANGE   ,
+  PB_TARGET    ,
+  NOTE_ASSIGN  ,
 ];
 </script>
 <script>
@@ -299,33 +299,33 @@ function preset(number) {
 
   presetControllers[FILTER_CUTOFF] = [96 , 0  , 0  , 0  , 0  , 0  , 0  , 127];
   presetControllers[FILTER_RESO  ] = [64 , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
-  presetControllers[FILTER_ENV   ] = [96 , 0  , 0  , 0  , 0  , 0  , 0  , 64 ];
-  presetControllers[FILTER_DECAY ] = [32 , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
+  presetControllers[CUTOFF_EG_AMT] = [96 , 0  , 0  , 0  , 0  , 0  , 0  , 64 ];
+  presetControllers[EG_DECAY     ] = [32 , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
 
   presetControllers[OSC2_PITCH   ] = [64 , 0  , 0  , 0  , 0  , 0  , 0  , 64 ];
   presetControllers[OSC2_DETUNE  ] = [16 , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
   presetControllers[PORTAMENTO   ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
-  presetControllers[AMP_DECAY    ] = [32 , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
+  presetControllers[EG_ATTACK    ] = [32 , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
 
   presetControllers[OSC_WAVE     ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
+  presetControllers[OSC2_ON      ] = [127, 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
   presetControllers[SUB_OSC_ON   ] = [127, 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
+  presetControllers[EG_SUSTAIN   ] = [127, 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
+
   presetControllers[OSC2_P5TH    ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
   presetControllers[OSC2_POCT    ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
-
-  presetControllers[CC90         ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
-  presetControllers[OSC2_ON      ] = [127, 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
   presetControllers[LEGATO       ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
-  presetControllers[AMP_SUSTAIN  ] = [127, 0  , 0  , 0  , 0  , 0  , 0  , 127];
+  presetControllers[AMP_EG_ON    ] = [127, 0  , 0  , 0  , 0  , 0  , 0  , 127];
 
   presetControllers[LFO_RATE     ] = [64 , 0  , 0  , 0  , 0  , 0  , 0  , 64 ];
   presetControllers[LFO_DEPTH    ] = [16 , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
-  presetControllers[LFO_PITCH    ] = [68 , 0  , 0  , 0  , 0  , 0  , 0  , 64 ];
-  presetControllers[LFO_CUTOFF   ] = [68 , 0  , 0  , 0  , 0  , 0  , 0  , 64 ];
+  presetControllers[PITCH_LFO_AMT] = [68 , 0  , 0  , 0  , 0  , 0  , 0  , 64 ];
+  presetControllers[CO_VEL_AMT   ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 64 ];
 
-  presetControllers[BENDM_RANGE  ] = [66 , 0  , 0  , 0  , 0  , 0  , 0  , 66 ];
-  presetControllers[BENDP_RANGE  ] = [66 , 0  , 0  , 0  , 0  , 0  , 0  , 66 ];
-  presetControllers[BEND_TARGET  ] = [127, 0  , 0  , 0  , 0  , 0  , 0  , 127];
-  presetControllers[KEY_ASSIGN   ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
+  presetControllers[PB_M_RANGE   ] = [66 , 0  , 0  , 0  , 0  , 0  , 0  , 66 ];
+  presetControllers[PB_P_RANGE   ] = [66 , 0  , 0  , 0  , 0  , 0  , 0  , 66 ];
+  presetControllers[PB_TARGET    ] = [127, 0  , 0  , 0  , 0  , 0  , 0  , 127];
+  presetControllers[NOTE_ASSIGN  ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
 
   controllersInLocalStorage.forEach(function(i) {
     onChangeControlChange(i, presetControllers[i][number]);
@@ -446,9 +446,9 @@ function noteOff(noteNumber) {
 <table>
 <tr><td>&nbsp;</td></tr>
 <tr><td>FILTER CUTOFF         </td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-    <td>FILTER RESO           </td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-    <td>FILTER < ENV (-/+)    </td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-    <td>FILTER DECAY          </td></tr>
+    <td>FILTER RESONANCE      </td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>CUTOFF < EG (-/+)     </td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>EG DECAY              </td></tr>
 <tr><td><input id="inputCC16" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(16, value)"></td>
     <td><span   id="spanCC16">-1</span></td>
     <td><input id="inputCC17" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(17, value)"></td>
@@ -457,10 +457,10 @@ function noteOff(noteNumber) {
     <td><span   id="spanCC18">-1</span></td>
     <td><input id="inputCC19" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(19, value)"></td>
     <td><span   id="spanCC19">-1</span></td></tr>
-<tr><td>OSC2 PITCH            </td><td></td>
+<tr><td>OSC2 PITCH (-/+)      </td><td></td>
     <td>OSC2 DETUNE           </td><td></td>
     <td>PORTAMENTO            </td><td></td>
-    <td>AMP DECAY             </td></tr>
+    <td>EG ATTACK             </td></tr>
 <tr><td><input id="inputCC20" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(20, value)"></td>
     <td><span   id="spanCC20">-1</span></td>
     <td><input id="inputCC21" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(21, value)"></td>
@@ -471,9 +471,9 @@ function noteOff(noteNumber) {
     <td><span   id="spanCC23">-1</span></td></tr>
 <tr><td>&nbsp;</td></tr>
 <tr><td>OSC WAVE (SAW/SQ)     </td><td></td>
+    <td>OSC2 ON               </td><td></td>
     <td>SUB OSC ON            </td><td></td>
-    <td>OSC2 +5TH             </td><td></td>
-    <td>OSC2 +OCT             </td></tr>
+    <td>EG SUSTAIN            </td></tr>
 <tr><td><input id="inputCC80" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(80, value)"></td>
     <td><span   id="spanCC80">-1</span></td>
     <td><input id="inputCC81" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(81, value)"></td>
@@ -483,9 +483,9 @@ function noteOff(noteNumber) {
     <td><input id="inputCC83" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(83, value)"></td>
     <td><span   id="spanCC83">-1</span></td>
 <tr><td>----                  </td><td></td>
-    <td>OSC2 ON               </td><td></td>
+    <td>----                  </td><td></td>
     <td>LEGATO                </td><td></td>
-    <td>AMP SUSTAIN           </td></tr>
+    <td>AMP EG ON             </td></tr>
 <tr><td><input id="inputCC90" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(90, value)"></td>
     <td><span   id="spanCC90">-1</span></td>
     <td><input id="inputCC85" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(85, value)"></td>
@@ -497,8 +497,8 @@ function noteOff(noteNumber) {
 <tr><td>&nbsp;</td></tr>
 <tr><td>LFO RATE              </td><td></td>
     <td>LFO DEPTH             </td><td></td>
-    <td>LFO > PITCH (2/1+2)   </td><td></td>
-    <td>LFO > CUTOFF (-/+)    </td></tr>
+    <td>PITCH < LFO (2/1+2)   </td><td></td>
+    <td>CUTOFF < VELOCITY     </td></tr>
 <tr><td><input id="inputCC24" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(24, value)"></td>
     <td><span   id="spanCC24">-1</span></td>
     <td><input id="inputCC25" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(25, value)"></td>
@@ -507,10 +507,10 @@ function noteOff(noteNumber) {
     <td><span   id="spanCC26">-1</span></td>
     <td><input id="inputCC27" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(27, value)"></td>
     <td><span   id="spanCC27">-1</span></td>
-<tr><td>PBEND- RANGE (+/-)    </td><td></td>
-    <td>PBEND+ RANGE (-/+)    </td><td></td>
-    <td>PBEND TRGT (2/1+2)    </td><td></td>
-    <td>KEY ASGN (LO/LAST)    </td></tr>
+<tr><td>PB- RANGE             </td><td></td>
+    <td>PB+ RANGE             </td><td></td>
+    <td>PB TARGET (2/1+2)     </td><td></td>
+    <td>NOTE ASGN (LO/RCT)    </td></tr>
 <tr><td><input id="inputCC102" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(102, value)"></td>
     <td><span   id="spanCC102">-1</span></td>
     <td><input id="inputCC103" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(103, value)"></td>

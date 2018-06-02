@@ -117,10 +117,10 @@ public:
     case FILTER_RESO:
       IFilter<0>::set_resonance(controller_value);
       break;
-    case FILTER_ENV:
+    case CUTOFF_EG_AMT:
       IFilter<0>::set_env_amt(controller_value);
       break;
-    case FILTER_DECAY:
+    case EG_DECAY:
       IEnvGen<0>::set_decay(controller_value);
       IEnvGen<0>::set_sustain(false);
       break;
@@ -134,7 +134,7 @@ public:
     case PORTAMENTO:
       m_portamento = controller_value;
       break;
-    case AMP_DECAY:
+    case EG_ATTACK:
       IEnvGen<1>::set_decay(controller_value);
       break;
 
@@ -155,7 +155,7 @@ public:
       // TODO
       break;
 
-    case CC90:
+    case AMP_EG_ON:
       // TODO
       break;
     case OSC2_ON:
@@ -178,7 +178,7 @@ public:
         }
       }
       break;
-    case AMP_SUSTAIN:
+    case EG_SUSTAIN:
       if (controller_value < 64) {
         IEnvGen<1>::set_sustain(false);
       } else {
@@ -192,27 +192,27 @@ public:
     case LFO_DEPTH:
       IOsc<0>::set_lfo_depth<0>(controller_value);
       break;
-    case LFO_PITCH:
+    case PITCH_LFO_AMT:
       if (controller_value < 64) {
         // TODO
       } else {
         // TODO
       }
       break;
-    case LFO_CUTOFF:
+    case CO_VEL_AMT:
       // TODO
       break;
 
-    case BENDM_RANGE:
+    case PB_M_RANGE:
       // TODO
       break;
-    case BENDP_RANGE:
+    case PB_P_RANGE:
       // TODO
       break;
-    case BEND_TARGET:
+    case PB_TARGET:
       // TODO
       break;
-    case KEY_ASSIGN:
+    case NOTE_ASSIGN:
       if (controller_value < 64) {
         if (m_key_assign_last) {
           m_key_assign_last = false;
