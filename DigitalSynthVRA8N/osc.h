@@ -179,6 +179,14 @@ public:
     update_pitch_bend();
   }
 
+  INLINE static uint8_t get_white_noise_7() {
+    return m_rnd;
+  }
+
+  INLINE static uint8_t get_red_noise_8() {
+    return (m_rnd_prev + m_rnd);
+  }
+
   INLINE static int16_t clock(uint8_t count) {
     if ((count & 0x01) == 1) {
       int16_t wave_0_sub = get_wave_level(m_wave_table[2], m_phase[0] >> 8);
@@ -373,10 +381,6 @@ private:
     m_rnd_temp = m_rnd_temp ^ (m_rnd_temp << 8);
     m_rnd_prev = m_rnd;
     m_rnd = low_byte(m_rnd_temp) >> 1;
-  }
-
-  INLINE static uint8_t get_red_noise_8() {
-    return (m_rnd_prev + m_rnd);
   }
 
   INLINE static void update_lfo() {
