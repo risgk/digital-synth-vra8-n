@@ -201,7 +201,7 @@ function onMIDIMessage(event) {
       document.getElementById("spanCC1").innerHTML = value;
     }
   } else if (event.data[0] == (PITCH_BEND | MIDI_CH)) {
-    var value = (event.data[1] - 64) * 128 + event.data[2];
+    var value = event.data[1] + (event.data[2] * 128) - 8192;
     document.getElementById("spanPB").innerHTML = value;
   }
 
@@ -307,14 +307,14 @@ function preset(number) {
   presetControllers[EG_DECAY     ] = [32 , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
 
   presetControllers[OSC2_PITCH   ] = [64 , 0  , 0  , 0  , 0  , 0  , 0  , 64 ];
-  presetControllers[OSC2_DETUNE  ] = [16 , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
+  presetControllers[OSC2_DETUNE  ] = [16 , 0  , 0  , 0  , 0  , 0  , 0  , 8  ];
   presetControllers[PORTAMENTO   ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
   presetControllers[EG_ATTACK    ] = [32 , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
 
   presetControllers[OSC_WAVE     ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
   presetControllers[OSC2_ON      ] = [127, 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
   presetControllers[SUB_OSC_ON   ] = [127, 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
-  presetControllers[EG_SUSTAIN   ] = [127, 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
+  presetControllers[EG_SUSTAIN   ] = [127, 0  , 0  , 0  , 0  , 0  , 0  , 127];
 
   presetControllers[OSC2_P5TH    ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
   presetControllers[OSC2_POCT    ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
@@ -402,6 +402,7 @@ function noteOff(noteNumber) {
     <td>&nbsp;</td>
     <td>&nbsp;</td>
     <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>&nbsp;</td>
     <td>&nbsp;</td>
     <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
 <tr><td>MIDI IN 2</td>

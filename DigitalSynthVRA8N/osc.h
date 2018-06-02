@@ -316,11 +316,11 @@ private:
   template <uint8_t N>
   INLINE static void update_freq_1st() {
     m_pitch_real[N] += (64 << 8) + high_sbyte((m_fluctuation >> 2) * static_cast<int8_t>(get_red_noise_8()));
-    m_pitch_real[N] += (m_mod_level << 1);
+    m_pitch_real[N] += (m_mod_level << 0);
 
     if (N == 1) {
       /* For OSC 2 */
-      m_pitch_real[N] += (m_pitch_offset_1 << 8) + m_detune + 8;
+      m_pitch_real[N] += (m_pitch_offset_1 << 8) + m_detune;
     }
 
     uint8_t coarse = high_byte(m_pitch_real[N]);
