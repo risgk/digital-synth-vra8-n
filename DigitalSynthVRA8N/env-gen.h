@@ -27,8 +27,8 @@ public:
 
   INLINE static void set_attack(uint8_t controller_value) {
     if (controller_value >= 32) {
-      m_attack_update_interval = high_byte((controller_value << 1) *
-                                           (controller_value << 1)) >> 1 + 1;
+      m_attack_update_interval = (high_byte((controller_value << 1) *
+                                            (controller_value << 1)) >> 1) + 1;
     } else {
       m_attack_update_interval = (controller_value >> 2) + 1;
     }
