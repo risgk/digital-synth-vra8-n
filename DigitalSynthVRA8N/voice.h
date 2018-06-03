@@ -233,8 +233,7 @@ public:
     case PITCH_LFO_TGT:
       IOsc<0>::set_lfo_target<0>(controller_value);
       break;
-    case CO_VEL_AMT:
-      m_cutoff_velocity_amt = (controller_value - 64) << 1;;
+    case CC27:
       break;
 
     case PB_RANGE:
@@ -242,8 +241,6 @@ public:
       IOsc<0>::set_pitch_bend_plus_range(controller_value);
       break;
     case CC29:
-      break;
-    case CC30:
       break;
     case NOTE_ASSIGN:
       if (controller_value < 64) {
@@ -257,6 +254,9 @@ public:
           all_note_off();
         }
       }
+      break;
+    case CO_VEL_AMT:
+      m_cutoff_velocity_amt = (controller_value - 64) << 1;;
       break;
 
     case ALL_NOTES_OFF:

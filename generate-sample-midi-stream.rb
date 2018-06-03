@@ -59,12 +59,12 @@ control_change(AMP_EG_ON    , 0  )
 control_change(LFO_RATE     , 64 )
 control_change(LFO_DEPTH    , 16 )
 control_change(PITCH_LFO_TGT, 0  )
-control_change(CO_VEL_AMT   , 80 )
+control_change(CC27         , 80 )
 
 control_change(PB_RANGE     , 2  )
 control_change(CC29         , 0  )
-control_change(CC30         , 0  )
 control_change(NOTE_ASSIGN  , 0  )
+control_change(CO_VEL_AMT   , 80 )
 
 play_cegbdfac(3)
 

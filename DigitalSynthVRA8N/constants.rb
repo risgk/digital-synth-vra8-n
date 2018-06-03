@@ -73,13 +73,13 @@ AMP_EG_ON     = 87
 
 LFO_RATE      = 24
 LFO_DEPTH     = 25
-PITCH_LFO_AMT = 26
-CO_VEL_AMT    = 27
+PITCH_LFO_TGT = 26
+CC27          = 27
 
 PB_RANGE      = 28
 CC29          = 29
-CC30          = 30
-NOTE_ASSIGN   = 31
+NOTE_ASSIGN   = 30
+CO_VEL_AMT    = 31
 
 ALL_NOTES_OFF = 123
 OMNI_MODE_OFF = 124

@@ -72,12 +72,12 @@ const AMP_EG_ON     = 87;
 const LFO_RATE      = 24;
 const LFO_DEPTH     = 25;
 const PITCH_LFO_TGT = 26;
-const CO_VEL_AMT    = 27;
+const CC27          = 27;
 
 const PB_RANGE      = 28;
 const CC29          = 29;
-const CC30          = 30;
-const NOTE_ASSIGN   = 31;
+const NOTE_ASSIGN   = 30;
+const CO_VEL_AMT    = 31;
 
 const ALL_NOTES_OFF = 123;
 
@@ -105,12 +105,12 @@ var controllersInLocalStorage = [
   LFO_RATE     ,
   LFO_DEPTH    ,
   PITCH_LFO_TGT,
-  CO_VEL_AMT   ,
+  CC27         ,
 
   PB_RANGE     ,
   CC29         ,
-  CC30         ,
   NOTE_ASSIGN  ,
+  CO_VEL_AMT   ,
 ];
 </script>
 <script>
@@ -327,12 +327,12 @@ function preset(number) {
   presetControllers[LFO_RATE     ] = [64 , 0  , 0  , 0  , 0  , 0  , 0  , 64 ];
   presetControllers[LFO_DEPTH    ] = [16 , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
   presetControllers[PITCH_LFO_TGT] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 127];
-  presetControllers[CO_VEL_AMT   ] = [80 , 0  , 0  , 0  , 0  , 0  , 0  , 64 ];
+  presetControllers[CC27         ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
 
   presetControllers[PB_RANGE     ] = [2  , 0  , 0  , 0  , 0  , 0  , 0  , 2  ];
   presetControllers[CC29         ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
-  presetControllers[CC30         ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
   presetControllers[NOTE_ASSIGN  ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
+  presetControllers[CO_VEL_AMT   ] = [80 , 0  , 0  , 0  , 0  , 0  , 0  , 64 ];
 
   controllersInLocalStorage.forEach(function(i) {
     onChangeControlChange(i, presetControllers[i][number]);
@@ -517,25 +517,25 @@ function noteOff(noteNumber) {
 <tr><td>VIB RATE              </td><td></td>
     <td>VIB DEPTH             </td><td></td>
     <td>VIB TARGET (2/1+2)    </td><td></td>
-    <td>CUTOFF < RND/VEL      </td></tr>
+    <td>                      </td></tr>
 <tr><td><input id="inputCC24" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(24, value)"></td>
     <td><span   id="spanCC24">-1</span></td>
     <td><input id="inputCC25" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(25, value)"></td>
     <td><span   id="spanCC25">-1</span></td>
     <td><input id="inputCC26" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(26, value)"></td>
     <td><span   id="spanCC26">-1</span></td>
-    <td><input id="inputCC27" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(27, value)"></td>
-    <td><span   id="spanCC27">-1</span></td>
+    <td><input id="inputCC27" style="visibility:hidden" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(27, value)"></td>
+    <td><span   id="spanCC27" style="visibility:hidden">-1</span></td>
 <tr><td>P.BEND RANGE          </td><td></td>
     <td>                      </td><td></td>
-    <td>                      </td><td></td>
-    <td>NOTE ASGN (LO/LST)    </td></tr>
+    <td>NOTE ASGN (LO/LST)    </td><td></td>
+    <td>CUTOFF < RND/VEL      </td></tr>
 <tr><td><input id="inputCC28" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(28, value)"></td>
     <td><span   id="spanCC28">-1</span></td>
     <td><input id="inputCC29" style="visibility:hidden" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(29, value)"></td>
     <td><span   id="spanCC29" style="visibility:hidden">-1</span></td>
-    <td><input id="inputCC30" style="visibility:hidden" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(30, value)"></td>
-    <td><span   id="spanCC30" style="visibility:hidden">-1</span></td>
+    <td><input id="inputCC30" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(30, value)"></td>
+    <td><span   id="spanCC30">-1</span></td>
     <td><input id="inputCC31" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(31, value)"></td>
     <td><span   id="spanCC31">-1</span></td>
 <tr><td>&nbsp;</td></tr>

@@ -74,12 +74,12 @@ const uint8_t   AMP_EG_ON     = 87;
 const uint8_t   LFO_RATE      = 24;
 const uint8_t   LFO_DEPTH     = 25;
 const uint8_t   PITCH_LFO_TGT = 26;
-const uint8_t   CO_VEL_AMT    = 27;
+const uint8_t   CC27          = 27;
 
 const uint8_t   PB_RANGE      = 28;
 const uint8_t   CC29          = 29;
-const uint8_t   CC30          = 30;
-const uint8_t   NOTE_ASSIGN   = 31;
+const uint8_t   NOTE_ASSIGN   = 30;
+const uint8_t   CO_VEL_AMT    = 31;
 
 const uint8_t   ALL_NOTES_OFF = 123;
 const uint8_t   OMNI_MODE_OFF = 124;
