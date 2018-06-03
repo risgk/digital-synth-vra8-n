@@ -9,11 +9,9 @@ class EnvGen {
   static const uint8_t STATE_SUSTAIN = 1;
   static const uint8_t STATE_IDLE    = 2;
 
-  static const uint8_t ATTACK_UPDATE_INTERVAL  = 1;
-
   static uint8_t  m_state;
   static uint16_t m_level;
-  static uint16_t m_attack_step;
+  static uint8_t  m_attack_update_interval;
   static uint8_t  m_decay_update_interval;
   static boolean  m_sustain;
   static uint8_t  m_rest;
@@ -28,8 +26,12 @@ public:
   }
 
   INLINE static void set_attack(uint8_t controller_value) {
-    m_attack_step = (high_byte((127 - controller_value) *
-                               (127 - controller_value)) + 1) << 8;
+    if (controller_value >= 32) {
+      m_attack_update_interval = high_byte((controller_value << 1) *
+                                           (controller_value << 1)) + 1;
+    } else {
+      m_attack_update_interval = (controller_value >> 1) + 1;
+    }
   }
 
   INLINE static void set_decay(uint8_t controller_value) {
@@ -50,7 +52,7 @@ public:
 
   INLINE static void note_on() {
     m_state = STATE_ATTACK;
-    m_rest = ATTACK_UPDATE_INTERVAL;
+    m_rest = m_attack_update_interval;
   }
 
   INLINE static void note_off() {
@@ -64,13 +66,13 @@ public:
       case STATE_ATTACK:
         m_rest--;
         if (m_rest == 0) {
-          m_rest = ATTACK_UPDATE_INTERVAL;
-          if (m_level >= ENV_GEN_LEVEL_MAX - m_attack_step) {
+          m_rest = m_attack_update_interval;
+          if (m_level >= ENV_GEN_LEVEL_MAX) {
             m_level = ENV_GEN_LEVEL_MAX;
             m_state = STATE_SUSTAIN;
             m_rest = m_decay_update_interval;
           } else {
-            m_level += m_attack_step;
+            m_level = ENV_GEN_LEVEL_MAX - mul_q16_q8(ENV_GEN_LEVEL_MAX - m_level, ENV_GEN_ATTACK_FACTOR);
           }
         }
         break;
@@ -104,7 +106,7 @@ public:
 
 template <uint8_t T> uint8_t  EnvGen<T>::m_state;
 template <uint8_t T> uint16_t EnvGen<T>::m_level;
-template <uint8_t T> uint16_t EnvGen<T>::m_attack_step;
+template <uint8_t T> uint8_t  EnvGen<T>::m_attack_update_interval;
 template <uint8_t T> uint8_t  EnvGen<T>::m_decay_update_interval;
 template <uint8_t T> boolean  EnvGen<T>::m_sustain;
 template <uint8_t T> uint8_t  EnvGen<T>::m_rest;
