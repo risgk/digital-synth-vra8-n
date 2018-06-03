@@ -151,6 +151,13 @@ public:
     case OSC_WAVE:
       IOsc<0>::set_waveform(controller_value);
       break;
+    case OSC2_ON:
+      if (controller_value < 64) {
+        IOsc<0>::set_osc_mix(0);
+      } else {
+        IOsc<0>::set_osc_mix(64);
+      }
+      break;
     case SUB_OSC_ON:
       if (controller_value < 64) {
         IOsc<0>::set_sub_osc_level(0);
@@ -158,22 +165,17 @@ public:
         IOsc<0>::set_sub_osc_level(127);
       }
       break;
-    case OSC2_P5TH:
-      // TODO
-      break;
-    case OSC2_POCT:
-      // TODO
+    case EG_SUSTAIN:
+      if (controller_value < 64) {
+        IEnvGen<1>::set_sustain(false);
+      } else {
+        IEnvGen<1>::set_sustain(true);
+      }
       break;
 
-    case AMP_EG_ON:
-      // TODO
+    case CC14:
       break;
-    case OSC2_ON:
-      if (controller_value < 64) {
-        IOsc<0>::set_osc_mix(0);
-      } else {
-        IOsc<0>::set_osc_mix(64);
-      }
+    case CC15:
       break;
     case LEGATO:
       if (controller_value < 64) {
@@ -188,12 +190,8 @@ public:
         }
       }
       break;
-    case EG_SUSTAIN:
-      if (controller_value < 64) {
-        IEnvGen<1>::set_sustain(false);
-      } else {
-        IEnvGen<1>::set_sustain(true);
-      }
+    case AMP_EG_ON:
+      // TODO
       break;
 
     case LFO_RATE:
@@ -213,14 +211,14 @@ public:
       m_cutoff_velocity_amt = (controller_value - 64) << 1;;
       break;
 
-    case PB_M_RANGE:
+    case PB_RANGE:
       IOsc<0>::set_pitch_bend_minus_range(controller_value);
-      break;
-    case PB_P_RANGE:
       IOsc<0>::set_pitch_bend_plus_range(controller_value);
+      IOsc<0>::set_pitch_bend_target(127);
       break;
-    case PB_TARGET:
-      IOsc<0>::set_pitch_bend_target(controller_value);
+    case CC29:
+      break;
+    case CC30:
       break;
     case NOTE_ASSIGN:
       if (controller_value < 64) {

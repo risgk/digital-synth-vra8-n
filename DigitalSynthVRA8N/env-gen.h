@@ -30,7 +30,7 @@ public:
   }
 
   INLINE static void set_decay(uint8_t controller_value) {
-    if (controller_value >= 126) {
+    if (controller_value >= 128) {
       // No Decay
       m_decay_update_interval = 0;
     } else if (controller_value >= 32) {

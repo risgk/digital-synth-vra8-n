@@ -64,8 +64,8 @@ const OSC2_ON       = 81;
 const SUB_OSC_ON    = 82;
 const EG_SUSTAIN    = 83;
 
-const OSC2_P5TH     = 14;
-const OSC2_POCT     = 15;
+const CC14          = 14;
+const CC15          = 15;
 const LEGATO        = 86;
 const AMP_EG_ON     = 87;
 
@@ -74,9 +74,9 @@ const LFO_DEPTH     = 25;
 const PITCH_LFO_AMT = 26;
 const CO_VEL_AMT    = 27;
 
-const PB_M_RANGE    = 28;
-const PB_P_RANGE    = 29;
-const PB_TARGET     = 30;
+const PB_RANGE      = 28;
+const CC29          = 29;
+const CC30          = 30;
 const NOTE_ASSIGN   = 31;
 
 const ALL_NOTES_OFF = 123;
@@ -97,8 +97,8 @@ var controllersInLocalStorage = [
   SUB_OSC_ON   ,
   EG_SUSTAIN   ,
 
-  OSC2_P5TH    ,
-  OSC2_POCT    ,
+  CC14         ,
+  CC15         ,
   LEGATO       ,
   AMP_EG_ON    ,
 
@@ -107,9 +107,9 @@ var controllersInLocalStorage = [
   PITCH_LFO_AMT,
   CO_VEL_AMT   ,
 
-  PB_M_RANGE   ,
-  PB_P_RANGE   ,
-  PB_TARGET    ,
+  PB_RANGE     ,
+  CC29         ,
+  CC30         ,
   NOTE_ASSIGN  ,
 ];
 </script>
@@ -302,33 +302,33 @@ function preset(number) {
   var presetControllers = {};
 
   presetControllers[FILTER_CUTOFF] = [96 , 0  , 0  , 0  , 0  , 0  , 0  , 127];
-  presetControllers[FILTER_RESO  ] = [64 , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
+  presetControllers[FILTER_RESO  ] = [96 , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
   presetControllers[CUTOFF_EG_AMT] = [96 , 0  , 0  , 0  , 0  , 0  , 0  , 64 ];
   presetControllers[EG_DECAY     ] = [32 , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
 
-  presetControllers[OSC2_PITCH   ] = [64 , 0  , 0  , 0  , 0  , 0  , 0  , 64 ];
-  presetControllers[OSC2_DETUNE  ] = [16 , 0  , 0  , 0  , 0  , 0  , 0  , 8  ];
+  presetControllers[OSC2_PITCH   ] = [71 , 0  , 0  , 0  , 0  , 0  , 0  , 64 ];
+  presetControllers[OSC2_DETUNE  ] = [8  , 0  , 0  , 0  , 0  , 0  , 0  , 8  ];
   presetControllers[PORTAMENTO   ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
-  presetControllers[EG_ATTACK    ] = [32 , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
+  presetControllers[EG_ATTACK    ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
 
   presetControllers[OSC_WAVE     ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
   presetControllers[OSC2_ON      ] = [127, 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
   presetControllers[SUB_OSC_ON   ] = [127, 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
   presetControllers[EG_SUSTAIN   ] = [127, 0  , 0  , 0  , 0  , 0  , 0  , 127];
 
-  presetControllers[OSC2_P5TH    ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
-  presetControllers[OSC2_POCT    ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
+  presetControllers[CC14         ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
+  presetControllers[CC15         ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
   presetControllers[LEGATO       ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
   presetControllers[AMP_EG_ON    ] = [127, 0  , 0  , 0  , 0  , 0  , 0  , 127];
 
   presetControllers[LFO_RATE     ] = [64 , 0  , 0  , 0  , 0  , 0  , 0  , 64 ];
   presetControllers[LFO_DEPTH    ] = [16 , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
   presetControllers[PITCH_LFO_AMT] = [68 , 0  , 0  , 0  , 0  , 0  , 0  , 64 ];
-  presetControllers[CO_VEL_AMT   ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 64 ];
+  presetControllers[CO_VEL_AMT   ] = [96 , 0  , 0  , 0  , 0  , 0  , 0  , 64 ];
 
-  presetControllers[PB_M_RANGE   ] = [2  , 0  , 0  , 0  , 0  , 0  , 0  , 2  ];
-  presetControllers[PB_P_RANGE   ] = [2  , 0  , 0  , 0  , 0  , 0  , 0  , 2  ];
-  presetControllers[PB_TARGET    ] = [127, 0  , 0  , 0  , 0  , 0  , 0  , 127];
+  presetControllers[PB_RANGE     ] = [2  , 0  , 0  , 0  , 0  , 0  , 0  , 2  ];
+  presetControllers[CC29         ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
+  presetControllers[CC30         ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
   presetControllers[NOTE_ASSIGN  ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
 
   controllersInLocalStorage.forEach(function(i) {
@@ -399,7 +399,7 @@ function noteOff(noteNumber) {
     <td>MIDI OUT</td>
     <td><select id="selectOutputPort" size="1" onchange="onChangeOutputPort()"></select></td>
     <td>&nbsp;</td>
-    <td>&nbsp;</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
     <td>&nbsp;</td>
     <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
     <td>&nbsp;</td>
@@ -520,9 +520,9 @@ function noteOff(noteNumber) {
     <td><span   id="spanCC26">-1</span></td>
     <td><input id="inputCC27" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(27, value)"></td>
     <td><span   id="spanCC27">-1</span></td>
-<tr><td>P.BEND- RANGE         </td><td></td>
-    <td>P.BEND+ RANGE         </td><td></td>
-    <td>P.BEND TRGT (2/1+2)   </td><td></td>
+<tr><td>P.BEND RANGE          </td><td></td>
+    <td>----                  </td><td></td>
+    <td>----                  </td><td></td>
     <td>NOTE ASGN (LO/LST)    </td></tr>
 <tr><td><input id="inputCC28" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(28, value)"></td>
     <td><span   id="spanCC28">-1</span></td>

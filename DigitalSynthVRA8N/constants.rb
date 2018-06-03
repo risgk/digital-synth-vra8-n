@@ -65,8 +65,8 @@ OSC2_ON       = 81
 SUB_OSC_ON    = 82
 EG_SUSTAIN    = 83
 
-OSC2_P5TH     = 14
-OSC2_POCT     = 15
+CC14          = 14
+CC15          = 15
 LEGATO        = 86
 AMP_EG_ON     = 87
 
@@ -75,9 +75,9 @@ LFO_DEPTH     = 25
 PITCH_LFO_AMT = 26
 CO_VEL_AMT    = 27
 
-PB_M_RANGE    = 28
-PB_P_RANGE    = 29
-PB_TARGET     = 30
+PB_RANGE      = 28
+CC29          = 29
+CC30          = 30
 NOTE_ASSIGN   = 31
 
 ALL_NOTES_OFF = 123
