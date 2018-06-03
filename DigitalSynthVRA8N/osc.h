@@ -18,11 +18,12 @@ class Osc {
   static int8_t         m_detune;
   static uint8_t        m_fluctuation;
   static uint16_t       m_portamento_rate;
-  static int8_t         m_mod_level;
+  static int8_t         m_mod_level[2];
   static uint16_t       m_lfo_phase;
   static int8_t         m_lfo_level;
   static uint16_t       m_lfo_rate;
   static uint8_t        m_lfo_depth[2];
+  static boolean        m_lfo_target[2];
   static uint8_t        m_waveform;
   static int16_t        m_pitch_bend;
   static uint8_t        m_pitch_bend_minus_range;
@@ -54,7 +55,8 @@ public:
     m_detune = 0;
     m_fluctuation = FLUCTUATION_INIT;
     m_portamento_rate = 0x8000;
-    m_mod_level = 0;
+    m_mod_level[0] = 0;
+    m_mod_level[1] = 0;
     m_lfo_phase = 0;
     m_lfo_level = 0;
     m_lfo_rate = 0;
@@ -139,6 +141,17 @@ public:
   template <uint8_t N>
   INLINE static void set_lfo_depth(uint8_t controller_value) {
     m_lfo_depth[N] = controller_value;
+  }
+
+  template <uint8_t N>
+  INLINE static void set_lfo_target(uint8_t controller_value) {
+    if (controller_value < 64) {
+      m_lfo_target[0] = false;
+      m_lfo_target[1] = true;
+    } else {
+      m_lfo_target[0] = true;
+      m_lfo_target[1] = true;
+    }
   }
 
   template <uint8_t N>
@@ -304,7 +317,7 @@ private:
   template <uint8_t N>
   INLINE static void update_freq_1st() {
     m_pitch_real[N] += (64 << 8) + high_sbyte((m_fluctuation >> 2) * static_cast<int8_t>(get_red_noise_8()));
-    m_pitch_real[N] += (m_mod_level << 0);
+    m_pitch_real[N] += m_mod_level[N];
 
     if (N == 1) {
       /* For OSC 2 */
@@ -370,7 +383,18 @@ private:
     if (lfo_depth > 127) {
       lfo_depth = 127;
     }
-    m_mod_level = high_sbyte((lfo_depth << 1) * m_lfo_level);
+
+    if (m_lfo_target[0]) {
+      m_mod_level[0] = high_sbyte((lfo_depth << 1) * m_lfo_level);
+    } else {
+      m_mod_level[0] = 0;
+    }
+
+    if (m_lfo_target[1]) {
+      m_mod_level[1] = high_sbyte((lfo_depth << 1) * m_lfo_level);
+    } else {
+      m_mod_level[1] = 0;
+    }
   }
 
   INLINE static void update_pitch_bend() {
@@ -393,11 +417,12 @@ template <uint8_t T> int8_t          Osc<T>::m_pitch_offset_1;
 template <uint8_t T> int8_t          Osc<T>::m_detune;
 template <uint8_t T> uint8_t         Osc<T>::m_fluctuation;
 template <uint8_t T> uint16_t        Osc<T>::m_portamento_rate;
-template <uint8_t T> int8_t          Osc<T>::m_mod_level;
+template <uint8_t T> int8_t          Osc<T>::m_mod_level[2];
 template <uint8_t T> uint16_t        Osc<T>::m_lfo_phase;
 template <uint8_t T> int8_t          Osc<T>::m_lfo_level;
 template <uint8_t T> uint16_t        Osc<T>::m_lfo_rate;
 template <uint8_t T> uint8_t         Osc<T>::m_lfo_depth[2];
+template <uint8_t T> boolean         Osc<T>::m_lfo_target[2];
 template <uint8_t T> uint8_t         Osc<T>::m_waveform;
 template <uint8_t T> int16_t         Osc<T>::m_pitch_bend;
 template <uint8_t T> uint8_t         Osc<T>::m_pitch_bend_minus_range;

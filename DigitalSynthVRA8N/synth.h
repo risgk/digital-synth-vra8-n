@@ -48,7 +48,7 @@ public:
 
     ISynthCore<0>::control_change(LFO_RATE     , 64 );
     ISynthCore<0>::control_change(LFO_DEPTH    , 16 );
-    ISynthCore<0>::control_change(PITCH_LFO_AMT, 68 );
+    ISynthCore<0>::control_change(PITCH_LFO_TGT, 0  );
     ISynthCore<0>::control_change(CO_VEL_AMT   , 80 );
 
     ISynthCore<0>::control_change(PB_RANGE     , 2  );

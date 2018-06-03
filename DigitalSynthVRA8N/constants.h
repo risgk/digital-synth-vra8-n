@@ -73,7 +73,7 @@ const uint8_t   AMP_EG_ON     = 87;
 
 const uint8_t   LFO_RATE      = 24;
 const uint8_t   LFO_DEPTH     = 25;
-const uint8_t   PITCH_LFO_AMT = 26;
+const uint8_t   PITCH_LFO_TGT = 26;
 const uint8_t   CO_VEL_AMT    = 27;
 
 const uint8_t   PB_RANGE      = 28;

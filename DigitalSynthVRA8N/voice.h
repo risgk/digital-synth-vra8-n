@@ -230,12 +230,8 @@ public:
     case LFO_DEPTH:
       IOsc<0>::set_lfo_depth<0>(controller_value);
       break;
-    case PITCH_LFO_AMT:
-      if (controller_value < 64) {
-        // TODO
-      } else {
-        // TODO
-      }
+    case PITCH_LFO_TGT:
+      IOsc<0>::set_lfo_target<0>(controller_value);
       break;
     case CO_VEL_AMT:
       m_cutoff_velocity_amt = (controller_value - 64) << 1;;
