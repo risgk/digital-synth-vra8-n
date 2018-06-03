@@ -12,6 +12,10 @@ class Voice {
   static boolean m_legato;
   static boolean m_key_assign_last;
   static int8_t m_cutoff_velocity_amt;
+  static uint8_t m_attack;
+  static uint8_t m_decay;
+  static boolean m_sustain;
+  static boolean m_amp_env_gen_on;
 
 public:
   INLINE static void initialize() {
@@ -28,10 +32,11 @@ public:
     IAmp<0>::initialize();
     IEnvGen<0>::initialize();
     IEnvGen<1>::initialize();
-    IEnvGen<0>::set_decay(0);
-    IEnvGen<0>::set_sustain(false);
-    IEnvGen<1>::set_decay(0);
-    IEnvGen<1>::set_sustain(true);
+    m_attack = 0;
+    m_decay = 0;
+    m_sustain = true;
+    m_amp_env_gen_on = true;
+    update_env_gen();
   }
 
   INLINE static void note_on(uint8_t note_number, uint8_t velocity) {
@@ -131,8 +136,13 @@ public:
       IFilter<0>::set_env_amt(controller_value);
       break;
     case EG_DECAY:
-      IEnvGen<0>::set_decay(controller_value);
-      IEnvGen<0>::set_sustain(false);
+      m_decay = controller_value;
+      if (m_amp_env_gen_on) {
+        IEnvGen<0>::set_decay(m_decay);
+        IEnvGen<1>::set_decay(m_decay);
+      } else {
+        IEnvGen<0>::set_decay(m_decay);
+      }
       break;
 
     case OSC2_PITCH:
@@ -145,7 +155,13 @@ public:
       m_portamento = controller_value;
       break;
     case EG_ATTACK:
-      IEnvGen<1>::set_decay(controller_value);
+      m_attack = controller_value;
+      if (m_amp_env_gen_on) {
+        IEnvGen<0>::set_attack(m_attack);
+        IEnvGen<1>::set_attack(m_attack);
+      } else {
+        IEnvGen<0>::set_attack(m_attack);
+      }
       break;
 
     case OSC_WAVE:
@@ -166,10 +182,19 @@ public:
       }
       break;
     case EG_SUSTAIN:
-      if (controller_value < 64) {
-        IEnvGen<1>::set_sustain(false);
-      } else {
-        IEnvGen<1>::set_sustain(true);
+      {
+        if (controller_value < 64) {
+          m_sustain = false;
+        } else {
+          m_sustain = true;
+        }
+
+        if (m_amp_env_gen_on) {
+          IEnvGen<0>::set_sustain(m_sustain);
+          IEnvGen<1>::set_sustain(m_sustain);
+        } else {
+          IEnvGen<0>::set_sustain(m_sustain);
+        }
       }
       break;
 
@@ -191,7 +216,12 @@ public:
       }
       break;
     case AMP_EG_ON:
-      // TODO
+      if (controller_value < 64) {
+        m_amp_env_gen_on = false;
+      } else {
+        m_amp_env_gen_on = true;
+      }
+      update_env_gen();
       break;
 
     case LFO_RATE:
@@ -330,6 +360,24 @@ private:
     }
     return lowest_on_note;
   }
+
+  INLINE static void update_env_gen() {
+    if (m_amp_env_gen_on) {
+      IEnvGen<0>::set_attack(m_attack);
+      IEnvGen<0>::set_decay(m_decay);
+      IEnvGen<0>::set_sustain(m_sustain);
+      IEnvGen<1>::set_attack(m_attack);
+      IEnvGen<1>::set_decay(m_decay);
+      IEnvGen<1>::set_sustain(m_sustain);
+    } else {
+      IEnvGen<0>::set_attack(m_attack);
+      IEnvGen<0>::set_decay(m_decay);
+      IEnvGen<0>::set_sustain(m_sustain);
+      IEnvGen<1>::set_attack(0);
+      IEnvGen<1>::set_decay(0);
+      IEnvGen<1>::set_sustain(true);
+    }
+  }
 };
 
 template <uint8_t T> uint8_t Voice<T>::m_count;
@@ -342,3 +390,7 @@ template <uint8_t T> uint8_t Voice<T>::m_portamento;
 template <uint8_t T> boolean Voice<T>::m_legato;
 template <uint8_t T> boolean Voice<T>::m_key_assign_last;
 template <uint8_t T> int8_t Voice<T>::m_cutoff_velocity_amt;
+template <uint8_t T> uint8_t Voice<T>::m_attack;
+template <uint8_t T> uint8_t Voice<T>::m_decay;
+template <uint8_t T> boolean Voice<T>::m_sustain;
+template <uint8_t T> boolean Voice<T>::m_amp_env_gen_on;

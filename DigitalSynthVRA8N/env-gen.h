@@ -9,24 +9,27 @@ class EnvGen {
   static const uint8_t STATE_SUSTAIN = 1;
   static const uint8_t STATE_IDLE    = 2;
 
-  static const uint16_t ATTACK_STEP            = 0x4000;
   static const uint8_t ATTACK_UPDATE_INTERVAL  = 1;
 
   static uint8_t  m_state;
   static uint16_t m_level;
-  static boolean  m_sustain;
+  static uint16_t m_attack_step;
   static uint8_t  m_decay_update_interval;
+  static boolean  m_sustain;
   static uint8_t  m_rest;
 
 public:
   INLINE static void initialize() {
     m_state = STATE_IDLE;
     m_level = 0;
-    set_sustain(true);
+    set_attack(0);
     set_decay(0);
+    set_sustain(true);
   }
 
   INLINE static void set_attack(uint8_t controller_value) {
+    m_attack_step = (high_byte((127 - controller_value) *
+                               (127 - controller_value)) + 1) << 8;
   }
 
   INLINE static void set_decay(uint8_t controller_value) {
@@ -62,12 +65,12 @@ public:
         m_rest--;
         if (m_rest == 0) {
           m_rest = ATTACK_UPDATE_INTERVAL;
-          if (m_level >= ENV_GEN_LEVEL_MAX - ATTACK_STEP) {
+          if (m_level >= ENV_GEN_LEVEL_MAX - m_attack_step) {
             m_level = ENV_GEN_LEVEL_MAX;
             m_state = STATE_SUSTAIN;
             m_rest = m_decay_update_interval;
           } else {
-            m_level += ATTACK_STEP;
+            m_level += m_attack_step;
           }
         }
         break;
@@ -101,6 +104,7 @@ public:
 
 template <uint8_t T> uint8_t  EnvGen<T>::m_state;
 template <uint8_t T> uint16_t EnvGen<T>::m_level;
-template <uint8_t T> boolean  EnvGen<T>::m_sustain;
+template <uint8_t T> uint16_t EnvGen<T>::m_attack_step;
 template <uint8_t T> uint8_t  EnvGen<T>::m_decay_update_interval;
+template <uint8_t T> boolean  EnvGen<T>::m_sustain;
 template <uint8_t T> uint8_t  EnvGen<T>::m_rest;
