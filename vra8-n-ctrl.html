@@ -203,6 +203,9 @@ function onMIDIMessage(event) {
   } else if (event.data[0] == (PITCH_BEND | MIDI_CH)) {
     var value = event.data[1] + (event.data[2] * 128) - 8192;
     document.getElementById("spanPB").innerHTML = value;
+  } else if (event.data[0] == (NOTE_ON | MIDI_CH)) {
+    var value = event.data[2];
+    document.getElementById("spanNoteOnVelocity").innerHTML = value;
   }
 
   const PROGRAM_CHANGE = 0xC0;
@@ -301,7 +304,7 @@ function preset(number) {
   allNotesOff();
   var presetControllers = {};
 
-  presetControllers[FILTER_CUTOFF] = [96 , 0  , 0  , 0  , 0  , 0  , 0  , 127];
+  presetControllers[FILTER_CUTOFF] = [64 , 0  , 0  , 0  , 0  , 0  , 0  , 127];
   presetControllers[FILTER_RESO  ] = [96 , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
   presetControllers[CUTOFF_EG_AMT] = [96 , 0  , 0  , 0  , 0  , 0  , 0  , 64 ];
   presetControllers[EG_DECAY     ] = [32 , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
@@ -314,17 +317,17 @@ function preset(number) {
   presetControllers[OSC_WAVE     ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
   presetControllers[OSC2_ON      ] = [127, 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
   presetControllers[SUB_OSC_ON   ] = [127, 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
-  presetControllers[EG_SUSTAIN   ] = [127, 0  , 0  , 0  , 0  , 0  , 0  , 127];
+  presetControllers[EG_SUSTAIN   ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 127];
 
   presetControllers[CC14         ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
   presetControllers[CC15         ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
-  presetControllers[LEGATO       ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
-  presetControllers[AMP_EG_ON    ] = [127, 0  , 0  , 0  , 0  , 0  , 0  , 127];
+  presetControllers[LEGATO       ] = [127, 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
+  presetControllers[AMP_EG_ON    ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 127];
 
   presetControllers[LFO_RATE     ] = [64 , 0  , 0  , 0  , 0  , 0  , 0  , 64 ];
   presetControllers[LFO_DEPTH    ] = [16 , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
   presetControllers[PITCH_LFO_AMT] = [68 , 0  , 0  , 0  , 0  , 0  , 0  , 64 ];
-  presetControllers[CO_VEL_AMT   ] = [96 , 0  , 0  , 0  , 0  , 0  , 0  , 64 ];
+  presetControllers[CO_VEL_AMT   ] = [80 , 0  , 0  , 0  , 0  , 0  , 0  , 64 ];
 
   presetControllers[PB_RANGE     ] = [2  , 0  , 0  , 0  , 0  , 0  , 0  , 2  ];
   presetControllers[CC29         ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
@@ -399,12 +402,12 @@ function noteOff(noteNumber) {
     <td>MIDI OUT</td>
     <td><select id="selectOutputPort" size="1" onchange="onChangeOutputPort()"></select></td>
     <td>&nbsp;</td>
-    <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
     <td>&nbsp;</td>
-    <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
     <td>&nbsp;</td>
     <td>&nbsp;</td>
-    <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
 <tr><td>MIDI IN 2</td>
     <td><select id="selectInputPort2" size="1" onchange="onChangeInputPort2()"></select></td>
     <td>&nbsp;</td>
@@ -416,7 +419,10 @@ function noteOff(noteNumber) {
     <td><span id="spanPB">-</span></td>
     <td>&nbsp;</td>
     <td>MOD</td>
-    <td><span id="spanCC1">-</span></td></tr>
+    <td><span id="spanCC1">-</span></td>
+    <td>&nbsp;</td>
+    <td>VEL</td>
+    <td><span id="spanNoteOnVelocity">-</span></td></tr>
 </table>
 
 <table>
@@ -458,10 +464,10 @@ function noteOff(noteNumber) {
 
 <table>
 <tr><td>&nbsp;</td></tr>
-<tr><td>FILTER CUTOFF         </td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-    <td>FILTER RESONANCE      </td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-    <td>CUTOFF < EG (-/+)     </td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-    <td>EG DECAY              </td></tr>
+<tr><td>FILTER CUTOFF         </td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>FILTER RESONANCE      </td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>CUTOFF < EG (-/+)     </td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>EG DECAY              </td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
 <tr><td><input id="inputCC16" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(16, value)"></td>
     <td><span   id="spanCC16">-1</span></td>
     <td><input id="inputCC17" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(17, value)"></td>
