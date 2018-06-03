@@ -54,8 +54,8 @@ const FILTER_RESO   = 17;
 const CUTOFF_EG_AMT = 18;
 const EG_DECAY      = 19;
 
-const OSC2_PITCH    = 20;
-const OSC2_DETUNE   = 21;
+const OSC2_COARSE   = 20;
+const OSC2_FINE     = 21;
 const PORTAMENTO    = 22;
 const EG_ATTACK     = 23;
 
@@ -87,8 +87,8 @@ var controllersInLocalStorage = [
   CUTOFF_EG_AMT,
   EG_DECAY     ,
 
-  OSC2_PITCH   ,
-  OSC2_DETUNE  ,
+  OSC2_COARSE  ,
+  OSC2_FINE    ,
   PORTAMENTO   ,
   EG_ATTACK    ,
 
@@ -306,8 +306,8 @@ function preset(number) {
   presetControllers[CUTOFF_EG_AMT] = [96 , 0  , 0  , 0  , 0  , 0  , 0  , 64 ];
   presetControllers[EG_DECAY     ] = [32 , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
 
-  presetControllers[OSC2_PITCH   ] = [71 , 0  , 0  , 0  , 0  , 0  , 0  , 64 ];
-  presetControllers[OSC2_DETUNE  ] = [8  , 0  , 0  , 0  , 0  , 0  , 0  , 8  ];
+  presetControllers[OSC2_COARSE  ] = [71 , 0  , 0  , 0  , 0  , 0  , 0  , 64 ];
+  presetControllers[OSC2_FINE    ] = [68 , 0  , 0  , 0  , 0  , 0  , 0  , 68 ];
   presetControllers[PORTAMENTO   ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
   presetControllers[EG_ATTACK    ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
 
@@ -470,8 +470,8 @@ function noteOff(noteNumber) {
     <td><span   id="spanCC18">-1</span></td>
     <td><input id="inputCC19" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(19, value)"></td>
     <td><span   id="spanCC19">-1</span></td></tr>
-<tr><td>OSC2 PITCH (-/+)      </td><td></td>
-    <td>OSC2 DETUNE           </td><td></td>
+<tr><td>OSC2 COARSE (-/+)     </td><td></td>
+    <td>OSC2 FINE (-/+)       </td><td></td>
     <td>PORTAMENTO            </td><td></td>
     <td>EG ATTACK             </td></tr>
 <tr><td><input id="inputCC20" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(20, value)"></td>

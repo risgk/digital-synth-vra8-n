@@ -31,8 +31,8 @@ public:
     ISynthCore<0>::control_change(CUTOFF_EG_AMT, 96 );
     ISynthCore<0>::control_change(EG_DECAY     , 32 );
 
-    ISynthCore<0>::control_change(OSC2_PITCH   , 71 );
-    ISynthCore<0>::control_change(OSC2_DETUNE  , 8  );
+    ISynthCore<0>::control_change(OSC2_COARSE  , 71 );
+    ISynthCore<0>::control_change(OSC2_FINE    , 68 );
     ISynthCore<0>::control_change(PORTAMENTO   , 0  );
     ISynthCore<0>::control_change(EG_ATTACK    , 0  );
 

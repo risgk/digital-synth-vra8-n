@@ -56,8 +56,8 @@ const uint8_t   FILTER_RESO   = 17;
 const uint8_t   CUTOFF_EG_AMT = 18;
 const uint8_t   EG_DECAY      = 19;
 
-const uint8_t   OSC2_PITCH    = 20;
-const uint8_t   OSC2_DETUNE   = 21;
+const uint8_t   OSC2_COARSE   = 20;
+const uint8_t   OSC2_FINE     = 21;
 const uint8_t   PORTAMENTO    = 22;
 const uint8_t   EG_ATTACK     = 23;
 

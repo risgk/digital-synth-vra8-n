@@ -15,7 +15,7 @@ class Osc {
   static int16_t        m_level_sub;
   static int8_t         m_mix_table[OSC_MIX_TABLE_LENGTH];
   static int8_t         m_pitch_offset_1;
-  static uint8_t        m_detune;
+  static int8_t         m_detune;
   static uint8_t        m_fluctuation;
   static uint16_t       m_portamento_rate;
   static int8_t         m_mod_level;
@@ -121,7 +121,7 @@ public:
   }
 
   INLINE static void set_detune(uint8_t controller_value) {
-    m_detune = controller_value << 1;
+    m_detune = (controller_value - 64) << 1;
   }
 
   INLINE static void set_portamento(uint8_t controller_value) {
@@ -308,7 +308,7 @@ private:
 
     if (N == 1) {
       /* For OSC 2 */
-      m_pitch_real[N] += (m_pitch_offset_1 << 8) + m_detune;
+      m_pitch_real[N] += (m_pitch_offset_1 << 8) + m_detune + m_detune;
     }
 
     uint8_t coarse = high_byte(m_pitch_real[N]);
@@ -390,7 +390,7 @@ template <uint8_t T> int8_t          Osc<T>::m_mix_sub;
 template <uint8_t T> int16_t         Osc<T>::m_level_sub;
 template <uint8_t T> int8_t          Osc<T>::m_mix_table[OSC_MIX_TABLE_LENGTH];
 template <uint8_t T> int8_t          Osc<T>::m_pitch_offset_1;
-template <uint8_t T> uint8_t         Osc<T>::m_detune;
+template <uint8_t T> int8_t          Osc<T>::m_detune;
 template <uint8_t T> uint8_t         Osc<T>::m_fluctuation;
 template <uint8_t T> uint16_t        Osc<T>::m_portamento_rate;
 template <uint8_t T> int8_t          Osc<T>::m_mod_level;

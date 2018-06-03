@@ -41,8 +41,8 @@ control_change(FILTER_RESO  , 96 )
 control_change(CUTOFF_EG_AMT, 96 )
 control_change(EG_DECAY     , 32 )
 
-control_change(OSC2_PITCH   , 71 )
-control_change(OSC2_DETUNE  , 8  )
+control_change(OSC2_COARSE  , 71 )
+control_change(OSC2_FINE    , 68 )
 control_change(PORTAMENTO   , 0  )
 control_change(EG_ATTACK    , 0  )
 
