@@ -27,7 +27,6 @@ class Osc {
   static int16_t        m_pitch_bend;
   static uint8_t        m_pitch_bend_minus_range;
   static uint8_t        m_pitch_bend_plus_range;
-  static boolean        m_pitch_bend_target_both;
   static int16_t        m_pitch_bend_normalized;
   static uint16_t       m_pitch_target[2];
   static uint16_t       m_pitch_current[2];
@@ -86,7 +85,6 @@ public:
     m_rnd_prev = 0;
     set_pitch_bend_minus_range(2);
     set_pitch_bend_plus_range(2);
-    set_pitch_bend_target(127);
   }
 
   INLINE static void set_osc_mix(uint8_t controller_value) {
@@ -164,14 +162,6 @@ public:
     }
     m_pitch_bend_plus_range = range;
     update_pitch_bend();
-  }
-
-  INLINE static void set_pitch_bend_target(uint8_t controller_value) {
-    if (controller_value < 64) {
-      m_pitch_bend_target_both = false;
-    } else {
-      m_pitch_bend_target_both = true;
-    }
   }
 
   INLINE static void set_pitch_bend(int16_t pitch_bend) {
@@ -299,17 +289,7 @@ private:
     }
 
     int16_t t = TRANSPOSE << 8;
-    if (N == 1) {
-      /* For OSC 1 */
-      m_pitch_real[N] = (64 << 8) + m_pitch_current[N] + m_pitch_bend_normalized + t;
-    } else {
-      /* For OSC 2 */
-      if (m_pitch_bend_target_both) {
-        m_pitch_real[N] = (64 << 8) + m_pitch_current[N] + m_pitch_bend_normalized + t;
-      } else {
-        m_pitch_real[N] = (64 << 8) + m_pitch_current[N] + t;
-      }
-    }
+    m_pitch_real[N] = (64 << 8) + m_pitch_current[N] + m_pitch_bend_normalized + t;
 
     uint8_t coarse = high_byte(m_pitch_real[N]);
     if (coarse <= (NOTE_NUMBER_MIN + 64)) {
@@ -422,7 +402,6 @@ template <uint8_t T> uint8_t         Osc<T>::m_waveform;
 template <uint8_t T> int16_t         Osc<T>::m_pitch_bend;
 template <uint8_t T> uint8_t         Osc<T>::m_pitch_bend_minus_range;
 template <uint8_t T> uint8_t         Osc<T>::m_pitch_bend_plus_range;
-template <uint8_t T> boolean         Osc<T>::m_pitch_bend_target_both;
 template <uint8_t T> int16_t         Osc<T>::m_pitch_bend_normalized;
 template <uint8_t T> uint16_t        Osc<T>::m_pitch_target[2];
 template <uint8_t T> uint16_t        Osc<T>::m_pitch_current[2];

@@ -244,7 +244,6 @@ public:
     case PB_RANGE:
       IOsc<0>::set_pitch_bend_minus_range(controller_value);
       IOsc<0>::set_pitch_bend_plus_range(controller_value);
-      IOsc<0>::set_pitch_bend_target(127);
       break;
     case CC29:
       break;
