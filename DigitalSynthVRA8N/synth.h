@@ -26,9 +26,9 @@ public:
     ISynthCore<0>::initialize();
 
     // DEFAULT
-    ISynthCore<0>::control_change(FILTER_CUTOFF, 64 );
-    ISynthCore<0>::control_change(FILTER_RESO  , 96 );
-    ISynthCore<0>::control_change(CUTOFF_EG_AMT, 96 );
+    ISynthCore<0>::control_change(FILTER_CUTOFF, 80 );
+    ISynthCore<0>::control_change(FILTER_RESO  , 80 );
+    ISynthCore<0>::control_change(CUTOFF_EG_AMT, 80 );
     ISynthCore<0>::control_change(EG_DECAY     , 32 );
 
     ISynthCore<0>::control_change(OSC2_COARSE  , 71 );
@@ -39,12 +39,12 @@ public:
     ISynthCore<0>::control_change(OSC_WAVE     , 0  );
     ISynthCore<0>::control_change(OSC2_ON      , 127);
     ISynthCore<0>::control_change(SUB_OSC_ON   , 127);
-    ISynthCore<0>::control_change(EG_SUSTAIN   , 0  );
+    ISynthCore<0>::control_change(EG_SUSTAIN   , 127);
 
     ISynthCore<0>::control_change(CC14         , 0  );
     ISynthCore<0>::control_change(CC15         , 0  );
     ISynthCore<0>::control_change(LEGATO       , 127);
-    ISynthCore<0>::control_change(AMP_EG_ON    , 0  );
+    ISynthCore<0>::control_change(AMP_EG_ON    , 127);
 
     ISynthCore<0>::control_change(LFO_RATE     , 64 );
     ISynthCore<0>::control_change(LFO_DEPTH    , 16 );

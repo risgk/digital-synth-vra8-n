@@ -36,9 +36,9 @@ end
 
 sound_off
 
-control_change(FILTER_CUTOFF, 64 )
-control_change(FILTER_RESO  , 96 )
-control_change(CUTOFF_EG_AMT, 96 )
+control_change(FILTER_CUTOFF, 80 )
+control_change(FILTER_RESO  , 80 )
+control_change(CUTOFF_EG_AMT, 80 )
 control_change(EG_DECAY     , 32 )
 
 control_change(OSC2_COARSE  , 71 )
@@ -49,17 +49,17 @@ control_change(EG_ATTACK    , 0  )
 control_change(OSC_WAVE     , 0  )
 control_change(OSC2_ON      , 127)
 control_change(SUB_OSC_ON   , 127)
-control_change(EG_SUSTAIN   , 0  )
+control_change(EG_SUSTAIN   , 127)
 
 control_change(CC14         , 0  )
 control_change(CC15         , 0  )
 control_change(LEGATO       , 127)
-control_change(AMP_EG_ON    , 0  )
+control_change(AMP_EG_ON    , 127)
 
 control_change(LFO_RATE     , 64 )
 control_change(LFO_DEPTH    , 16 )
 control_change(PITCH_LFO_TGT, 0  )
-control_change(CC27         , 80 )
+control_change(CC27         , 0  )
 
 control_change(PB_RANGE     , 2  )
 control_change(CC29         , 0  )
