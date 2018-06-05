@@ -230,8 +230,8 @@ public:
     case LFO_DEPTH:
       IOsc<0>::set_lfo_depth<0>(controller_value);
       break;
-    case PITCH_LFO_TGT:
-      IOsc<0>::set_lfo_target<0>(controller_value);
+    case PITCH_LFO_AMT:
+      IOsc<0>::set_pitch_lfo_amt<0>(controller_value);
       break;
     case CC27:
       break;

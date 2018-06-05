@@ -73,7 +73,7 @@ AMP_EG_ON     = 87
 
 LFO_RATE      = 24
 LFO_DEPTH     = 25
-PITCH_LFO_TGT = 26
+PITCH_LFO_AMT = 26
 CC27          = 27
 
 PB_RANGE      = 28

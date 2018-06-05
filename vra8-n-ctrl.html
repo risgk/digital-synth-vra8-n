@@ -71,7 +71,7 @@ const AMP_EG_ON     = 87;
 
 const LFO_RATE      = 24;
 const LFO_DEPTH     = 25;
-const PITCH_LFO_TGT = 26;
+const PITCH_LFO_AMT = 26;
 const CC27          = 27;
 
 const PB_RANGE      = 28;
@@ -104,7 +104,7 @@ var controllersInLocalStorage = [
 
   LFO_RATE     ,
   LFO_DEPTH    ,
-  PITCH_LFO_TGT,
+  PITCH_LFO_AMT,
   CC27         ,
 
   PB_RANGE     ,
@@ -326,7 +326,7 @@ function preset(number) {
 
   presetControllers[LFO_RATE     ] = [64 , 0  , 0  , 0  , 0  , 0  , 0  , 64 ];
   presetControllers[LFO_DEPTH    ] = [16 , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
-  presetControllers[PITCH_LFO_TGT] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 127];
+  presetControllers[PITCH_LFO_AMT] = [66 , 0  , 0  , 0  , 0  , 0  , 0  , 62 ];
   presetControllers[CC27         ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
 
   presetControllers[PB_RANGE     ] = [2  , 0  , 0  , 0  , 0  , 0  , 0  , 2  ];
@@ -514,7 +514,7 @@ function noteOff(noteNumber) {
 <tr><td>&nbsp;</td></tr>
 <tr><td>LFO RATE              </td><td></td>
     <td>LFO DEPTH             </td><td></td>
-    <td>LFO > PITCH (2/1+2)   </td><td></td>
+    <td>LFO > PITCH (1+2/2)   </td><td></td>
     <td>                      </td></tr>
 <tr><td><input id="inputCC24" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(24, value)"></td>
     <td><span   id="spanCC24">-1</span></td>

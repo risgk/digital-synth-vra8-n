@@ -18,12 +18,13 @@ class Osc {
   static int8_t         m_detune;
   static uint8_t        m_fluctuation;
   static uint16_t       m_portamento_rate;
-  static int8_t         m_mod_level[2];
+  static int16_t        m_mod_level[2];
   static uint16_t       m_lfo_phase;
   static int8_t         m_lfo_level;
   static uint16_t       m_lfo_rate;
   static uint8_t        m_lfo_depth[2];
-  static boolean        m_lfo_target[2];
+  static boolean        m_pitch_lfo_target_both;
+  static uint8_t        m_pitch_lfo_amt;
   static uint8_t        m_waveform;
   static int16_t        m_pitch_bend;
   static uint8_t        m_pitch_bend_minus_range;
@@ -144,13 +145,19 @@ public:
   }
 
   template <uint8_t N>
-  INLINE static void set_lfo_target(uint8_t controller_value) {
-    if (controller_value < 64) {
-      m_lfo_target[0] = false;
-      m_lfo_target[1] = true;
+  INLINE static void set_pitch_lfo_amt(uint8_t controller_value) {
+    if (controller_value < 16) {
+      m_pitch_lfo_amt = 48;
+      m_pitch_lfo_target_both = true;
+    } else if (controller_value < 64) {
+      m_pitch_lfo_amt = (64 - controller_value);
+      m_pitch_lfo_target_both = true;
+    } else if (controller_value < 112) {
+      m_pitch_lfo_amt = (controller_value - 64);
+      m_pitch_lfo_target_both = false;
     } else {
-      m_lfo_target[0] = true;
-      m_lfo_target[1] = true;
+      m_pitch_lfo_amt = 48;
+      m_pitch_lfo_target_both = false;
     }
   }
 
@@ -323,7 +330,10 @@ private:
       /* For OSC 2 */
       m_pitch_real[N] += (m_pitch_offset_1 << 8) + m_detune + m_detune;
     }
+  }
 
+  template <uint8_t N>
+  INLINE static void update_freq_2nd() {
     uint8_t coarse = high_byte(m_pitch_real[N]);
     if (coarse <= (NOTE_NUMBER_MIN + 64)) {
       m_pitch_real[N] = NOTE_NUMBER_MIN << 8;
@@ -331,16 +341,6 @@ private:
       m_pitch_real[N] = NOTE_NUMBER_MAX << 8;
     } else {
       m_pitch_real[N] -= (64 << 8);
-    }
-  }
-
-  template <uint8_t N>
-  INLINE static void update_freq_2nd() {
-    int16_t coarse = m_pitch_real[N] >> 8;
-    if (coarse > (NOTE_NUMBER_MAX << 8)) {
-      m_pitch_real[N] = NOTE_NUMBER_MAX << 8;
-    } else if (coarse < 0) {
-      m_pitch_real[N] = 0;
     }
 
     m_pitch_real[N] += 128;  // For g_osc_tune_table[]
@@ -384,16 +384,11 @@ private:
       lfo_depth = 127;
     }
 
-    if (m_lfo_target[0]) {
-      m_mod_level[0] = high_sbyte((lfo_depth << 1) * m_lfo_level);
+    m_mod_level[1] = high_sbyte(lfo_depth * m_lfo_level) * m_pitch_lfo_amt;
+    if (m_pitch_lfo_target_both) {
+      m_mod_level[0] = m_mod_level[1];
     } else {
       m_mod_level[0] = 0;
-    }
-
-    if (m_lfo_target[1]) {
-      m_mod_level[1] = high_sbyte((lfo_depth << 1) * m_lfo_level);
-    } else {
-      m_mod_level[1] = 0;
     }
   }
 
@@ -417,12 +412,13 @@ template <uint8_t T> int8_t          Osc<T>::m_pitch_offset_1;
 template <uint8_t T> int8_t          Osc<T>::m_detune;
 template <uint8_t T> uint8_t         Osc<T>::m_fluctuation;
 template <uint8_t T> uint16_t        Osc<T>::m_portamento_rate;
-template <uint8_t T> int8_t          Osc<T>::m_mod_level[2];
+template <uint8_t T> int16_t         Osc<T>::m_mod_level[2];
 template <uint8_t T> uint16_t        Osc<T>::m_lfo_phase;
 template <uint8_t T> int8_t          Osc<T>::m_lfo_level;
 template <uint8_t T> uint16_t        Osc<T>::m_lfo_rate;
 template <uint8_t T> uint8_t         Osc<T>::m_lfo_depth[2];
-template <uint8_t T> boolean         Osc<T>::m_lfo_target[2];
+template <uint8_t T> boolean         Osc<T>::m_pitch_lfo_target_both;
+template <uint8_t T> uint8_t         Osc<T>::m_pitch_lfo_amt;
 template <uint8_t T> uint8_t         Osc<T>::m_waveform;
 template <uint8_t T> int16_t         Osc<T>::m_pitch_bend;
 template <uint8_t T> uint8_t         Osc<T>::m_pitch_bend_minus_range;
