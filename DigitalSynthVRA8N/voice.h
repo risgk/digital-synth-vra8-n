@@ -167,19 +167,11 @@ public:
     case OSC_WAVE:
       IOsc<0>::set_waveform(controller_value);
       break;
-    case OSC2_ON:
-      if (controller_value < 64) {
-        IOsc<0>::set_osc_mix(0);
-      } else {
-        IOsc<0>::set_osc_mix(64);
-      }
+    case OSC2_MIX:
+      IOsc<0>::set_osc_mix((controller_value + 1) >> 1);
       break;
-    case SUB_OSC_ON:
-      if (controller_value < 64) {
-        IOsc<0>::set_sub_osc_level(0);
-      } else {
-        IOsc<0>::set_sub_osc_level(127);
-      }
+    case SUB_OSC_MIX:
+      IOsc<0>::set_sub_osc_level(controller_value);
       break;
     case EG_SUSTAIN:
       {
@@ -233,16 +225,12 @@ public:
     case PITCH_LFO_AMT:
       IOsc<0>::set_pitch_lfo_amt<0>(controller_value);
       break;
-    case CC27:
-      break;
 
     case PB_RANGE:
       IOsc<0>::set_pitch_bend_minus_range(controller_value);
       IOsc<0>::set_pitch_bend_plus_range(controller_value);
       break;
-    case CC29:
-      break;
-    case NOTE_ASSIGN:
+    case KEY_ASSIGN:
       if (controller_value < 64) {
         if (m_key_assign_last) {
           m_key_assign_last = false;
@@ -254,8 +242,6 @@ public:
           all_note_off();
         }
       }
-      break;
-    case CC31:
       break;
 
     case ALL_NOTES_OFF:

@@ -66,20 +66,20 @@ const uint8_t   CC14          = 25;
 const uint8_t   CC15          = 26;
 const uint8_t   EG_SUSTAIN    = 27;
 
-const uint8_t   OSC2_ON       = 28;
-const uint8_t   SUB_OSC_ON    = 29;
+const uint8_t   OSC2_MIX      = 28;
+const uint8_t   SUB_OSC_MIX   = 29;
 const uint8_t   LEGATO        = 30;
 const uint8_t   AMP_EG_ON     = 31;
 
 const uint8_t   LFO_RATE      = 48;
 const uint8_t   LFO_DEPTH     = 49;
 const uint8_t   PITCH_LFO_AMT = 50;
-const uint8_t   CC27          = 51;
+const uint8_t   CC51          = 51;
 
 const uint8_t   PB_RANGE      = 56;
-const uint8_t   CC29          = 57;
-const uint8_t   NOTE_ASSIGN   = 58;
-const uint8_t   CC31          = 59;
+const uint8_t   KEY_ASSIGN    = 57;
+const uint8_t   CC58          = 58;
+const uint8_t   CC59          = 59;
 
 const uint8_t   ALL_NOTES_OFF = 123;
 const uint8_t   OMNI_MODE_OFF = 124;

@@ -51,20 +51,20 @@ control_change(CC14         , 0  )
 control_change(CC15         , 0  )
 control_change(EG_SUSTAIN   , 127)
 
-control_change(OSC2_ON      , 127)
-control_change(SUB_OSC_ON   , 127)
+control_change(OSC2_MIX     , 127)
+control_change(SUB_OSC_MIX  , 127)
 control_change(LEGATO       , 127)
 control_change(AMP_EG_ON    , 127)
 
 control_change(LFO_RATE     , 64 )
 control_change(LFO_DEPTH    , 16 )
 control_change(PITCH_LFO_AMT, 66 )
-control_change(CC27         , 0  )
+control_change(CC51         , 0  )
 
 control_change(PB_RANGE     , 2  )
-control_change(CC29         , 0  )
-control_change(NOTE_ASSIGN  , 0  )
-control_change(CC31         , 80 )
+control_change(KEY_ASSIGN   , 0  )
+control_change(CC58         , 0  )
+control_change(CC59         , 80 )
 
 play_cegbdfac(3)
 

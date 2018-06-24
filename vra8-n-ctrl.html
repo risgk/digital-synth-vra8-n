@@ -64,20 +64,20 @@ const CC14          = 25;
 const CC15          = 26;
 const EG_SUSTAIN    = 27;
 
-const OSC2_ON       = 28;
-const SUB_OSC_ON    = 29;
+const OSC2_MIX      = 28;
+const SUB_OSC_MIX   = 29;
 const LEGATO        = 30;
 const AMP_EG_ON     = 31;
 
 const LFO_RATE      = 48;
 const LFO_DEPTH     = 49;
 const PITCH_LFO_AMT = 50;
-const CC27          = 51;
+const CC51          = 51;
 
 const PB_RANGE      = 56;
-const CC29          = 57;
-const NOTE_ASSIGN   = 58;
-const CC31          = 59;
+const KEY_ASSIGN    = 57;
+const CC58          = 58;
+const CC59          = 59;
 
 const ALL_NOTES_OFF = 123;
 
@@ -97,20 +97,20 @@ var controllersInLocalStorage = [
   CC15         ,
   EG_SUSTAIN   ,
 
-  OSC2_ON      ,
-  SUB_OSC_ON   ,
+  OSC2_MIX     ,
+  SUB_OSC_MIX  ,
   LEGATO       ,
   AMP_EG_ON    ,
 
   LFO_RATE     ,
   LFO_DEPTH    ,
   PITCH_LFO_AMT,
-  CC27         ,
+  CC51         ,
 
   PB_RANGE     ,
-  CC29         ,
-  NOTE_ASSIGN  ,
-  CC31         ,
+  KEY_ASSIGN   ,
+  CC58         ,
+  CC59         ,
 ];
 </script>
 <script>
@@ -319,20 +319,20 @@ function preset(number) {
   presetControllers[CC15         ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
   presetControllers[EG_SUSTAIN   ] = [127, 0  , 0  , 0  , 0  , 0  , 0  , 127];
 
-  presetControllers[OSC2_ON      ] = [127, 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
-  presetControllers[SUB_OSC_ON   ] = [127, 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
+  presetControllers[OSC2_MIX     ] = [127, 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
+  presetControllers[SUB_OSC_MIX  ] = [127, 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
   presetControllers[LEGATO       ] = [127, 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
   presetControllers[AMP_EG_ON    ] = [127, 0  , 0  , 0  , 0  , 0  , 0  , 127];
 
   presetControllers[LFO_RATE     ] = [64 , 0  , 0  , 0  , 0  , 0  , 0  , 64 ];
   presetControllers[LFO_DEPTH    ] = [16 , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
   presetControllers[PITCH_LFO_AMT] = [66 , 0  , 0  , 0  , 0  , 0  , 0  , 62 ];
-  presetControllers[CC27         ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
+  presetControllers[CC51         ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
 
   presetControllers[PB_RANGE     ] = [2  , 0  , 0  , 0  , 0  , 0  , 0  , 2  ];
-  presetControllers[CC29         ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
-  presetControllers[NOTE_ASSIGN  ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
-  presetControllers[CC31         ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
+  presetControllers[KEY_ASSIGN   ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
+  presetControllers[CC58         ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
+  presetControllers[CC59         ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
 
   controllersInLocalStorage.forEach(function(i) {
     onChangeControlChange(i, presetControllers[i][number]);
@@ -499,8 +499,8 @@ function noteOff(noteNumber) {
     <td><span   id="spanCC26">-1</span></td>
     <td><input id="inputCC27" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(27, value)"></td>
     <td><span   id="spanCC27">-1</span></td>
-<tr><td>OSC2 ON               </td><td></td>
-    <td>SUB OSC ON            </td><td></td>
+<tr><td>OSC2 MIX              </td><td></td>
+    <td>SUB OSC MIX           </td><td></td>
     <td>LEGATO                </td><td></td>
     <td>AMP EG ON             </td></tr>
 <tr><td><input id="inputCC28" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(28, value)"></td>
@@ -525,15 +525,15 @@ function noteOff(noteNumber) {
     <td><input id="inputCC51" style="visibility:hidden" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(51, value)"></td>
     <td><span   id="spanCC51" style="visibility:hidden">-1</span></td>
 <tr><td>P.BEND RANGE          </td><td></td>
-    <td>                      </td><td></td>
     <td>KEY ASGN (LO/LAST)    </td><td></td>
+    <td>                      </td><td></td>
     <td>                      </td></tr>
 <tr><td><input id="inputCC56" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(56, value)"></td>
     <td><span   id="spanCC56">-1</span></td>
-    <td><input id="inputCC57" style="visibility:hidden" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(57, value)"></td>
-    <td><span   id="spanCC57" style="visibility:hidden">-1</span></td>
-    <td><input id="inputCC58" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(58, value)"></td>
-    <td><span   id="spanCC58">-1</span></td>
+    <td><input id="inputCC57" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(57, value)"></td>
+    <td><span   id="spanCC57">-1</span></td>
+    <td><input id="inputCC58" style="visibility:hidden" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(58, value)"></td>
+    <td><span   id="spanCC58" style="visibility:hidden">-1</span></td>
     <td><input id="inputCC59" style="visibility:hidden" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(59, value)"></td>
     <td><span   id="spanCC59" style="visibility:hidden">-1</span></td>
 <tr><td>&nbsp;</td></tr>
