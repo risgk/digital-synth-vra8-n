@@ -120,7 +120,13 @@ public:
   }
 
   INLINE static void set_pitch_offset_1(uint8_t controller_value) {
-    m_pitch_offset_1 = controller_value - 64;
+    if (controller_value < 4) {
+      m_pitch_offset_1 = -60;
+    } else if (controller_value <= 124) {
+      m_pitch_offset_1 = controller_value - 64;
+    } else {
+      m_pitch_offset_1 = 60;
+    }
   }
 
   INLINE static void set_detune(uint8_t controller_value) {
@@ -136,7 +142,8 @@ public:
   }
 
   INLINE static void set_lfo_rate(uint8_t controller_value) {
-    m_lfo_rate = ((controller_value + 1) * 25) >> 1;
+    m_lfo_rate = (high_byte((controller_value << 1) *
+                            (controller_value << 1)) * 25) >> 1;
   }
 
   template <uint8_t N>

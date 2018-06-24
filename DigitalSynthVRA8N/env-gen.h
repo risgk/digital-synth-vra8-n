@@ -94,7 +94,7 @@ public:
         m_rest--;
         if (m_rest == 0) {
           m_rest = m_decay_update_interval;
-          if (m_level < ((T == 0) ? 0x0100 : 0x1000 /* gate for amp */)) {
+          if (m_level < ((T == 0) ? 0x0100 : 0x0400 /* gate for amp */)) {
             m_level = 0;
           } else {
             m_level = mul_q16_q8(m_level, ENV_GEN_DECAY_FACTOR);
