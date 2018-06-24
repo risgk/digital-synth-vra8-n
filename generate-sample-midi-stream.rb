@@ -58,7 +58,7 @@ control_change(AMP_EG_ON    , 127)
 
 control_change(LFO_RATE     , 64 )
 control_change(LFO_DEPTH    , 16 )
-control_change(PITCH_LFO_AMT, 66 )
+control_change(PITCH_LFO_AMT, 62 )
 control_change(CC51         , 0  )
 
 control_change(PB_RANGE     , 2  )
