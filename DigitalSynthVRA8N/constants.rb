@@ -61,25 +61,25 @@ OSC2_FINE     = 21
 PORTAMENTO    = 22
 EG_ATTACK     = 23
 
-OSC_WAVE      = 80
-OSC2_ON       = 81
-SUB_OSC_ON    = 82
-EG_SUSTAIN    = 83
+OSC_WAVE      = 24
+CC14          = 25
+CC15          = 26
+EG_SUSTAIN    = 27
 
-CC14          = 14
-CC15          = 15
-LEGATO        = 86
-AMP_EG_ON     = 87
+OSC2_ON       = 28
+SUB_OSC_ON    = 29
+LEGATO        = 30
+AMP_EG_ON     = 31
 
-LFO_RATE      = 24
-LFO_DEPTH     = 25
-PITCH_LFO_AMT = 26
-CC27          = 27
+LFO_RATE      = 48
+LFO_DEPTH     = 49
+PITCH_LFO_AMT = 50
+CC27          = 51
 
-PB_RANGE      = 28
-CC29          = 29
-NOTE_ASSIGN   = 30
-CC31          = 31
+PB_RANGE      = 56
+CC29          = 57
+NOTE_ASSIGN   = 58
+CC31          = 59
 
 ALL_NOTES_OFF = 123
 OMNI_MODE_OFF = 124
