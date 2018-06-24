@@ -79,7 +79,7 @@ const uint8_t   CC27          = 27;
 const uint8_t   PB_RANGE      = 28;
 const uint8_t   CC29          = 29;
 const uint8_t   NOTE_ASSIGN   = 30;
-const uint8_t   CO_VEL_AMT    = 31;
+const uint8_t   CC31          = 31;
 
 const uint8_t   ALL_NOTES_OFF = 123;
 const uint8_t   OMNI_MODE_OFF = 124;

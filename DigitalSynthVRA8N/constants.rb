@@ -79,7 +79,7 @@ CC27          = 27
 PB_RANGE      = 28
 CC29          = 29
 NOTE_ASSIGN   = 30
-CO_VEL_AMT    = 31
+CC31          = 31
 
 ALL_NOTES_OFF = 123
 OMNI_MODE_OFF = 124

@@ -77,7 +77,7 @@ const CC27          = 27;
 const PB_RANGE      = 28;
 const CC29          = 29;
 const NOTE_ASSIGN   = 30;
-const CO_VEL_AMT    = 31;
+const CC31          = 31;
 
 const ALL_NOTES_OFF = 123;
 
@@ -110,7 +110,7 @@ var controllersInLocalStorage = [
   PB_RANGE     ,
   CC29         ,
   NOTE_ASSIGN  ,
-  CO_VEL_AMT   ,
+  CC31         ,
 ];
 </script>
 <script>
@@ -332,7 +332,7 @@ function preset(number) {
   presetControllers[PB_RANGE     ] = [2  , 0  , 0  , 0  , 0  , 0  , 0  , 2  ];
   presetControllers[CC29         ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
   presetControllers[NOTE_ASSIGN  ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
-  presetControllers[CO_VEL_AMT   ] = [80 , 0  , 0  , 0  , 0  , 0  , 0  , 64 ];
+  presetControllers[CC31         ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
 
   controllersInLocalStorage.forEach(function(i) {
     onChangeControlChange(i, presetControllers[i][number]);
@@ -404,9 +404,9 @@ function noteOff(noteNumber) {
     <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
     <td>&nbsp;</td>
     <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+    <td style="display:none">&nbsp;</td>
+    <td style="display:none">&nbsp;</td>
+    <td style="display:none">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
 <tr><td>MIDI IN 2</td>
     <td><select id="selectInputPort2" size="1" onchange="onChangeInputPort2()"></select></td>
     <td>&nbsp;</td>
@@ -418,9 +418,9 @@ function noteOff(noteNumber) {
     <td>&nbsp;</td>
     <td>MOD</td>
     <td><span id="spanCC1">-</span></td>
-    <td>&nbsp;</td>
-    <td>VEL</td>
-    <td><span id="spanNoteOnVelocity">-</span></td></tr>
+    <td style="display:none">&nbsp;</td>
+    <td style="display:none">VEL</td>
+    <td style="display:none"><span id="spanNoteOnVelocity">-</span></td></tr>
 </table>
 
 <table>
@@ -527,7 +527,7 @@ function noteOff(noteNumber) {
 <tr><td>P.BEND RANGE          </td><td></td>
     <td>                      </td><td></td>
     <td>KEY ASGN (LO/LAST)    </td><td></td>
-    <td>RND/VEL > CUTOFF      </td></tr>
+    <td>                      </td></tr>
 <tr><td><input id="inputCC28" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(28, value)"></td>
     <td><span   id="spanCC28">-1</span></td>
     <td><input id="inputCC29" style="visibility:hidden" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(29, value)"></td>

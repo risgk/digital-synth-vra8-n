@@ -255,8 +255,7 @@ public:
         }
       }
       break;
-    case CO_VEL_AMT:
-      m_cutoff_velocity_amt = (controller_value - 64) << 1;;
+    case CC31:
       break;
 
     case ALL_NOTES_OFF:

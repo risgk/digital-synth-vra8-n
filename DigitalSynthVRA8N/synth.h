@@ -54,7 +54,7 @@ public:
     ISynthCore<0>::control_change(PB_RANGE     , 2  );
     ISynthCore<0>::control_change(CC29         , 0  );
     ISynthCore<0>::control_change(NOTE_ASSIGN  , 0  );
-    ISynthCore<0>::control_change(CO_VEL_AMT   , 80 );
+    ISynthCore<0>::control_change(CC31         , 0  );
   }
 
   INLINE static void receive_midi_byte(uint8_t b) {
