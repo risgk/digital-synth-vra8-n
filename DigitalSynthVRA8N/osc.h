@@ -155,16 +155,16 @@ public:
   INLINE static void set_pitch_lfo_amt(uint8_t controller_value) {
     if (controller_value < 16) {
       m_pitch_lfo_amt = 48;
-      m_pitch_lfo_target_both = true;
+      m_pitch_lfo_target_both = false;
     } else if (controller_value < 64) {
       m_pitch_lfo_amt = (64 - controller_value);
-      m_pitch_lfo_target_both = true;
+      m_pitch_lfo_target_both = false;
     } else if (controller_value < 112) {
       m_pitch_lfo_amt = (controller_value - 64);
-      m_pitch_lfo_target_both = false;
+      m_pitch_lfo_target_both = true;
     } else {
       m_pitch_lfo_amt = 48;
-      m_pitch_lfo_target_both = false;
+      m_pitch_lfo_target_both = true;
     }
   }
 
@@ -305,6 +305,18 @@ private:
     return result;
   }
 
+  INLINE static int8_t get_lfo_wave_level(uint16_t phase) {
+    int8_t level = high_sbyte(phase);
+    if (level < -64) {
+      level = -64 - (level + 64);
+    } else if (level < 64) {
+      // do nothing
+    } else {
+      level = 64 - (level - 64);
+    }
+    return level;
+  }
+
   template <uint8_t N>
   INLINE static void update_freq_0th() {
     if (m_pitch_current[N] + m_portamento_rate < m_pitch_target[N]) {
@@ -385,13 +397,13 @@ private:
 
   INLINE static void update_lfo() {
     m_lfo_phase += m_lfo_rate;
-    m_lfo_level = get_wave_level(g_osc_sin_wave_table_h1, m_lfo_phase);
+    m_lfo_level = get_lfo_wave_level(m_lfo_phase);
     uint8_t lfo_depth = m_lfo_depth[0] + m_lfo_depth[1];
     if (lfo_depth > 127) {
       lfo_depth = 127;
     }
 
-    m_mod_level[1] = high_sbyte(lfo_depth * m_lfo_level) * m_pitch_lfo_amt;
+    m_mod_level[1] = high_sbyte((lfo_depth << 1) * m_lfo_level) * m_pitch_lfo_amt;
     if (m_pitch_lfo_target_both) {
       m_mod_level[0] = m_mod_level[1];
     } else {
