@@ -413,7 +413,7 @@ function noteOff(noteNumber) {
     <td>KBD TR</td>
     <td><input id="inputTranspose" type="range" min="-60" max="60" step="12" oninput="onChangeTranspose(value)" ></td>
     <td><span id="spanTranspose" >-1</span></td>
-    <td>P. BEND</td>
+    <td>P.BEND</td>
     <td><span id="spanPB">-</span></td>
     <td>&nbsp;</td>
     <td>MOD</td>
@@ -462,10 +462,10 @@ function noteOff(noteNumber) {
 
 <table>
 <tr><td>&nbsp;</td></tr>
-<tr><td>FILTER CUTOFF         </td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-    <td>FILTER RESONANCE      </td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+<tr><td>CUTOFF                </td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>RESONANCE             </td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
     <td>EG > CUTOFF (-/+)     </td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-    <td>EG DECAY              </td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+    <td>DECAY                 </td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
 <tr><td><input id="inputCC16" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(16, value)"></td>
     <td><span   id="spanCC16">-1</span></td>
     <td><input id="inputCC17" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(17, value)"></td>
@@ -477,7 +477,7 @@ function noteOff(noteNumber) {
 <tr><td>OSC2 COARSE (-/+)     </td><td></td>
     <td>OSC2 FINE (-/+)       </td><td></td>
     <td>PORTAMENTO            </td><td></td>
-    <td>EG ATTACK             </td></tr>
+    <td>ATTACK                </td></tr>
 <tr><td><input id="inputCC20" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(20, value)"></td>
     <td><span   id="spanCC20">-1</span></td>
     <td><input id="inputCC21" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(21, value)"></td>
@@ -487,10 +487,10 @@ function noteOff(noteNumber) {
     <td><input id="inputCC23" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(23, value)"></td>
     <td><span   id="spanCC23">-1</span></td></tr>
 <tr><td>&nbsp;</td></tr>
-<tr><td>OSC WAVE (SAW/SQ)     </td><td></td>
+<tr><td>OSC WAVE (SW/SQ)      </td><td></td>
     <td>OSC2 ON               </td><td></td>
     <td>SUB OSC ON            </td><td></td>
-    <td>EG SUSTAIN            </td></tr>
+    <td>SUSTAIN               </td></tr>
 <tr><td><input id="inputCC80" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(80, value)"></td>
     <td><span   id="spanCC80">-1</span></td>
     <td><input id="inputCC81" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(81, value)"></td>
@@ -524,9 +524,9 @@ function noteOff(noteNumber) {
     <td><span   id="spanCC26">-1</span></td>
     <td><input id="inputCC27" style="visibility:hidden" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(27, value)"></td>
     <td><span   id="spanCC27" style="visibility:hidden">-1</span></td>
-<tr><td>P. BEND RANGE         </td><td></td>
+<tr><td>P.BEND RANGE          </td><td></td>
     <td>                      </td><td></td>
-    <td>NOTE ASGN (LO/RCT)    </td><td></td>
+    <td>KEY ASGN (LO/LAST)    </td><td></td>
     <td>RND/VEL > CUTOFF      </td></tr>
 <tr><td><input id="inputCC28" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(28, value)"></td>
     <td><span   id="spanCC28">-1</span></td>
