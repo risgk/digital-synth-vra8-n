@@ -73,7 +73,7 @@ public:
     m_pitch_real[1] = m_pitch_current[1];
     m_wave_table[0] = g_osc_saw_wave_tables[0];
     m_wave_table[1] = g_osc_saw_wave_tables[0];
-    m_wave_table[2] = g_osc_tri_wave_tables[0];
+    m_wave_table[2] = g_osc_sin_wave_table_h1;
     m_wave_table_temp[0] = g_osc_saw_wave_tables[0];
     m_wave_table_temp[1] = g_osc_saw_wave_tables[0];
     m_freq[0] = g_osc_freq_table[0];
@@ -383,7 +383,7 @@ private:
   }
 
   INLINE static void update_waveform_sub() {
-    uint8_t coarse = high_byte(m_pitch_real[0]);
+//  uint8_t coarse = high_byte(m_pitch_real[0]);
     m_wave_table[2] = g_osc_sin_wave_table_h1;
   }
 
