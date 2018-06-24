@@ -17,7 +17,7 @@ class Osc {
   static int8_t         m_pitch_offset_1;
   static int8_t         m_detune;
   static uint8_t        m_fluctuation;
-  static uint16_t       m_portamento_rate;
+  static uint8_t        m_portamento_coef;
   static int16_t        m_mod_level[2];
   static uint16_t       m_lfo_phase;
   static int8_t         m_lfo_level;
@@ -55,7 +55,7 @@ public:
     m_pitch_offset_1 = 0;
     m_detune = 0;
     m_fluctuation = FLUCTUATION_INIT;
-    m_portamento_rate = 0x8000;
+    m_portamento_coef = 0;
     m_mod_level[0] = 0;
     m_mod_level[1] = 0;
     m_lfo_phase = 0;
@@ -135,9 +135,9 @@ public:
 
   INLINE static void set_portamento(uint8_t controller_value) {
     if (controller_value < 2) {
-      m_portamento_rate = 0x8000;
+      m_portamento_coef = 0;
     } else {
-      m_portamento_rate = 134 - ((controller_value >> 1) << 1);
+      m_portamento_coef = (controller_value >> 1) + 192;
     }
   }
 
@@ -319,13 +319,7 @@ private:
 
   template <uint8_t N>
   INLINE static void update_freq_0th() {
-    if (m_pitch_current[N] + m_portamento_rate < m_pitch_target[N]) {
-      m_pitch_current[N] += m_portamento_rate;
-    } else if (m_pitch_current[N] > m_pitch_target[N] + m_portamento_rate) {
-      m_pitch_current[N] -= m_portamento_rate;
-    } else {
-      m_pitch_current[N] = m_pitch_target[N];
-    }
+    m_pitch_current[N] = m_pitch_target[N] - mul_q15_q8(m_pitch_target[N] - m_pitch_current[N], m_portamento_coef);
 
     int16_t t = TRANSPOSE << 8;
     m_pitch_real[N] = (64 << 8) + m_pitch_current[N] + m_pitch_bend_normalized + t;
@@ -430,7 +424,7 @@ template <uint8_t T> int8_t          Osc<T>::m_mix_table[OSC_MIX_TABLE_LENGTH];
 template <uint8_t T> int8_t          Osc<T>::m_pitch_offset_1;
 template <uint8_t T> int8_t          Osc<T>::m_detune;
 template <uint8_t T> uint8_t         Osc<T>::m_fluctuation;
-template <uint8_t T> uint16_t        Osc<T>::m_portamento_rate;
+template <uint8_t T> uint8_t         Osc<T>::m_portamento_coef;
 template <uint8_t T> int16_t         Osc<T>::m_mod_level[2];
 template <uint8_t T> uint16_t        Osc<T>::m_lfo_phase;
 template <uint8_t T> int8_t          Osc<T>::m_lfo_level;
