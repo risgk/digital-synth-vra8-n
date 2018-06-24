@@ -142,8 +142,8 @@ public:
   }
 
   INLINE static void set_lfo_rate(uint8_t controller_value) {
-    m_lfo_rate = (high_byte((controller_value << 1) *
-                            (controller_value << 1)) * 25) >> 1;
+    m_lfo_rate = ((high_byte((controller_value << 1) *
+                             (controller_value << 1)) + 1) * 25) >> 1;
   }
 
   template <uint8_t N>
