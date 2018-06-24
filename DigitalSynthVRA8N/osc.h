@@ -384,7 +384,7 @@ private:
 
   INLINE static void update_waveform_sub() {
     uint8_t coarse = high_byte(m_pitch_real[0]);
-    m_wave_table[2] = g_osc_tri_wave_tables[coarse - NOTE_NUMBER_MIN];
+    m_wave_table[2] = g_osc_sin_wave_table_h1;
   }
 
   INLINE static void update_rnd() {
