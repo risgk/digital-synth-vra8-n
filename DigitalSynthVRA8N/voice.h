@@ -164,8 +164,9 @@ public:
       }
       break;
 
-    case OSC_WAVE:
-      IOsc<0>::set_waveform(controller_value);
+    case OSC_WAVE :
+      IOsc<0>::set_waveform<0>(controller_value);
+      IOsc<0>::set_waveform<1>(controller_value);
       break;
     case OSC2_MIX:
       IOsc<0>::set_osc_mix((controller_value + 1) >> 1);
@@ -190,10 +191,6 @@ public:
       }
       break;
 
-    case CC14:
-      break;
-    case CC15:
-      break;
     case LEGATO:
       if (controller_value < 64) {
         if (m_legato) {

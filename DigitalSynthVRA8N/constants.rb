@@ -62,12 +62,12 @@ PORTAMENTO    = 22
 EG_ATTACK     = 23
 
 OSC_WAVE      = 24
-CC14          = 25
-CC15          = 26
+OSC2_MIX      = 25
+SUB_OSC_MIX   = 26
 EG_SUSTAIN    = 27
 
-OSC2_MIX      = 28
-SUB_OSC_MIX   = 29
+CC28          = 28
+CC29          = 29
 LEGATO        = 30
 AMP_EG_ON     = 31
 
@@ -88,4 +88,5 @@ MONO_MODE_ON  = 126
 POLY_MODE_ON  = 127
 
 OSC_WAVEFORM_SAW     = 0
+OSC_WAVEFORM_PUL33P  = 64
 OSC_WAVEFORM_SQ      = 127

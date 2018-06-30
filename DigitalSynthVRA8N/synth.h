@@ -37,12 +37,12 @@ public:
     ISynthCore<0>::control_change(EG_ATTACK    , 0  );
 
     ISynthCore<0>::control_change(OSC_WAVE     , 0  );
-    ISynthCore<0>::control_change(CC14         , 0  );
-    ISynthCore<0>::control_change(CC15         , 0  );
-    ISynthCore<0>::control_change(EG_SUSTAIN   , 127);
-
     ISynthCore<0>::control_change(OSC2_MIX     , 127);
     ISynthCore<0>::control_change(SUB_OSC_MIX  , 127);
+    ISynthCore<0>::control_change(EG_SUSTAIN   , 127);
+
+    ISynthCore<0>::control_change(CC28         , 0  );
+    ISynthCore<0>::control_change(CC29         , 0  );
     ISynthCore<0>::control_change(LEGATO       , 127);
     ISynthCore<0>::control_change(AMP_EG_ON    , 127);
 

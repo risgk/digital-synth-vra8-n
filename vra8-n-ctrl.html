@@ -60,12 +60,12 @@ const PORTAMENTO    = 22;
 const EG_ATTACK     = 23;
 
 const OSC_WAVE      = 24;
-const CC14          = 25;
-const CC15          = 26;
+const OSC2_MIX      = 25;
+const SUB_OSC_MIX   = 26;
 const EG_SUSTAIN    = 27;
 
-const OSC2_MIX      = 28;
-const SUB_OSC_MIX   = 29;
+const CC28          = 28;
+const CC29          = 29;
 const LEGATO        = 30;
 const AMP_EG_ON     = 31;
 
@@ -93,12 +93,12 @@ var controllersInLocalStorage = [
   EG_ATTACK    ,
 
   OSC_WAVE     ,
-  CC14         ,
-  CC15         ,
-  EG_SUSTAIN   ,
-
   OSC2_MIX     ,
   SUB_OSC_MIX  ,
+  EG_SUSTAIN   ,
+
+  CC28         ,
+  CC29         ,
   LEGATO       ,
   AMP_EG_ON    ,
 
@@ -315,12 +315,12 @@ function preset(number) {
   presetControllers[EG_ATTACK    ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
 
   presetControllers[OSC_WAVE     ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
-  presetControllers[CC14         ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
-  presetControllers[CC15         ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
-  presetControllers[EG_SUSTAIN   ] = [127, 0  , 0  , 0  , 0  , 0  , 0  , 127];
-
   presetControllers[OSC2_MIX     ] = [127, 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
   presetControllers[SUB_OSC_MIX  ] = [127, 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
+  presetControllers[EG_SUSTAIN   ] = [127, 0  , 0  , 0  , 0  , 0  , 0  , 127];
+
+  presetControllers[CC28         ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
+  presetControllers[CC29         ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
   presetControllers[LEGATO       ] = [127, 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
   presetControllers[AMP_EG_ON    ] = [127, 0  , 0  , 0  , 0  , 0  , 0  , 127];
 
@@ -487,9 +487,9 @@ function noteOff(noteNumber) {
     <td><input id="inputCC23" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(23, value)"></td>
     <td><span   id="spanCC23">-1</span></td></tr>
 <tr><td>&nbsp;</td></tr>
-<tr><td>OSC WAVE (SW/SQ)      </td><td></td>
-    <td>                      </td><td></td>
-    <td>                      </td><td></td>
+<tr><td>OSC WAVE (S/P3/P5)    </td><td></td>
+    <td>OSC2 MIX              </td><td></td>
+    <td>SUB OSC MIX           </td><td></td>
     <td>SUSTAIN               </td></tr>
 <tr><td><input id="inputCC24" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(24, value)"></td>
     <td><span   id="spanCC24">-1</span></td>
@@ -499,14 +499,14 @@ function noteOff(noteNumber) {
     <td><span   id="spanCC26">-1</span></td>
     <td><input id="inputCC27" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(27, value)"></td>
     <td><span   id="spanCC27">-1</span></td>
-<tr><td>OSC2 MIX              </td><td></td>
-    <td>SUB OSC MIX           </td><td></td>
+<tr><td>                      </td><td></td>
+    <td>                      </td><td></td>
     <td>LEGATO                </td><td></td>
     <td>AMP EG ON             </td></tr>
-<tr><td><input id="inputCC28" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(28, value)"></td>
-    <td><span   id="spanCC28">-1</span></td>
-    <td><input id="inputCC29" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(29, value)"></td>
-    <td><span   id="spanCC29">-1</span></td>
+<tr><td><input id="inputCC28" style="visibility:hidden" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(28, value)"></td>
+    <td><span   id="spanCC28" style="visibility:hidden">-1</span></td>
+    <td><input id="inputCC29" style="visibility:hidden" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(29, value)"></td>
+    <td><span   id="spanCC29" style="visibility:hidden">-1</span></td>
     <td><input id="inputCC30" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(30, value)"></td>
     <td><span   id="spanCC30">-1</span></td>
     <td><input id="inputCC31" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(31, value)"></td>

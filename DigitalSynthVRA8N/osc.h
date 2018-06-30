@@ -25,7 +25,7 @@ class Osc {
   static uint8_t        m_lfo_depth[2];
   static boolean        m_pitch_lfo_target_both;
   static uint8_t        m_pitch_lfo_amt;
-  static uint8_t        m_waveform;
+  static uint8_t        m_waveform[2];
   static int16_t        m_pitch_bend;
   static uint8_t        m_pitch_bend_minus_range;
   static uint8_t        m_pitch_bend_plus_range;
@@ -63,7 +63,8 @@ public:
     m_lfo_rate = 0;
     m_lfo_depth[0] = 0;
     m_lfo_depth[1] = 0;
-    m_waveform = OSC_WAVEFORM_SAW;
+    m_waveform[0] = OSC_WAVEFORM_SAW;
+    m_waveform[1] = OSC_WAVEFORM_SAW;
     m_pitch_bend_normalized = 0;
     m_pitch_target[0] = NOTE_NUMBER_MIN << 8;
     m_pitch_target[1] = NOTE_NUMBER_MIN << 8;
@@ -103,11 +104,14 @@ public:
     m_mix_1 = m_mix_table[                             (controller_value >> 2)];
   }
 
+  template <uint8_t N>
   INLINE static void set_waveform(uint8_t controller_value) {
-    if (controller_value < 64) {
-      m_waveform = OSC_WAVEFORM_SAW;
+    if (controller_value < 32) {
+      m_waveform[N] = OSC_WAVEFORM_SAW;
+    } else if (controller_value < 96) {
+      m_waveform[N] = OSC_WAVEFORM_PUL33P;
     } else {
-      m_waveform = OSC_WAVEFORM_SQ;
+      m_waveform[N] = OSC_WAVEFORM_SQ;
     }
   }
 
@@ -281,6 +285,8 @@ private:
     const uint8_t* result;
     if (waveform == OSC_WAVEFORM_SAW) {
       result = g_osc_saw_wave_tables[note_number - NOTE_NUMBER_MIN];
+    } else if (waveform == OSC_WAVEFORM_PUL33P) {
+      result = g_osc_pul33p_wave_tables[note_number - NOTE_NUMBER_MIN];
     } else {
       result = g_osc_sq_wave_tables[note_number - NOTE_NUMBER_MIN];
     }
@@ -363,7 +369,7 @@ private:
   INLINE static void update_freq_3rd() {
     uint8_t coarse = high_byte(m_pitch_real[N]);
     m_freq_temp[N] = g_osc_freq_table[coarse - NOTE_NUMBER_MIN];
-    m_wave_table_temp[N] = get_wave_table(m_waveform, coarse);
+    m_wave_table_temp[N] = get_wave_table(m_waveform[N], coarse);
   }
 
   template <uint8_t N>
@@ -432,7 +438,7 @@ template <uint8_t T> uint16_t        Osc<T>::m_lfo_rate;
 template <uint8_t T> uint8_t         Osc<T>::m_lfo_depth[2];
 template <uint8_t T> boolean         Osc<T>::m_pitch_lfo_target_both;
 template <uint8_t T> uint8_t         Osc<T>::m_pitch_lfo_amt;
-template <uint8_t T> uint8_t         Osc<T>::m_waveform;
+template <uint8_t T> uint8_t         Osc<T>::m_waveform[2];
 template <uint8_t T> int16_t         Osc<T>::m_pitch_bend;
 template <uint8_t T> uint8_t         Osc<T>::m_pitch_bend_minus_range;
 template <uint8_t T> uint8_t         Osc<T>::m_pitch_bend_plus_range;

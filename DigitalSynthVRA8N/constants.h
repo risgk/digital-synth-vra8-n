@@ -62,12 +62,12 @@ const uint8_t   PORTAMENTO    = 22;
 const uint8_t   EG_ATTACK     = 23;
 
 const uint8_t   OSC_WAVE      = 24;
-const uint8_t   CC14          = 25;
-const uint8_t   CC15          = 26;
+const uint8_t   OSC2_MIX      = 25;
+const uint8_t   SUB_OSC_MIX   = 26;
 const uint8_t   EG_SUSTAIN    = 27;
 
-const uint8_t   OSC2_MIX      = 28;
-const uint8_t   SUB_OSC_MIX   = 29;
+const uint8_t   CC28          = 28;
+const uint8_t   CC29          = 29;
 const uint8_t   LEGATO        = 30;
 const uint8_t   AMP_EG_ON     = 31;
 
@@ -88,4 +88,5 @@ const uint8_t   MONO_MODE_ON  = 126;
 const uint8_t   POLY_MODE_ON  = 127;
 
 const uint8_t   OSC_WAVEFORM_SAW     = 0;
+const uint8_t   OSC_WAVEFORM_PUL33P  = 64;
 const uint8_t   OSC_WAVEFORM_SQ      = 127;
