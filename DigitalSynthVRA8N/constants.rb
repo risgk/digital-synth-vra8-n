@@ -77,8 +77,8 @@ PITCH_LFO_AMT = 50
 CC51          = 51
 
 PB_RANGE      = 56
-KEY_ASSIGN    = 57
-CC58          = 58
+CC57          = 57
+KEY_ASSIGN    = 58
 CC59          = 59
 
 ALL_NOTES_OFF = 123

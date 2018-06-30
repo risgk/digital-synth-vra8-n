@@ -52,8 +52,8 @@ public:
     ISynthCore<0>::control_change(CC51         , 0  );
 
     ISynthCore<0>::control_change(PB_RANGE     , 2  );
+    ISynthCore<0>::control_change(CC57         , 0  );
     ISynthCore<0>::control_change(KEY_ASSIGN   , 0  );
-    ISynthCore<0>::control_change(CC58         , 0  );
     ISynthCore<0>::control_change(CC59         , 0  );
   }
 

@@ -77,8 +77,8 @@ const uint8_t   PITCH_LFO_AMT = 50;
 const uint8_t   CC51          = 51;
 
 const uint8_t   PB_RANGE      = 56;
-const uint8_t   KEY_ASSIGN    = 57;
-const uint8_t   CC58          = 58;
+const uint8_t   CC57          = 57;
+const uint8_t   KEY_ASSIGN    = 58;
 const uint8_t   CC59          = 59;
 
 const uint8_t   ALL_NOTES_OFF = 123;
