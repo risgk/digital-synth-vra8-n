@@ -48,7 +48,13 @@ public:
   }
 
   INLINE static void set_env_amt(uint8_t controller_value) {
-    m_mod_amt = controller_value;
+    if (controller_value < 4) {
+      m_mod_amt = 4;
+    } else if (controller_value <= 124) {
+      m_mod_amt = controller_value;
+    } else {
+      m_mod_amt = 124;
+    }
   }
 
   INLINE static void note_on(uint8_t cutoff_velocity) {
