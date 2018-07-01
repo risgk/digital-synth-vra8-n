@@ -1,6 +1,6 @@
 #pragma once
 
-//#define DEBUG
+#define DEBUG
 
 #define SERIAL_SPEED (38400)    // for Serial MIDI
 //#define SERIAL_SPEED (31250)    // for MIDI Shield

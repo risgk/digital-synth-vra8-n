@@ -399,7 +399,11 @@ private:
       lfo_depth = 127;
     }
 
-    m_mod_level[1] = high_sbyte((lfo_depth << 1) * m_lfo_level) * m_pitch_lfo_amt;
+    if (lfo_depth == 127) {
+      lfo_depth = 128;
+    }
+
+    m_mod_level[1] = (high_sbyte(lfo_depth * m_lfo_level) << 1) * m_pitch_lfo_amt;
     if (m_pitch_lfo_target_both) {
       m_mod_level[0] = m_mod_level[1];
     } else {
