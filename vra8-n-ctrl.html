@@ -326,7 +326,7 @@ function preset(number) {
 
   presetControllers[LFO_RATE     ] = [64 , 0  , 0  , 0  , 0  , 0  , 0  , 64 ];
   presetControllers[LFO_DEPTH    ] = [16 , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
-  presetControllers[PITCH_LFO_AMT] = [62 , 0  , 0  , 0  , 0  , 0  , 0  , 64 ];
+  presetControllers[PITCH_LFO_AMT] = [62 , 0  , 0  , 0  , 0  , 0  , 0  , 66 ];
   presetControllers[CC51         ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
 
   presetControllers[PB_RANGE     ] = [2  , 0  , 0  , 0  , 0  , 0  , 0  , 2  ];
@@ -487,10 +487,10 @@ function noteOff(noteNumber) {
     <td><input id="inputCC23" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(23, value)"></td>
     <td><span   id="spanCC23">-1</span></td></tr>
 <tr><td>&nbsp;</td></tr>
-<tr><td>OSC WAVE (S/P3/P5)    </td><td></td>
+<tr><td>OSC WAVE (SAW/SQ)     </td><td></td>
     <td>OSC2 MIX              </td><td></td>
     <td>SUB OSC MIX           </td><td></td>
-    <td>SUSTAIN               </td></tr>
+    <td>SUSTAIN (OFF/ON)      </td></tr>
 <tr><td><input id="inputCC24" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(24, value)"></td>
     <td><span   id="spanCC24">-1</span></td>
     <td><input id="inputCC25" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(25, value)"></td>
@@ -501,8 +501,8 @@ function noteOff(noteNumber) {
     <td><span   id="spanCC27">-1</span></td>
 <tr><td>                      </td><td></td>
     <td>                      </td><td></td>
-    <td>LEGATO                </td><td></td>
-    <td>AMP EG ON             </td></tr>
+    <td>LEGATO (OFF/ON)       </td><td></td>
+    <td>AMP EG (OFF/ON)       </td></tr>
 <tr><td><input id="inputCC28" style="visibility:hidden" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(28, value)"></td>
     <td><span   id="spanCC28" style="visibility:hidden">-1</span></td>
     <td><input id="inputCC29" style="visibility:hidden" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(29, value)"></td>

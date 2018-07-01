@@ -100,16 +100,14 @@ public:
       controller_value = 123;
     }
 
-    m_mix_0   = m_mix_table[(OSC_MIX_TABLE_LENGTH - 1) - (controller_value >> 2)];
+    m_mix_0 = m_mix_table[(OSC_MIX_TABLE_LENGTH - 1) - (controller_value >> 2)];
     m_mix_1 = m_mix_table[                             (controller_value >> 2)];
   }
 
   template <uint8_t N>
   INLINE static void set_waveform(uint8_t controller_value) {
-    if (controller_value < 32) {
+    if (controller_value < 64) {
       m_waveform[N] = OSC_WAVEFORM_SAW;
-    } else if (controller_value < 96) {
-      m_waveform[N] = OSC_WAVEFORM_PUL33P;
     } else {
       m_waveform[N] = OSC_WAVEFORM_SQ;
     }
@@ -285,8 +283,6 @@ private:
     const uint8_t* result;
     if (waveform == OSC_WAVEFORM_SAW) {
       result = g_osc_saw_wave_tables[note_number - NOTE_NUMBER_MIN];
-    } else if (waveform == OSC_WAVEFORM_PUL33P) {
-      result = g_osc_pul33p_wave_tables[note_number - NOTE_NUMBER_MIN];
     } else {
       result = g_osc_sq_wave_tables[note_number - NOTE_NUMBER_MIN];
     }
