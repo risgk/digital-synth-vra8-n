@@ -10,29 +10,31 @@
 ## Features
 
 - Monophonic Synthesizer, MIDI Sound Module
+- Sampling Rate: 31.25 kHz, Bit Depth: 8 bit, LPF Attenuation Slope: -12 dB/oct
 - Serial MIDI In (38400 bps), PWM Audio Out (Pin 6), PWM Rate: 62500 Hz
     - We recommend adding a RC filter circuit to reduce PWM ripples
-    - A cutoff frequency 15.9 kHz (R: 100 ohm, C: 100 nF) works well
+        - A cutoff frequency 15.9 kHz (R: 100 ohm, C: 100 nF) works well
     - **CAUTION**: Click sounds may occur when you connect the audio out to an amp/a speaker or reset the board
     - **CAUTION**: The Arduino PWM audio output is a unipolar LINE OUT
         - Please connect this to a power amp/a headphone amp (not to a speaker/a headphone directly)
-- Sampling Rate: 31.25 kHz, Bit Depth: 8 bit, LPF Attenuation Slope: -12 dB/oct
-- Recommending [Hairless MIDI<->Serial Bridge](http://projectgus.github.io/hairless-midiserial/) to connect PC
+- We recommend [Hairless MIDI<->Serial Bridge](http://projectgus.github.io/hairless-midiserial/) to connect PC
+    - A MIDI Shield (MIDI Breakout) and a power supply adapter are desirable to avoiding USB noise
 - Files
-    - `DigitalSynthVRA8N.ino` is a sketch for Arduino/Genuino Uno
+    - `DigitalSynthVRA8N.ino` is a sketch for Arduino (Genuino) Uno Rev3
     - `make-sample-wav-file.cc` is for Debugging on PC
         - Requiring GCC (G++) or other
         - `make-sample-wav-file-cc.bat` makes a sample WAV file (working on Windows)
     - `generate-*.rb` generate source files
         - Requiring a Ruby execution environment
-- **CAUTION**: We recommend Arduino IDE 1.8.3
+    - Edit `SERIAL_SPEED` in `configs.h` to use MIDI Shield
+- We recommend Arduino IDE 1.8.3
 
 ## VRA8-N CTRL
 
 - Parameter Editor (MIDI Controller) for VRA8-N, Web App
 - We recommend Google Chrome, which implements Web MIDI API
 - VRA8-N CTRL includes PRESET programs
-- Recommending [loopMIDI](http://www.tobias-erichsen.de/software/loopmidi.html) (virtual loopback MIDI cable) to connect VRA8-N
+- We recommend [loopMIDI](http://www.tobias-erichsen.de/software/loopmidi.html) (virtual loopback MIDI cable) to connect VRA8-N
 - **CAUTION**: Click sounds may occur when you change the controllers (ex. SUB OSC MIX)
 - **CAUTION**: Low CUTOFF with high RESONANCE can damage the speakers
 
