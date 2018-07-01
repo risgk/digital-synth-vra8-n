@@ -1,6 +1,6 @@
-# Digital Synth VRA8-N v0.1.1
+# Digital Synth VRA8-N v0.8.0
 
-- 2018-03-21 ISGK Instruments
+- 2018-07-01 ISGK Instruments
 - <https://github.com/risgk/digital-synth-vra8-n>
 
 ## Concept
@@ -33,13 +33,13 @@
 - We recommend Google Chrome, which implements Web MIDI API
 - VRA8-N CTRL includes PRESET programs
 - Recommending [loopMIDI](http://www.tobias-erichsen.de/software/loopmidi.html) (virtual loopback MIDI cable) to connect VRA8-N
-- **CAUTION**: Click sounds may occur when you change the controllers
+- **CAUTION**: Click sounds may occur when you change the controllers (ex. SUB OSC MIX)
 - **CAUTION**: Low CUTOFF with high RESONANCE can damage the speakers
 
 ## MIDI Implementation Chart
 
-      [Monophonic Synthesizer]                                        Date: 2018-03-21       
-      Model: Digital Synth VRA8-N     MIDI Implementation Chart       Version: 0.1.1         
+      [Monophonic Synthesizer]                                        Date: 2018-07-01       
+      Model: Digital Synth VRA8-N     MIDI Implementation Chart       Version: 0.8.0         
     +-------------------------------+---------------+---------------+-----------------------+
     | Function...                   | Transmitted   | Recognized    | Remarks               |
     +-------------------------------+---------------+---------------+-----------------------+
@@ -51,7 +51,7 @@
     |              Altered          | ************* |               |                       |
     +-------------------------------+---------------+---------------+-----------------------+
     | Note                          | x             | 0-127         |                       |
-    | Number       : True Voice     | ************* | 24-84         | (w/o TRANSPOSE)       |
+    | Number       : True Voice     | ************* | 0-120         |                       |
     +-------------------------------+---------------+---------------+-----------------------+
     | Velocity     Note ON          | x             | o (V=1-127)   |                       |
     |              Note OFF         | x             | x             |                       |
@@ -61,22 +61,31 @@
     +-------------------------------+---------------+---------------+-----------------------+
     | Pitch Bend                    | x             | o             | Range: 12 (or 2)      |
     +-------------------------------+---------------+---------------+-----------------------+
-    | Control                    16 | x             | o             | OSC WAVE (SAW/SQ)     |
-    | Change                     17 | x             | o             | SUB OSC (TRI)         |
-    |                            18 | x             | o             | OSC2 PITCH            |
-    |                            19 | x             | o             | OSC MIX (1/2)         |
-    |                            20 | x             | o             | CUTOFF                |
-    |                            21 | x             | o             | RESONANCE             |
-    |                            22 | x             | o             | FEG AMT (-/+)         |
-    |                            23 | x             | o             | FEG DECAY/SUS         |
-    |                            24 | x             | o             | ----                  |
-    |                            25 | x             | o             | FLUCTUATION           |
-    |                            26 | x             | o             | PORTAMENTO            |
-    |                            27 | x             | o             | AEG DECAY/SUS         |
-    |                            28 | x             | o             | ----                  |
-    |                            29 | x             | o             | ----                  |
-    |                            30 | x             | o             | ----                  |
-    |                            31 | x             | o             | ----                  |
+    | Control                     1 | x             | o             | MODULATION            |
+    | Change                     16 | x             | o             | CUTOFF                |
+    |                            17 | x             | o             | RESONANCE             |
+    |                            18 | x             | o             | CUTOFF < EG (-/+)     |
+    |                            19 | x             | o             | DECAY                 |
+    |                            20 | x             | o             | OSC2 COARSE (-/+)     |
+    |                            21 | x             | o             | OSC2 FINE (-/+)       |
+    |                            22 | x             | o             | PORTAMENTO            |
+    |                            23 | x             | o             | ATTACK                |
+    |                            24 | x             | o             | OSC WAVE (SAW/SQ)     |
+    |                            25 | x             | o             | OSC2 MIX              |
+    |                            26 | x             | o             | SUB OSC MIX           |
+    |                            27 | x             | o             | SUSTAIN (OFF/ON)      |
+    |                            28 | x             | x             | (RESERVED)            |
+    |                            29 | x             | x             | (RESERVED)            |
+    |                            30 | x             | o             | LEGATO (OFF/ON)       |
+    |                            31 | x             | o             | AMP EG (OFF/ON)       |
+    |                            48 | x             | o             | LFO RATE              |
+    |                            49 | x             | o             | LFO DEPTH             |
+    |                            50 | x             | o             | LFO > PITCH (2/1+2)   |
+    |                            51 | x             | x             | (RESERVED)            |
+    |                            56 | x             | o             | P.BEND RANGE          |
+    |                            57 | x             | x             | (RESERVED)            |
+    |                            58 | x             | o             | KEY ASGN (LO/LAST)    |
+    |                            59 | x             | x             | (RESERVED)            |
     +-------------------------------+---------------+---------------+-----------------------+
     | Program                       | x             | x             |                       |
     | Change       : True #         | ************* |               |                       |

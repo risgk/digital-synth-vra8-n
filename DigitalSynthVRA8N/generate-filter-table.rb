@@ -9,10 +9,10 @@ OCTAVES = 5
 def generate_filter_lpf_table(name, q)
   $file.printf("const uint8_t g_filter_lpf_table_%s[] PROGMEM = {\n  ", name)
   (0..DATA_BYTE_MAX).each do |i|
-    f = [[0, i - 4].max, 120].min
-    f_0_over_fs = (2.0 ** (f / (120.0 / OCTAVES))) * ((A4_PITCH * 2.0) * 16.0 / (SAMPLING_RATE / 2.0)) /
+    f = [7, i - 7].max - 7
+    g4_pitch = A4_PITCH * (2.0 ** (-200.0 / 1200.0))
+    f_0_over_fs = (2.0 ** (f / (120.0 / OCTAVES))) * ((g4_pitch * 2.0) * 16.0 / (SAMPLING_RATE / 2.0)) /
                   (2.0 ** (OCTAVES.to_f + 1.0))
-
     w_0 = 2.0 * Math::PI * f_0_over_fs
     alpha = Math.sin(w_0) / (2.0 * q)
 
@@ -42,13 +42,13 @@ def generate_filter_lpf_table(name, q)
   $file.printf("};\n\n")
 end
 
-(0..6).each do |idx|
+(0..7).each do |idx|
   generate_filter_lpf_table(idx.to_s, Math.sqrt(2.0) ** (idx - 1.0))
 end
 
 $file.printf("const uint8_t* g_filter_lpf_tables[] = {\n  ")
 (0..8).each do |idx|
-  i = (idx > 6) ? 6: idx
+  i = (idx > 7) ? 7: idx
   $file.printf("g_filter_lpf_table_%-2d,", i)
   if idx == DATA_BYTE_MAX
     $file.printf("\n")

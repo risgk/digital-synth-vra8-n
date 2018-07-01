@@ -6,11 +6,11 @@ const uint8_t   MIDI_CH             = 0;
 const uint16_t  SAMPLING_RATE       = 31250;
 const uint16_t  FREQUENCY_MAX       = 15624;
 const uint8_t   BIT_DEPTH           = 8;
-const uint8_t   NOTE_NUMBER_MIN     = 24;
-const uint8_t   NOTE_NUMBER_MAX     = 84;
+const uint8_t   NOTE_NUMBER_MIN     = 0;
+const uint8_t   NOTE_NUMBER_MAX     = 120;
 const uint8_t   NOTE_NUMBER_INVALID = 255;
 
-const uint8_t   OSC_CONTROL_INTERVAL_BITS   = 3;
+const uint8_t   OSC_CONTROL_INTERVAL_BITS   = 2;
 const uint8_t   OSC_CONTROL_INTERVAL        = 0x01 << OSC_CONTROL_INTERVAL_BITS;
 const uint8_t   OSC_PHASE_RESOLUTION_BITS   = 24;
 const uint8_t   OSC_TUNE_TABLE_STEPS_BITS   = 8;
@@ -21,11 +21,13 @@ const uint8_t   OSC_DETUNE_MUL_NUM_BITS     = 4;
 const uint16_t  OSC_DETUNE_FREQ_MIN         = 64;
 const uint16_t  OSC_DETUNE_FREQ_MAX         = 0;
 const uint8_t   FILTER_CONTROL_INTERVAL     = 0x08;
-const uint8_t   FILTER_CUTOFF_THROUGH_RATE  = 8;
+const uint8_t   FILTER_CUTOFF_THROUGH_RATE  = 16;
 const uint8_t   FILTER_TABLE_FRACTION_BITS  = 14;
 const uint8_t   ENV_GEN_CONTROL_INTERVAL    = 0x08;
-const uint16_t  ENV_GEN_LEVEL_MAX           = 0xFFFF;
+const uint16_t  ENV_GEN_LEVEL_MAX           = 0x8000;
+const uint16_t  ENV_GEN_LEVEL_MAX_X_1_5     = ENV_GEN_LEVEL_MAX + (ENV_GEN_LEVEL_MAX >> 1);
 const uint16_t  ENV_GEN_LEVEL_RELEASE_STEP  = 0x1600;
+const uint8_t   ENV_GEN_ATTACK_FACTOR       = 248;
 const uint8_t   ENV_GEN_DECAY_FACTOR        = 248;
 const uint8_t   AMP_ENV_AMT_MAX             = 240;
 const uint8_t   AMP_ENV_AMT_STEP            = 16;
@@ -48,27 +50,37 @@ const uint8_t   EOX                   = 0xF7;
 const uint8_t   REAL_TIME_MESSAGE_MIN = 0xF8;
 const uint8_t   ACTIVE_SENSING        = 0xFE;
 
-const uint8_t   OSC_COLOR_1   = 16;
-const uint8_t   OSC_COLOR_2   = 17;
-const uint8_t   MOD_RATE      = 18;
-const uint8_t   MOD_DEPTH     = 19;
+const uint8_t   MODULATION    = 1;
 
-const uint8_t   FILTER_CUTOFF = 20;
-const uint8_t   FILTER_RESO   = 21;
-const uint8_t   FILTER_EG_AMT = 22;
-const uint8_t   FILTER_EG     = 23;
+const uint8_t   FILTER_CUTOFF = 16;
+const uint8_t   FILTER_RESO   = 17;
+const uint8_t   CUTOFF_EG_AMT = 18;
+const uint8_t   EG_DECAY      = 19;
 
-const uint8_t   CC24          = 24;
-const uint8_t   FLUCTUATION   = 25;
-const uint8_t   PORTAMENTO    = 26;
-const uint8_t   AMP_EG        = 27;
+const uint8_t   OSC2_COARSE   = 20;
+const uint8_t   OSC2_FINE     = 21;
+const uint8_t   PORTAMENTO    = 22;
+const uint8_t   EG_ATTACK     = 23;
+
+const uint8_t   OSC_WAVE      = 24;
+const uint8_t   OSC2_MIX      = 25;
+const uint8_t   SUB_OSC_MIX   = 26;
+const uint8_t   EG_SUSTAIN    = 27;
 
 const uint8_t   CC28          = 28;
 const uint8_t   CC29          = 29;
-const uint8_t   CC30          = 30;
-const uint8_t   CC31          = 31;
+const uint8_t   LEGATO        = 30;
+const uint8_t   AMP_EG_ON     = 31;
 
-const uint8_t   DAMPER_PEDAL  = 64;
+const uint8_t   LFO_RATE      = 48;
+const uint8_t   LFO_DEPTH     = 49;
+const uint8_t   PITCH_LFO_AMT = 50;
+const uint8_t   CC51          = 51;
+
+const uint8_t   PB_RANGE      = 56;
+const uint8_t   CC57          = 57;
+const uint8_t   KEY_ASSIGN    = 58;
+const uint8_t   CC59          = 59;
 
 const uint8_t   ALL_NOTES_OFF = 123;
 const uint8_t   OMNI_MODE_OFF = 124;

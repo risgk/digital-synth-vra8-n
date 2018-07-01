@@ -9,21 +9,31 @@ static const uint8_t OSC_MIX_TABLE_LENGTH = 31;
 
 template <uint8_t T>
 class Osc {
-  static int8_t         m_mix_main;
-  static int8_t         m_mix_detune;
+  static int8_t         m_mix_0;
+  static int8_t         m_mix_1;
   static int8_t         m_mix_sub;
   static int16_t        m_level_sub;
   static int8_t         m_mix_table[OSC_MIX_TABLE_LENGTH];
-  static uint16_t       m_detune;
+  static int8_t         m_pitch_offset_1;
+  static int8_t         m_detune;
   static uint8_t        m_fluctuation;
-  static uint8_t        m_detune_mod_amt;
-  static uint16_t       m_portamento;
-  static uint8_t        m_waveform;
+  static uint8_t        m_portamento_coef;
+  static int16_t        m_mod_level[2];
+  static uint16_t       m_lfo_phase;
+  static int8_t         m_lfo_level;
+  static uint16_t       m_lfo_rate;
+  static uint8_t        m_lfo_depth[2];
+  static boolean        m_pitch_lfo_target_both;
+  static uint8_t        m_pitch_lfo_amt;
+  static uint8_t        m_waveform[2];
+  static int16_t        m_pitch_bend;
+  static uint8_t        m_pitch_bend_minus_range;
+  static uint8_t        m_pitch_bend_plus_range;
   static int16_t        m_pitch_bend_normalized;
-  static uint16_t       m_pitch_target;
-  static uint16_t       m_pitch_current;
+  static uint16_t       m_pitch_target[2];
+  static uint16_t       m_pitch_current[2];
   static uint16_t       m_pitch_real[2];
-  static const uint8_t* m_wave_table[2];
+  static const uint8_t* m_wave_table[3];
   static const uint8_t* m_wave_table_temp[2];
   static __uint24       m_freq[2];
   static __uint24       m_freq_temp[2];
@@ -39,21 +49,32 @@ public:
       m_mix_table[i] = static_cast<uint8_t>(sqrtf(static_cast<float>(i) /
                                                   (OSC_MIX_TABLE_LENGTH - 1)) * 40);
     }
-    set_mix(0);
+    set_osc_mix(0);
     set_sub_osc_level(0);
     m_level_sub = 0;
+    m_pitch_offset_1 = 0;
     m_detune = 0;
-    m_fluctuation = 0;
-    m_detune_mod_amt = 0;
-    m_portamento = 0x4000;
-    m_waveform = OSC_WAVEFORM_SAW;
+    m_fluctuation = FLUCTUATION_INIT;
+    m_portamento_coef = 0;
+    m_mod_level[0] = 0;
+    m_mod_level[1] = 0;
+    m_lfo_phase = 0;
+    m_lfo_level = 0;
+    m_lfo_rate = 0;
+    m_lfo_depth[0] = 0;
+    m_lfo_depth[1] = 0;
+    m_waveform[0] = OSC_WAVEFORM_SAW;
+    m_waveform[1] = OSC_WAVEFORM_SAW;
     m_pitch_bend_normalized = 0;
-    m_pitch_target = (NOTE_NUMBER_MIN - 13) << 8;
-    m_pitch_current = m_pitch_target;
-    m_pitch_real[0] = m_pitch_target;
-    m_pitch_real[1] = m_pitch_target;
+    m_pitch_target[0] = NOTE_NUMBER_MIN << 8;
+    m_pitch_target[1] = NOTE_NUMBER_MIN << 8;
+    m_pitch_current[0] = m_pitch_target[0];
+    m_pitch_current[1] = m_pitch_target[1];
+    m_pitch_real[0] = m_pitch_current[0];
+    m_pitch_real[1] = m_pitch_current[1];
     m_wave_table[0] = g_osc_saw_wave_tables[0];
     m_wave_table[1] = g_osc_saw_wave_tables[0];
+    m_wave_table[2] = g_osc_sin_wave_table_h1;
     m_wave_table_temp[0] = g_osc_saw_wave_tables[0];
     m_wave_table_temp[1] = g_osc_saw_wave_tables[0];
     m_freq[0] = g_osc_freq_table[0];
@@ -66,9 +87,11 @@ public:
     m_rnd_temp = 1;
     m_rnd = 0;
     m_rnd_prev = 0;
+    set_pitch_bend_minus_range(2);
+    set_pitch_bend_plus_range(2);
   }
 
-  INLINE static void set_mix(uint8_t controller_value) {
+  INLINE static void set_osc_mix(uint8_t controller_value) {
     if (controller_value >= 2) {
       controller_value -= 2;
     }
@@ -77,15 +100,16 @@ public:
       controller_value = 123;
     }
 
-    m_mix_main   = m_mix_table[(OSC_MIX_TABLE_LENGTH - 1) - (controller_value >> 2)];
-    m_mix_detune = m_mix_table[                             (controller_value >> 2)];
+    m_mix_0 = m_mix_table[(OSC_MIX_TABLE_LENGTH - 1) - (controller_value >> 2)];
+    m_mix_1 = m_mix_table[                             (controller_value >> 2)];
   }
 
+  template <uint8_t N>
   INLINE static void set_waveform(uint8_t controller_value) {
     if (controller_value < 64) {
-      m_waveform = OSC_WAVEFORM_SAW;
+      m_waveform[N] = OSC_WAVEFORM_SAW;
     } else {
-      m_waveform = OSC_WAVEFORM_SQ;
+      m_waveform[N] = OSC_WAVEFORM_SQ;
     }
   }
 
@@ -97,91 +121,145 @@ public:
     m_mix_sub = m_mix_table[idx];
   }
 
-  INLINE static void set_detune(uint8_t controller_value) {
-    if (controller_value >= 15) {
-      m_detune = (controller_value - 11) << 4;
-    } else if (controller_value >= 2) {
-      m_detune = (controller_value << 2) + 4;
+  INLINE static void set_pitch_offset_1(uint8_t controller_value) {
+    if (controller_value < 4) {
+      m_pitch_offset_1 = -60;
+    } else if (controller_value <= 124) {
+      m_pitch_offset_1 = controller_value - 64;
     } else {
-      m_detune = 9;
+      m_pitch_offset_1 = 60;
     }
   }
 
-  INLINE static void set_detune_noise_gen_amt(uint8_t controller_value) {
-    m_fluctuation = controller_value >> 1;
-  }
-
-  INLINE static void set_detune_env_amt(uint8_t controller_value) {
-    m_detune_mod_amt = controller_value;
+  INLINE static void set_detune(uint8_t controller_value) {
+    m_detune = (controller_value - 64) << 1;
   }
 
   INLINE static void set_portamento(uint8_t controller_value) {
-    if (controller_value < 4) {
-      m_portamento = 0x4000;
+    if (controller_value < 2) {
+      m_portamento_coef = 0;
     } else {
-      m_portamento = 134 - ((controller_value >> 1) << 1);
+      m_portamento_coef = (controller_value >> 1) + 192;
     }
   }
 
+  INLINE static void set_lfo_rate(uint8_t controller_value) {
+    m_lfo_rate = ((high_byte((controller_value << 1) *
+                             (controller_value << 1)) + 1) * 25) >> 1;
+  }
+
+  template <uint8_t N>
+  INLINE static void set_lfo_depth(uint8_t controller_value) {
+    m_lfo_depth[N] = controller_value;
+  }
+
+  template <uint8_t N>
+  INLINE static void set_pitch_lfo_amt(uint8_t controller_value) {
+    if (controller_value < 16) {
+      m_pitch_lfo_amt = 48;
+      m_pitch_lfo_target_both = false;
+    } else if (controller_value < 64) {
+      m_pitch_lfo_amt = (64 - controller_value);
+      m_pitch_lfo_target_both = false;
+    } else if (controller_value < 112) {
+      m_pitch_lfo_amt = (controller_value - 64);
+      m_pitch_lfo_target_both = true;
+    } else {
+      m_pitch_lfo_amt = 48;
+      m_pitch_lfo_target_both = true;
+    }
+  }
+
+  template <uint8_t N>
   INLINE static void note_on(uint8_t note_number) {
-    m_pitch_target = note_number << 8;
+    m_pitch_target[N] = note_number << 8;
+  }
+
+  INLINE static void set_pitch_bend_minus_range(uint8_t controller_value) {
+    uint8_t range = controller_value;
+    if (range > 24) {
+      range = 24;
+    }
+    m_pitch_bend_minus_range = range;
+    update_pitch_bend();
+  }
+
+  INLINE static void set_pitch_bend_plus_range(uint8_t controller_value) {
+    uint8_t range = controller_value;
+    if (range > 24) {
+      range = 24;
+    }
+    m_pitch_bend_plus_range = range;
+    update_pitch_bend();
   }
 
   INLINE static void set_pitch_bend(int16_t pitch_bend) {
-    pitch_bend++;
-#if (PITCH_BEND_RANGE == 12)
-    m_pitch_bend_normalized = ((pitch_bend << 1) + pitch_bend) >> 3;
-#else  // (PITCH_BEND_RANGE == 2)
-    m_pitch_bend_normalized = pitch_bend >> 4;
-#endif
+    m_pitch_bend = pitch_bend;
+    update_pitch_bend();
+  }
+
+  INLINE static uint8_t get_white_noise_7() {
+    return m_rnd;
+  }
+
+  INLINE static uint8_t get_red_noise_8() {
+    return (m_rnd_prev + m_rnd);
   }
 
   INLINE static int16_t clock(uint8_t count) {
     if ((count & 0x01) == 1) {
-      int16_t wave_0_sub = get_tri_wave_level(m_phase[0] >> 8);
+      int16_t wave_0_sub = get_wave_level(m_wave_table[2], m_phase[0] >> 8);
       m_level_sub = wave_0_sub * m_mix_sub;
     }
     else if ((count & (OSC_CONTROL_INTERVAL - 1)) == 0) {
       uint8_t idx = (count >> OSC_CONTROL_INTERVAL_BITS) & 0x0F;
       switch (idx) {
       case 0x0:
-        update_pitch_current<0>();
+        update_freq_0th<0>();
         break;
       case 0x1:
-        update_freq_first<0>();
+        update_freq_1st<0>();
         break;
       case 0x2:
-        update_freq_latter<0>();
+        update_freq_2nd<0>();
+        break;
+      case 0x3:
+        update_freq_3rd<0>();
         break;
       case 0x4:
-        m_rnd_cnt++;
-        if ((m_rnd_cnt & 0x03) == 0x00) {
-          update_rnd_first();
-        }
+        update_freq_4th<0>();
         break;
       case 0x5:
-        if ((m_rnd_cnt & 0x03) == 0x00) {
-          update_rnd_latter();
+        update_waveform_sub();
+        break;
+      case 0x6:
+        m_rnd_cnt++;
+        if ((m_rnd_cnt & 0x07) == 0x00) {
+          update_rnd();
         }
         break;
       case 0x8:
-        update_pitch_current<1>();
+        update_freq_0th<1>();
         break;
       case 0x9:
-        update_freq_first<1>();
+        update_freq_1st<1>();
         break;
       case 0xA:
-        update_freq_latter<1>();
+        update_freq_2nd<1>();
+        break;
+      case 0xB:
+        update_freq_3rd<1>();
         break;
       case 0xC:
-        if ((m_rnd_cnt & 0x03) == 0x00) {
-          update_rnd_first();
+        update_freq_4th<1>();
+        break;
+      case 0xE:
+        if ((m_rnd_cnt & 0x07) == 0x00) {
+          update_rnd();
         }
         break;
-      case 0xD:
-        if ((m_rnd_cnt & 0x03) == 0x00) {
-          update_rnd_latter();
-        }
+      case 0xF:
+        update_lfo();
         break;
       }
     }
@@ -193,28 +271,20 @@ public:
     int8_t wave_0_detune = get_wave_level(m_wave_table[1], static_cast<uint16_t>(m_phase[1] >> 8) << 1);
 
     // amp and mix
-    int16_t level_main   = wave_0_main   * m_mix_main;
-    int16_t level_detune = wave_0_detune * m_mix_detune;
+    int16_t level_main   = wave_0_main   * m_mix_0;
+    int16_t level_detune = wave_0_detune * m_mix_1;
     int16_t result       = level_main + level_detune + m_level_sub;
 
     return result;
-  }
-
-  INLINE static uint8_t get_white_noise_7() {
-    return m_rnd;
-  }
-
-  INLINE static uint8_t get_red_noise_8() {
-    return (m_rnd_prev + m_rnd);
   }
 
 private:
   INLINE static const uint8_t* get_wave_table(uint8_t waveform, uint8_t note_number) {
     const uint8_t* result;
     if (waveform == OSC_WAVEFORM_SAW) {
-      result = g_osc_saw_wave_tables[note_number - (NOTE_NUMBER_MIN - 13)];
+      result = g_osc_saw_wave_tables[note_number - NOTE_NUMBER_MIN];
     } else {
-      result = g_osc_sq_wave_tables[note_number - (NOTE_NUMBER_MIN - 13)];
+      result = g_osc_sq_wave_tables[note_number - NOTE_NUMBER_MIN];
     }
     return result;
   }
@@ -237,56 +307,69 @@ private:
     return result;
   }
 
-  INLINE static int8_t get_tri_wave_level(uint16_t phase) {
-    uint16_t level = phase;
-    if ((level & 0x8000) != 0) {
-      level = ~level;
+  INLINE static int8_t get_lfo_wave_level(uint16_t phase) {
+    int8_t level = high_sbyte(phase);
+    if (level < -64) {
+      level = -64 - (level + 64);
+    } else if (level < 64) {
+      // do nothing
+    } else {
+      level = 64 - (level - 64);
     }
-    level -= 0x4000;
-    return high_sbyte(level << 1);
+    return level;
   }
 
   template <uint8_t N>
-  INLINE static void update_pitch_current() {
-    if (m_pitch_current + m_portamento < m_pitch_target) {
-      m_pitch_current += m_portamento;
-    } else if (m_pitch_current > m_pitch_target + m_portamento) {
-      m_pitch_current -= m_portamento;
-    } else {
-      m_pitch_current = m_pitch_target;
-    }
+  INLINE static void update_freq_0th() {
+    m_pitch_current[N] = m_pitch_target[N] - mul_q15_q8(m_pitch_target[N] - m_pitch_current[N], m_portamento_coef);
 
-#if defined(TRANSPOSE)
-    int16_t transpose = (TRANSPOSE << 8) | 0x00;
-    m_pitch_real[N] = m_pitch_current + m_pitch_bend_normalized + transpose;
-#else
-    m_pitch_real[N] = m_pitch_current + m_pitch_bend_normalized;
-#endif
+    int16_t t = TRANSPOSE << 8;
+    m_pitch_real[N] = (64 << 8) + m_pitch_current[N] + m_pitch_bend_normalized + t;
 
     uint8_t coarse = high_byte(m_pitch_real[N]);
-    if (coarse <= (NOTE_NUMBER_MIN - 12)) {
-      m_pitch_real[N] = (NOTE_NUMBER_MIN - 12) << 8;
-    } else if (coarse >= (NOTE_NUMBER_MAX + 12)) {
-      m_pitch_real[N] = (NOTE_NUMBER_MAX + 12) << 8;
+    if (coarse <= (NOTE_NUMBER_MIN + 64)) {
+      m_pitch_real[N] = NOTE_NUMBER_MIN << 8;
+    } else if (coarse >= (NOTE_NUMBER_MAX + 64)) {
+      m_pitch_real[N] = NOTE_NUMBER_MAX << 8;
+    } else {
+      m_pitch_real[N] -= (64 << 8);
     }
   }
 
   template <uint8_t N>
-  INLINE static void update_freq_first() {
+  INLINE static void update_freq_1st() {
+    m_pitch_real[N] += (64 << 8) + high_sbyte((m_fluctuation >> 2) * static_cast<int8_t>(get_red_noise_8()));
+    m_pitch_real[N] += m_mod_level[N];
+
     if (N == 1) {
       /* For OSC 2 */
-      m_pitch_real[N] += m_detune;
+      m_pitch_real[N] += (m_pitch_offset_1 << 8) + m_detune + m_detune;
     }
-
-    m_pitch_real[N] += high_sbyte((m_fluctuation >> 2) * static_cast<int8_t>(get_red_noise_8()));
-    m_pitch_real[N] += 128;
-    uint8_t coarse = high_byte(m_pitch_real[N]);
-    m_freq_temp[N] = g_osc_freq_table[coarse - (NOTE_NUMBER_MIN - 13)];
-    m_wave_table_temp[N] = get_wave_table(m_waveform, coarse);
   }
 
   template <uint8_t N>
-  INLINE static void update_freq_latter() {
+  INLINE static void update_freq_2nd() {
+    uint8_t coarse = high_byte(m_pitch_real[N]);
+    if (coarse <= (NOTE_NUMBER_MIN + 64)) {
+      m_pitch_real[N] = NOTE_NUMBER_MIN << 8;
+    } else if (coarse >= (NOTE_NUMBER_MAX + 64)) {
+      m_pitch_real[N] = NOTE_NUMBER_MAX << 8;
+    } else {
+      m_pitch_real[N] -= (64 << 8);
+    }
+
+    m_pitch_real[N] += 128;  // For g_osc_tune_table[]
+  }
+
+  template <uint8_t N>
+  INLINE static void update_freq_3rd() {
+    uint8_t coarse = high_byte(m_pitch_real[N]);
+    m_freq_temp[N] = g_osc_freq_table[coarse - NOTE_NUMBER_MIN];
+    m_wave_table_temp[N] = get_wave_table(m_waveform[N], coarse);
+  }
+
+  template <uint8_t N>
+  INLINE static void update_freq_4th() {
     uint8_t fine = low_byte(m_pitch_real[N]);
     uint16_t freq_div_512 = m_freq_temp[N] >> 8;
     freq_div_512 >>= 1;
@@ -295,33 +378,71 @@ private:
     m_wave_table[N] = m_wave_table_temp[N];
   }
 
-  INLINE static void update_rnd_first() {
-    m_rnd_temp = m_rnd_temp ^ (m_rnd_temp << 5);
-    m_rnd_temp = m_rnd_temp ^ (m_rnd_temp >> 9);
+  INLINE static void update_waveform_sub() {
+//  uint8_t coarse = high_byte(m_pitch_real[0]);
+    m_wave_table[2] = g_osc_sin_wave_table_h1;
   }
 
-  INLINE static void update_rnd_latter() {
+  INLINE static void update_rnd() {
+    m_rnd_temp = m_rnd_temp ^ (m_rnd_temp << 5);
+    m_rnd_temp = m_rnd_temp ^ (m_rnd_temp >> 9);
     m_rnd_temp = m_rnd_temp ^ (m_rnd_temp << 8);
     m_rnd_prev = m_rnd;
     m_rnd = low_byte(m_rnd_temp) >> 1;
   }
+
+  INLINE static void update_lfo() {
+    m_lfo_phase += m_lfo_rate;
+    m_lfo_level = get_lfo_wave_level(m_lfo_phase);
+    uint8_t lfo_depth = m_lfo_depth[0] + m_lfo_depth[1];
+    if (lfo_depth > 127) {
+      lfo_depth = 127;
+    }
+
+    m_mod_level[1] = high_sbyte((lfo_depth << 1) * m_lfo_level) * m_pitch_lfo_amt;
+    if (m_pitch_lfo_target_both) {
+      m_mod_level[0] = m_mod_level[1];
+    } else {
+      m_mod_level[0] = 0;
+    }
+  }
+
+  INLINE static void update_pitch_bend() {
+    int16_t b = m_pitch_bend + 1;
+    b >>= 3;
+    if (b < 0) {
+      m_pitch_bend_normalized = (b * m_pitch_bend_minus_range) >> 2;
+    } else {
+      m_pitch_bend_normalized = (b * m_pitch_bend_plus_range) >> 2;
+    }
+  }
 };
 
-template <uint8_t T> int8_t          Osc<T>::m_mix_main;
-template <uint8_t T> int8_t          Osc<T>::m_mix_detune;
+template <uint8_t T> int8_t          Osc<T>::m_mix_0;
+template <uint8_t T> int8_t          Osc<T>::m_mix_1;
 template <uint8_t T> int8_t          Osc<T>::m_mix_sub;
 template <uint8_t T> int16_t         Osc<T>::m_level_sub;
 template <uint8_t T> int8_t          Osc<T>::m_mix_table[OSC_MIX_TABLE_LENGTH];
-template <uint8_t T> uint16_t        Osc<T>::m_detune;
+template <uint8_t T> int8_t          Osc<T>::m_pitch_offset_1;
+template <uint8_t T> int8_t          Osc<T>::m_detune;
 template <uint8_t T> uint8_t         Osc<T>::m_fluctuation;
-template <uint8_t T> uint8_t         Osc<T>::m_detune_mod_amt;
-template <uint8_t T> uint16_t        Osc<T>::m_portamento;
-template <uint8_t T> uint8_t         Osc<T>::m_waveform;
+template <uint8_t T> uint8_t         Osc<T>::m_portamento_coef;
+template <uint8_t T> int16_t         Osc<T>::m_mod_level[2];
+template <uint8_t T> uint16_t        Osc<T>::m_lfo_phase;
+template <uint8_t T> int8_t          Osc<T>::m_lfo_level;
+template <uint8_t T> uint16_t        Osc<T>::m_lfo_rate;
+template <uint8_t T> uint8_t         Osc<T>::m_lfo_depth[2];
+template <uint8_t T> boolean         Osc<T>::m_pitch_lfo_target_both;
+template <uint8_t T> uint8_t         Osc<T>::m_pitch_lfo_amt;
+template <uint8_t T> uint8_t         Osc<T>::m_waveform[2];
+template <uint8_t T> int16_t         Osc<T>::m_pitch_bend;
+template <uint8_t T> uint8_t         Osc<T>::m_pitch_bend_minus_range;
+template <uint8_t T> uint8_t         Osc<T>::m_pitch_bend_plus_range;
 template <uint8_t T> int16_t         Osc<T>::m_pitch_bend_normalized;
-template <uint8_t T> uint16_t        Osc<T>::m_pitch_target;
-template <uint8_t T> uint16_t        Osc<T>::m_pitch_current;
+template <uint8_t T> uint16_t        Osc<T>::m_pitch_target[2];
+template <uint8_t T> uint16_t        Osc<T>::m_pitch_current[2];
 template <uint8_t T> uint16_t        Osc<T>::m_pitch_real[2];
-template <uint8_t T> const uint8_t*  Osc<T>::m_wave_table[2];
+template <uint8_t T> const uint8_t*  Osc<T>::m_wave_table[3];
 template <uint8_t T> const uint8_t*  Osc<T>::m_wave_table_temp[2];
 template <uint8_t T> __uint24        Osc<T>::m_freq[2];
 template <uint8_t T> __uint24        Osc<T>::m_freq_temp[2];

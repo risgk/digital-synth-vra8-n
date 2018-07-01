@@ -1,5 +1,6 @@
 #pragma once
 
+#include "configs.h"
 #include "constants.h"
 
 #define INLINE inline __attribute__((always_inline))
@@ -17,5 +18,9 @@ INLINE int8_t high_sbyte(int16_t x) {
 }
 
 INLINE uint8_t hhigh_byte(__uint24 x) {
+  return x >> 16;
+}
+
+INLINE int8_t hhigh_sbyte(__int24 x) {
   return x >> 16;
 }
