@@ -91,7 +91,7 @@ public:
 private:
   INLINE static void update_current(uint8_t mod_input) {
     int16_t cutoff_candidate = m_cutoff + static_cast<int8_t>(m_cutoff_velocity - 64);
-    cutoff_candidate += high_sbyte(((m_mod_amt - 64) << 1) * mod_input);
+    cutoff_candidate += static_cast<int8_t>(high_sbyte(((m_mod_amt - 64) << 1) * mod_input) << 1);
     uint8_t cutoff_target;
     if (cutoff_candidate > 127) {
       cutoff_target = 127;

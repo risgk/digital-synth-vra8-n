@@ -72,8 +72,8 @@ public:
             m_state = STATE_SUSTAIN;
             m_rest = m_decay_update_interval;
           } else {
-            m_level = (ENV_GEN_LEVEL_MAX << 1) - mul_q16_q8((ENV_GEN_LEVEL_MAX << 1) - m_level,
-                                                            ENV_GEN_ATTACK_FACTOR);
+            m_level = ENV_GEN_LEVEL_MAX_X_1_5 - mul_q16_q8(ENV_GEN_LEVEL_MAX_X_1_5 - m_level,
+                                                           ENV_GEN_ATTACK_FACTOR);
             if (m_level >= ENV_GEN_LEVEL_MAX) {
               m_level = ENV_GEN_LEVEL_MAX;
             }
@@ -104,7 +104,7 @@ public:
       }
     }
 
-    return high_byte(m_level << 1);
+    return high_byte(m_level);
   }
 };
 
