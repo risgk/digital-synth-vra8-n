@@ -304,32 +304,32 @@ function preset(number) {
   allNotesOff();
   var presetControllers = {};
 
-  presetControllers[FILTER_CUTOFF] = [80 , 0  , 0  , 0  , 0  , 0  , 0  , 127];
-  presetControllers[FILTER_RESO  ] = [80 , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
-  presetControllers[CUTOFF_EG_AMT] = [80 , 0  , 0  , 0  , 0  , 0  , 0  , 64 ];
-  presetControllers[EG_DECAY     ] = [32 , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
+  presetControllers[FILTER_CUTOFF] = [80 , 64 , 0  , 127, 127, 127, 127, 127];
+  presetControllers[FILTER_RESO  ] = [80 , 64 , 127, 0  , 0  , 0  , 0  , 0  ];
+  presetControllers[CUTOFF_EG_AMT] = [80 , 96 , 112, 64 , 64 , 64 , 64 , 64 ];
+  presetControllers[EG_DECAY     ] = [32 , 64 , 48 , 0  , 0  , 0  , 0  , 0  ];
 
-  presetControllers[OSC2_COARSE  ] = [71 , 0  , 0  , 0  , 0  , 0  , 0  , 64 ];
-  presetControllers[OSC2_FINE    ] = [68 , 0  , 0  , 0  , 0  , 0  , 0  , 68 ];
-  presetControllers[PORTAMENTO   ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
-  presetControllers[EG_ATTACK    ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
+  presetControllers[OSC2_COARSE  ] = [71 , 64 , 64 , 64 , 64 , 64 , 64 , 64 ];
+  presetControllers[OSC2_FINE    ] = [68 , 72 , 66 , 72 , 68 , 68 , 68 , 68 ];
+  presetControllers[PORTAMENTO   ] = [32 , 32 , 32 , 32 , 0  , 0  , 0  , 0  ];
+  presetControllers[EG_ATTACK    ] = [0  , 32 , 0  , 0  , 0  , 0  , 0  , 0  ];
 
-  presetControllers[OSC_WAVE     ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
-  presetControllers[OSC2_MIX     ] = [127, 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
-  presetControllers[SUB_OSC_MIX  ] = [127, 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
-  presetControllers[EG_SUSTAIN   ] = [127, 0  , 0  , 0  , 0  , 0  , 0  , 127];
+  presetControllers[OSC_WAVE     ] = [0  , 0  , 0  , 127, 0  , 0  , 0  , 0  ];
+  presetControllers[OSC2_MIX     ] = [127, 127, 127, 127, 0  , 0  , 0  , 0  ];
+  presetControllers[SUB_OSC_MIX  ] = [127, 127, 127, 0  , 0  , 0  , 0  , 0  ];
+  presetControllers[EG_SUSTAIN   ] = [127, 0  , 0  , 127, 127, 127, 127, 127];
 
   presetControllers[CC28         ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
   presetControllers[CC29         ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
-  presetControllers[LEGATO       ] = [127, 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
-  presetControllers[AMP_EG_ON    ] = [127, 0  , 0  , 0  , 0  , 0  , 0  , 127];
+  presetControllers[LEGATO       ] = [127, 127, 127, 127, 0  , 0  , 0  , 0  ];
+  presetControllers[AMP_EG_ON    ] = [127, 0  , 127, 127, 127, 127, 127, 127];
 
-  presetControllers[LFO_RATE     ] = [64 , 0  , 0  , 0  , 0  , 0  , 0  , 64 ];
-  presetControllers[LFO_DEPTH    ] = [16 , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
-  presetControllers[PITCH_LFO_AMT] = [62 , 0  , 0  , 0  , 0  , 0  , 0  , 66 ];
+  presetControllers[LFO_RATE     ] = [64 , 64 , 64 , 64 , 64 , 64 , 64 , 64 ];
+  presetControllers[LFO_DEPTH    ] = [16 , 16 , 0  , 16 , 0  , 0  , 0  , 0  ];
+  presetControllers[PITCH_LFO_AMT] = [62 , 62 , 66 , 66 , 66 , 66 , 66 , 66 ];
   presetControllers[CC51         ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
 
-  presetControllers[PB_RANGE     ] = [2  , 0  , 0  , 0  , 0  , 0  , 0  , 2  ];
+  presetControllers[PB_RANGE     ] = [2  , 2  , 2  , 2  , 2  , 2  , 2  , 2  ];
   presetControllers[CC57         ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
   presetControllers[KEY_ASSIGN   ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
   presetControllers[CC59         ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
@@ -426,12 +426,10 @@ function noteOff(noteNumber) {
 <table>
 <tr><td>PRESET</td>
     <td><input type="button" value="LEAD"          onclick="preset(0)"></td>
-    <td><input type="button" value="4TH"           onclick="preset(1)"></td>
-    <td><input type="button" value="5TH"           onclick="preset(2)"></td>
-    <td><input type="button" value="SOFT"          onclick="preset(3)"></td>
-    <td><input type="button" value="BASS"          onclick="preset(4)"></td>
-    <td><input type="button" value="SQ"            onclick="preset(5)"></td>
-    <td><input type="button" value="#6"            onclick="preset(6)"></td>
+    <td><input type="button" value="SOFT"          onclick="preset(1)"></td>
+    <td><input type="button" value="BASS"          onclick="preset(2)"></td>
+    <td><input type="button" value="SQ"            onclick="preset(3)"></td>
+    <td>&nbsp;</td>
     <td><input type="button" value="NEUTRAL"       onclick="preset(7)"></td></tr>
 </table>
 

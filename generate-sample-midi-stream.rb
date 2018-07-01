@@ -43,7 +43,7 @@ control_change(EG_DECAY     , 32 )
 
 control_change(OSC2_COARSE  , 71 )
 control_change(OSC2_FINE    , 68 )
-control_change(PORTAMENTO   , 0  )
+control_change(PORTAMENTO   , 32 )
 control_change(EG_ATTACK    , 0  )
 
 control_change(OSC_WAVE     , 0  )
@@ -64,7 +64,7 @@ control_change(CC51         , 0  )
 control_change(PB_RANGE     , 2  )
 control_change(CC57         , 0  )
 control_change(KEY_ASSIGN   , 0  )
-control_change(CC59         , 80 )
+control_change(CC59         , 0  )
 
 play_cegbdfac(3)
 

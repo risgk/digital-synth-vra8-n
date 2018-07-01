@@ -33,7 +33,7 @@ public:
 
     ISynthCore<0>::control_change(OSC2_COARSE  , 71 );
     ISynthCore<0>::control_change(OSC2_FINE    , 68 );
-    ISynthCore<0>::control_change(PORTAMENTO   , 0  );
+    ISynthCore<0>::control_change(PORTAMENTO   , 32 );
     ISynthCore<0>::control_change(EG_ATTACK    , 0  );
 
     ISynthCore<0>::control_change(OSC_WAVE     , 0  );
