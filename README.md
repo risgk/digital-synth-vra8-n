@@ -12,11 +12,11 @@
 - Monophonic Synthesizer, MIDI Sound Module
 - Serial MIDI In (38400 bps), PWM Audio Out (Pin 6), PWM Rate: 62500 Hz
     - We recommend adding a RC filter circuit to reduce PWM ripples
-    - A cutoff frequency 15.9 kHz (R: 100 ohm, C: 100 nF) works well, too
+    - A cutoff frequency 15.9 kHz (R: 100 ohm, C: 100 nF) works well
     - **CAUTION**: Click sounds may occur when you connect the audio out to an amp/a speaker or reset the board
     - **CAUTION**: The Arduino PWM audio output is a unipolar LINE OUT
         - Please connect this to a power amp/a headphone amp (not to a speaker/a headphone directly)
-- Sampling Rate: 31250 Hz, Bit Depth: 8 bit, LPF Attenuation Slope: -12 dB/oct
+- Sampling Rate: 31.25 kHz, Bit Depth: 8 bit, LPF Attenuation Slope: -12 dB/oct
 - Recommending [Hairless MIDI<->Serial Bridge](http://projectgus.github.io/hairless-midiserial/) to connect PC
 - Files
     - `DigitalSynthVRA8N.ino` is a sketch for Arduino/Genuino Uno
