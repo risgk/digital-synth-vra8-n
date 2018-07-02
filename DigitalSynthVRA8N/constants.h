@@ -77,10 +77,10 @@ const uint8_t   LFO_DEPTH     = 49;
 const uint8_t   PITCH_LFO_AMT = 50;
 const uint8_t   CC51          = 51;
 
-const uint8_t   PB_RANGE      = 56;
-const uint8_t   CC57          = 57;
-const uint8_t   KEY_ASSIGN    = 58;
-const uint8_t   CC59          = 59;
+const uint8_t   PB_RANGE      = 52;
+const uint8_t   CC53          = 53;
+const uint8_t   KEY_ASSIGN    = 54;
+const uint8_t   CC55          = 55;
 
 const uint8_t   ALL_NOTES_OFF = 123;
 const uint8_t   OMNI_MODE_OFF = 124;

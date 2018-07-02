@@ -77,10 +77,10 @@ LFO_DEPTH     = 49
 PITCH_LFO_AMT = 50
 CC51          = 51
 
-PB_RANGE      = 56
-CC57          = 57
-KEY_ASSIGN    = 58
-CC59          = 59
+PB_RANGE      = 52
+CC53          = 53
+KEY_ASSIGN    = 54
+CC55          = 55
 
 ALL_NOTES_OFF = 123
 OMNI_MODE_OFF = 124

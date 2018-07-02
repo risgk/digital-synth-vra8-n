@@ -62,9 +62,9 @@ control_change(PITCH_LFO_AMT, 62 )
 control_change(CC51         , 0  )
 
 control_change(PB_RANGE     , 2  )
-control_change(CC57         , 0  )
+control_change(CC53         , 0  )
 control_change(KEY_ASSIGN   , 0  )
-control_change(CC59         , 0  )
+control_change(CC55         , 0  )
 
 play_cegbdfac(3)
 
