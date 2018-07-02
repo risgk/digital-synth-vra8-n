@@ -84,10 +84,10 @@
     |                            49 | x             | o             | LFO DEPTH             |
     |                            50 | x             | o             | LFO > PITCH (2/1+2)   |
     |                            51 | x             | x             | (RESERVED)            |
-    |                            56 | x             | o             | P.BEND RANGE          |
-    |                            57 | x             | x             | (RESERVED)            |
-    |                            58 | x             | o             | KEY ASGN (LO/LAST)    |
-    |                            59 | x             | x             | (RESERVED)            |
+    |                            52 | x             | o             | P.BEND RANGE          |
+    |                            53 | x             | x             | (RESERVED)            |
+    |                            54 | x             | o             | KEY ASGN (LO/LAST)    |
+    |                            55 | x             | x             | (RESERVED)            |
     +-------------------------------+---------------+---------------+-----------------------+
     | Program                       | x             | x             |                       |
     | Change       : True #         | ************* |               |                       |
