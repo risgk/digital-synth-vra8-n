@@ -74,13 +74,13 @@
     |                            23 | x             | o             | ATTACK                |
     |                            24 | x             | o             | OSC WAVE (SAW/SQ)     |
     |                            25 | x             | o             | OSC2 MIX              |
-    |                            26 | x             | o             | SUB OSC MIX           |
+    |                            26 | x             | o             | SUB OSC MIX (SIN)     |
     |                            27 | x             | o             | SUSTAIN (OFF/ON)      |
     |                            28 | x             | x             | (RESERVED)            |
     |                            29 | x             | x             | (RESERVED)            |
     |                            30 | x             | o             | LEGATO (OFF/ON)       |
     |                            31 | x             | o             | AMP EG (OFF/ON)       |
-    |                            48 | x             | o             | LFO RATE              |
+    |                            48 | x             | o             | LFO RATE (TRI)        |
     |                            49 | x             | o             | LFO DEPTH             |
     |                            50 | x             | o             | LFO > PITCH (2/1+2)   |
     |                            51 | x             | x             | (RESERVED)            |
