@@ -74,7 +74,8 @@ public:
         if (m_rest == 0) {
           m_rest = m_decay_update_coef;
           if (m_level > m_sustain) {
-            m_level = mul_q16_q8(m_level, 188 + (m_decay_update_coef >> 1));
+            m_level = m_sustain + mul_q16_q8(m_level - m_sustain,
+                                             188 + (m_decay_update_coef >> 1));
             if (m_level < m_sustain) {
               m_level = m_sustain;
             }
