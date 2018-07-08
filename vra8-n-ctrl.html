@@ -212,6 +212,9 @@ function onMIDIMessage(event) {
   if (event.data[0] == (PROGRAM_CHANGE | MIDI_CH)) {
     var number = event.data[1];
     if (number >= 0 && number <= 7) {
+      preset(number);
+      return;
+    } else if (number >= 8 && number <= 15) {
       loadControllers(number);
       return;
     }
@@ -425,35 +428,35 @@ function noteOff(noteNumber) {
 
 <table>
 <tr><td>PRESET</td>
-    <td><input type="button" value="LEAD"          onclick="preset(0)"></td>
-    <td><input type="button" value="SOFT"          onclick="preset(1)"></td>
-    <td><input type="button" value="BASS"          onclick="preset(2)"></td>
-    <td><input type="button" value="SQ"            onclick="preset(3)"></td>
+    <td><input type="button" value="#00 LEAD"          onclick="preset(0)"></td>
+    <td><input type="button" value="#01 SOFT"          onclick="preset(1)"></td>
+    <td><input type="button" value="#02 BASS"          onclick="preset(2)"></td>
+    <td><input type="button" value="#03 SQ"            onclick="preset(3)"></td>
     <td>&nbsp;</td>
-    <td><input type="button" value="NEUTRAL"       onclick="preset(7)"></td></tr>
+    <td><input type="button" value="#07 NEUTRAL"       onclick="preset(7)"></td></tr>
 </table>
 
 <table>
-<tr><td><input type="button" value="LOAD #4"       onclick="loadControllers(4)"></td>
-    <td><input type="button" value="LOAD #5"       onclick="loadControllers(5)"></td>
-    <td><input type="button" value="LOAD #6"       onclick="loadControllers(6)"></td>
-    <td><input type="button" value="LOAD #7"       onclick="loadControllers(7)"></td>
+<tr><td><input type="button" value="LOAD #12"       onclick="loadControllers(12)"></td>
+    <td><input type="button" value="LOAD #13"       onclick="loadControllers(13)"></td>
+    <td><input type="button" value="LOAD #14"       onclick="loadControllers(14)"></td>
+    <td><input type="button" value="LOAD #15"       onclick="loadControllers(15)"></td>
     <td>&nbsp;</td>
-    <td><input type="button" value="SAVE #4"       onclick="saveControllers(4)"></td>
-    <td><input type="button" value="SAVE #5"       onclick="saveControllers(5)"></td>
-    <td><input type="button" value="SAVE #6"       onclick="saveControllers(6)"></td>
-    <td><input type="button" value="SAVE #7"       onclick="saveControllers(7)"></td>
+    <td><input type="button" value="SAVE #12"       onclick="saveControllers(12)"></td>
+    <td><input type="button" value="SAVE #13"       onclick="saveControllers(13)"></td>
+    <td><input type="button" value="SAVE #14"       onclick="saveControllers(14)"></td>
+    <td><input type="button" value="SAVE #15"       onclick="saveControllers(15)"></td>
     <td>&nbsp;</td>
     <td><input type="button" value="ALL NOTES OFF" onclick="allNotesOff()"></td></tr>
-<tr><td><input type="button" value="LOAD #0"       onclick="loadControllers(0)"></td>
-    <td><input type="button" value="LOAD #1"       onclick="loadControllers(1)"></td>
-    <td><input type="button" value="LOAD #2"       onclick="loadControllers(2)"></td>
-    <td><input type="button" value="LOAD #3"       onclick="loadControllers(3)"></td>
+<tr><td><input type="button" value="LOAD #08"       onclick="loadControllers(8)"></td>
+    <td><input type="button" value="LOAD #09"       onclick="loadControllers(9)"></td>
+    <td><input type="button" value="LOAD #10"       onclick="loadControllers(10)"></td>
+    <td><input type="button" value="LOAD #11"       onclick="loadControllers(11)"></td>
     <td>&nbsp;</td>
-    <td><input type="button" value="SAVE #0"       onclick="saveControllers(0)"></td>
-    <td><input type="button" value="SAVE #1"       onclick="saveControllers(1)"></td>
-    <td><input type="button" value="SAVE #2"       onclick="saveControllers(2)"></td>
-    <td><input type="button" value="SAVE #3"       onclick="saveControllers(3)"></td>
+    <td><input type="button" value="SAVE #08"       onclick="saveControllers(8)"></td>
+    <td><input type="button" value="SAVE #09"       onclick="saveControllers(9)"></td>
+    <td><input type="button" value="SAVE #10"       onclick="saveControllers(10)"></td>
+    <td><input type="button" value="SAVE #11"       onclick="saveControllers(11)"></td>
     <td>&nbsp;</td>
     <td><input type="button" value="RANDOM"        onclick="setRandom()"       ></td></tr>
 </table>

@@ -1,4 +1,5 @@
 #include "common.h"
+#include "program_table.h"
 
 template <uint8_t T>
 class Voice {
@@ -254,6 +255,42 @@ public:
   INLINE static void pitch_bend(uint8_t lsb, uint8_t msb) {
     uint16_t pitch_bend = (msb << 7) + lsb - 8192;
     IOsc<0>::set_pitch_bend(pitch_bend);
+  }
+
+  INLINE static void program_change(uint8_t program_number) {
+    if (program_number > 7) {
+      return;
+    }
+
+    control_change(FILTER_CUTOFF, preset_table_FILTER_CUTOFF[program_number]);
+    control_change(FILTER_RESO  , preset_table_FILTER_RESO  [program_number]);
+    control_change(CUTOFF_EG_AMT, preset_table_CUTOFF_EG_AMT[program_number]);
+    control_change(EG_DECAY     , preset_table_EG_DECAY     [program_number]);
+
+    control_change(OSC2_COARSE  , preset_table_OSC2_COARSE  [program_number]);
+    control_change(OSC2_FINE    , preset_table_OSC2_FINE    [program_number]);
+    control_change(PORTAMENTO   , preset_table_PORTAMENTO   [program_number]);
+    control_change(EG_ATTACK    , preset_table_EG_ATTACK    [program_number]);
+
+    control_change(OSC_WAVE     , preset_table_OSC_WAVE     [program_number]);
+    control_change(OSC2_MIX     , preset_table_OSC2_MIX     [program_number]);
+    control_change(SUB_OSC_MIX  , preset_table_SUB_OSC_MIX  [program_number]);
+    control_change(EG_SUSTAIN   , preset_table_EG_SUSTAIN   [program_number]);
+
+    control_change(CC28         , preset_table_CC28         [program_number]);
+    control_change(CC29         , preset_table_CC29         [program_number]);
+    control_change(LEGATO       , preset_table_LEGATO       [program_number]);
+    control_change(AMP_EG_ON    , preset_table_AMP_EG_ON    [program_number]);
+
+    control_change(LFO_RATE     , preset_table_LFO_RATE     [program_number]);
+    control_change(LFO_DEPTH    , preset_table_LFO_DEPTH    [program_number]);
+    control_change(PITCH_LFO_AMT, preset_table_PITCH_LFO_AMT[program_number]);
+    control_change(CC79         , preset_table_CC79         [program_number]);
+
+    control_change(PB_RANGE     , preset_table_PB_RANGE     [program_number]);
+    control_change(CC81         , preset_table_CC81         [program_number]);
+    control_change(KEY_ASSIGN   , preset_table_KEY_ASSIGN   [program_number]);
+    control_change(CC83         , preset_table_CC83         [program_number]);
   }
 
   INLINE static int8_t clock() {

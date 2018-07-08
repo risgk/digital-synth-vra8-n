@@ -37,6 +37,7 @@ STATUS_BYTE_MIN       = 0x80
 NOTE_OFF              = 0x80
 NOTE_ON               = 0x90
 CONTROL_CHANGE        = 0xB0
+PROGRAM_CHANGE        = 0xC0
 PITCH_BEND            = 0xE0
 SYSTEM_MESSAGE_MIN    = 0xF0
 SYSTEM_EXCLUSIVE      = 0xF0

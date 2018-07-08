@@ -37,6 +37,7 @@ const uint8_t   STATUS_BYTE_MIN       = 0x80;
 const uint8_t   NOTE_OFF              = 0x80;
 const uint8_t   NOTE_ON               = 0x90;
 const uint8_t   CONTROL_CHANGE        = 0xB0;
+const uint8_t   PROGRAM_CHANGE        = 0xC0;
 const uint8_t   PITCH_BEND            = 0xE0;
 const uint8_t   SYSTEM_MESSAGE_MIN    = 0xF0;
 const uint8_t   SYSTEM_EXCLUSIVE      = 0xF0;
