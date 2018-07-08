@@ -79,7 +79,7 @@
     |                            28 | x             | x             | (RESERVED)            |
     |                            29 | x             | x             | (RESERVED)            |
     |                            30 | x             | o             | LEGATO (OFF/ON)       |
-    |                            31 | x             | o             | AMP EG (OFF/ON)       |
+    |                            31 | x             | o             | AMP GATE+REL/EG       |
     |                            76 | x             | o             | LFO RATE (TRI)        |
     |                            78 | x             | o             | LFO DEPTH             |
     |                            79 | x             | o             | LFO > PITCH (2/1+2)   |

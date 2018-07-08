@@ -16,7 +16,7 @@ class Voice {
   static uint8_t m_attack;
   static uint8_t m_decay;
   static boolean m_sustain;
-  static boolean m_amp_env_gen_on;
+  static uint8_t m_amp_env_gen;
 
 public:
   INLINE static void initialize() {
@@ -36,7 +36,7 @@ public:
     m_attack = 0;
     m_decay = 0;
     m_sustain = true;
-    m_amp_env_gen_on = true;
+    m_amp_env_gen = 127;
     update_env_gen();
   }
 
@@ -138,7 +138,7 @@ public:
       break;
     case EG_DECAY:
       m_decay = controller_value;
-      if (m_amp_env_gen_on) {
+      if (m_amp_env_gen >= 64) {
         IEnvGen<0>::set_decay(m_decay);
         IEnvGen<1>::set_decay(m_decay);
       } else {
@@ -157,7 +157,7 @@ public:
       break;
     case EG_ATTACK:
       m_attack = controller_value;
-      if (m_amp_env_gen_on) {
+      if (m_amp_env_gen >= 64) {
         IEnvGen<0>::set_attack(m_attack);
         IEnvGen<1>::set_attack(m_attack);
       } else {
@@ -183,7 +183,7 @@ public:
           m_sustain = true;
         }
 
-        if (m_amp_env_gen_on) {
+        if (m_amp_env_gen >= 64) {
           IEnvGen<0>::set_sustain(m_sustain);
           IEnvGen<1>::set_sustain(m_sustain);
         } else {
@@ -206,11 +206,7 @@ public:
       }
       break;
     case AMP_EG_ON:
-      if (controller_value < 64) {
-        m_amp_env_gen_on = false;
-      } else {
-        m_amp_env_gen_on = true;
-      }
+      m_amp_env_gen = controller_value;
       update_env_gen();
       break;
 
@@ -376,7 +372,7 @@ private:
   }
 
   INLINE static void update_env_gen() {
-    if (m_amp_env_gen_on) {
+    if (m_amp_env_gen >= 64) {
       IEnvGen<0>::set_attack(m_attack);
       IEnvGen<0>::set_decay(m_decay);
       IEnvGen<0>::set_sustain(m_sustain);
@@ -388,7 +384,7 @@ private:
       IEnvGen<0>::set_decay(m_decay);
       IEnvGen<0>::set_sustain(m_sustain);
       IEnvGen<1>::set_attack(0);
-      IEnvGen<1>::set_decay(0);
+      IEnvGen<1>::set_decay(m_amp_env_gen << 1);
       IEnvGen<1>::set_sustain(true);
     }
   }
@@ -407,4 +403,4 @@ template <uint8_t T> int8_t Voice<T>::m_cutoff_velocity_amt;
 template <uint8_t T> uint8_t Voice<T>::m_attack;
 template <uint8_t T> uint8_t Voice<T>::m_decay;
 template <uint8_t T> boolean Voice<T>::m_sustain;
-template <uint8_t T> boolean Voice<T>::m_amp_env_gen_on;
+template <uint8_t T> uint8_t Voice<T>::m_amp_env_gen;
