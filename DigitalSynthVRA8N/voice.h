@@ -257,7 +257,7 @@ public:
     IOsc<0>::set_pitch_bend(pitch_bend);
   }
 
-  INLINE static void program_change(uint8_t program_number) {
+  static void program_change(uint8_t program_number) {
     if (program_number > 7) {
       return;
     }
