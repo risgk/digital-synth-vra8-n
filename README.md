@@ -35,7 +35,7 @@
 - We recommend Google Chrome, which implements Web MIDI API
 - VRA8-N CTRL includes PRESET programs
 - We recommend [loopMIDI](http://www.tobias-erichsen.de/software/loopmidi.html) (virtual loopback MIDI cable) to connect VRA8-N
-- **CAUTION**: Click sounds may occur when you change the controllers (ex. SUB OSC MIX)
+- **CAUTION**: Click sounds may occur when you change the controllers (especially OSC2 MIX and SUB OSC MIX)
 - **CAUTION**: Low CUTOFF with high RESONANCE can damage the speakers
 
 ## MIDI Implementation Chart
