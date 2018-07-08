@@ -139,7 +139,7 @@ public:
     if (controller_value < 2) {
       m_portamento_coef = 0;
     } else {
-      m_portamento_coef = (controller_value >> 1) + 192;
+      m_portamento_coef = (controller_value >> 1) + 191;
     }
   }
 
