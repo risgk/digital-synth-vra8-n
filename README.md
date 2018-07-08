@@ -75,7 +75,7 @@
     |                            24 | x             | o             | OSC WAVE (SAW/SQ)     |
     |                            25 | x             | o             | OSC2 MIX              |
     |                            26 | x             | o             | SUB OSC MIX (SIN)     |
-    |                            27 | x             | o             | SUSTAIN (OFF/ON)      |
+    |                            27 | x             | o             | SUSTAIN               |
     |                            28 | x             | x             | (RESERVED)            |
     |                            29 | x             | x             | (RESERVED)            |
     |                            30 | x             | o             | LEGATO (OFF/ON)       |

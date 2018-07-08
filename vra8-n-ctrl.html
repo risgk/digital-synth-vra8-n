@@ -307,6 +307,7 @@ function preset(number) {
   allNotesOff();
   var presetControllers = {};
 
+// PRESET                             #00  #01  #02  #03  #04  #05  #06  #07  
   presetControllers[FILTER_CUTOFF] = [79 , 67 , 7  , 127, 127, 127, 127, 127];
   presetControllers[FILTER_RESO  ] = [80 , 64 , 127, 0  , 0  , 0  , 0  , 0  ];
   presetControllers[CUTOFF_EG_AMT] = [82 , 94 , 94,  64 , 64 , 64 , 64 , 64 ];
@@ -491,7 +492,7 @@ function noteOff(noteNumber) {
 <tr><td>OSC WAVE (SAW/SQ)     </td><td></td>
     <td>OSC2 MIX              </td><td></td>
     <td>SUB OSC MIX (SIN)     </td><td></td>
-    <td>SUSTAIN (OFF/ON)      </td></tr>
+    <td>SUSTAIN               </td></tr>
 <tr><td><input id="inputCC24" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(24, value)"></td>
     <td><span   id="spanCC24">-1</span></td>
     <td><input id="inputCC25" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(25, value)"></td>

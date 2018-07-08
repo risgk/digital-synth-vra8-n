@@ -15,7 +15,7 @@ class Voice {
   static int8_t m_cutoff_velocity_amt;
   static uint8_t m_attack;
   static uint8_t m_decay;
-  static boolean m_sustain;
+  static uint8_t m_sustain;
   static uint8_t m_amp_env_gen;
 
 public:
@@ -35,7 +35,7 @@ public:
     IEnvGen<1>::initialize();
     m_attack = 0;
     m_decay = 0;
-    m_sustain = true;
+    m_sustain = 127;
     m_amp_env_gen = 127;
     update_env_gen();
   }
@@ -177,11 +177,7 @@ public:
       break;
     case EG_SUSTAIN:
       {
-        if (controller_value < 64) {
-          m_sustain = false;
-        } else {
-          m_sustain = true;
-        }
+        m_sustain = controller_value;
 
         if (m_amp_env_gen >= 64) {
           IEnvGen<0>::set_sustain(m_sustain);
@@ -385,7 +381,7 @@ private:
       IEnvGen<0>::set_sustain(m_sustain);
       IEnvGen<1>::set_attack(0);
       IEnvGen<1>::set_decay(m_amp_env_gen << 1);
-      IEnvGen<1>::set_sustain(true);
+      IEnvGen<1>::set_sustain(127);
     }
   }
 };
@@ -402,5 +398,5 @@ template <uint8_t T> boolean Voice<T>::m_key_assign_last;
 template <uint8_t T> int8_t Voice<T>::m_cutoff_velocity_amt;
 template <uint8_t T> uint8_t Voice<T>::m_attack;
 template <uint8_t T> uint8_t Voice<T>::m_decay;
-template <uint8_t T> boolean Voice<T>::m_sustain;
+template <uint8_t T> uint8_t Voice<T>::m_sustain;
 template <uint8_t T> uint8_t Voice<T>::m_amp_env_gen;
