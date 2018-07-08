@@ -80,14 +80,14 @@
     |                            29 | x             | x             | (RESERVED)            |
     |                            30 | x             | o             | LEGATO (OFF/ON)       |
     |                            31 | x             | o             | AMP EG (OFF/ON)       |
-    |                            48 | x             | o             | LFO RATE (TRI)        |
-    |                            49 | x             | o             | LFO DEPTH             |
-    |                            50 | x             | o             | LFO > PITCH (2/1+2)   |
-    |                            51 | x             | x             | (RESERVED)            |
-    |                            52 | x             | o             | P.BEND RANGE          |
-    |                            53 | x             | x             | (RESERVED)            |
-    |                            54 | x             | o             | KEY ASGN (LO/LAST)    |
-    |                            55 | x             | x             | (RESERVED)            |
+    |                            76 | x             | o             | LFO RATE (TRI)        |
+    |                            78 | x             | o             | LFO DEPTH             |
+    |                            79 | x             | o             | LFO > PITCH (2/1+2)   |
+    |                            80 | x             | x             | (RESERVED)            |
+    |                            81 | x             | o             | P.BEND RANGE          |
+    |                            82 | x             | x             | (RESERVED)            |
+    |                            83 | x             | o             | KEY ASGN (LO/LAST)    |
+    |                            84 | x             | x             | (RESERVED)            |
     +-------------------------------+---------------+---------------+-----------------------+
     | Program                       | x             | x             |                       |
     | Change       : True #         | ************* |               |                       |

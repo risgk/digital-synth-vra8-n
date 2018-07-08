@@ -49,12 +49,12 @@ public:
     ISynthCore<0>::control_change(LFO_RATE     , 64 );
     ISynthCore<0>::control_change(LFO_DEPTH    , 16 );
     ISynthCore<0>::control_change(PITCH_LFO_AMT, 62 );
-    ISynthCore<0>::control_change(CC51         , 0  );
+    ISynthCore<0>::control_change(CC79         , 0  );
 
     ISynthCore<0>::control_change(PB_RANGE     , 2  );
-    ISynthCore<0>::control_change(CC53         , 0  );
+    ISynthCore<0>::control_change(CC81         , 0  );
     ISynthCore<0>::control_change(KEY_ASSIGN   , 0  );
-    ISynthCore<0>::control_change(CC55         , 0  );
+    ISynthCore<0>::control_change(CC83         , 0  );
   }
 
   INLINE static void receive_midi_byte(uint8_t b) {

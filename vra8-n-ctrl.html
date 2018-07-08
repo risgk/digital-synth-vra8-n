@@ -69,15 +69,15 @@ const CC29          = 29;
 const LEGATO        = 30;
 const AMP_EG_ON     = 31;
 
-const LFO_RATE      = 48;
-const LFO_DEPTH     = 49;
-const PITCH_LFO_AMT = 50;
-const CC51          = 51;
+const LFO_RATE      = 76;
+const LFO_DEPTH     = 77;
+const PITCH_LFO_AMT = 78;
+const CC79          = 79;
 
-const PB_RANGE      = 52;
-const CC53          = 53;
-const KEY_ASSIGN    = 54;
-const CC55          = 55;
+const PB_RANGE      = 80;
+const CC81          = 81;
+const KEY_ASSIGN    = 82;
+const CC83          = 83;
 
 const ALL_NOTES_OFF = 123;
 
@@ -105,12 +105,12 @@ var controllersInLocalStorage = [
   LFO_RATE     ,
   LFO_DEPTH    ,
   PITCH_LFO_AMT,
-  CC51         ,
+  CC79         ,
 
   PB_RANGE     ,
-  CC53         ,
+  CC81         ,
   KEY_ASSIGN   ,
-  CC55         ,
+  CC83         ,
 ];
 </script>
 <script>
@@ -327,12 +327,12 @@ function preset(number) {
   presetControllers[LFO_RATE     ] = [64 , 64 , 64 , 64 , 64 , 64 , 64 , 64 ];
   presetControllers[LFO_DEPTH    ] = [16 , 16 , 0  , 16 , 0  , 0  , 0  , 0  ];
   presetControllers[PITCH_LFO_AMT] = [62 , 62 , 66 , 66 , 66 , 66 , 66 , 66 ];
-  presetControllers[CC51         ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
+  presetControllers[CC79         ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
 
   presetControllers[PB_RANGE     ] = [2  , 2  , 2  , 2  , 2  , 2  , 2  , 2  ];
-  presetControllers[CC53         ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
+  presetControllers[CC81         ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
   presetControllers[KEY_ASSIGN   ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
-  presetControllers[CC55         ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
+  presetControllers[CC83         ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
 
   controllersInLocalStorage.forEach(function(i) {
     onChangeControlChange(i, presetControllers[i][number]);
@@ -514,26 +514,26 @@ function noteOff(noteNumber) {
     <td>LFO DEPTH             </td><td></td>
     <td>LFO > PITCH (2/1+2)   </td><td></td>
     <td>                      </td></tr>
-<tr><td><input id="inputCC48" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(48, value)"></td>
-    <td><span   id="spanCC48">-1</span></td>
-    <td><input id="inputCC49" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(49, value)"></td>
-    <td><span   id="spanCC49">-1</span></td>
-    <td><input id="inputCC50" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(50, value)"></td>
-    <td><span   id="spanCC50">-1</span></td>
-    <td><input id="inputCC51" style="visibility:hidden" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(51, value)"></td>
-    <td><span   id="spanCC51" style="visibility:hidden">-1</span></td>
+<tr><td><input id="inputCC76" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(76, value)"></td>
+    <td><span   id="spanCC76">-1</span></td>
+    <td><input id="inputCC77" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(77, value)"></td>
+    <td><span   id="spanCC77">-1</span></td>
+    <td><input id="inputCC78" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(78, value)"></td>
+    <td><span   id="spanCC78">-1</span></td>
+    <td><input id="inputCC79" style="visibility:hidden" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(79, value)"></td>
+    <td><span   id="spanCC79" style="visibility:hidden">-1</span></td>
 <tr><td>P.BEND RANGE          </td><td></td>
     <td>                      </td><td></td>
     <td>KEY ASGN (LO/LAST)    </td><td></td>
     <td>                      </td></tr>
-<tr><td><input id="inputCC52" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(52, value)"></td>
-    <td><span   id="spanCC52">-1</span></td>
-    <td><input id="inputCC53" style="visibility:hidden" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(53, value)"></td>
-    <td><span   id="spanCC53" style="visibility:hidden">-1</span></td>
-    <td><input id="inputCC54" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(54, value)"></td>
-    <td><span   id="spanCC54">-1</span></td>
-    <td><input id="inputCC55" style="visibility:hidden" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(55, value)"></td>
-    <td><span   id="spanCC55" style="visibility:hidden">-1</span></td>
+<tr><td><input id="inputCC80" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(80, value)"></td>
+    <td><span   id="spanCC80">-1</span></td>
+    <td><input id="inputCC81" style="visibility:hidden" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(81, value)"></td>
+    <td><span   id="spanCC81" style="visibility:hidden">-1</span></td>
+    <td><input id="inputCC82" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(82, value)"></td>
+    <td><span   id="spanCC82">-1</span></td>
+    <td><input id="inputCC83" style="visibility:hidden" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(83, value)"></td>
+    <td><span   id="spanCC83" style="visibility:hidden">-1</span></td>
 <tr><td>&nbsp;</td></tr>
 </table>
 
