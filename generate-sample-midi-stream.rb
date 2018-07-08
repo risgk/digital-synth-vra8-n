@@ -36,10 +36,10 @@ end
 
 sound_off
 
-control_change(FILTER_CUTOFF, 80 )
+control_change(FILTER_CUTOFF, 79 )
 control_change(FILTER_RESO  , 80 )
-control_change(CUTOFF_EG_AMT, 80 )
-control_change(EG_DECAY     , 32 )
+control_change(CUTOFF_EG_AMT, 82 )
+control_change(EG_DECAY     , 64 )
 
 control_change(OSC2_COARSE  , 71 )
 control_change(OSC2_FINE    , 68 )

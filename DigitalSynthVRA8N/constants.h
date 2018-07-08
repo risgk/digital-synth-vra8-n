@@ -27,8 +27,6 @@ const uint8_t   ENV_GEN_CONTROL_INTERVAL    = 0x08;
 const uint16_t  ENV_GEN_LEVEL_MAX           = 0x8000;
 const uint16_t  ENV_GEN_LEVEL_MAX_X_1_5     = ENV_GEN_LEVEL_MAX + (ENV_GEN_LEVEL_MAX >> 1);
 const uint16_t  ENV_GEN_LEVEL_RELEASE_STEP  = 0x1600;
-const uint8_t   ENV_GEN_ATTACK_FACTOR       = 248;
-const uint8_t   ENV_GEN_DECAY_FACTOR        = 248;
 const uint8_t   AMP_ENV_AMT_MAX             = 240;
 const uint8_t   AMP_ENV_AMT_STEP            = 16;
 

@@ -11,8 +11,8 @@ class EnvGen {
 
   static uint8_t  m_state;
   static uint16_t m_level;
-  static uint8_t  m_attack_update_interval;
-  static uint8_t  m_decay_update_interval;
+  static uint8_t  m_attack_update_coef;
+  static uint8_t  m_decay_update_coef;
   static boolean  m_sustain;
   static uint8_t  m_rest;
 
@@ -26,24 +26,11 @@ public:
   }
 
   INLINE static void set_attack(uint8_t controller_value) {
-    if (controller_value >= 32) {
-      m_attack_update_interval = (high_byte((controller_value << 1) *
-                                            (controller_value << 1)) >> 1) + 1;
-    } else {
-      m_attack_update_interval = (controller_value >> 2) + 1;
-    }
+    m_attack_update_coef = controller_value + 2;
   }
 
   INLINE static void set_decay(uint8_t controller_value) {
-    if (controller_value >= 128) {
-      // No Decay
-      m_decay_update_interval = 0;
-    } else if (controller_value >= 32) {
-      m_decay_update_interval = high_byte((controller_value << 1) *
-                                          (controller_value << 1)) + 1;
-    } else {
-      m_decay_update_interval = (controller_value >> 1) + 1;
-    }
+    m_decay_update_coef = controller_value + 2;
   }
 
   INLINE static void set_sustain(boolean on) {
@@ -52,12 +39,12 @@ public:
 
   INLINE static void note_on() {
     m_state = STATE_ATTACK;
-    m_rest = m_attack_update_interval;
+    m_rest = m_attack_update_coef;
   }
 
   INLINE static void note_off() {
     m_state = STATE_IDLE;
-    m_rest = m_decay_update_interval;
+    m_rest = m_decay_update_coef;
   }
 
   INLINE static uint8_t clock(uint8_t count) {
@@ -66,14 +53,14 @@ public:
       case STATE_ATTACK:
         m_rest--;
         if (m_rest == 0) {
-          m_rest = m_attack_update_interval;
+          m_rest = m_attack_update_coef;
           if (m_level >= ENV_GEN_LEVEL_MAX) {
             m_level = ENV_GEN_LEVEL_MAX;
             m_state = STATE_SUSTAIN;
-            m_rest = m_decay_update_interval;
+            m_rest = m_decay_update_coef;
           } else {
             m_level = ENV_GEN_LEVEL_MAX_X_1_5 - mul_q16_q8(ENV_GEN_LEVEL_MAX_X_1_5 - m_level,
-                                                           ENV_GEN_ATTACK_FACTOR);
+                                                           188 + (m_attack_update_coef >> 1));
             if (m_level >= ENV_GEN_LEVEL_MAX) {
               m_level = ENV_GEN_LEVEL_MAX;
             }
@@ -84,20 +71,20 @@ public:
         m_level = ENV_GEN_LEVEL_MAX;
         if (!m_sustain) {
           m_state = STATE_IDLE;
-          m_rest = m_decay_update_interval;
+          m_rest = m_decay_update_coef;
         }
         break;
       case STATE_IDLE:
-        if (m_decay_update_interval == 0) {
+        if (m_decay_update_coef == 0) {
           break;
         }
         m_rest--;
         if (m_rest == 0) {
-          m_rest = m_decay_update_interval;
+          m_rest = m_decay_update_coef;
           if (m_level < ((T == 0) ? 0x0100 : 0x0400 /* gate for amp */)) {
             m_level = 0;
           } else {
-            m_level = mul_q16_q8(m_level, ENV_GEN_DECAY_FACTOR);
+            m_level = mul_q16_q8(m_level, 188 + (m_decay_update_coef >> 1));
           }
         }
         break;
@@ -110,7 +97,7 @@ public:
 
 template <uint8_t T> uint8_t  EnvGen<T>::m_state;
 template <uint8_t T> uint16_t EnvGen<T>::m_level;
-template <uint8_t T> uint8_t  EnvGen<T>::m_attack_update_interval;
-template <uint8_t T> uint8_t  EnvGen<T>::m_decay_update_interval;
+template <uint8_t T> uint8_t  EnvGen<T>::m_attack_update_coef;
+template <uint8_t T> uint8_t  EnvGen<T>::m_decay_update_coef;
 template <uint8_t T> boolean  EnvGen<T>::m_sustain;
 template <uint8_t T> uint8_t  EnvGen<T>::m_rest;

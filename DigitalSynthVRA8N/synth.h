@@ -26,10 +26,10 @@ public:
     ISynthCore<0>::initialize();
 
     // DEFAULT
-    ISynthCore<0>::control_change(FILTER_CUTOFF, 80 );
+    ISynthCore<0>::control_change(FILTER_CUTOFF, 79 );
     ISynthCore<0>::control_change(FILTER_RESO  , 80 );
-    ISynthCore<0>::control_change(CUTOFF_EG_AMT, 80 );
-    ISynthCore<0>::control_change(EG_DECAY     , 32 );
+    ISynthCore<0>::control_change(CUTOFF_EG_AMT, 82 );
+    ISynthCore<0>::control_change(EG_DECAY     , 64 );
 
     ISynthCore<0>::control_change(OSC2_COARSE  , 71 );
     ISynthCore<0>::control_change(OSC2_FINE    , 68 );
