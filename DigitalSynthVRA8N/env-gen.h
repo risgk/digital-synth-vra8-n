@@ -26,11 +26,11 @@ public:
   }
 
   INLINE static void set_attack(uint8_t controller_value) {
-    m_attack_update_coef = controller_value + 2;
+    m_attack_update_coef = ((controller_value >> 1) << 1) + 2;
   }
 
   INLINE static void set_decay(uint8_t controller_value) {
-    m_decay_update_coef = controller_value + 2;
+    m_decay_update_coef = ((controller_value >> 1) << 1) + 2;
   }
 
   INLINE static void set_sustain(uint8_t controller_value) {
