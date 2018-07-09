@@ -3,40 +3,42 @@
 - 2018-07-01 ISGK Instruments
 - <https://github.com/risgk/digital-synth-vra8-n>
 
+
 ## Concept
 
-- Monophonic Synthesizer for Arduino Uno
+- Monophonic Synthesizer (MIDI Sound Module) for Arduino Uno
+
 
 ## Features
 
-- Monophonic Synthesizer, MIDI Sound Module
 - Sampling Rate: 31.25 kHz, Bit Depth: 8 bit, LPF Attenuation Slope: -12 dB/oct
-- Serial MIDI In (38400 bps), PWM Audio Out (Pin 6), PWM Rate: 62500 Hz
+- Serial MIDI In (38.4 kbps), PWM Audio Out (Pin 6), PWM Rate: 62.5 kHz
     - We recommend adding a RC filter circuit to reduce PWM ripples
         - A cutoff frequency 15.9 kHz (R: 100 ohm, C: 100 nF) works well
-    - **CAUTION**: Click sounds may occur when you connect the audio out to an amp/a speaker or reset the board
     - **CAUTION**: The Arduino PWM audio output is a unipolar LINE OUT
         - Please connect this to a power amp/a headphone amp (not to a speaker/a headphone directly)
+    - **CAUTION**: Click sounds may occur when you connect the audio out to an amp or reset the board
 - We recommend [Hairless MIDI<->Serial Bridge](http://projectgus.github.io/hairless-midiserial/) to connect PC
     - A MIDI Shield (MIDI Breakout) and a power supply adapter are desirable to avoiding USB noise
+        - Edit `SERIAL_SPEED` in `configs.h` to use MIDI Shield
 - Files
     - `DigitalSynthVRA8N.ino` is a sketch for Arduino (Genuino) Uno Rev3
     - `make-sample-wav-file.cc` is for Debugging on PC
-        - Requiring GCC (G++) or other
+        - Requiring GCC (g++) or other
         - `make-sample-wav-file-cc.bat` makes a sample WAV file (working on Windows)
     - `generate-*.rb` generate source files
         - Requiring a Ruby execution environment
-    - Edit `SERIAL_SPEED` in `configs.h` to use MIDI Shield
 - We recommend Arduino IDE 1.8.3
+
 
 ## VRA8-N CTRL
 
-- Parameter Editor (MIDI Controller) for VRA8-N, Web App
+- MIDI Controller (Parameter Editor) for VRA8-N, Web App
 - We recommend Google Chrome, which implements Web MIDI API
-- VRA8-N CTRL includes PRESET programs
 - We recommend [loopMIDI](http://www.tobias-erichsen.de/software/loopmidi.html) (virtual loopback MIDI cable) to connect VRA8-N
-- **CAUTION**: Click sounds may occur when you change the controllers (especially OSC2 MIX and SUB OSC MIX)
 - **CAUTION**: Low CUTOFF with high RESONANCE can damage the speakers
+- **CAUTION**: Click sounds may occur when you change the parameters (especially OSC2 MIX and SUB OSC MIX)
+
 
 ## MIDI Implementation Chart
 
@@ -46,7 +48,7 @@
     | Function...                   | Transmitted   | Recognized    | Remarks               |
     +-------------------------------+---------------+---------------+-----------------------+
     | Basic        Default          | x             | 1             |                       |
-    | Channel      Changed          | x             | 1-16          | MIDI_CH               |
+    | Channel      Changed          | x             | 1-16          | Edit MIDI_CH          |
     +-------------------------------+---------------+---------------+-----------------------+
     | Mode         Default          | x             | 3             |                       |
     |              Messages         | x             | x             |                       |
@@ -74,17 +76,17 @@
     |                            23 | x             | o             | ATTACK                |
     |                            24 | x             | o             | OSC WAVE (SAW/SQ)     |
     |                            25 | x             | o             | OSC2 MIX              |
-    |                            26 | x             | o             | SUB OSC MIX (SIN)     |
+    |                            26 | x             | o             | SUB OSC MIX           |
     |                            27 | x             | o             | SUSTAIN               |
     |                            28 | x             | x             | (RESERVED)            |
     |                            29 | x             | x             | (RESERVED)            |
     |                            30 | x             | o             | LEGATO (OFF/ON)       |
-    |                            31 | x             | o             | AMP GATE+REL/EG       |
-    |                            76 | x             | o             | LFO RATE (TRI)        |
+    |                            31 | x             | o             | AMP (GATE+RLS/EG)     |
+    |                            76 | x             | o             | LFO RATE              |
     |                            77 | x             | o             | LFO DEPTH             |
     |                            78 | x             | o             | LFO > PITCH (2/1+2)   |
     |                            79 | x             | x             | (RESERVED)            |
-    |                            80 | x             | o             | P.BEND RANGE          |
+    |                            80 | x             | o             | P. BEND RANGE         |
     |                            81 | x             | x             | (RESERVED)            |
     |                            82 | x             | o             | KEY ASGN (LO/LAST)    |
     |                            83 | x             | x             | (RESERVED)            |
@@ -102,7 +104,7 @@
     | Real Time    : Commands       | x             | x             |                       |
     +-------------------------------+---------------+---------------+-----------------------+
     | Aux          : Local ON/OFF   | x             | x             |                       |
-    | Messages     : All Notes OFF  | x             | o (123-127)   |                       |
+    | Messages     : All Notes OFF  | x             | o 123-127     |                       |
     |              : Active Sense   | x             | x             |                       |
     |              : Reset          | x             | x             |                       |
     +-------------------------------+---------------+---------------+-----------------------+
