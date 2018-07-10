@@ -23,7 +23,7 @@ const uint8_t preset_table_AMP_EG_ON    [] = {127, 32 , 127, 127, 127, 127, 127,
 
 const uint8_t preset_table_LFO_RATE     [] = {64 , 64 , 64 , 64 , 64 , 64 , 64 , 64 };
 const uint8_t preset_table_LFO_DEPTH    [] = {16 , 16 , 0  , 16 , 0  , 0  , 0  , 0  };
-const uint8_t preset_table_PITCH_LFO_AMT[] = {62 , 66 , 66 , 66 , 66 , 66 , 66 , 66 };
+const uint8_t preset_table_PITCH_LFO_AMT[] = {62 , 62 , 66 , 66 , 66 , 66 , 66 , 66 };
 const uint8_t preset_table_CC83         [] = {0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  };
 
 const uint8_t preset_table_PB_RANGE     [] = {2  , 2  , 2  , 2  , 2  , 2  , 2  , 2  };
