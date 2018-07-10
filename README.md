@@ -37,7 +37,7 @@
 - We recommend Google Chrome, which implements Web MIDI API
 - We recommend [loopMIDI](http://www.tobias-erichsen.de/software/loopmidi.html) (virtual loopback MIDI cable) to connect VRA8-N
 - **CAUTION**: Low CUTOFF with high RESONANCE can damage the speakers
-- **CAUTION**: Click sounds may occur when you change the parameters (especially OSC2 MIX and SUB OSC MIX)
+- **CAUTION**: Click sounds may occur when you change the parameters
 
 
 ## MIDI Implementation Chart

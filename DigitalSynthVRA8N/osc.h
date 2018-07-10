@@ -9,8 +9,10 @@ static const uint8_t OSC_MIX_TABLE_LENGTH = 31;
 
 template <uint8_t T>
 class Osc {
-  static int8_t         m_mix_0;
-  static int8_t         m_mix_1;
+  static int8_t         m_mix_0_target;
+  static int8_t         m_mix_0_current;
+  static int8_t         m_mix_1_target;
+  static int8_t         m_mix_1_current;
   static int8_t         m_mix_sub_target;
   static int8_t         m_mix_sub_current;
   static int16_t        m_level_sub;
@@ -101,8 +103,8 @@ public:
       controller_value = 123;
     }
 
-    m_mix_0 = m_mix_table[(OSC_MIX_TABLE_LENGTH - 1) - (controller_value >> 2)];
-    m_mix_1 = m_mix_table[                             (controller_value >> 2)];
+    m_mix_0_target = m_mix_table[(OSC_MIX_TABLE_LENGTH - 1) - (controller_value >> 2)];
+    m_mix_1_target = m_mix_table[                             (controller_value >> 2)];
   }
 
   template <uint8_t N>
@@ -244,7 +246,7 @@ public:
         }
         break;
       case 0x7:
-        update_mix_sub();
+        update_mix();
         break;
       case 0x8:
         update_freq_0th<1>();
@@ -279,8 +281,8 @@ public:
     int8_t wave_0_detune = get_wave_level(m_wave_table[1], static_cast<uint16_t>(m_phase[1] >> 8) << 1);
 
     // amp and mix
-    int16_t level_main   = wave_0_main   * m_mix_0;
-    int16_t level_detune = wave_0_detune * m_mix_1;
+    int16_t level_main   = wave_0_main   * m_mix_0_current;
+    int16_t level_detune = wave_0_detune * m_mix_1_current;
     int16_t result       = level_main + level_detune + m_level_sub;
 
     return result;
@@ -429,17 +431,31 @@ private:
     }
   }
 
-  INLINE static void update_mix_sub() {
+  INLINE static void update_mix() {
     if (m_mix_sub_current < m_mix_sub_target) {
       m_mix_sub_current++;
     } else if (m_mix_sub_current > m_mix_sub_target) {
       m_mix_sub_current--;
     }
+
+    if (m_mix_0_current < m_mix_0_target) {
+      m_mix_0_current++;
+    } else if (m_mix_0_current > m_mix_0_target) {
+      m_mix_0_current--;
+    }
+
+    if (m_mix_1_current < m_mix_1_target) {
+      m_mix_1_current++;
+    } else if (m_mix_1_current > m_mix_1_target) {
+      m_mix_1_current--;
+    }
   }
 };
 
-template <uint8_t T> int8_t          Osc<T>::m_mix_0;
-template <uint8_t T> int8_t          Osc<T>::m_mix_1;
+template <uint8_t T> int8_t          Osc<T>::m_mix_0_target;
+template <uint8_t T> int8_t          Osc<T>::m_mix_0_current;
+template <uint8_t T> int8_t          Osc<T>::m_mix_1_target;
+template <uint8_t T> int8_t          Osc<T>::m_mix_1_current;
 template <uint8_t T> int8_t          Osc<T>::m_mix_sub_target;
 template <uint8_t T> int8_t          Osc<T>::m_mix_sub_current;
 template <uint8_t T> int16_t         Osc<T>::m_level_sub;
