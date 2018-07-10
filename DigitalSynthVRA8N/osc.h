@@ -146,9 +146,9 @@ public:
   INLINE static void set_lfo_rate(uint8_t controller_value) {
     if (controller_value >= 32) {
       m_lfo_rate = ((high_byte((controller_value << 1) *
-                               (controller_value << 1)) + 2) * 25) >> 1;
+                               (controller_value << 1)) + 2) * 24) >> 1;
     } else {
-      m_lfo_rate = (((controller_value >> 1) + 2) * 25) >> 1;
+      m_lfo_rate = (((controller_value >> 1) + 2) * 24) >> 1;
     }
   }
 
