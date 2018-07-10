@@ -82,14 +82,14 @@
     |                            29 | x             | x             | (RESERVED)            |
     |                            30 | x             | o             | LEGATO (OFF/ON)       |
     |                            31 | x             | o             | AMP (GATE+RLS/EG)     |
-    |                            76 | x             | o             | LFO RATE              |
-    |                            77 | x             | o             | LFO DEPTH             |
-    |                            78 | x             | o             | LFO > PITCH (2/1+2)   |
-    |                            79 | x             | x             | (RESERVED)            |
-    |                            80 | x             | o             | P. BEND RANGE         |
-    |                            81 | x             | x             | (RESERVED)            |
-    |                            82 | x             | o             | KEY ASGN (LO/LAST)    |
+    |                            80 | x             | o             | LFO RATE              |
+    |                            81 | x             | o             | LFO DEPTH             |
+    |                            82 | x             | o             | LFO > PITCH (2/1+2)   |
     |                            83 | x             | x             | (RESERVED)            |
+    |                            85 | x             | o             | P. BEND RANGE         |
+    |                            86 | x             | x             | (RESERVED)            |
+    |                            87 | x             | o             | KEY ASGN (LO/LAST)    |
+    |                            89 | x             | x             | (RESERVED)            |
     +-------------------------------+---------------+---------------+-----------------------+
     | Program                       | x             | o             |                       |
     | Change       : True #         | ************* | 0-7           |                       |

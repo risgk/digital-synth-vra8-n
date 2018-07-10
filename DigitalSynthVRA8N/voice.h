@@ -277,12 +277,12 @@ public:
     control_change(LFO_RATE     , preset_table_LFO_RATE     [program_number]);
     control_change(LFO_DEPTH    , preset_table_LFO_DEPTH    [program_number]);
     control_change(PITCH_LFO_AMT, preset_table_PITCH_LFO_AMT[program_number]);
-    control_change(CC79         , preset_table_CC79         [program_number]);
+    control_change(CC83         , preset_table_CC83         [program_number]);
 
     control_change(PB_RANGE     , preset_table_PB_RANGE     [program_number]);
-    control_change(CC81         , preset_table_CC81         [program_number]);
+    control_change(CC86         , preset_table_CC86         [program_number]);
     control_change(KEY_ASSIGN   , preset_table_KEY_ASSIGN   [program_number]);
-    control_change(CC83         , preset_table_CC83         [program_number]);
+    control_change(CC89         , preset_table_CC89         [program_number]);
   }
 
   INLINE static int8_t clock() {

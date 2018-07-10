@@ -71,15 +71,15 @@ CC29          = 29
 LEGATO        = 30
 AMP_EG_ON     = 31
 
-LFO_RATE      = 76
-LFO_DEPTH     = 77
-PITCH_LFO_AMT = 78
-CC79          = 79
-
-PB_RANGE      = 80
-CC81          = 81
-KEY_ASSIGN    = 82
+LFO_RATE      = 80
+LFO_DEPTH     = 81
+PITCH_LFO_AMT = 82
 CC83          = 83
+
+PB_RANGE      = 85
+CC86          = 86
+KEY_ASSIGN    = 87
+CC89          = 89
 
 ALL_NOTES_OFF = 123
 OMNI_MODE_OFF = 124
