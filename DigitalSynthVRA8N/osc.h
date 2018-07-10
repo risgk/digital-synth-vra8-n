@@ -11,7 +11,8 @@ template <uint8_t T>
 class Osc {
   static int8_t         m_mix_0;
   static int8_t         m_mix_1;
-  static int8_t         m_mix_sub;
+  static int8_t         m_mix_sub_target;
+  static int8_t         m_mix_sub_current;
   static int16_t        m_level_sub;
   static int8_t         m_mix_table[OSC_MIX_TABLE_LENGTH];
   static int8_t         m_pitch_offset_1;
@@ -118,7 +119,7 @@ public:
     if (idx > 0) {
       idx -= 1;
     }
-    m_mix_sub = m_mix_table[idx];
+    m_mix_sub_target = m_mix_table[idx];
   }
 
   INLINE static void set_pitch_offset_1(uint8_t controller_value) {
@@ -213,7 +214,7 @@ public:
   INLINE static int16_t clock(uint8_t count) {
     if ((count & 0x01) == 1) {
       int16_t wave_0_sub = get_wave_level(m_wave_table[2], m_phase[0] >> 8);
-      m_level_sub = wave_0_sub * m_mix_sub;
+      m_level_sub = wave_0_sub * m_mix_sub_current;
     }
     else if ((count & (OSC_CONTROL_INTERVAL - 1)) == 0) {
       uint8_t idx = (count >> OSC_CONTROL_INTERVAL_BITS) & 0x0F;
@@ -241,6 +242,9 @@ public:
         if ((m_rnd_cnt & 0x07) == 0x00) {
           update_rnd();
         }
+        break;
+      case 0x7:
+        update_mix_sub();
         break;
       case 0x8:
         update_freq_0th<1>();
@@ -424,11 +428,20 @@ private:
       m_pitch_bend_normalized = (b * m_pitch_bend_plus_range) >> 2;
     }
   }
+
+  INLINE static void update_mix_sub() {
+    if (m_mix_sub_current < m_mix_sub_target) {
+      m_mix_sub_current++;
+    } else if (m_mix_sub_current > m_mix_sub_target) {
+      m_mix_sub_current--;
+    }
+  }
 };
 
 template <uint8_t T> int8_t          Osc<T>::m_mix_0;
 template <uint8_t T> int8_t          Osc<T>::m_mix_1;
-template <uint8_t T> int8_t          Osc<T>::m_mix_sub;
+template <uint8_t T> int8_t          Osc<T>::m_mix_sub_target;
+template <uint8_t T> int8_t          Osc<T>::m_mix_sub_current;
 template <uint8_t T> int16_t         Osc<T>::m_level_sub;
 template <uint8_t T> int8_t          Osc<T>::m_mix_table[OSC_MIX_TABLE_LENGTH];
 template <uint8_t T> int8_t          Osc<T>::m_pitch_offset_1;
