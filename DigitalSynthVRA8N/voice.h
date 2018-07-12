@@ -117,6 +117,8 @@ public:
       m_on_note[i] = 0x00;
     }
     m_current_note_number = NOTE_NUMBER_INVALID;
+    IOsc<0>::note_off<0>();
+    IOsc<0>::note_off<1>();
     IEnvGen<0>::note_off();
     IEnvGen<1>::note_off();
   }

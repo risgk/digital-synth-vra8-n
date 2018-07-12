@@ -45,6 +45,7 @@ class Osc {
   static uint16_t       m_rnd_temp;
   static uint8_t        m_rnd;
   static uint8_t        m_rnd_prev;
+  static boolean        m_note_on[2];
 
 public:
   INLINE static void initialize() {
@@ -90,6 +91,8 @@ public:
     m_rnd_temp = 1;
     m_rnd = 0;
     m_rnd_prev = 0;
+    m_note_on[0] = false;
+    m_note_on[1] = false;
     set_pitch_bend_minus_range(2);
     set_pitch_bend_plus_range(2);
   }
@@ -180,6 +183,12 @@ public:
   template <uint8_t N>
   INLINE static void note_on(uint8_t note_number) {
     m_pitch_target[N] = note_number << 8;
+    m_note_on[N] = true;
+  }
+
+  template <uint8_t N>
+  INLINE static void note_off() {
+    m_note_on[N] = false;
   }
 
   INLINE static void set_pitch_bend_minus_range(uint8_t controller_value) {
@@ -331,7 +340,9 @@ private:
 
   template <uint8_t N>
   INLINE static void update_freq_0th() {
-    m_pitch_current[N] = m_pitch_target[N] - mul_q15_q8(m_pitch_target[N] - m_pitch_current[N], m_portamento_coef);
+    if (m_note_on[N]) {
+      m_pitch_current[N] = m_pitch_target[N] - mul_q15_q8(m_pitch_target[N] - m_pitch_current[N], m_portamento_coef);
+    }
 
     int16_t t = TRANSPOSE << 8;
     m_pitch_real[N] = (64 << 8) + m_pitch_current[N] + m_pitch_bend_normalized + t;
@@ -488,3 +499,4 @@ template <uint8_t T> uint8_t         Osc<T>::m_rnd_cnt;
 template <uint8_t T> uint16_t        Osc<T>::m_rnd_temp;
 template <uint8_t T> uint8_t         Osc<T>::m_rnd;
 template <uint8_t T> uint8_t         Osc<T>::m_rnd_prev;
+template <uint8_t T> boolean         Osc<T>::m_note_on[2];
