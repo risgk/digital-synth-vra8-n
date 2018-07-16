@@ -85,7 +85,7 @@
     |                            80 | x             | o             | LFO RATE              |
     |                            81 | x             | o             | LFO DEPTH             |
     |                            82 | x             | o             | LFO > PITCH (2/1+2)   |
-    |                            83 | x             | x             | (RESERVED)            |
+    |                            83 | x             | o             | LFO > CUTOFF (-/+)    |
     |                            85 | x             | o             | P. BEND RANGE         |
     |                            86 | x             | x             | (RESERVED)            |
     |                            87 | x             | o             | KEY ASGN (LO/LAST)    |

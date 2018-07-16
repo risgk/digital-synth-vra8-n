@@ -23,6 +23,7 @@ class Osc {
   static uint8_t        m_portamento_coef;
   static int16_t        m_mod_level[2];
   static uint16_t       m_lfo_phase;
+  static int8_t         m_lfo_wave_level;
   static int8_t         m_lfo_level;
   static uint16_t       m_lfo_rate;
   static uint8_t        m_lfo_depth[2];
@@ -63,6 +64,7 @@ public:
     m_mod_level[0] = 0;
     m_mod_level[1] = 0;
     m_lfo_phase = 0;
+    m_lfo_wave_level = 0;
     m_lfo_level = 0;
     m_lfo_rate = 0;
     m_lfo_depth[0] = 0;
@@ -220,6 +222,10 @@ public:
 
   INLINE static uint8_t get_red_noise_8() {
     return (m_rnd_prev + m_rnd);
+  }
+
+  INLINE static int8_t get_lfo_level() {
+    return m_lfo_level;
   }
 
   INLINE static int16_t clock(uint8_t count) {
@@ -414,7 +420,7 @@ private:
 
   INLINE static void update_lfo() {
     m_lfo_phase += m_lfo_rate;
-    m_lfo_level = get_lfo_wave_level(m_lfo_phase);
+    m_lfo_wave_level = get_lfo_wave_level(m_lfo_phase);
     uint8_t lfo_depth = m_lfo_depth[0] + m_lfo_depth[1];
     if (lfo_depth > 127) {
       lfo_depth = 127;
@@ -424,7 +430,8 @@ private:
       lfo_depth = 128;
     }
 
-    m_mod_level[1] = (high_sbyte(lfo_depth * m_lfo_level) << 1) * m_pitch_lfo_amt;
+    m_lfo_level = high_sbyte(lfo_depth * m_lfo_wave_level) << 1;
+    m_mod_level[1] = m_lfo_level * m_pitch_lfo_amt;
     if (m_pitch_lfo_target_both) {
       m_mod_level[0] = m_mod_level[1];
     } else {
@@ -477,6 +484,7 @@ template <uint8_t T> uint8_t         Osc<T>::m_fluctuation;
 template <uint8_t T> uint8_t         Osc<T>::m_portamento_coef;
 template <uint8_t T> int16_t         Osc<T>::m_mod_level[2];
 template <uint8_t T> uint16_t        Osc<T>::m_lfo_phase;
+template <uint8_t T> int8_t          Osc<T>::m_lfo_wave_level;
 template <uint8_t T> int8_t          Osc<T>::m_lfo_level;
 template <uint8_t T> uint16_t        Osc<T>::m_lfo_rate;
 template <uint8_t T> uint8_t         Osc<T>::m_lfo_depth[2];

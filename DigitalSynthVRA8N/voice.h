@@ -136,7 +136,7 @@ public:
       IFilter<0>::set_resonance(controller_value);
       break;
     case CUTOFF_EG_AMT:
-      IFilter<0>::set_env_amt(controller_value);
+      IFilter<0>::set_cutoff_env_amt(controller_value);
       break;
     case EG_DECAY:
       m_decay = controller_value;
@@ -217,6 +217,9 @@ public:
     case PITCH_LFO_AMT:
       IOsc<0>::set_pitch_lfo_amt<0>(controller_value);
       break;
+    case CO_LFO_AMT:
+      IFilter<0>::set_cutoff_lfo_amt(controller_value);
+      break;
 
     case PB_RANGE:
       IOsc<0>::set_pitch_bend_minus_range(controller_value);
@@ -279,7 +282,7 @@ public:
     control_change(LFO_RATE     , preset_table_LFO_RATE     [program_number]);
     control_change(LFO_DEPTH    , preset_table_LFO_DEPTH    [program_number]);
     control_change(PITCH_LFO_AMT, preset_table_PITCH_LFO_AMT[program_number]);
-    control_change(CC83         , preset_table_CC83         [program_number]);
+    control_change(CO_LFO_AMT   , preset_table_CO_LFO_AMT   [program_number]);
 
     control_change(PB_RANGE     , preset_table_PB_RANGE     [program_number]);
     control_change(CC86         , preset_table_CC86         [program_number]);
@@ -291,8 +294,9 @@ public:
     m_count++;
 
     int16_t osc_output = IOsc<0>::clock(m_count);
+    int8_t lfo_output = IOsc<0>::get_lfo_level();
     uint8_t env_gen_output_0 = IEnvGen<0>::clock(m_count);
-    int16_t filter_output = IFilter<0>::clock(m_count, osc_output, env_gen_output_0);
+    int16_t filter_output = IFilter<0>::clock(m_count, osc_output, env_gen_output_0, lfo_output);
     uint8_t env_gen_output_1 = IEnvGen<1>::clock(m_count);
     int16_t amp_output = IAmp<0>::clock(filter_output, env_gen_output_1);
 
