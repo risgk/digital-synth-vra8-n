@@ -6,6 +6,10 @@ def control_change(control_number, value)
   $file.write([(CONTROL_CHANGE | MIDI_CH), control_number, value].pack("C*"))
 end
 
+def program_change(program_number)
+  $file.write([(PROGRAM_CHANGE | MIDI_CH), program_number].pack("C*"))
+end
+
 def play(note_number, length)
   $file.write([(NOTE_ON  | MIDI_CH), note_number, 64].pack("C*"))
   (length * 7 / 8).times { $file.write([ACTIVE_SENSING].pack("C")) }
@@ -36,42 +40,20 @@ end
 
 sound_off
 
-control_change(FILTER_CUTOFF, 79 )
-control_change(FILTER_RESO  , 80 )
-control_change(CUTOFF_EG_AMT, 82 )
-control_change(EG_DECAY     , 64 )
-
-control_change(OSC2_COARSE  , 71 )
-control_change(OSC2_FINE    , 68 )
-control_change(PORTAMENTO   , 32 )
-control_change(EG_ATTACK    , 0  )
-
-control_change(OSC_WAVE     , 0  )
-control_change(OSC2_MIX     , 127)
-control_change(SUB_OSC_MIX  , 127)
-control_change(EG_SUSTAIN   , 127)
-
-control_change(CC28         , 0  )
-control_change(CC29         , 0  )
-control_change(LEGATO       , 127)
-control_change(AMP_EG_ON    , 127)
-
-control_change(LFO_RATE     , 64 )
-control_change(LFO_DEPTH    , 16 )
-control_change(PITCH_LFO_AMT, 62 )
-control_change(CC79         , 0  )
-
-control_change(PB_RANGE     , 2  )
-control_change(CC81         , 0  )
-control_change(KEY_ASSIGN   , 0  )
-control_change(CC83         , 0  )
-
+program_change(0)
 play_cegbdfac(3)
-
 sound_off
 
-play_cegbdfac(4)
+program_change(1)
+play_cegbdfac(3)
+sound_off
 
+program_change(2)
+play_cegbdfac(1)
+sound_off
+
+program_change(3)
+play_cegbdfac(4)
 sound_off
 
 $file.close
