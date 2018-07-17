@@ -51,7 +51,7 @@ play_cegbdfac(3)
 sound_off
 
 program_change(2)
-play_cegbdfac(1)
+play_cegbdfac(2)
 sound_off
 
 program_change(3)
