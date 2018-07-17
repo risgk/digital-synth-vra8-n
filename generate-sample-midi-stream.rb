@@ -4,10 +4,12 @@ $file = File.open("sample-midi-stream.bin", "wb")
 
 def control_change(control_number, value)
   $file.write([(CONTROL_CHANGE | MIDI_CH), control_number, value].pack("C*"))
+  wait(10)
 end
 
 def program_change(program_number)
   $file.write([(PROGRAM_CHANGE | MIDI_CH), program_number].pack("C*"))
+  wait(100)
 end
 
 def play(note_number, length)
