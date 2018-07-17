@@ -365,7 +365,7 @@ private:
 
   template <uint8_t N>
   INLINE static void update_freq_1st() {
-    m_pitch_real[N] += (64 << 8) + high_sbyte((m_fluctuation >> 2) * static_cast<int8_t>(get_red_noise_8()));
+    m_pitch_real[N] += (64 << 8) + high_sbyte((m_fluctuation >> 2) * static_cast<int8_t>(get_red_noise_8() - 127));
     m_pitch_real[N] += m_mod_level[N];
 
     if (N == 1) {

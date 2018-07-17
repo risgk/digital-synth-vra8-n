@@ -6,4 +6,4 @@
 //#define SERIAL_SPEED (31250)    // for MIDI Shield
 
 #define TRANSPOSE              (+0)    // Min: -24, Max: +24
-#define FLUCTUATION_INIT       (0)     // Min: 0, Max: 127
+#define FLUCTUATION_INIT       (64)    // Min: 0, Max: 127
