@@ -15,7 +15,7 @@
 - Serial MIDI In (38.4 kbps), PWM Audio Out (Pin 6), PWM Rate: 62.5 kHz
     - We recommend adding a RC filter circuit to reduce PWM ripples
         - A cutoff frequency 15.9 kHz (R: 100 ohm, C: 100 nF) works well
-    - **CAUTION**: The Arduino PWM audio output is a unipolar LINE OUT
+    - **CAUTION**: The Arduino PWM audio output is a unipolar Line Out
         - Please connect this to a power amp/a headphone amp (not to a speaker/a headphone directly)
     - **CAUTION**: Click sounds may occur when you connect the audio out to an amp or reset the board
 - We recommend [Hairless MIDI<->Serial Bridge](http://projectgus.github.io/hairless-midiserial/) to connect PC
@@ -26,9 +26,9 @@
     - `make-sample-wav-file.cc` is for Debugging on PC
         - Requiring GCC (g++) or other
         - `make-sample-wav-file-cc.bat` makes a sample WAV file (working on Windows)
-    - `generate-*.rb` generate source files
+    - `generate-*.rb` generates source files
         - Requiring a Ruby execution environment
-- We recommend Arduino IDE 1.8.3
+- We recommend Arduino IDE 1.8.5
 
 
 ## VRA8-N CTRL
@@ -57,7 +57,7 @@
     | Note                          | x             | 0-127         |                       |
     | Number       : True Voice     | ************* | 0-120         |                       |
     +-------------------------------+---------------+---------------+-----------------------+
-    | Velocity     Note ON          | x             | x 9nH V=1-127 |                       |
+    | Velocity     Note ON          | x             | x             |                       |
     |              Note OFF         | x             | x             |                       |
     +-------------------------------+---------------+---------------+-----------------------+
     | After        Key's            | x             | x             |                       |
