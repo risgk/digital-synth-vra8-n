@@ -1,6 +1,5 @@
 #pragma once
 
-#include "configs.h"
 #include "constants.h"
 
 #define INLINE inline __attribute__((always_inline))

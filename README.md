@@ -20,7 +20,7 @@
     - **CAUTION**: Click sounds may occur when you connect the audio out to an amp or reset the board
 - We recommend [Hairless MIDI<->Serial Bridge](http://projectgus.github.io/hairless-midiserial/) to connect PC
     - A MIDI Shield (MIDI Breakout) and a power supply adapter are desirable to avoiding USB noise
-        - Edit `SERIAL_SPEED` in `configs.h` to use MIDI Shield
+        - Edit `SERIAL_SPEED` in `DigitalSynthVRA8N.ino` to use MIDI Shield
 - Files
     - `DigitalSynthVRA8N.ino` is a sketch for Arduino (Genuino) Uno Rev3
     - `make-sample-wav-file.cc` is for Debugging on PC
@@ -48,7 +48,7 @@
     | Function...                   | Transmitted   | Recognized    | Remarks               |
     +-------------------------------+---------------+---------------+-----------------------+
     | Basic        Default          | x             | 1             |                       |
-    | Channel      Changed          | x             | 1-16          | Edit MIDI_CH          |
+    | Channel      Changed          | x             | x             |                       |
     +-------------------------------+---------------+---------------+-----------------------+
     | Mode         Default          | x             | 3             |                       |
     |              Messages         | x             | x             |                       |

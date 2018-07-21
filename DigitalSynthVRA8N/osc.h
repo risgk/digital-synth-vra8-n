@@ -9,6 +9,8 @@ static const uint8_t OSC_MIX_TABLE_LENGTH = 31;
 
 template <uint8_t T>
 class Osc {
+  static const uint8_t FLUCTUATION_INIT = 32;
+
   static int8_t         m_mix_0_target;
   static int8_t         m_mix_0_current;
   static int8_t         m_mix_1_target;
