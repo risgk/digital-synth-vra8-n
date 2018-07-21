@@ -54,7 +54,7 @@ public:
   INLINE static void initialize() {
     for (uint8_t i = 0; i < OSC_MIX_TABLE_LENGTH; i++) {
       m_mix_table[i] = static_cast<uint8_t>(sqrtf(static_cast<float>(i) /
-                                                  (OSC_MIX_TABLE_LENGTH - 1)) * 40);
+                                                  (OSC_MIX_TABLE_LENGTH - 1)) * 80);
     }
     set_osc_mix(0);
     set_sub_osc_level(0);
