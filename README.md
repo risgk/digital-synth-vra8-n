@@ -34,6 +34,8 @@
 ## VRA8-N CTRL
 
 - MIDI Controller (Parameter Editor) for VRA8-N, Web App
+- VRA8-N CTRL converts Program Changes (#0 - #7 for PRESET) into Control Changes
+- VRA8-N CTRL manages USER Programs (#8 - #15)
 - We recommend Google Chrome, which implements Web MIDI API
 - We recommend [loopMIDI](http://www.tobias-erichsen.de/software/loopmidi.html) (virtual loopback MIDI cable) to connect VRA8-N
 - **CAUTION**: Low CUTOFF with high RESONANCE can damage the speakers
