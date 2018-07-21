@@ -194,12 +194,10 @@ public:
       if (controller_value < 64) {
         if (m_legato) {
           m_legato = false;
-          all_note_off();
         }
       } else {
         if (!m_legato) {
           m_legato = true;
-          all_note_off();
         }
       }
       break;
@@ -229,12 +227,10 @@ public:
       if (controller_value < 64) {
         if (m_key_assign_last) {
           m_key_assign_last = false;
-          all_note_off();
         }
       } else {
         if (!m_key_assign_last) {
           m_key_assign_last = true;
-          all_note_off();
         }
       }
       break;

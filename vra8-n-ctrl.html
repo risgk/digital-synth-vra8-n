@@ -153,7 +153,6 @@ function allNotesOff() {
 }
 
 function restoreControllers() {
-  allNotesOff();
   var value;
 
   controllersInLocalStorage.forEach(function(i) {
@@ -281,6 +280,7 @@ function onChangeOutputPort() {
   var selectOutputPort = document.getElementById("selectOutputPort");
   midiOutput = midiOutputs[selectOutputPort.selectedIndex];
   if (midiOutput) {
+    allNotesOff();
     var result = restoreControllers();
     if (!result) {
       onChangeTranspose(0);
@@ -304,7 +304,6 @@ function onChangeControlChange(number, value) {
 }
 
 function preset(number) {
-  allNotesOff();
   var presetControllers = {};
 
 // PRESET                             #0   #1   #2   #3   #4   #5   #6   #7   
@@ -344,7 +343,6 @@ function preset(number) {
 }
 
 function setRandom() {
-  allNotesOff();
   controllersInLocalStorage.forEach(function(i) {
     onChangeControlChange(i, rand(128));
   });
@@ -356,7 +354,6 @@ function rand(n) {
 
 function loadControllers(number) {
   var value;
-  allNotesOff();
   controllersInLocalStorage.forEach(function(i) {
     value = localStorage.getItem("keyMemory" + String(number) + "CC" + String(i));
     if (!value) {
