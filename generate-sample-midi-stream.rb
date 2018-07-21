@@ -9,7 +9,7 @@ end
 
 def program_change(program_number)
   $file.write([(PROGRAM_CHANGE | MIDI_CH), program_number].pack("C*"))
-  wait(100)
+  wait(800)
 end
 
 def play(note_number, length)
@@ -25,14 +25,14 @@ end
 
 def play_cegbdfac(c)
   play(12 + (c * 12), 1200)
-  play(16 + (c * 12), 1200)
   play(19 + (c * 12), 1200)
+  play(16 + (c * 12), 1200)
   play(23 + (c * 12), 1200)
   play(14 + (c * 12), 1200)
-  play(17 + (c * 12), 1200)
   play(21 + (c * 12), 1200)
-  play(24 + (c * 12), 6400)
-  wait(6400)
+  play(17 + (c * 12), 1200)
+  play(24 + (c * 12), 8400)
+  wait(8400)
 end
 
 def sound_off
