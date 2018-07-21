@@ -18,6 +18,7 @@ class Filter {
   static int16_t        m_y_1;
   static int16_t        m_y_2;
   static uint8_t        m_cutoff_current;
+  static int16_t        m_cutoff_candidate;
   static uint8_t        m_cutoff;
   static uint8_t        m_cutoff_velocity;
   static uint8_t        m_cutoff_env_gen_amt;
@@ -37,8 +38,9 @@ public:
     set_resonance(0);
     set_cutoff_env_amt(64);
     set_cutoff_lfo_amt(64);
-    update_current(0, 0);
-    update_coefs();
+    update_coefs_1st(0, 0);
+    update_coefs_2nd();
+    update_coefs_3rd();
   }
 
   INLINE static void set_cutoff(uint8_t controller_value) {
@@ -79,13 +81,16 @@ public:
 
   INLINE static int16_t clock(uint8_t count, int16_t audio_input, uint8_t env_gen_input, int16_t lfo_input) {
     if ((count & (FILTER_CONTROL_INTERVAL - 1)) == 6) {
-      uint8_t idx = (count >> FILTER_CONTROL_INTERVAL_BITS) & 0x01;
+      uint8_t idx = (count >> FILTER_CONTROL_INTERVAL_BITS) & 0x03;
       switch (idx) {
       case 0x0:
-        update_current(env_gen_input, lfo_input);
+        update_coefs_1st(env_gen_input, lfo_input);
         break;
       case 0x1:
-        update_coefs();
+        update_coefs_2nd();
+        break;
+      case 0x2:
+        update_coefs_3rd();
         break;
       }
     }
@@ -117,18 +122,20 @@ public:
   }
 
 private:
-  INLINE static void update_current(uint8_t env_gen_input, int16_t lfo_input) {
-    int16_t cutoff_candidate = m_cutoff + static_cast<int8_t>(m_cutoff_velocity - 64);
-    cutoff_candidate += static_cast<int8_t>(high_sbyte(((m_cutoff_env_gen_amt - 64) << 1) * env_gen_input) << 1);
-    cutoff_candidate += static_cast<int8_t>(high_sbyte(((m_cutoff_lfo_amt - 64) << 1) * high_sbyte(lfo_input)) << 2);
-//    cutoff_candidate += high_sbyte(mul_q15_q8(lfo_input, ((m_cutoff_lfo_amt - 64) << 1)) << 2);
+  INLINE static void update_coefs_1st(uint8_t env_gen_input, int16_t lfo_input) {
+    m_cutoff_candidate = m_cutoff + static_cast<int8_t>(m_cutoff_velocity - 64);
+    m_cutoff_candidate += static_cast<int8_t>(high_sbyte(((m_cutoff_env_gen_amt - 64) << 1) * env_gen_input) << 1);
+    m_cutoff_candidate += high_sbyte(mul_q15_q8(lfo_input, ((m_cutoff_lfo_amt - 64) << 1)) << 2);
+  }
+
+  INLINE static void update_coefs_2nd() {
     uint8_t cutoff_target;
-    if (cutoff_candidate > 127) {
+    if (m_cutoff_candidate > 127) {
       cutoff_target = 127;
-    } else if (cutoff_candidate < 0) {
+    } else if (m_cutoff_candidate < 0) {
       cutoff_target = 0;
     } else {
-      cutoff_target = cutoff_candidate;
+      cutoff_target = m_cutoff_candidate;
     }
 
     if (m_cutoff_current + FILTER_CUTOFF_THROUGH_RATE < cutoff_target) {
@@ -140,7 +147,7 @@ private:
     }
   }
 
-  INLINE static void update_coefs() {
+  INLINE static void update_coefs_3rd() {
     const uint8_t* p = m_lpf_table + (m_cutoff_current << 2);
     uint32_t four_data = pgm_read_dword(p);
     m_b_2_over_a_0_low  = (four_data >>  0) & 0xFF;
@@ -160,6 +167,7 @@ template <uint8_t T> int16_t        Filter<T>::m_x_2;
 template <uint8_t T> int16_t        Filter<T>::m_y_1;
 template <uint8_t T> int16_t        Filter<T>::m_y_2;
 template <uint8_t T> uint8_t        Filter<T>::m_cutoff_current;
+template <uint8_t T> int16_t        Filter<T>::m_cutoff_candidate;
 template <uint8_t T> uint8_t        Filter<T>::m_cutoff;
 template <uint8_t T> uint8_t        Filter<T>::m_cutoff_velocity;
 template <uint8_t T> uint8_t        Filter<T>::m_cutoff_env_gen_amt;
