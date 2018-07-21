@@ -58,6 +58,8 @@ public:
           pitch_bend(m_first_data, b);
           m_first_data = DATA_BYTE_INVALID;
         }
+      } else if (m_running_status == (PROGRAM_CHANGE | MIDI_CH)) {
+        program_change(b);
       }
     } else if (is_system_message(b)) {
       switch (b) {
@@ -98,6 +100,10 @@ public:
 
   INLINE static void pitch_bend(uint8_t lsb, uint8_t msb) {
     IVoice<0>::pitch_bend(lsb, msb);
+  }
+
+  INLINE static void program_change(uint8_t program_number) {
+    IVoice<0>::program_change(program_number);
   }
 
   INLINE static int8_t clock() {

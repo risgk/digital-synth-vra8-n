@@ -69,15 +69,15 @@ const CC29          = 29;
 const LEGATO        = 30;
 const AMP_EG_ON     = 31;
 
-const LFO_RATE      = 48;
-const LFO_DEPTH     = 49;
-const PITCH_LFO_AMT = 50;
-const CC51          = 51;
+const LFO_RATE      = 80;
+const LFO_DEPTH     = 81;
+const PITCH_LFO_AMT = 82;
+const CO_LFO_AMT    = 83;
 
-const PB_RANGE      = 56;
-const CC57          = 57;
-const KEY_ASSIGN    = 58;
-const CC59          = 59;
+const PB_RANGE      = 85;
+const CC86          = 86;
+const KEY_ASSIGN    = 87;
+const CC89          = 89;
 
 const ALL_NOTES_OFF = 123;
 
@@ -97,20 +97,20 @@ var controllersInLocalStorage = [
   SUB_OSC_MIX  ,
   EG_SUSTAIN   ,
 
-  CC28         ,
-  CC29         ,
+//CC28         ,
+//CC29         ,
   LEGATO       ,
   AMP_EG_ON    ,
 
   LFO_RATE     ,
   LFO_DEPTH    ,
   PITCH_LFO_AMT,
-  CC51         ,
+  CO_LFO_AMT   ,
 
   PB_RANGE     ,
-  CC57         ,
+//CC86         ,
   KEY_ASSIGN   ,
-  CC59         ,
+//CC89         ,
 ];
 </script>
 <script>
@@ -153,7 +153,6 @@ function allNotesOff() {
 }
 
 function restoreControllers() {
-  allNotesOff();
   var value;
 
   controllersInLocalStorage.forEach(function(i) {
@@ -212,6 +211,9 @@ function onMIDIMessage(event) {
   if (event.data[0] == (PROGRAM_CHANGE | MIDI_CH)) {
     var number = event.data[1];
     if (number >= 0 && number <= 7) {
+      preset(number);
+      return;
+    } else if (number >= 8 && number <= 15) {
       loadControllers(number);
       return;
     }
@@ -278,6 +280,7 @@ function onChangeOutputPort() {
   var selectOutputPort = document.getElementById("selectOutputPort");
   midiOutput = midiOutputs[selectOutputPort.selectedIndex];
   if (midiOutput) {
+    allNotesOff();
     var result = restoreControllers();
     if (!result) {
       onChangeTranspose(0);
@@ -301,18 +304,18 @@ function onChangeControlChange(number, value) {
 }
 
 function preset(number) {
-  allNotesOff();
   var presetControllers = {};
 
-  presetControllers[FILTER_CUTOFF] = [80 , 64 , 0  , 127, 127, 127, 127, 127];
+// PRESET                             #0   #1   #2   #3   #4   #5   #6   #7   
+  presetControllers[FILTER_CUTOFF] = [79 , 31 , 7  , 127, 127, 127, 127, 127];
   presetControllers[FILTER_RESO  ] = [80 , 64 , 127, 0  , 0  , 0  , 0  , 0  ];
-  presetControllers[CUTOFF_EG_AMT] = [80 , 96 , 112, 64 , 64 , 64 , 64 , 64 ];
-  presetControllers[EG_DECAY     ] = [32 , 64 , 48 , 0  , 0  , 0  , 0  , 0  ];
+  presetControllers[CUTOFF_EG_AMT] = [82 , 112, 94,  64 , 64 , 64 , 64 , 64 ];
+  presetControllers[EG_DECAY     ] = [64 , 96 , 96 , 0  , 0  , 0  , 0  , 0  ];
 
   presetControllers[OSC2_COARSE  ] = [71 , 64 , 64 , 64 , 64 , 64 , 64 , 64 ];
-  presetControllers[OSC2_FINE    ] = [68 , 72 , 66 , 72 , 68 , 68 , 68 , 68 ];
-  presetControllers[PORTAMENTO   ] = [32 , 32 , 32 , 32 , 0  , 0  , 0  , 0  ];
-  presetControllers[EG_ATTACK    ] = [0  , 32 , 0  , 0  , 0  , 0  , 0  , 0  ];
+  presetControllers[OSC2_FINE    ] = [68 , 72 , 66 , 72 , 64 , 64 , 64 , 64 ];
+  presetControllers[PORTAMENTO   ] = [0  , 32 , 32 , 32 , 0  , 0  , 0  , 0  ];
+  presetControllers[EG_ATTACK    ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
 
   presetControllers[OSC_WAVE     ] = [0  , 0  , 0  , 127, 0  , 0  , 0  , 0  ];
   presetControllers[OSC2_MIX     ] = [127, 127, 127, 127, 0  , 0  , 0  , 0  ];
@@ -322,17 +325,17 @@ function preset(number) {
   presetControllers[CC28         ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
   presetControllers[CC29         ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
   presetControllers[LEGATO       ] = [127, 127, 127, 127, 0  , 0  , 0  , 0  ];
-  presetControllers[AMP_EG_ON    ] = [127, 0  , 127, 127, 127, 127, 127, 127];
+  presetControllers[AMP_EG_ON    ] = [127, 32 , 127, 127, 127, 127, 127, 127];
 
   presetControllers[LFO_RATE     ] = [64 , 64 , 64 , 64 , 64 , 64 , 64 , 64 ];
-  presetControllers[LFO_DEPTH    ] = [16 , 16 , 0  , 16 , 0  , 0  , 0  , 0  ];
-  presetControllers[PITCH_LFO_AMT] = [62 , 62 , 66 , 66 , 66 , 66 , 66 , 66 ];
-  presetControllers[CC51         ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
+  presetControllers[LFO_DEPTH    ] = [16 , 16 , 16 , 16 , 0  , 0  , 0  , 0  ];
+  presetControllers[PITCH_LFO_AMT] = [63 , 65 , 64 , 65 , 64 , 64 , 64 , 64 ];
+  presetControllers[CO_LFO_AMT   ] = [64 , 64 , 52 , 64 , 64 , 64 , 64 , 64 ];
 
   presetControllers[PB_RANGE     ] = [2  , 2  , 2  , 2  , 2  , 2  , 2  , 2  ];
-  presetControllers[CC57         ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
+  presetControllers[CC86         ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
   presetControllers[KEY_ASSIGN   ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
-  presetControllers[CC59         ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
+  presetControllers[CC89         ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
 
   controllersInLocalStorage.forEach(function(i) {
     onChangeControlChange(i, presetControllers[i][number]);
@@ -340,7 +343,6 @@ function preset(number) {
 }
 
 function setRandom() {
-  allNotesOff();
   controllersInLocalStorage.forEach(function(i) {
     onChangeControlChange(i, rand(128));
   });
@@ -352,7 +354,6 @@ function rand(n) {
 
 function loadControllers(number) {
   var value;
-  allNotesOff();
   controllersInLocalStorage.forEach(function(i) {
     value = localStorage.getItem("keyMemory" + String(number) + "CC" + String(i));
     if (!value) {
@@ -392,7 +393,7 @@ function noteOff(noteNumber) {
 <body>
 
 <table>
-<tr><td><strong>VRA8-N CTRL v0.8.0</strong>&nbsp;&nbsp;Digital Synth VRA8-N Controller (<a href="https://github.com/risgk/digital-synth-vra8-n">View on GitHub</a>), We recommend Google Chrome</td></tr>
+<tr><td><strong>VRA8-N CTRL v1.0.0</strong>&nbsp;&nbsp;Digital Synth VRA8-N Controller (<a href="https://github.com/risgk/digital-synth-vra8-n">View on GitHub</a>), We recommend Google Chrome</td></tr>
 </table>
 
 <table>
@@ -413,7 +414,7 @@ function noteOff(noteNumber) {
     <td>KBD TR</td>
     <td><input id="inputTranspose" type="range" min="-60" max="60" step="12" oninput="onChangeTranspose(value)" ></td>
     <td><span id="spanTranspose" >-1</span></td>
-    <td>P.BEND</td>
+    <td>P. BEND</td>
     <td><span id="spanPB">-</span></td>
     <td>&nbsp;</td>
     <td>MOD</td>
@@ -425,37 +426,37 @@ function noteOff(noteNumber) {
 
 <table>
 <tr><td>PRESET</td>
-    <td><input type="button" value="LEAD"          onclick="preset(0)"></td>
-    <td><input type="button" value="SOFT"          onclick="preset(1)"></td>
-    <td><input type="button" value="BASS"          onclick="preset(2)"></td>
-    <td><input type="button" value="SQ"            onclick="preset(3)"></td>
+    <td><input type="button" value="#0 FIFTH"       onclick="preset(0)"></td>
+    <td><input type="button" value="#1 LEAD"        onclick="preset(1)"></td>
+    <td><input type="button" value="#2 BASS"        onclick="preset(2)"></td>
+    <td><input type="button" value="#3 SQ"          onclick="preset(3)"></td>
     <td>&nbsp;</td>
-    <td><input type="button" value="NEUTRAL"       onclick="preset(7)"></td></tr>
+    <td><input type="button" value="#7 NEUTRAL"     onclick="preset(7)"></td></tr>
 </table>
 
 <table>
-<tr><td><input type="button" value="LOAD #4"       onclick="loadControllers(4)"></td>
-    <td><input type="button" value="LOAD #5"       onclick="loadControllers(5)"></td>
-    <td><input type="button" value="LOAD #6"       onclick="loadControllers(6)"></td>
-    <td><input type="button" value="LOAD #7"       onclick="loadControllers(7)"></td>
+<tr><td><input type="button" value="LOAD #12"       onclick="loadControllers(12)"></td>
+    <td><input type="button" value="LOAD #13"       onclick="loadControllers(13)"></td>
+    <td><input type="button" value="LOAD #14"       onclick="loadControllers(14)"></td>
+    <td><input type="button" value="LOAD #15"       onclick="loadControllers(15)"></td>
     <td>&nbsp;</td>
-    <td><input type="button" value="SAVE #4"       onclick="saveControllers(4)"></td>
-    <td><input type="button" value="SAVE #5"       onclick="saveControllers(5)"></td>
-    <td><input type="button" value="SAVE #6"       onclick="saveControllers(6)"></td>
-    <td><input type="button" value="SAVE #7"       onclick="saveControllers(7)"></td>
+    <td><input type="button" value="SAVE #12"       onclick="saveControllers(12)"></td>
+    <td><input type="button" value="SAVE #13"       onclick="saveControllers(13)"></td>
+    <td><input type="button" value="SAVE #14"       onclick="saveControllers(14)"></td>
+    <td><input type="button" value="SAVE #15"       onclick="saveControllers(15)"></td>
     <td>&nbsp;</td>
-    <td><input type="button" value="ALL NOTES OFF" onclick="allNotesOff()"></td></tr>
-<tr><td><input type="button" value="LOAD #0"       onclick="loadControllers(0)"></td>
-    <td><input type="button" value="LOAD #1"       onclick="loadControllers(1)"></td>
-    <td><input type="button" value="LOAD #2"       onclick="loadControllers(2)"></td>
-    <td><input type="button" value="LOAD #3"       onclick="loadControllers(3)"></td>
+    <td><input type="button" value="ALL NOTES OFF"  onclick="allNotesOff()"></td></tr>
+<tr><td><input type="button" value="LOAD #8"        onclick="loadControllers(8)"></td>
+    <td><input type="button" value="LOAD #9"        onclick="loadControllers(9)"></td>
+    <td><input type="button" value="LOAD #10"       onclick="loadControllers(10)"></td>
+    <td><input type="button" value="LOAD #11"       onclick="loadControllers(11)"></td>
     <td>&nbsp;</td>
-    <td><input type="button" value="SAVE #0"       onclick="saveControllers(0)"></td>
-    <td><input type="button" value="SAVE #1"       onclick="saveControllers(1)"></td>
-    <td><input type="button" value="SAVE #2"       onclick="saveControllers(2)"></td>
-    <td><input type="button" value="SAVE #3"       onclick="saveControllers(3)"></td>
+    <td><input type="button" value="SAVE #8"        onclick="saveControllers(8)"></td>
+    <td><input type="button" value="SAVE #9"        onclick="saveControllers(9)"></td>
+    <td><input type="button" value="SAVE #10"       onclick="saveControllers(10)"></td>
+    <td><input type="button" value="SAVE #11"       onclick="saveControllers(11)"></td>
     <td>&nbsp;</td>
-    <td><input type="button" value="RANDOM"        onclick="setRandom()"       ></td></tr>
+    <td><input type="button" value="RANDOM"         onclick="setRandom()"       ></td></tr>
 </table>
 
 <table>
@@ -488,7 +489,7 @@ function noteOff(noteNumber) {
 <tr><td>OSC WAVE (SAW/SQ)     </td><td></td>
     <td>OSC2 MIX              </td><td></td>
     <td>SUB OSC MIX           </td><td></td>
-    <td>SUSTAIN (OFF/ON)      </td></tr>
+    <td>SUSTAIN               </td></tr>
 <tr><td><input id="inputCC24" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(24, value)"></td>
     <td><span   id="spanCC24">-1</span></td>
     <td><input id="inputCC25" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(25, value)"></td>
@@ -500,7 +501,7 @@ function noteOff(noteNumber) {
 <tr><td>                      </td><td></td>
     <td>                      </td><td></td>
     <td>LEGATO (OFF/ON)       </td><td></td>
-    <td>AMP EG (OFF/ON)       </td></tr>
+    <td>AMP (GATE+RLS/EG)     </td></tr>
 <tr><td><input id="inputCC28" style="visibility:hidden" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(28, value)"></td>
     <td><span   id="spanCC28" style="visibility:hidden">-1</span></td>
     <td><input id="inputCC29" style="visibility:hidden" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(29, value)"></td>
@@ -513,27 +514,27 @@ function noteOff(noteNumber) {
 <tr><td>LFO RATE              </td><td></td>
     <td>LFO DEPTH             </td><td></td>
     <td>LFO > PITCH (2/1+2)   </td><td></td>
-    <td>                      </td></tr>
-<tr><td><input id="inputCC48" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(48, value)"></td>
-    <td><span   id="spanCC48">-1</span></td>
-    <td><input id="inputCC49" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(49, value)"></td>
-    <td><span   id="spanCC49">-1</span></td>
-    <td><input id="inputCC50" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(50, value)"></td>
-    <td><span   id="spanCC50">-1</span></td>
-    <td><input id="inputCC51" style="visibility:hidden" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(51, value)"></td>
-    <td><span   id="spanCC51" style="visibility:hidden">-1</span></td>
-<tr><td>P.BEND RANGE          </td><td></td>
+    <td>LFO > CUTOFF (-/+)    </td></tr>
+<tr><td><input id="inputCC80" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(80, value)"></td>
+    <td><span   id="spanCC80">-1</span></td>
+    <td><input id="inputCC81" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(81, value)"></td>
+    <td><span   id="spanCC81">-1</span></td>
+    <td><input id="inputCC82" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(82, value)"></td>
+    <td><span   id="spanCC82">-1</span></td>
+    <td><input id="inputCC83" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(83, value)"></td>
+    <td><span   id="spanCC83">-1</span></td>
+<tr><td>P. BEND RANGE         </td><td></td>
     <td>                      </td><td></td>
     <td>KEY ASGN (LO/LAST)    </td><td></td>
     <td>                      </td></tr>
-<tr><td><input id="inputCC56" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(56, value)"></td>
-    <td><span   id="spanCC56">-1</span></td>
-    <td><input id="inputCC57" style="visibility:hidden" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(57, value)"></td>
-    <td><span   id="spanCC57" style="visibility:hidden">-1</span></td>
-    <td><input id="inputCC58" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(58, value)"></td>
-    <td><span   id="spanCC58">-1</span></td>
-    <td><input id="inputCC59" style="visibility:hidden" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(59, value)"></td>
-    <td><span   id="spanCC59" style="visibility:hidden">-1</span></td>
+<tr><td><input id="inputCC85" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(85, value)"></td>
+    <td><span   id="spanCC85">-1</span></td>
+    <td><input id="inputCC86" style="visibility:hidden" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(86, value)"></td>
+    <td><span   id="spanCC86" style="visibility:hidden">-1</span></td>
+    <td><input id="inputCC87" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(87, value)"></td>
+    <td><span   id="spanCC87">-1</span></td>
+    <td><input id="inputCC89" style="visibility:hidden" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(89, value)"></td>
+    <td><span   id="spanCC89" style="visibility:hidden">-1</span></td>
 <tr><td>&nbsp;</td></tr>
 </table>
 

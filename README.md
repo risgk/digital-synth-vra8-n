@@ -1,67 +1,73 @@
-# Digital Synth VRA8-N v0.8.0
+# Digital Synth VRA8-N v1.0.0
 
-- 2018-07-01 ISGK Instruments
+- 2018-07-21 ISGK Instruments
 - <https://github.com/risgk/digital-synth-vra8-n>
+
 
 ## Concept
 
-- Monophonic Synthesizer for Arduino Uno
+- Monophonic Synthesizer (MIDI Sound Module) for Arduino Uno
+
 
 ## Features
 
-- Monophonic Synthesizer, MIDI Sound Module
-- Serial MIDI In (38400 bps), PWM Audio Out (Pin 6), PWM Rate: 62500 Hz
+- Sampling Rate: 31.25 kHz, Bit Depth: 8 bit, LPF Attenuation Slope: -12 dB/oct
+- Serial MIDI In (38.4 kbps), PWM Audio Out (Pin 6), PWM Rate: 62.5 kHz
     - We recommend adding a RC filter circuit to reduce PWM ripples
-    - A cutoff frequency 15.9 kHz (R: 100 ohm, C: 100 nF) works well, too
-    - **CAUTION**: Click sounds may occur when you connect the audio out to an amp/a speaker or reset the board
-    - **CAUTION**: The Arduino PWM audio output is a unipolar LINE OUT
+        - A cutoff frequency 15.9 kHz (R: 100 ohm, C: 100 nF) works well
+    - **CAUTION**: The Arduino PWM audio output is a unipolar Line Out
         - Please connect this to a power amp/a headphone amp (not to a speaker/a headphone directly)
-- Sampling Rate: 31250 Hz, Bit Depth: 8 bit, LPF Attenuation Slope: -12 dB/oct
-- Recommending [Hairless MIDI<->Serial Bridge](http://projectgus.github.io/hairless-midiserial/) to connect PC
+    - **CAUTION**: Click sounds may occur when you connect the audio out to an amp or reset the board
+- We recommend [Hairless MIDI<->Serial Bridge](http://projectgus.github.io/hairless-midiserial/) to connect PC
+    - A MIDI Shield (MIDI Breakout) and a power supply adapter are desirable to avoiding USB noise
+        - Edit `SERIAL_SPEED` in `DigitalSynthVRA8N.ino` to use MIDI Shield
 - Files
-    - `DigitalSynthVRA8N.ino` is a sketch for Arduino/Genuino Uno
+    - `DigitalSynthVRA8N.ino` is a sketch for Arduino (Genuino) Uno Rev3
     - `make-sample-wav-file.cc` is for Debugging on PC
-        - Requiring GCC (G++) or other
+        - Requiring GCC (g++) or other
         - `make-sample-wav-file-cc.bat` makes a sample WAV file (working on Windows)
-    - `generate-*.rb` generate source files
+    - `generate-*.rb` generates source files
         - Requiring a Ruby execution environment
-- **CAUTION**: We recommend Arduino IDE 1.8.3
+- We recommend Arduino IDE 1.8.5
+
 
 ## VRA8-N CTRL
 
-- Parameter Editor (MIDI Controller) for VRA8-N, Web App
+- MIDI Controller (Parameter Editor) for VRA8-N, Web App
+- VRA8-N CTRL converts Program Changes (#0-7 for PRESET) into Control Changes
+- VRA8-N CTRL memorizes USER Programs (#8-15)
 - We recommend Google Chrome, which implements Web MIDI API
-- VRA8-N CTRL includes PRESET programs
-- Recommending [loopMIDI](http://www.tobias-erichsen.de/software/loopmidi.html) (virtual loopback MIDI cable) to connect VRA8-N
-- **CAUTION**: Click sounds may occur when you change the controllers (ex. SUB OSC MIX)
+- We recommend [loopMIDI](http://www.tobias-erichsen.de/software/loopmidi.html) (virtual loopback MIDI cable) to connect VRA8-N
 - **CAUTION**: Low CUTOFF with high RESONANCE can damage the speakers
+- **CAUTION**: Click sounds may occur when you change the parameters
+
 
 ## MIDI Implementation Chart
 
-      [Monophonic Synthesizer]                                        Date: 2018-07-01       
-      Model: Digital Synth VRA8-N     MIDI Implementation Chart       Version: 0.8.0         
+      [Monophonic Synthesizer]                                        Date: 2018-07-21       
+      Model: Digital Synth VRA8-N     MIDI Implementation Chart       Version: 1.0.0         
     +-------------------------------+---------------+---------------+-----------------------+
     | Function...                   | Transmitted   | Recognized    | Remarks               |
     +-------------------------------+---------------+---------------+-----------------------+
     | Basic        Default          | x             | 1             |                       |
     | Channel      Changed          | x             | x             |                       |
     +-------------------------------+---------------+---------------+-----------------------+
-    | Mode         Default          | x             | Mode 3        |                       |
+    | Mode         Default          | x             | 3             |                       |
     |              Messages         | x             | x             |                       |
     |              Altered          | ************* |               |                       |
     +-------------------------------+---------------+---------------+-----------------------+
     | Note                          | x             | 0-127         |                       |
     | Number       : True Voice     | ************* | 0-120         |                       |
     +-------------------------------+---------------+---------------+-----------------------+
-    | Velocity     Note ON          | x             | o (V=1-127)   |                       |
+    | Velocity     Note ON          | x             | x             |                       |
     |              Note OFF         | x             | x             |                       |
     +-------------------------------+---------------+---------------+-----------------------+
     | After        Key's            | x             | x             |                       |
     | Touch        Ch's             | x             | x             |                       |
     +-------------------------------+---------------+---------------+-----------------------+
-    | Pitch Bend                    | x             | o             | Range: 12 (or 2)      |
+    | Pitch Bend                    | x             | o             |                       |
     +-------------------------------+---------------+---------------+-----------------------+
-    | Control                     1 | x             | o             | MODULATION            |
+    | Control                     1 | x             | o             | MODULATION DEPTH      |
     | Change                     16 | x             | o             | CUTOFF                |
     |                            17 | x             | o             | RESONANCE             |
     |                            18 | x             | o             | CUTOFF < EG (-/+)     |
@@ -73,22 +79,22 @@
     |                            24 | x             | o             | OSC WAVE (SAW/SQ)     |
     |                            25 | x             | o             | OSC2 MIX              |
     |                            26 | x             | o             | SUB OSC MIX           |
-    |                            27 | x             | o             | SUSTAIN (OFF/ON)      |
+    |                            27 | x             | o             | SUSTAIN               |
     |                            28 | x             | x             | (RESERVED)            |
     |                            29 | x             | x             | (RESERVED)            |
     |                            30 | x             | o             | LEGATO (OFF/ON)       |
-    |                            31 | x             | o             | AMP EG (OFF/ON)       |
-    |                            48 | x             | o             | LFO RATE              |
-    |                            49 | x             | o             | LFO DEPTH             |
-    |                            50 | x             | o             | LFO > PITCH (2/1+2)   |
-    |                            51 | x             | x             | (RESERVED)            |
-    |                            56 | x             | o             | P.BEND RANGE          |
-    |                            57 | x             | x             | (RESERVED)            |
-    |                            58 | x             | o             | KEY ASGN (LO/LAST)    |
-    |                            59 | x             | x             | (RESERVED)            |
+    |                            31 | x             | o             | AMP (GATE+RLS/EG)     |
+    |                            80 | x             | o             | LFO RATE              |
+    |                            81 | x             | o             | LFO DEPTH             |
+    |                            82 | x             | o             | LFO > PITCH (2/1+2)   |
+    |                            83 | x             | o             | LFO > CUTOFF (-/+)    |
+    |                            85 | x             | o             | P. BEND RANGE         |
+    |                            86 | x             | x             | (RESERVED)            |
+    |                            87 | x             | o             | KEY ASGN (LO/LAST)    |
+    |                            89 | x             | x             | (RESERVED)            |
     +-------------------------------+---------------+---------------+-----------------------+
-    | Program                       | x             | x             |                       |
-    | Change       : True #         | ************* |               |                       |
+    | Program                       | x             | o             |                       |
+    | Change       : True #         | ************* | 0-7           |                       |
     +-------------------------------+---------------+---------------+-----------------------+
     | System Exclusive              | x             | x             |                       |
     +-------------------------------+---------------+---------------+-----------------------+
@@ -100,7 +106,7 @@
     | Real Time    : Commands       | x             | x             |                       |
     +-------------------------------+---------------+---------------+-----------------------+
     | Aux          : Local ON/OFF   | x             | x             |                       |
-    | Messages     : All Notes OFF  | x             | o (123-127)   |                       |
+    | Messages     : All Notes OFF  | x             | o 123-127     |                       |
     |              : Active Sense   | x             | x             |                       |
     |              : Reset          | x             | x             |                       |
     +-------------------------------+---------------+---------------+-----------------------+

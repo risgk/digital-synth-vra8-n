@@ -1,4 +1,5 @@
 #include "common.h"
+#include "program_table.h"
 
 template <uint8_t T>
 class Voice {
@@ -14,8 +15,8 @@ class Voice {
   static int8_t m_cutoff_velocity_amt;
   static uint8_t m_attack;
   static uint8_t m_decay;
-  static boolean m_sustain;
-  static boolean m_amp_env_gen_on;
+  static uint8_t m_sustain;
+  static uint8_t m_amp_env_gen;
 
 public:
   INLINE static void initialize() {
@@ -34,8 +35,8 @@ public:
     IEnvGen<1>::initialize();
     m_attack = 0;
     m_decay = 0;
-    m_sustain = true;
-    m_amp_env_gen_on = true;
+    m_sustain = 127;
+    m_amp_env_gen = 127;
     update_env_gen();
   }
 
@@ -116,6 +117,8 @@ public:
       m_on_note[i] = 0x00;
     }
     m_current_note_number = NOTE_NUMBER_INVALID;
+    IOsc<0>::note_off<0>();
+    IOsc<0>::note_off<1>();
     IEnvGen<0>::note_off();
     IEnvGen<1>::note_off();
   }
@@ -133,11 +136,11 @@ public:
       IFilter<0>::set_resonance(controller_value);
       break;
     case CUTOFF_EG_AMT:
-      IFilter<0>::set_env_amt(controller_value);
+      IFilter<0>::set_cutoff_env_amt(controller_value);
       break;
     case EG_DECAY:
       m_decay = controller_value;
-      if (m_amp_env_gen_on) {
+      if (m_amp_env_gen >= 64) {
         IEnvGen<0>::set_decay(m_decay);
         IEnvGen<1>::set_decay(m_decay);
       } else {
@@ -156,7 +159,7 @@ public:
       break;
     case EG_ATTACK:
       m_attack = controller_value;
-      if (m_amp_env_gen_on) {
+      if (m_amp_env_gen >= 64) {
         IEnvGen<0>::set_attack(m_attack);
         IEnvGen<1>::set_attack(m_attack);
       } else {
@@ -176,13 +179,9 @@ public:
       break;
     case EG_SUSTAIN:
       {
-        if (controller_value < 64) {
-          m_sustain = false;
-        } else {
-          m_sustain = true;
-        }
+        m_sustain = controller_value;
 
-        if (m_amp_env_gen_on) {
+        if (m_amp_env_gen >= 64) {
           IEnvGen<0>::set_sustain(m_sustain);
           IEnvGen<1>::set_sustain(m_sustain);
         } else {
@@ -195,21 +194,15 @@ public:
       if (controller_value < 64) {
         if (m_legato) {
           m_legato = false;
-          all_note_off();
         }
       } else {
         if (!m_legato) {
           m_legato = true;
-          all_note_off();
         }
       }
       break;
     case AMP_EG_ON:
-      if (controller_value < 64) {
-        m_amp_env_gen_on = false;
-      } else {
-        m_amp_env_gen_on = true;
-      }
+      m_amp_env_gen = controller_value;
       update_env_gen();
       break;
 
@@ -222,6 +215,9 @@ public:
     case PITCH_LFO_AMT:
       IOsc<0>::set_pitch_lfo_amt<0>(controller_value);
       break;
+    case CO_LFO_AMT:
+      IFilter<0>::set_cutoff_lfo_amt(controller_value);
+      break;
 
     case PB_RANGE:
       IOsc<0>::set_pitch_bend_minus_range(controller_value);
@@ -231,12 +227,10 @@ public:
       if (controller_value < 64) {
         if (m_key_assign_last) {
           m_key_assign_last = false;
-          all_note_off();
         }
       } else {
         if (!m_key_assign_last) {
           m_key_assign_last = true;
-          all_note_off();
         }
       }
       break;
@@ -256,12 +250,49 @@ public:
     IOsc<0>::set_pitch_bend(pitch_bend);
   }
 
+  static void program_change(uint8_t program_number) {
+    if (program_number > 7) {
+      return;
+    }
+
+    control_change(FILTER_CUTOFF, preset_table_FILTER_CUTOFF[program_number]);
+    control_change(FILTER_RESO  , preset_table_FILTER_RESO  [program_number]);
+    control_change(CUTOFF_EG_AMT, preset_table_CUTOFF_EG_AMT[program_number]);
+    control_change(EG_DECAY     , preset_table_EG_DECAY     [program_number]);
+
+    control_change(OSC2_COARSE  , preset_table_OSC2_COARSE  [program_number]);
+    control_change(OSC2_FINE    , preset_table_OSC2_FINE    [program_number]);
+    control_change(PORTAMENTO   , preset_table_PORTAMENTO   [program_number]);
+    control_change(EG_ATTACK    , preset_table_EG_ATTACK    [program_number]);
+
+    control_change(OSC_WAVE     , preset_table_OSC_WAVE     [program_number]);
+    control_change(OSC2_MIX     , preset_table_OSC2_MIX     [program_number]);
+    control_change(SUB_OSC_MIX  , preset_table_SUB_OSC_MIX  [program_number]);
+    control_change(EG_SUSTAIN   , preset_table_EG_SUSTAIN   [program_number]);
+
+    control_change(CC28         , preset_table_CC28         [program_number]);
+    control_change(CC29         , preset_table_CC29         [program_number]);
+    control_change(LEGATO       , preset_table_LEGATO       [program_number]);
+    control_change(AMP_EG_ON    , preset_table_AMP_EG_ON    [program_number]);
+
+    control_change(LFO_RATE     , preset_table_LFO_RATE     [program_number]);
+    control_change(LFO_DEPTH    , preset_table_LFO_DEPTH    [program_number]);
+    control_change(PITCH_LFO_AMT, preset_table_PITCH_LFO_AMT[program_number]);
+    control_change(CO_LFO_AMT   , preset_table_CO_LFO_AMT   [program_number]);
+
+    control_change(PB_RANGE     , preset_table_PB_RANGE     [program_number]);
+    control_change(CC86         , preset_table_CC86         [program_number]);
+    control_change(KEY_ASSIGN   , preset_table_KEY_ASSIGN   [program_number]);
+    control_change(CC89         , preset_table_CC89         [program_number]);
+  }
+
   INLINE static int8_t clock() {
     m_count++;
 
     int16_t osc_output = IOsc<0>::clock(m_count);
+    int16_t lfo_output = IOsc<0>::get_lfo_level();
     uint8_t env_gen_output_0 = IEnvGen<0>::clock(m_count);
-    int16_t filter_output = IFilter<0>::clock(m_count, osc_output, env_gen_output_0);
+    int16_t filter_output = IFilter<0>::clock(m_count, osc_output, env_gen_output_0, lfo_output);
     uint8_t env_gen_output_1 = IEnvGen<1>::clock(m_count);
     int16_t amp_output = IAmp<0>::clock(filter_output, env_gen_output_1);
 
@@ -339,7 +370,7 @@ private:
   }
 
   INLINE static void update_env_gen() {
-    if (m_amp_env_gen_on) {
+    if (m_amp_env_gen >= 64) {
       IEnvGen<0>::set_attack(m_attack);
       IEnvGen<0>::set_decay(m_decay);
       IEnvGen<0>::set_sustain(m_sustain);
@@ -351,8 +382,8 @@ private:
       IEnvGen<0>::set_decay(m_decay);
       IEnvGen<0>::set_sustain(m_sustain);
       IEnvGen<1>::set_attack(0);
-      IEnvGen<1>::set_decay(0);
-      IEnvGen<1>::set_sustain(true);
+      IEnvGen<1>::set_decay(m_amp_env_gen << 1);
+      IEnvGen<1>::set_sustain(127);
     }
   }
 };
@@ -369,5 +400,5 @@ template <uint8_t T> boolean Voice<T>::m_key_assign_last;
 template <uint8_t T> int8_t Voice<T>::m_cutoff_velocity_amt;
 template <uint8_t T> uint8_t Voice<T>::m_attack;
 template <uint8_t T> uint8_t Voice<T>::m_decay;
-template <uint8_t T> boolean Voice<T>::m_sustain;
-template <uint8_t T> boolean Voice<T>::m_amp_env_gen_on;
+template <uint8_t T> uint8_t Voice<T>::m_sustain;
+template <uint8_t T> uint8_t Voice<T>::m_amp_env_gen;

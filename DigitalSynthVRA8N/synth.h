@@ -24,37 +24,7 @@ class Synth {
 public:
   INLINE static void initialize() {
     ISynthCore<0>::initialize();
-
-    // DEFAULT
-    ISynthCore<0>::control_change(FILTER_CUTOFF, 80 );
-    ISynthCore<0>::control_change(FILTER_RESO  , 80 );
-    ISynthCore<0>::control_change(CUTOFF_EG_AMT, 80 );
-    ISynthCore<0>::control_change(EG_DECAY     , 32 );
-
-    ISynthCore<0>::control_change(OSC2_COARSE  , 71 );
-    ISynthCore<0>::control_change(OSC2_FINE    , 68 );
-    ISynthCore<0>::control_change(PORTAMENTO   , 32 );
-    ISynthCore<0>::control_change(EG_ATTACK    , 0  );
-
-    ISynthCore<0>::control_change(OSC_WAVE     , 0  );
-    ISynthCore<0>::control_change(OSC2_MIX     , 127);
-    ISynthCore<0>::control_change(SUB_OSC_MIX  , 127);
-    ISynthCore<0>::control_change(EG_SUSTAIN   , 127);
-
-    ISynthCore<0>::control_change(CC28         , 0  );
-    ISynthCore<0>::control_change(CC29         , 0  );
-    ISynthCore<0>::control_change(LEGATO       , 127);
-    ISynthCore<0>::control_change(AMP_EG_ON    , 127);
-
-    ISynthCore<0>::control_change(LFO_RATE     , 64 );
-    ISynthCore<0>::control_change(LFO_DEPTH    , 16 );
-    ISynthCore<0>::control_change(PITCH_LFO_AMT, 62 );
-    ISynthCore<0>::control_change(CC51         , 0  );
-
-    ISynthCore<0>::control_change(PB_RANGE     , 2  );
-    ISynthCore<0>::control_change(CC57         , 0  );
-    ISynthCore<0>::control_change(KEY_ASSIGN   , 0  );
-    ISynthCore<0>::control_change(CC59         , 0  );
+    ISynthCore<0>::program_change(0);
   }
 
   INLINE static void receive_midi_byte(uint8_t b) {

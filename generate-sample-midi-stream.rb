@@ -4,13 +4,19 @@ $file = File.open("sample-midi-stream.bin", "wb")
 
 def control_change(control_number, value)
   $file.write([(CONTROL_CHANGE | MIDI_CH), control_number, value].pack("C*"))
+  wait(10)
+end
+
+def program_change(program_number)
+  $file.write([(PROGRAM_CHANGE | MIDI_CH), program_number].pack("C*"))
+  wait(800)
 end
 
 def play(note_number, length)
   $file.write([(NOTE_ON  | MIDI_CH), note_number, 64].pack("C*"))
-  (length * 7 / 8).times { $file.write([ACTIVE_SENSING].pack("C")) }
+  (length * 15 / 16).times { $file.write([ACTIVE_SENSING].pack("C")) }
   $file.write([(NOTE_OFF | MIDI_CH), note_number, 64].pack("C*"))
-  (length * 1 / 8).times { $file.write([ACTIVE_SENSING].pack("C")) }
+  (length * 1 / 16).times { $file.write([ACTIVE_SENSING].pack("C")) }
 end
 
 def wait(length)
@@ -19,14 +25,14 @@ end
 
 def play_cegbdfac(c)
   play(12 + (c * 12), 1200)
-  play(16 + (c * 12), 1200)
   play(19 + (c * 12), 1200)
+  play(16 + (c * 12), 1200)
   play(23 + (c * 12), 1200)
   play(14 + (c * 12), 1200)
-  play(17 + (c * 12), 1200)
   play(21 + (c * 12), 1200)
-  play(24 + (c * 12), 6400)
-  wait(6400)
+  play(17 + (c * 12), 1200)
+  play(24 + (c * 12), 8400)
+  wait(8400)
 end
 
 def sound_off
@@ -36,42 +42,24 @@ end
 
 sound_off
 
-control_change(FILTER_CUTOFF, 80 )
-control_change(FILTER_RESO  , 80 )
-control_change(CUTOFF_EG_AMT, 80 )
-control_change(EG_DECAY     , 32 )
-
-control_change(OSC2_COARSE  , 71 )
-control_change(OSC2_FINE    , 68 )
-control_change(PORTAMENTO   , 32 )
-control_change(EG_ATTACK    , 0  )
-
-control_change(OSC_WAVE     , 0  )
-control_change(OSC2_MIX     , 127)
-control_change(SUB_OSC_MIX  , 127)
-control_change(EG_SUSTAIN   , 127)
-
-control_change(CC28         , 0  )
-control_change(CC29         , 0  )
-control_change(LEGATO       , 127)
-control_change(AMP_EG_ON    , 127)
-
-control_change(LFO_RATE     , 64 )
-control_change(LFO_DEPTH    , 16 )
-control_change(PITCH_LFO_AMT, 62 )
-control_change(CC51         , 0  )
-
-control_change(PB_RANGE     , 2  )
-control_change(CC57         , 0  )
-control_change(KEY_ASSIGN   , 0  )
-control_change(CC59         , 0  )
-
+program_change(0)
 play_cegbdfac(3)
-
 sound_off
 
-play_cegbdfac(4)
+program_change(1)
+play_cegbdfac(3)
+sound_off
 
+program_change(2)
+play_cegbdfac(2)
+sound_off
+
+program_change(3)
+play_cegbdfac(4)
+sound_off
+
+program_change(7)
+play_cegbdfac(4)
 sound_off
 
 $file.close

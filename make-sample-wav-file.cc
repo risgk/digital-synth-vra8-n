@@ -1,6 +1,7 @@
 #define PROGMEM
 
 #include <stdint.h>
+#include <stdio.h>
 
 typedef signed char boolean;
 typedef int32_t __int24;
@@ -23,7 +24,8 @@ inline uint32_t pgm_read_dword(const void* addr) {
   return p[0] | (p[1] << 8) | (p[2] << 16) | (p[3] << 24);
 }
 
-#include <stdio.h>
+#define TRANSPOSE (0)    // Min: -24, Max: +24
+
 #include "./DigitalSynthVRA8N/common.h"
 #include "./DigitalSynthVRA8N/synth.h"
 #include "./DigitalSynthVRA8N/wav-file-out.h"
