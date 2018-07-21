@@ -125,7 +125,7 @@ private:
   INLINE static void update_coefs_1st(uint8_t env_gen_input, int16_t lfo_input) {
     m_cutoff_candidate = m_cutoff + static_cast<int8_t>(m_cutoff_velocity - 64);
     m_cutoff_candidate += static_cast<int8_t>(high_sbyte(((m_cutoff_env_gen_amt - 64) << 1) * env_gen_input) << 1);
-    m_cutoff_candidate += high_sbyte(mul_q15_q8(lfo_input, ((m_cutoff_lfo_amt - 64) << 1)) << 2);
+    m_cutoff_candidate += high_sbyte(mul_q15_q7(lfo_input, ((m_cutoff_lfo_amt - 64) << 1)) << 2);
   }
 
   INLINE static void update_coefs_2nd() {
