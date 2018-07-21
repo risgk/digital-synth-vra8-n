@@ -77,7 +77,7 @@ public:
     m_cutoff_velocity = cutoff_velocity;
   }
 
-  INLINE static int16_t clock(uint8_t count, int16_t audio_input, uint8_t env_gen_input, int8_t lfo_input) {
+  INLINE static int16_t clock(uint8_t count, int16_t audio_input, uint8_t env_gen_input, int16_t lfo_input) {
     if ((count & (FILTER_CONTROL_INTERVAL - 1)) == 6) {
       uint8_t idx = (count >> FILTER_CONTROL_INTERVAL_BITS) & 0x01;
       switch (idx) {
@@ -117,10 +117,11 @@ public:
   }
 
 private:
-  INLINE static void update_current(uint8_t env_gen_input, int8_t lfo_input) {
+  INLINE static void update_current(uint8_t env_gen_input, int16_t lfo_input) {
     int16_t cutoff_candidate = m_cutoff + static_cast<int8_t>(m_cutoff_velocity - 64);
     cutoff_candidate += static_cast<int8_t>(high_sbyte(((m_cutoff_env_gen_amt - 64) << 1) * env_gen_input) << 1);
-    cutoff_candidate += static_cast<int8_t>(high_sbyte(((m_cutoff_lfo_amt - 64) << 1) * lfo_input) << 2);
+    cutoff_candidate += static_cast<int8_t>(high_sbyte(((m_cutoff_lfo_amt - 64) << 1) * high_sbyte(lfo_input)) << 2);
+//    cutoff_candidate += high_sbyte(mul_q15_q8(lfo_input, ((m_cutoff_lfo_amt - 64) << 1)) << 2);
     uint8_t cutoff_target;
     if (cutoff_candidate > 127) {
       cutoff_target = 127;

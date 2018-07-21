@@ -290,7 +290,7 @@ public:
     m_count++;
 
     int16_t osc_output = IOsc<0>::clock(m_count);
-    int8_t lfo_output = IOsc<0>::get_lfo_level();
+    int16_t lfo_output = IOsc<0>::get_lfo_level();
     uint8_t env_gen_output_0 = IEnvGen<0>::clock(m_count);
     int16_t filter_output = IFilter<0>::clock(m_count, osc_output, env_gen_output_0, lfo_output);
     uint8_t env_gen_output_1 = IEnvGen<1>::clock(m_count);

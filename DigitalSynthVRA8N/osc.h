@@ -26,7 +26,7 @@ class Osc {
   static int16_t        m_mod_level[2];
   static uint16_t       m_lfo_phase;
   static int8_t         m_lfo_wave_level;
-  static int8_t         m_lfo_level;
+  static int16_t        m_lfo_level;
   static uint16_t       m_lfo_rate;
   static uint8_t        m_lfo_depth[2];
   static boolean        m_pitch_lfo_target_both;
@@ -226,7 +226,7 @@ public:
     return (m_rnd_prev + m_rnd);
   }
 
-  INLINE static int8_t get_lfo_level() {
+  INLINE static int16_t get_lfo_level() {
     return m_lfo_level;
   }
 
@@ -254,13 +254,13 @@ public:
         update_freq_4th<0>();
         break;
       case 0x5:
-        update_waveform_sub();
-        break;
-      case 0x6:
         m_rnd_cnt++;
         if ((m_rnd_cnt & 0x07) == 0x00) {
           update_rnd();
         }
+        break;
+      case 0x6:
+        update_waveform_sub();
         break;
       case 0x7:
         update_mix();
@@ -280,13 +280,16 @@ public:
       case 0xC:
         update_freq_4th<1>();
         break;
-      case 0xE:
+      case 0xD:
         if ((m_rnd_cnt & 0x07) == 0x00) {
           update_rnd();
         }
         break;
+      case 0xE:
+        update_lfo_1st();
+        break;
       case 0xF:
-        update_lfo();
+        update_lfo_2nd();
         break;
       }
     }
@@ -420,7 +423,7 @@ private:
     m_rnd = low_byte(m_rnd_temp) >> 1;
   }
 
-  INLINE static void update_lfo() {
+  INLINE static void update_lfo_1st() {
     m_lfo_phase += m_lfo_rate;
     m_lfo_wave_level = get_lfo_wave_level(m_lfo_phase);
     uint8_t lfo_depth = m_lfo_depth[0] + m_lfo_depth[1];
@@ -432,8 +435,11 @@ private:
       lfo_depth = 128;
     }
 
-    m_lfo_level = high_sbyte(lfo_depth * m_lfo_wave_level) << 1;
-    m_mod_level[1] = m_lfo_level * m_pitch_lfo_amt;
+    m_lfo_level = (lfo_depth * m_lfo_wave_level) << 1;
+  }
+
+  INLINE static void update_lfo_2nd() {
+    m_mod_level[1] = mul_q15_q8(m_lfo_level, m_pitch_lfo_amt);
     if (m_pitch_lfo_target_both) {
       m_mod_level[0] = m_mod_level[1];
     } else {
@@ -487,7 +493,7 @@ template <uint8_t T> uint8_t         Osc<T>::m_portamento_coef;
 template <uint8_t T> int16_t         Osc<T>::m_mod_level[2];
 template <uint8_t T> uint16_t        Osc<T>::m_lfo_phase;
 template <uint8_t T> int8_t          Osc<T>::m_lfo_wave_level;
-template <uint8_t T> int8_t          Osc<T>::m_lfo_level;
+template <uint8_t T> int16_t         Osc<T>::m_lfo_level;
 template <uint8_t T> uint16_t        Osc<T>::m_lfo_rate;
 template <uint8_t T> uint8_t         Osc<T>::m_lfo_depth[2];
 template <uint8_t T> boolean         Osc<T>::m_pitch_lfo_target_both;
