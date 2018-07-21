@@ -58,4 +58,8 @@ program_change(3)
 play_cegbdfac(4)
 sound_off
 
+program_change(7)
+play_cegbdfac(4)
+sound_off
+
 $file.close
