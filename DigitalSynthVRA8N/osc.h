@@ -32,6 +32,7 @@ class Osc {
   static boolean        m_pitch_lfo_target_both;
   static uint8_t        m_pitch_lfo_amt;
   static uint8_t        m_waveform[2];
+  static uint8_t        m_sub_waveform;
   static int16_t        m_pitch_bend;
   static uint8_t        m_pitch_bend_minus_range;
   static uint8_t        m_pitch_bend_plus_range;
@@ -73,6 +74,7 @@ public:
     m_lfo_depth[1] = 0;
     m_waveform[0] = OSC_WAVEFORM_SAW;
     m_waveform[1] = OSC_WAVEFORM_SAW;
+    m_sub_waveform = SUB_WAVEFORM_SIN;
     m_pitch_bend_normalized = 0;
     m_pitch_target[0] = NOTE_NUMBER_MIN << 8;
     m_pitch_target[1] = NOTE_NUMBER_MIN << 8;
@@ -120,6 +122,14 @@ public:
       m_waveform[N] = OSC_WAVEFORM_SAW;
     } else {
       m_waveform[N] = OSC_WAVEFORM_SQ;
+    }
+  }
+
+  INLINE static void set_sub_waveform(uint8_t controller_value) {
+    if (controller_value < 64) {
+      m_sub_waveform = SUB_WAVEFORM_SIN;
+    } else {
+      m_sub_waveform = SUB_WAVEFORM_SQ;
     }
   }
 
@@ -233,7 +243,11 @@ public:
   INLINE static int16_t clock(uint8_t count) {
     if ((count & 0x01) == 1) {
       int16_t wave_0_sub = get_wave_level(m_wave_table[2], m_phase[0] >> 8);
-      m_level_sub = wave_0_sub * m_mix_sub_current;
+      int8_t mix_sub = m_mix_sub_current;
+      if (m_sub_waveform == SUB_WAVEFORM_SQ) {
+        mix_sub = mix_sub >> 1;
+      }
+      m_level_sub = wave_0_sub * mix_sub;
     }
     else if ((count & (OSC_CONTROL_INTERVAL - 1)) == 0) {
       uint8_t idx = (count >> OSC_CONTROL_INTERVAL_BITS) & 0x0F;
@@ -260,7 +274,7 @@ public:
         }
         break;
       case 0x6:
-        update_waveform_sub();
+        update_sub_waveform();
         break;
       case 0x7:
         update_mix();
@@ -313,7 +327,7 @@ private:
     const uint8_t* result;
     if (waveform == OSC_WAVEFORM_SAW) {
       result = g_osc_saw_wave_tables[note_number - NOTE_NUMBER_MIN];
-    } else {
+    } else {     // OSC_WAVEFORM_SQ
       result = g_osc_sq_wave_tables[note_number - NOTE_NUMBER_MIN];
     }
     return result;
@@ -410,9 +424,13 @@ private:
     m_wave_table[N] = m_wave_table_temp[N];
   }
 
-  INLINE static void update_waveform_sub() {
-//  uint8_t coarse = high_byte(m_pitch_real[0]);
-    m_wave_table[2] = g_osc_sin_wave_table_h1;
+  INLINE static void update_sub_waveform() {
+    if (m_sub_waveform == SUB_WAVEFORM_SIN) {
+      m_wave_table[2] = g_osc_sin_wave_table_h1;
+    } else {           // SUB_WAVEFORM_SQ
+      uint8_t coarse = high_byte(m_pitch_real[0]);
+      m_wave_table[2] = get_wave_table(OSC_WAVEFORM_SQ, coarse);
+    }
   }
 
   INLINE static void update_rnd() {
@@ -499,6 +517,7 @@ template <uint8_t T> uint8_t         Osc<T>::m_lfo_depth[2];
 template <uint8_t T> boolean         Osc<T>::m_pitch_lfo_target_both;
 template <uint8_t T> uint8_t         Osc<T>::m_pitch_lfo_amt;
 template <uint8_t T> uint8_t         Osc<T>::m_waveform[2];
+template <uint8_t T> uint8_t         Osc<T>::m_sub_waveform;
 template <uint8_t T> int16_t         Osc<T>::m_pitch_bend;
 template <uint8_t T> uint8_t         Osc<T>::m_pitch_bend_minus_range;
 template <uint8_t T> uint8_t         Osc<T>::m_pitch_bend_plus_range;

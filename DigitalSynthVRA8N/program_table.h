@@ -17,7 +17,7 @@ const uint8_t preset_table_SUB_OSC_MIX  [] = {127, 127, 127, 0  , 0  , 0  , 0  ,
 const uint8_t preset_table_EG_SUSTAIN   [] = {127, 0  , 0  , 127, 127, 127, 127, 127};
 
 const uint8_t preset_table_CC28         [] = {0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  };
-const uint8_t preset_table_CC29         [] = {0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  };
+const uint8_t preset_table_SUB_OSC_WAVE [] = {0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  };
 const uint8_t preset_table_LEGATO       [] = {127, 127, 127, 127, 0  , 0  , 0  , 0  };
 const uint8_t preset_table_AMP_EG_ON    [] = {127, 32 , 127, 127, 127, 127, 127, 127};
 

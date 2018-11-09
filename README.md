@@ -81,7 +81,7 @@
     |                            26 | x             | o             | SUB OSC MIX           |
     |                            27 | x             | o             | SUSTAIN               |
     |                            28 | x             | x             | (RESERVED)            |
-    |                            29 | x             | x             | (RESERVED)            |
+    |                            29 | x             | x             | SUB WAVE (SIN/SQ)     |
     |                            30 | x             | o             | LEGATO (OFF/ON)       |
     |                            31 | x             | o             | AMP (GATE+RLS/EG)     |
     |                            80 | x             | o             | LFO RATE              |

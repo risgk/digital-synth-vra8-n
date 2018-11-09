@@ -190,6 +190,9 @@ public:
       }
       break;
 
+    case SUB_OSC_WAVE:
+      IOsc<0>::set_sub_waveform(controller_value);
+      break;
     case LEGATO:
       if (controller_value < 64) {
         if (m_legato) {
@@ -271,7 +274,7 @@ public:
     control_change(EG_SUSTAIN   , preset_table_EG_SUSTAIN   [program_number]);
 
     control_change(CC28         , preset_table_CC28         [program_number]);
-    control_change(CC29         , preset_table_CC29         [program_number]);
+    control_change(SUB_OSC_WAVE , preset_table_SUB_OSC_WAVE [program_number]);
     control_change(LEGATO       , preset_table_LEGATO       [program_number]);
     control_change(AMP_EG_ON    , preset_table_AMP_EG_ON    [program_number]);
 
