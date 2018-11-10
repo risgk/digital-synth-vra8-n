@@ -26,6 +26,11 @@ const uint8_t preset_table_LFO_DEPTH    [] = {16 , 16 , 16 , 16 , 0  , 0  , 0  ,
 const uint8_t preset_table_PITCH_LFO_AMT[] = {63 , 65 , 64 , 65 , 64 , 64 , 64 , 64 };
 const uint8_t preset_table_CO_LFO_AMT   [] = {64 , 64 , 52 , 64 , 64 , 64 , 64 , 64 };
 
+const uint8_t preset_table_CC3          [] = {0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  };
+const uint8_t preset_table_CC9          [] = {0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  };
+const uint8_t preset_table_CC14         [] = {0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  };
+const uint8_t preset_table_CC15         [] = {0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  };
+
 const uint8_t preset_table_PB_RANGE     [] = {2  , 2  , 2  , 2  , 2  , 2  , 2  , 2  };
 const uint8_t preset_table_CC86         [] = {0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  };
 const uint8_t preset_table_KEY_ASSIGN   [] = {0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  };

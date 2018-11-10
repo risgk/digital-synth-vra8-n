@@ -283,6 +283,11 @@ public:
     control_change(PITCH_LFO_AMT, preset_table_PITCH_LFO_AMT[program_number]);
     control_change(CO_LFO_AMT   , preset_table_CO_LFO_AMT   [program_number]);
 
+    control_change(CC3          , preset_table_CC3          [program_number]);
+    control_change(CC9          , preset_table_CC9          [program_number]);
+    control_change(CC14         , preset_table_CC14         [program_number]);
+    control_change(CC15         , preset_table_CC15         [program_number]);
+
     control_change(PB_RANGE     , preset_table_PB_RANGE     [program_number]);
     control_change(CC86         , preset_table_CC86         [program_number]);
     control_change(KEY_ASSIGN   , preset_table_KEY_ASSIGN   [program_number]);

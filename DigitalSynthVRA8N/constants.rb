@@ -77,6 +77,11 @@ LFO_DEPTH     = 81
 PITCH_LFO_AMT = 82
 CO_LFO_AMT    = 83
 
+CC3           = 3
+CC9           = 9
+CC14          = 14
+CC15          = 15
+
 PB_RANGE      = 85
 CC86          = 86
 KEY_ASSIGN    = 87

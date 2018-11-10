@@ -77,6 +77,11 @@ const uint8_t   LFO_DEPTH     = 81;
 const uint8_t   PITCH_LFO_AMT = 82;
 const uint8_t   CO_LFO_AMT    = 83;
 
+const uint8_t   CC3           = 3;
+const uint8_t   CC9           = 9;
+const uint8_t   CC14          = 14;
+const uint8_t   CC15          = 15;
+
 const uint8_t   PB_RANGE      = 85;
 const uint8_t   CC86          = 86;
 const uint8_t   KEY_ASSIGN    = 87;
