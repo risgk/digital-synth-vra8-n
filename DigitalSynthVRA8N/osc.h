@@ -33,6 +33,7 @@ class Osc {
   static uint8_t        m_pitch_lfo_amt;
   static uint8_t        m_waveform[2];
   static uint8_t        m_sub_waveform;
+  static uint8_t        m_lfo_waveform;
   static int16_t        m_pitch_bend;
   static uint8_t        m_pitch_bend_minus_range;
   static uint8_t        m_pitch_bend_plus_range;
@@ -75,6 +76,7 @@ public:
     m_waveform[0] = OSC_WAVEFORM_SAW;
     m_waveform[1] = OSC_WAVEFORM_SAW;
     m_sub_waveform = SUB_WAVEFORM_SIN;
+    m_lfo_waveform = LFO_WAVEFORM_TRI;
     m_pitch_bend_normalized = 0;
     m_pitch_target[0] = NOTE_NUMBER_MIN << 8;
     m_pitch_target[1] = NOTE_NUMBER_MIN << 8;
@@ -130,6 +132,14 @@ public:
       m_sub_waveform = SUB_WAVEFORM_SIN;
     } else {
       m_sub_waveform = SUB_WAVEFORM_SQ;
+    }
+  }
+
+  INLINE static void set_lfo_waveform(uint8_t controller_value) {
+    if (controller_value < 64) {
+      m_lfo_waveform = LFO_WAVEFORM_TRI;
+    } else {
+      m_lfo_waveform = LFO_WAVEFORM_SQ;
     }
   }
 
@@ -203,6 +213,12 @@ public:
   template <uint8_t N>
   INLINE static void note_off() {
     m_note_on[N] = false;
+  }
+
+  INLINE static void reset_lfo_phase_if_sq() {
+    if (m_lfo_waveform == LFO_WAVEFORM_SQ) {
+      m_lfo_phase = 0;
+    }
   }
 
   INLINE static void set_pitch_bend_minus_range(uint8_t controller_value) {
@@ -353,13 +369,24 @@ private:
 
   INLINE static int8_t get_lfo_wave_level(uint16_t phase) {
     int8_t level = high_sbyte(phase);
-    if (level < -64) {
-      level = -64 - (level + 64);
-    } else if (level < 64) {
-      // do nothing
-    } else {
-      level = 64 - (level - 64);
+
+    if (m_lfo_waveform == LFO_WAVEFORM_TRI) {
+      if (level < -64) {
+        level = -64 - (level + 64);
+      } else if (level < 64) {
+        // do nothing
+      } else {
+        level = 64 - (level - 64);
+      }
+      level = -level;
+    } else {           // LFO_WAVEFORM_SQ
+      if (level >= 0) {
+        level = 0;
+      } else {
+        level = -128;
+      }
     }
+
     return level;
   }
 
@@ -457,7 +484,7 @@ private:
   }
 
   INLINE static void update_lfo_2nd() {
-    m_mod_level[1] = mul_q15_q8(m_lfo_level, m_pitch_lfo_amt);
+    m_mod_level[1] = -mul_q15_q8(m_lfo_level, m_pitch_lfo_amt);
     if (m_pitch_lfo_target_both) {
       m_mod_level[0] = m_mod_level[1];
     } else {
@@ -518,6 +545,7 @@ template <uint8_t T> boolean         Osc<T>::m_pitch_lfo_target_both;
 template <uint8_t T> uint8_t         Osc<T>::m_pitch_lfo_amt;
 template <uint8_t T> uint8_t         Osc<T>::m_waveform[2];
 template <uint8_t T> uint8_t         Osc<T>::m_sub_waveform;
+template <uint8_t T> uint8_t         Osc<T>::m_lfo_waveform;
 template <uint8_t T> int16_t         Osc<T>::m_pitch_bend;
 template <uint8_t T> uint8_t         Osc<T>::m_pitch_bend_minus_range;
 template <uint8_t T> uint8_t         Osc<T>::m_pitch_bend_plus_range;

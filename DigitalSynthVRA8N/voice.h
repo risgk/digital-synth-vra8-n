@@ -56,6 +56,7 @@ public:
       } else {
         IOsc<0>::set_portamento(0);
         IFilter<0>::note_on(cutoff_v);
+        IOsc<0>::reset_lfo_phase_if_sq();
         IEnvGen<0>::note_on();
         IEnvGen<1>::note_on();
       }
@@ -63,6 +64,7 @@ public:
       IOsc<0>::set_portamento(m_portamento);
       if (m_key_assign_last || (m_current_note_number == NOTE_NUMBER_INVALID)) {
         IFilter<0>::note_on(cutoff_v);
+        IOsc<0>::reset_lfo_phase_if_sq();
         IEnvGen<0>::note_on();
         IEnvGen<1>::note_on();
       }
@@ -94,12 +96,14 @@ public:
             IOsc<0>::set_portamento(m_portamento);
           } else {
             IOsc<0>::set_portamento(0);
+            IOsc<0>::reset_lfo_phase_if_sq();
             IEnvGen<0>::note_on();
             IEnvGen<1>::note_on();
           }
         } else {
           IOsc<0>::set_portamento(m_portamento);
           if (m_key_assign_last || (m_current_note_number == NOTE_NUMBER_INVALID)) {
+            IOsc<0>::reset_lfo_phase_if_sq();
             IEnvGen<0>::note_on();
             IEnvGen<1>::note_on();
           }
@@ -188,6 +192,10 @@ public:
           IEnvGen<0>::set_sustain(m_sustain);
         }
       }
+      break;
+
+    case LFO_WAVE:
+      IOsc<0>::set_lfo_waveform(controller_value);
       break;
 
     case SUB_OSC_WAVE:
@@ -285,7 +293,7 @@ public:
 
     control_change(CC3          , preset_table_CC3          [program_number]);
     control_change(CC9          , preset_table_CC9          [program_number]);
-    control_change(CC14         , preset_table_CC14         [program_number]);
+    control_change(LFO_WAVE     , preset_table_LFO_WAVE     [program_number]);
     control_change(CC15         , preset_table_CC15         [program_number]);
 
     control_change(PB_RANGE     , preset_table_PB_RANGE     [program_number]);

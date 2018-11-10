@@ -79,7 +79,7 @@ CO_LFO_AMT    = 83
 
 CC3           = 3
 CC9           = 9
-CC14          = 14
+LFO_WAVE      = 14
 CC15          = 15
 
 PB_RANGE      = 85
@@ -98,3 +98,6 @@ OSC_WAVEFORM_SQ  = 127
 
 SUB_WAVEFORM_SIN = 0
 SUB_WAVEFORM_SQ  = 127
+
+LFO_WAVEFORM_TRI = 0
+LFO_WAVEFORM_SQ  = 127
