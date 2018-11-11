@@ -56,6 +56,7 @@ public:
       } else {
         IOsc<0>::set_portamento(0);
         IFilter<0>::note_on(cutoff_v);
+        IOsc<0>::reset_lfo_phase_if_sq();
         IEnvGen<0>::note_on();
         IEnvGen<1>::note_on();
       }
@@ -63,6 +64,7 @@ public:
       IOsc<0>::set_portamento(m_portamento);
       if (m_key_assign_last || (m_current_note_number == NOTE_NUMBER_INVALID)) {
         IFilter<0>::note_on(cutoff_v);
+        IOsc<0>::reset_lfo_phase_if_sq();
         IEnvGen<0>::note_on();
         IEnvGen<1>::note_on();
       }
@@ -94,12 +96,14 @@ public:
             IOsc<0>::set_portamento(m_portamento);
           } else {
             IOsc<0>::set_portamento(0);
+            IOsc<0>::reset_lfo_phase_if_sq();
             IEnvGen<0>::note_on();
             IEnvGen<1>::note_on();
           }
         } else {
           IOsc<0>::set_portamento(m_portamento);
           if (m_key_assign_last || (m_current_note_number == NOTE_NUMBER_INVALID)) {
+            IOsc<0>::reset_lfo_phase_if_sq();
             IEnvGen<0>::note_on();
             IEnvGen<1>::note_on();
           }
@@ -190,6 +194,13 @@ public:
       }
       break;
 
+    case LFO_WAVE:
+      IOsc<0>::set_lfo_waveform(controller_value);
+      break;
+
+    case SUB_OSC_WAVE:
+      IOsc<0>::set_sub_waveform(controller_value);
+      break;
     case LEGATO:
       if (controller_value < 64) {
         if (m_legato) {
@@ -271,7 +282,7 @@ public:
     control_change(EG_SUSTAIN   , preset_table_EG_SUSTAIN   [program_number]);
 
     control_change(CC28         , preset_table_CC28         [program_number]);
-    control_change(CC29         , preset_table_CC29         [program_number]);
+    control_change(SUB_OSC_WAVE , preset_table_SUB_OSC_WAVE [program_number]);
     control_change(LEGATO       , preset_table_LEGATO       [program_number]);
     control_change(AMP_EG_ON    , preset_table_AMP_EG_ON    [program_number]);
 
@@ -279,6 +290,11 @@ public:
     control_change(LFO_DEPTH    , preset_table_LFO_DEPTH    [program_number]);
     control_change(PITCH_LFO_AMT, preset_table_PITCH_LFO_AMT[program_number]);
     control_change(CO_LFO_AMT   , preset_table_CO_LFO_AMT   [program_number]);
+
+    control_change(CC3          , preset_table_CC3          [program_number]);
+    control_change(CC9          , preset_table_CC9          [program_number]);
+    control_change(LFO_WAVE     , preset_table_LFO_WAVE     [program_number]);
+    control_change(CC15         , preset_table_CC15         [program_number]);
 
     control_change(PB_RANGE     , preset_table_PB_RANGE     [program_number]);
     control_change(CC86         , preset_table_CC86         [program_number]);

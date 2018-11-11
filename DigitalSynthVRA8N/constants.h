@@ -68,7 +68,7 @@ const uint8_t   SUB_OSC_MIX   = 26;
 const uint8_t   EG_SUSTAIN    = 27;
 
 const uint8_t   CC28          = 28;
-const uint8_t   CC29          = 29;
+const uint8_t   SUB_OSC_WAVE  = 29;
 const uint8_t   LEGATO        = 30;
 const uint8_t   AMP_EG_ON     = 31;
 
@@ -76,6 +76,11 @@ const uint8_t   LFO_RATE      = 80;
 const uint8_t   LFO_DEPTH     = 81;
 const uint8_t   PITCH_LFO_AMT = 82;
 const uint8_t   CO_LFO_AMT    = 83;
+
+const uint8_t   CC3           = 3;
+const uint8_t   CC9           = 9;
+const uint8_t   LFO_WAVE      = 14;
+const uint8_t   CC15          = 15;
 
 const uint8_t   PB_RANGE      = 85;
 const uint8_t   CC86          = 86;
@@ -90,3 +95,9 @@ const uint8_t   POLY_MODE_ON  = 127;
 
 const uint8_t   OSC_WAVEFORM_SAW = 0;
 const uint8_t   OSC_WAVEFORM_SQ  = 127;
+
+const uint8_t   SUB_WAVEFORM_SIN = 0;
+const uint8_t   SUB_WAVEFORM_SQ  = 127;
+
+const uint8_t   LFO_WAVEFORM_TRI = 0;
+const uint8_t   LFO_WAVEFORM_SQ  = 127;

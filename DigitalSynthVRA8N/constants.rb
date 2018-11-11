@@ -68,7 +68,7 @@ SUB_OSC_MIX   = 26
 EG_SUSTAIN    = 27
 
 CC28          = 28
-CC29          = 29
+SUB_OSC_WAVE  = 29
 LEGATO        = 30
 AMP_EG_ON     = 31
 
@@ -76,6 +76,11 @@ LFO_RATE      = 80
 LFO_DEPTH     = 81
 PITCH_LFO_AMT = 82
 CO_LFO_AMT    = 83
+
+CC3           = 3
+CC9           = 9
+LFO_WAVE      = 14
+CC15          = 15
 
 PB_RANGE      = 85
 CC86          = 86
@@ -90,3 +95,9 @@ POLY_MODE_ON  = 127
 
 OSC_WAVEFORM_SAW = 0
 OSC_WAVEFORM_SQ  = 127
+
+SUB_WAVEFORM_SIN = 0
+SUB_WAVEFORM_SQ  = 127
+
+LFO_WAVEFORM_TRI = 0
+LFO_WAVEFORM_SQ  = 127

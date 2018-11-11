@@ -1,6 +1,6 @@
-# Digital Synth VRA8-N v1.0.0
+# Digital Synth VRA8-N v1.1.0
 
-- 2018-07-21 ISGK Instruments
+- 2018-11-11 ISGK Instruments
 - <https://github.com/risgk/digital-synth-vra8-n>
 
 
@@ -44,8 +44,8 @@
 
 ## MIDI Implementation Chart
 
-      [Monophonic Synthesizer]                                        Date: 2018-07-21       
-      Model: Digital Synth VRA8-N     MIDI Implementation Chart       Version: 1.0.0         
+      [Monophonic Synthesizer]                                        Date: 2018-11-11       
+      Model: Digital Synth VRA8-N     MIDI Implementation Chart       Version: 1.1.0         
     +-------------------------------+---------------+---------------+-----------------------+
     | Function...                   | Transmitted   | Recognized    | Remarks               |
     +-------------------------------+---------------+---------------+-----------------------+
@@ -81,13 +81,17 @@
     |                            26 | x             | o             | SUB OSC MIX           |
     |                            27 | x             | o             | SUSTAIN               |
     |                            28 | x             | x             | (RESERVED)            |
-    |                            29 | x             | x             | (RESERVED)            |
+    |                            29 | x             | x             | SUB WAVE (SIN/SQ)     |
     |                            30 | x             | o             | LEGATO (OFF/ON)       |
     |                            31 | x             | o             | AMP (GATE+RLS/EG)     |
     |                            80 | x             | o             | LFO RATE              |
     |                            81 | x             | o             | LFO DEPTH             |
     |                            82 | x             | o             | LFO > PITCH (2/1+2)   |
     |                            83 | x             | o             | LFO > CUTOFF (-/+)    |
+    |                             3 | x             | x             | (RESERVED)            |
+    |                             9 | x             | x             | (RESERVED)            |
+    |                            14 | x             | x             | LFO WAVE (TRI/SQ)     |
+    |                            15 | x             | x             | (RESERVED)            |
     |                            85 | x             | o             | P. BEND RANGE         |
     |                            86 | x             | x             | (RESERVED)            |
     |                            87 | x             | o             | KEY ASGN (LO/LAST)    |
