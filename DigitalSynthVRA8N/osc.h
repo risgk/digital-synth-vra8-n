@@ -228,7 +228,11 @@ public:
   }
 
   INLINE static void reset_lfo_phase_if_sq() {
-    m_lfo_midi_ticks = 0;
+    if (m_lfo_midi_sync != 0) {
+      m_lfo_midi_ticks = (m_lfo_midi_sync << 1) - 1;
+      m_lfo_level = 0;
+    }
+
     if (m_lfo_waveform == LFO_WAVEFORM_SQ) {
       m_lfo_phase = 0;
     }
