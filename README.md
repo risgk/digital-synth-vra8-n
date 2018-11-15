@@ -81,7 +81,7 @@
     |                            26 | x             | o             | SUB OSC MIX           |
     |                            27 | x             | o             | SUSTAIN               |
     |                            28 | x             | x             | (RESERVED)            |
-    |                            29 | x             | x             | SUB WAVE (SIN/SQ)     |
+    |                            29 | x             | o             | SUB WAVE (SIN/SQ)     |
     |                            30 | x             | o             | LEGATO (OFF/ON)       |
     |                            31 | x             | o             | AMP (GATE+RLS/EG)     |
     |                            80 | x             | o             | LFO RATE              |
@@ -90,7 +90,7 @@
     |                            83 | x             | o             | LFO > CUTOFF (-/+)    |
     |                             3 | x             | x             | (RESERVED)            |
     |                             9 | x             | x             | (RESERVED)            |
-    |                            14 | x             | x             | LFO WAVE (TRI/SQ)     |
+    |                            14 | x             | o             | LFO WAVE (TRI/SQ)     |
     |                            15 | x             | x             | (RESERVED)            |
     |                            85 | x             | o             | P. BEND RANGE         |
     |                            86 | x             | x             | (RESERVED)            |
