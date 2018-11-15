@@ -63,6 +63,9 @@ public:
       }
     } else if (is_system_message(b)) {
       switch (b) {
+      case TIMING_CLOCK:
+        midi_timing_clock();
+        break;
       case SYSTEM_EXCLUSIVE:
         m_system_exclusive = true;
         m_running_status = STATUS_BYTE_INVALID;
@@ -104,6 +107,10 @@ public:
 
   INLINE static void program_change(uint8_t program_number) {
     IVoice<0>::program_change(program_number);
+  }
+
+  INLINE static void midi_timing_clock() {
+    IVoice<0>::midi_timing_clock();
   }
 
   INLINE static int8_t clock() {

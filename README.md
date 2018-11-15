@@ -91,7 +91,7 @@
     |                             3 | x             | x             | (RESERVED)            |
     |                             9 | x             | x             | (RESERVED)            |
     |                            14 | x             | o             | LFO WAVE (TRI/SQ)     |
-    |                            15 | x             | x             | (RESERVED)            |
+    |                            15 | x             | o             | LFO MIDI SYNC (SQ)    |
     |                            85 | x             | o             | P. BEND RANGE         |
     |                            86 | x             | x             | (RESERVED)            |
     |                            87 | x             | o             | KEY ASGN (LO/LAST)    |

@@ -47,6 +47,7 @@ const uint8_t   SONG_POSITION         = 0xF2;
 const uint8_t   SONG_SELECT           = 0xF3;
 const uint8_t   TUNE_REQUEST          = 0xF6;
 const uint8_t   EOX                   = 0xF7;
+const uint8_t   TIMING_CLOCK          = 0xF8;
 const uint8_t   REAL_TIME_MESSAGE_MIN = 0xF8;
 const uint8_t   ACTIVE_SENSING        = 0xFE;
 
@@ -80,7 +81,7 @@ const uint8_t   CO_LFO_AMT    = 83;
 const uint8_t   CC3           = 3;
 const uint8_t   CC9           = 9;
 const uint8_t   LFO_WAVE      = 14;
-const uint8_t   CC15          = 15;
+const uint8_t   LFO_MIDI_SYNC = 15;
 
 const uint8_t   PB_RANGE      = 85;
 const uint8_t   CC86          = 86;

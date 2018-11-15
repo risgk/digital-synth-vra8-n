@@ -47,6 +47,7 @@ SONG_POSITION         = 0xF2
 SONG_SELECT           = 0xF3
 TUNE_REQUEST          = 0xF6
 EOX                   = 0xF7
+TIMING_CLOCK          = 0xF8
 REAL_TIME_MESSAGE_MIN = 0xF8
 ACTIVE_SENSING        = 0xFE
 
@@ -80,7 +81,7 @@ CO_LFO_AMT    = 83
 CC3           = 3
 CC9           = 9
 LFO_WAVE      = 14
-CC15          = 15
+LFO_MIDI_SYNC = 15
 
 PB_RANGE      = 85
 CC86          = 86
