@@ -197,9 +197,6 @@ public:
     case LFO_WAVE:
       IOsc<0>::set_lfo_waveform(controller_value);
       break;
-    case LFO_MIDI_SYNC:
-      IOsc<0>::set_lfo_midi_sync(controller_value);
-      break;
 
     case SUB_OSC_WAVE:
       IOsc<0>::set_sub_waveform(controller_value);
@@ -297,16 +294,12 @@ public:
     control_change(CC3          , preset_table_CC3          [program_number]);
     control_change(CC9          , preset_table_CC9          [program_number]);
     control_change(LFO_WAVE     , preset_table_LFO_WAVE     [program_number]);
-    control_change(LFO_MIDI_SYNC, preset_table_LFO_MIDI_SYNC[program_number]);
+    control_change(CC15         , preset_table_CC15         [program_number]);
 
     control_change(PB_RANGE     , preset_table_PB_RANGE     [program_number]);
     control_change(CC86         , preset_table_CC86         [program_number]);
     control_change(KEY_ASSIGN   , preset_table_KEY_ASSIGN   [program_number]);
     control_change(CC89         , preset_table_CC89         [program_number]);
-  }
-
-  INLINE static void midi_timing_clock() {
-    IOsc<0>::midi_timing_clock();
   }
 
   INLINE static int8_t clock() {

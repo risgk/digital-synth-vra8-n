@@ -34,8 +34,6 @@ class Osc {
   static uint8_t        m_waveform[2];
   static uint8_t        m_sub_waveform;
   static uint8_t        m_lfo_waveform;
-  static uint8_t        m_lfo_midi_sync;
-  static uint8_t        m_lfo_midi_ticks;
   static int16_t        m_pitch_bend;
   static uint8_t        m_pitch_bend_minus_range;
   static uint8_t        m_pitch_bend_plus_range;
@@ -79,8 +77,6 @@ public:
     m_waveform[1] = OSC_WAVEFORM_SAW;
     m_sub_waveform = SUB_WAVEFORM_SIN;
     m_lfo_waveform = LFO_WAVEFORM_TRI;
-    m_lfo_midi_sync = 0;
-    m_lfo_midi_ticks = 0;
     m_pitch_bend_normalized = 0;
     m_pitch_target[0] = NOTE_NUMBER_MIN << 8;
     m_pitch_target[1] = NOTE_NUMBER_MIN << 8;
@@ -144,14 +140,6 @@ public:
       m_lfo_waveform = LFO_WAVEFORM_TRI;
     } else {
       m_lfo_waveform = LFO_WAVEFORM_SQ;
-    }
-  }
-
-  INLINE static void set_lfo_midi_sync(uint8_t controller_value) {
-    if (controller_value >= 96) {
-      m_lfo_midi_sync = 96;
-    } else {
-      m_lfo_midi_sync = controller_value;
     }
   }
 
@@ -228,7 +216,6 @@ public:
   }
 
   INLINE static void reset_lfo_phase_if_sq() {
-    m_lfo_midi_ticks = 0;
     if (m_lfo_waveform == LFO_WAVEFORM_SQ) {
       m_lfo_phase = 0;
     }
@@ -267,29 +254,6 @@ public:
 
   INLINE static int16_t get_lfo_level() {
     return m_lfo_level;
-  }
-
-  INLINE static void midi_timing_clock() {
-    if (m_lfo_midi_sync != 0) {
-      uint8_t lfo_depth = m_lfo_depth[0] + m_lfo_depth[1];
-      if (lfo_depth > 127) {
-        lfo_depth = 127;
-      }
-
-      if (lfo_depth == 127) {
-        lfo_depth = 128;
-      }
-
-      m_lfo_midi_ticks++;
-      if (m_lfo_midi_ticks >= (m_lfo_midi_sync << 1)) {
-        m_lfo_midi_ticks = 0;
-        m_lfo_level = 0;
-      } else if (m_lfo_midi_ticks >= m_lfo_midi_sync) {
-        m_lfo_level = (lfo_depth * static_cast<int8_t>(-128)) << 1;
-      } else {
-        m_lfo_level = 0;
-      }
-    }
   }
 
   INLINE static int16_t clock(uint8_t count) {
@@ -505,21 +469,18 @@ private:
   }
 
   INLINE static void update_lfo_1st() {
-    if (m_lfo_midi_sync == 0) {
-      m_lfo_phase += m_lfo_rate;
-
-      m_lfo_wave_level = get_lfo_wave_level(m_lfo_phase);
-      uint8_t lfo_depth = m_lfo_depth[0] + m_lfo_depth[1];
-      if (lfo_depth > 127) {
-        lfo_depth = 127;
-      }
-
-      if (lfo_depth == 127) {
-        lfo_depth = 128;
-      }
-
-      m_lfo_level = (lfo_depth * m_lfo_wave_level) << 1;
+    m_lfo_phase += m_lfo_rate;
+    m_lfo_wave_level = get_lfo_wave_level(m_lfo_phase);
+    uint8_t lfo_depth = m_lfo_depth[0] + m_lfo_depth[1];
+    if (lfo_depth > 127) {
+      lfo_depth = 127;
     }
+
+    if (lfo_depth == 127) {
+      lfo_depth = 128;
+    }
+
+    m_lfo_level = (lfo_depth * m_lfo_wave_level) << 1;
   }
 
   INLINE static void update_lfo_2nd() {
@@ -585,8 +546,6 @@ template <uint8_t T> uint8_t         Osc<T>::m_pitch_lfo_amt;
 template <uint8_t T> uint8_t         Osc<T>::m_waveform[2];
 template <uint8_t T> uint8_t         Osc<T>::m_sub_waveform;
 template <uint8_t T> uint8_t         Osc<T>::m_lfo_waveform;
-template <uint8_t T> uint8_t         Osc<T>::m_lfo_midi_sync;
-template <uint8_t T> uint8_t         Osc<T>::m_lfo_midi_ticks;
 template <uint8_t T> int16_t         Osc<T>::m_pitch_bend;
 template <uint8_t T> uint8_t         Osc<T>::m_pitch_bend_minus_range;
 template <uint8_t T> uint8_t         Osc<T>::m_pitch_bend_plus_range;
