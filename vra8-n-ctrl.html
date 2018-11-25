@@ -84,6 +84,16 @@ const CC86          = 86;
 const KEY_ASSIGN    = 87;
 const CC89          = 89;
 
+const SP_PROG_CHG_0 = 112;
+const SP_PROG_CHG_1 = 113;
+const SP_PROG_CHG_2 = 114;
+const SP_PROG_CHG_3 = 115;
+
+const SP_PROG_CHG_4 = 116;
+const SP_PROG_CHG_5 = 117;
+const SP_PROG_CHG_6 = 118;
+const SP_PROG_CHG_7 = 119;
+
 const ALL_NOTES_OFF = 123;
 
 var controllersInLocalStorage = [
@@ -197,6 +207,8 @@ var midiInput2  = null;
 var midiOutputs = null;
 var midiOutput  = null;
 
+var specialProgramChangeCCValues = [0, 0, 0, 0, 0, 0, 0, 0];
+
 function onMIDIMessage(event) {
   console.log(event.data);
 
@@ -208,6 +220,14 @@ function onMIDIMessage(event) {
       updateDisplayOfControl(number, value);
     } else if (number == MODULATION) {
       document.getElementById("spanCC1").innerHTML = value;
+    } else if (number >= SP_PROG_CHG_0 && number <= SP_PROG_CHG_7) {
+      var programIndex = number - SP_PROG_CHG_0;
+      var oldValue = specialProgramChangeCCValues[programIndex];
+      specialProgramChangeCCValues[programIndex] = value;
+      if (oldValue <= 63 && value >= 64) {
+        loadControllers(programIndex + 8);
+        return;
+      }
     }
   } else if (event.data[0] == (PITCH_BEND | MIDI_CH)) {
     var value = event.data[1] + (event.data[2] * 128) - 8192;
