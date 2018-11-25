@@ -84,6 +84,7 @@ const CC86          = 86;
 const KEY_ASSIGN    = 87;
 const CC89          = 89;
 
+// Special Program Change (only for VRA8-N CTRL)
 const SP_PROG_CHG_0 = 112;
 const SP_PROG_CHG_1 = 113;
 const SP_PROG_CHG_2 = 114;
@@ -221,6 +222,7 @@ function onMIDIMessage(event) {
     } else if (number == MODULATION) {
       document.getElementById("spanCC1").innerHTML = value;
     } else if (number >= SP_PROG_CHG_0 && number <= SP_PROG_CHG_7) {
+      // Special Program Change (only for VRA8-N CTRL)
       var programIndex = number - SP_PROG_CHG_0;
       var oldValue = specialProgramChangeCCValues[programIndex];
       specialProgramChangeCCValues[programIndex] = value;
