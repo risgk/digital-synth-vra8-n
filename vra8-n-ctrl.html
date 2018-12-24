@@ -84,6 +84,11 @@ const CC86          = 86;
 const KEY_ASSIGN    = 87;
 const CC89          = 89;
 
+const CC104         = 104;
+const CC105         = 105;
+const CC106         = 106;
+const CC107         = 107;
+
 // Special Program Change (only for VRA8-N CTRL)
 const SP_PROG_CHG_0 = 112;
 const SP_PROG_CHG_1 = 113;
@@ -132,6 +137,11 @@ var controllersInLocalStorage = [
 //CC86         ,
   KEY_ASSIGN   ,
 //CC89         ,
+
+//CC104        ,
+//CC105        ,
+//CC106        ,
+//CC107        ,
 ];
 </script>
 <script>
@@ -374,6 +384,11 @@ function preset(number) {
   presetControllers[KEY_ASSIGN   ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
   presetControllers[CC89         ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
 
+  presetControllers[CC104        ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
+  presetControllers[CC105        ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
+  presetControllers[CC106        ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
+  presetControllers[CC107        ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
+
   controllersInLocalStorage.forEach(function(i) {
     onChangeControlChange(i, presetControllers[i][number]);
   });
@@ -534,7 +549,7 @@ function noteOff(noteNumber) {
     <td><input id="inputCC26" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(26, value)"></td>
     <td><span   id="spanCC26">-1</span></td>
     <td><input id="inputCC27" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(27, value)"></td>
-    <td><span   id="spanCC27">-1</span></td>
+    <td><span   id="spanCC27">-1</span></td></tr>
 <tr><td>                      </td><td></td>
     <td>SUB WAVE (SIN/SQ)     </td><td></td>
     <td>LEGATO (OFF/ON)       </td><td></td>
@@ -546,7 +561,7 @@ function noteOff(noteNumber) {
     <td><input id="inputCC30" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(30, value)"></td>
     <td><span   id="spanCC30">-1</span></td>
     <td><input id="inputCC31" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(31, value)"></td>
-    <td><span   id="spanCC31">-1</span></td>
+    <td><span   id="spanCC31">-1</span></td></tr>
 <tr><td>&nbsp;</td></tr>
 <tr><td>LFO RATE              </td><td></td>
     <td>LFO DEPTH             </td><td></td>
@@ -559,7 +574,7 @@ function noteOff(noteNumber) {
     <td><input id="inputCC82" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(82, value)"></td>
     <td><span   id="spanCC82">-1</span></td>
     <td><input id="inputCC83" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(83, value)"></td>
-    <td><span   id="spanCC83">-1</span></td>
+    <td><span   id="spanCC83">-1</span></td></tr>
 <tr><td>                      </td><td></td>
     <td>                      </td><td></td>
     <td>LFO WAVE (TRI/SQ)     </td><td></td>
@@ -571,7 +586,7 @@ function noteOff(noteNumber) {
     <td><input id="inputCC14" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(14, value)"></td>
     <td><span   id="spanCC14">-1</span></td>
     <td><input id="inputCC15" style="visibility:hidden" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(15, value)"></td>
-    <td><span   id="spanCC15" style="visibility:hidden">-1</span></td>
+    <td><span   id="spanCC15" style="visibility:hidden">-1</span></td></tr>
 <tr><td>&nbsp;</td></tr>
 <tr><td>P. BEND RANGE         </td><td></td>
     <td>                      </td><td></td>
@@ -584,7 +599,19 @@ function noteOff(noteNumber) {
     <td><input id="inputCC87" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(87, value)"></td>
     <td><span   id="spanCC87">-1</span></td>
     <td><input id="inputCC89" style="visibility:hidden" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(89, value)"></td>
-    <td><span   id="spanCC89" style="visibility:hidden">-1</span></td>
+    <td><span   id="spanCC89" style="visibility:hidden">-1</span></td></tr>
+<tr><td>                      </td><td></td>
+    <td>                      </td><td></td>
+    <td>                      </td><td></td>
+    <td>                      </td></tr>
+<tr><td><input id="inputCC104" style="visibility:hidden" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(104, value)"></td>
+    <td><span   id="spanCC104" style="visibility:hidden">-1</span></td>
+    <td><input id="inputCC105" style="visibility:hidden" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(105, value)"></td>
+    <td><span   id="spanCC105" style="visibility:hidden">-1</span></td>
+    <td><input id="inputCC106" style="visibility:hidden" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(106, value)"></td>
+    <td><span   id="spanCC106" style="visibility:hidden">-1</span></td>
+    <td><input id="inputCC107" style="visibility:hidden" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(107, value)"></td>
+    <td><span   id="spanCC107" style="visibility:hidden">-1</span></td></tr>
 <tr><td>&nbsp;</td></tr>
 </table>
 

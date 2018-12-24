@@ -87,6 +87,11 @@ CC86          = 86
 KEY_ASSIGN    = 87
 CC89          = 89
 
+CC104         = 104
+CC105         = 105
+CC106         = 106
+CC107         = 107
+
 ALL_NOTES_OFF = 123
 OMNI_MODE_OFF = 124
 OMNI_MODE_ON  = 125

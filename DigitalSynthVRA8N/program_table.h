@@ -35,3 +35,8 @@ const uint8_t preset_table_PB_RANGE     [] = {2  , 2  , 2  , 2  , 2  , 2  , 2  ,
 const uint8_t preset_table_CC86         [] = {0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  };
 const uint8_t preset_table_KEY_ASSIGN   [] = {0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  };
 const uint8_t preset_table_CC89         [] = {0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  };
+
+const uint8_t preset_table_CC104        [] = {0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  };
+const uint8_t preset_table_CC105        [] = {0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  };
+const uint8_t preset_table_CC106        [] = {0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  };
+const uint8_t preset_table_CC107        [] = {0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  };

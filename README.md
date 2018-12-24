@@ -96,6 +96,10 @@
     |                            86 | x             | x             | (RESERVED)            |
     |                            87 | x             | o             | KEY ASGN (LO/LAST)    |
     |                            89 | x             | x             | (RESERVED)            |
+    |                           104 | x             | x             | (RESERVED)            |
+    |                           105 | x             | x             | (RESERVED)            |
+    |                           106 | x             | x             | (RESERVED)            |
+    |                           107 | x             | x             | (RESERVED)            |
     +-------------------------------+---------------+---------------+-----------------------+
     | Program                       | x             | o             |                       |
     | Change       : True #         | ************* | 0-7           |                       |

@@ -300,6 +300,11 @@ public:
     control_change(CC86         , preset_table_CC86         [program_number]);
     control_change(KEY_ASSIGN   , preset_table_KEY_ASSIGN   [program_number]);
     control_change(CC89         , preset_table_CC89         [program_number]);
+
+    control_change(CC104        , preset_table_CC104        [program_number]);
+    control_change(CC105        , preset_table_CC105        [program_number]);
+    control_change(CC106        , preset_table_CC106        [program_number]);
+    control_change(CC107        , preset_table_CC107        [program_number]);
   }
 
   INLINE static int8_t clock() {

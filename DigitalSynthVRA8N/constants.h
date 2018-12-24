@@ -87,6 +87,11 @@ const uint8_t   CC86          = 86;
 const uint8_t   KEY_ASSIGN    = 87;
 const uint8_t   CC89          = 89;
 
+const uint8_t   CC104         = 104;
+const uint8_t   CC105         = 105;
+const uint8_t   CC106         = 106;
+const uint8_t   CC107         = 107;
+
 const uint8_t   ALL_NOTES_OFF = 123;
 const uint8_t   OMNI_MODE_OFF = 124;
 const uint8_t   OMNI_MODE_ON  = 125;
