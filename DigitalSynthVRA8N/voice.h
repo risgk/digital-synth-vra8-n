@@ -266,45 +266,45 @@ public:
       return;
     }
 
+    control_change(OSC_WAVE     , preset_table_OSC_WAVE     [program_number]);
+    control_change(OSC2_MIX     , preset_table_OSC2_MIX     [program_number]);
+    control_change(OSC2_COARSE  , preset_table_OSC2_COARSE  [program_number]);
+    control_change(OSC2_FINE    , preset_table_OSC2_FINE    [program_number]);
+
+    control_change(SUB_OSC_WAVE , preset_table_SUB_OSC_WAVE [program_number]);
+    control_change(SUB_OSC_MIX  , preset_table_SUB_OSC_MIX  [program_number]);
+    control_change(CC104        , preset_table_CC104        [program_number]);
+    control_change(CC105        , preset_table_CC105        [program_number]);
+
     control_change(FILTER_CUTOFF, preset_table_FILTER_CUTOFF[program_number]);
     control_change(FILTER_RESO  , preset_table_FILTER_RESO  [program_number]);
     control_change(CUTOFF_EG_AMT, preset_table_CUTOFF_EG_AMT[program_number]);
-    control_change(EG_DECAY     , preset_table_EG_DECAY     [program_number]);
-
-    control_change(OSC2_COARSE  , preset_table_OSC2_COARSE  [program_number]);
-    control_change(OSC2_FINE    , preset_table_OSC2_FINE    [program_number]);
-    control_change(PORTAMENTO   , preset_table_PORTAMENTO   [program_number]);
-    control_change(EG_ATTACK    , preset_table_EG_ATTACK    [program_number]);
-
-    control_change(OSC_WAVE     , preset_table_OSC_WAVE     [program_number]);
-    control_change(OSC2_MIX     , preset_table_OSC2_MIX     [program_number]);
-    control_change(SUB_OSC_MIX  , preset_table_SUB_OSC_MIX  [program_number]);
-    control_change(EG_SUSTAIN   , preset_table_EG_SUSTAIN   [program_number]);
-
-    control_change(CC28         , preset_table_CC28         [program_number]);
-    control_change(SUB_OSC_WAVE , preset_table_SUB_OSC_WAVE [program_number]);
-    control_change(LEGATO       , preset_table_LEGATO       [program_number]);
     control_change(AMP_EG_ON    , preset_table_AMP_EG_ON    [program_number]);
 
+    control_change(EG_ATTACK    , preset_table_EG_ATTACK    [program_number]);
+    control_change(EG_DECAY     , preset_table_EG_DECAY     [program_number]);
+    control_change(EG_SUSTAIN   , preset_table_EG_SUSTAIN   [program_number]);
+    control_change(CC28         , preset_table_CC28         [program_number]);
+
+    control_change(LFO_WAVE     , preset_table_LFO_WAVE     [program_number]);
     control_change(LFO_RATE     , preset_table_LFO_RATE     [program_number]);
-    control_change(LFO_DEPTH    , preset_table_LFO_DEPTH    [program_number]);
     control_change(PITCH_LFO_AMT, preset_table_PITCH_LFO_AMT[program_number]);
     control_change(CO_LFO_AMT   , preset_table_CO_LFO_AMT   [program_number]);
 
+    control_change(LFO_DEPTH    , preset_table_LFO_DEPTH    [program_number]);
     control_change(CC3          , preset_table_CC3          [program_number]);
     control_change(CC9          , preset_table_CC9          [program_number]);
-    control_change(LFO_WAVE     , preset_table_LFO_WAVE     [program_number]);
     control_change(CC15         , preset_table_CC15         [program_number]);
 
     control_change(PB_RANGE     , preset_table_PB_RANGE     [program_number]);
     control_change(CC86         , preset_table_CC86         [program_number]);
-    control_change(KEY_ASSIGN   , preset_table_KEY_ASSIGN   [program_number]);
-    control_change(CC89         , preset_table_CC89         [program_number]);
-
-    control_change(CC104        , preset_table_CC104        [program_number]);
-    control_change(CC105        , preset_table_CC105        [program_number]);
     control_change(CC106        , preset_table_CC106        [program_number]);
     control_change(CC107        , preset_table_CC107        [program_number]);
+
+    control_change(PORTAMENTO   , preset_table_PORTAMENTO   [program_number]);
+    control_change(LEGATO       , preset_table_LEGATO       [program_number]);
+    control_change(KEY_ASSIGN   , preset_table_KEY_ASSIGN   [program_number]);
+    control_change(CC89         , preset_table_CC89         [program_number]);
   }
 
   INLINE static int8_t clock() {

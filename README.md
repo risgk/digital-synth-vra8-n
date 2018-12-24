@@ -68,38 +68,46 @@
     | Pitch Bend                    | x             | o             |                       |
     +-------------------------------+---------------+---------------+-----------------------+
     | Control                     1 | x             | o             | MODULATION DEPTH      |
-    | Change                     16 | x             | o             | CUTOFF                |
-    |                            17 | x             | o             | RESONANCE             |
-    |                            18 | x             | o             | CUTOFF < EG (-/+)     |
-    |                            19 | x             | o             | DECAY                 |
-    |                            20 | x             | o             | OSC2 COARSE (-/+)     |
-    |                            21 | x             | o             | OSC2 FINE (-/+)       |
-    |                            22 | x             | o             | PORTAMENTO            |
-    |                            23 | x             | o             | ATTACK                |
+    | Change                        |               |               |                       |
     |                            24 | x             | o             | OSC WAVE (SAW/SQ)     |
     |                            25 | x             | o             | OSC2 MIX              |
+    |                            20 | x             | o             | OSC2 COARSE (-/+)     |
+    |                            21 | x             | o             | OSC2 FINE (-/+)       |
+    |                               |               |               |                       |
+    |                            29 | x             | o             | SUB WAVE (SIN/SQ)     |
     |                            26 | x             | o             | SUB OSC MIX           |
+    |                           104 | x             | x             | (RESERVED)            |
+    |                           105 | x             | x             | (RESERVED)            |
+    |                               |               |               |                       |
+    |                            16 | x             | o             | CUTOFF                |
+    |                            17 | x             | o             | RESONANCE             |
+    |                            18 | x             | o             | CUTOFF < EG (-/+)     |
+    |                            31 | x             | o             | AMP (GATE+RLS/EG)     |
+    |                               |               |               |                       |
+    |                            23 | x             | o             | ATTACK                |
+    |                            19 | x             | o             | DECAY                 |
     |                            27 | x             | o             | SUSTAIN               |
     |                            28 | x             | x             | (RESERVED)            |
-    |                            29 | x             | o             | SUB WAVE (SIN/SQ)     |
-    |                            30 | x             | o             | LEGATO (OFF/ON)       |
-    |                            31 | x             | o             | AMP (GATE+RLS/EG)     |
-    |                            80 | x             | o             | LFO RATE              |
+    |                               |               |               |                       |
+    |                            14 | x             | o             | LFO WAVE (TRI/SQ)     |
     |                            81 | x             | o             | LFO DEPTH             |
     |                            82 | x             | o             | LFO > PITCH (2/1+2)   |
     |                            83 | x             | o             | LFO > CUTOFF (-/+)    |
+    |                               |               |               |                       |
+    |                            80 | x             | o             | LFO RATE              |
     |                             3 | x             | x             | (RESERVED)            |
     |                             9 | x             | x             | (RESERVED)            |
-    |                            14 | x             | o             | LFO WAVE (TRI/SQ)     |
     |                            15 | x             | x             | (RESERVED)            |
+    |                               |               |               |                       |
     |                            85 | x             | o             | P. BEND RANGE         |
     |                            86 | x             | x             | (RESERVED)            |
-    |                            87 | x             | o             | KEY ASGN (LO/LAST)    |
-    |                            89 | x             | x             | (RESERVED)            |
-    |                           104 | x             | x             | (RESERVED)            |
-    |                           105 | x             | x             | (RESERVED)            |
     |                           106 | x             | x             | (RESERVED)            |
     |                           107 | x             | x             | (RESERVED)            |
+    |                               |               |               |                       |
+    |                            22 | x             | o             | PORTAMENTO            |
+    |                            30 | x             | o             | LEGATO (OFF/ON)       |
+    |                            87 | x             | o             | KEY ASGN (LO/LAST)    |
+    |                            89 | x             | x             | (RESERVED)            |
     +-------------------------------+---------------+---------------+-----------------------+
     | Program                       | x             | o             |                       |
     | Change       : True #         | ************* | 0-7           |                       |

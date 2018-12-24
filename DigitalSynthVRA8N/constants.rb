@@ -52,45 +52,45 @@ ACTIVE_SENSING        = 0xFE
 
 MODULATION    = 1
 
+OSC_WAVE      = 24
+OSC2_MIX      = 25
+OSC2_COARSE   = 20
+OSC2_FINE     = 21
+
+SUB_OSC_WAVE  = 29
+SUB_OSC_MIX   = 26
+CC104         = 104
+CC105         = 105
+
 FILTER_CUTOFF = 16
 FILTER_RESO   = 17
 CUTOFF_EG_AMT = 18
-EG_DECAY      = 19
-
-OSC2_COARSE   = 20
-OSC2_FINE     = 21
-PORTAMENTO    = 22
-EG_ATTACK     = 23
-
-OSC_WAVE      = 24
-OSC2_MIX      = 25
-SUB_OSC_MIX   = 26
-EG_SUSTAIN    = 27
-
-CC28          = 28
-SUB_OSC_WAVE  = 29
-LEGATO        = 30
 AMP_EG_ON     = 31
 
-LFO_RATE      = 80
+EG_ATTACK     = 23
+EG_DECAY      = 19
+EG_SUSTAIN    = 27
+CC28          = 28
+
+LFO_WAVE      = 14
 LFO_DEPTH     = 81
 PITCH_LFO_AMT = 82
 CO_LFO_AMT    = 83
 
+LFO_RATE      = 80
 CC3           = 3
 CC9           = 9
-LFO_WAVE      = 14
 CC15          = 15
 
 PB_RANGE      = 85
 CC86          = 86
-KEY_ASSIGN    = 87
-CC89          = 89
-
-CC104         = 104
-CC105         = 105
 CC106         = 106
 CC107         = 107
+
+PORTAMENTO    = 22
+LEGATO        = 30
+KEY_ASSIGN    = 87
+CC89          = 89
 
 ALL_NOTES_OFF = 123
 OMNI_MODE_OFF = 124
