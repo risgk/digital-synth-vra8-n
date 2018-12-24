@@ -517,100 +517,100 @@ function noteOff(noteNumber) {
     <td>RESONANCE             </td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
     <td>CUTOFF < EG (-/+)     </td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
     <td>DECAY                 </td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
-<tr><td><input id="inputCC16" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(16, value)"></td>
+<tr><td><input id="inputCC16" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(FILTER_CUTOFF, value)"></td>
     <td><span   id="spanCC16">-1</span></td>
-    <td><input id="inputCC17" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(17, value)"></td>
+    <td><input id="inputCC17" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(FILTER_RESO, value)"></td>
     <td><span   id="spanCC17">-1</span></td>
-    <td><input id="inputCC18" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(18, value)"></td>
+    <td><input id="inputCC18" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(CUTOFF_EG_AMT, value)"></td>
     <td><span   id="spanCC18">-1</span></td>
-    <td><input id="inputCC19" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(19, value)"></td>
+    <td><input id="inputCC19" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(EG_DECAY, value)"></td>
     <td><span   id="spanCC19">-1</span></td></tr>
 <tr><td>OSC2 COARSE (-/+)     </td><td></td>
     <td>OSC2 FINE (-/+)       </td><td></td>
     <td>PORTAMENTO            </td><td></td>
     <td>ATTACK                </td></tr>
-<tr><td><input id="inputCC20" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(20, value)"></td>
+<tr><td><input id="inputCC20" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(OSC2_COARSE, value)"></td>
     <td><span   id="spanCC20">-1</span></td>
-    <td><input id="inputCC21" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(21, value)"></td>
+    <td><input id="inputCC21" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(OSC2_FINE, value)"></td>
     <td><span   id="spanCC21">-1</span></td>
-    <td><input id="inputCC22" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(22, value)"></td>
+    <td><input id="inputCC22" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(PORTAMENTO, value)"></td>
     <td><span   id="spanCC22">-1</span></td>
-    <td><input id="inputCC23" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(23, value)"></td>
+    <td><input id="inputCC23" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(EG_ATTACK, value)"></td>
     <td><span   id="spanCC23">-1</span></td></tr>
 <tr><td>&nbsp;</td></tr>
 <tr><td>OSC WAVE (SAW/SQ)     </td><td></td>
     <td>OSC2 MIX              </td><td></td>
     <td>SUB OSC MIX           </td><td></td>
     <td>SUSTAIN               </td></tr>
-<tr><td><input id="inputCC24" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(24, value)"></td>
+<tr><td><input id="inputCC24" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(OSC_WAVE, value)"></td>
     <td><span   id="spanCC24">-1</span></td>
-    <td><input id="inputCC25" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(25, value)"></td>
+    <td><input id="inputCC25" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(OSC2_MIX, value)"></td>
     <td><span   id="spanCC25">-1</span></td>
-    <td><input id="inputCC26" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(26, value)"></td>
+    <td><input id="inputCC26" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(SUB_OSC_MIX, value)"></td>
     <td><span   id="spanCC26">-1</span></td>
-    <td><input id="inputCC27" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(27, value)"></td>
+    <td><input id="inputCC27" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(EG_SUSTAIN, value)"></td>
     <td><span   id="spanCC27">-1</span></td></tr>
 <tr><td>                      </td><td></td>
     <td>SUB WAVE (SIN/SQ)     </td><td></td>
     <td>LEGATO (OFF/ON)       </td><td></td>
     <td>AMP (GATE+RLS/EG)     </td></tr>
-<tr><td><input id="inputCC28" style="visibility:hidden" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(28, value)"></td>
+<tr><td><input id="inputCC28" style="visibility:hidden" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(CC28, value)"></td>
     <td><span   id="spanCC28" style="visibility:hidden">-1</span></td>
-    <td><input id="inputCC29" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(29, value)"></td>
+    <td><input id="inputCC29" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(SUB_OSC_WAVE, value)"></td>
     <td><span   id="spanCC29">-1</span></td>
-    <td><input id="inputCC30" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(30, value)"></td>
+    <td><input id="inputCC30" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(LEGATO, value)"></td>
     <td><span   id="spanCC30">-1</span></td>
-    <td><input id="inputCC31" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(31, value)"></td>
+    <td><input id="inputCC31" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(AMP_EG_ON, value)"></td>
     <td><span   id="spanCC31">-1</span></td></tr>
 <tr><td>&nbsp;</td></tr>
 <tr><td>LFO RATE              </td><td></td>
     <td>LFO DEPTH             </td><td></td>
     <td>LFO > PITCH (2/1+2)   </td><td></td>
     <td>LFO > CUTOFF (-/+)    </td></tr>
-<tr><td><input id="inputCC80" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(80, value)"></td>
+<tr><td><input id="inputCC80" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(LFO_RATE, value)"></td>
     <td><span   id="spanCC80">-1</span></td>
-    <td><input id="inputCC81" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(81, value)"></td>
+    <td><input id="inputCC81" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(LFO_DEPTH, value)"></td>
     <td><span   id="spanCC81">-1</span></td>
-    <td><input id="inputCC82" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(82, value)"></td>
+    <td><input id="inputCC82" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(PITCH_LFO_AMT, value)"></td>
     <td><span   id="spanCC82">-1</span></td>
-    <td><input id="inputCC83" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(83, value)"></td>
+    <td><input id="inputCC83" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(CO_LFO_AMT, value)"></td>
     <td><span   id="spanCC83">-1</span></td></tr>
 <tr><td>                      </td><td></td>
     <td>                      </td><td></td>
     <td>LFO WAVE (TRI/SQ)     </td><td></td>
     <td>                      </td></tr>
-<tr><td><input id="inputCC3"  style="visibility:hidden" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(3,  value)"></td>
+<tr><td><input id="inputCC3"  style="visibility:hidden" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(CC3,  value)"></td>
     <td><span   id="spanCC3"  style="visibility:hidden">-1</span></td>
-    <td><input id="inputCC9"  style="visibility:hidden" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(9,  value)"></td>
+    <td><input id="inputCC9"  style="visibility:hidden" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(CC9,  value)"></td>
     <td><span   id="spanCC9"  style="visibility:hidden">-1</span></td>
-    <td><input id="inputCC14" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(14, value)"></td>
+    <td><input id="inputCC14" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(LFO_WAVE, value)"></td>
     <td><span   id="spanCC14">-1</span></td>
-    <td><input id="inputCC15" style="visibility:hidden" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(15, value)"></td>
+    <td><input id="inputCC15" style="visibility:hidden" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(CC15, value)"></td>
     <td><span   id="spanCC15" style="visibility:hidden">-1</span></td></tr>
 <tr><td>&nbsp;</td></tr>
 <tr><td>P. BEND RANGE         </td><td></td>
     <td>                      </td><td></td>
     <td>KEY ASGN (LO/LAST)    </td><td></td>
     <td>                      </td></tr>
-<tr><td><input id="inputCC85" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(85, value)"></td>
+<tr><td><input id="inputCC85" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(PB_RANGE, value)"></td>
     <td><span   id="spanCC85">-1</span></td>
-    <td><input id="inputCC86" style="visibility:hidden" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(86, value)"></td>
+    <td><input id="inputCC86" style="visibility:hidden" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(CC86, value)"></td>
     <td><span   id="spanCC86" style="visibility:hidden">-1</span></td>
-    <td><input id="inputCC87" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(87, value)"></td>
+    <td><input id="inputCC87" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(KEY_ASSIGN, value)"></td>
     <td><span   id="spanCC87">-1</span></td>
-    <td><input id="inputCC89" style="visibility:hidden" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(89, value)"></td>
+    <td><input id="inputCC89" style="visibility:hidden" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(CC89, value)"></td>
     <td><span   id="spanCC89" style="visibility:hidden">-1</span></td></tr>
 <tr><td>                      </td><td></td>
     <td>                      </td><td></td>
     <td>                      </td><td></td>
     <td>                      </td></tr>
-<tr><td><input id="inputCC104" style="visibility:hidden" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(104, value)"></td>
+<tr><td><input id="inputCC104" style="visibility:hidden" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(CC104, value)"></td>
     <td><span   id="spanCC104" style="visibility:hidden">-1</span></td>
-    <td><input id="inputCC105" style="visibility:hidden" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(105, value)"></td>
+    <td><input id="inputCC105" style="visibility:hidden" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(CC105, value)"></td>
     <td><span   id="spanCC105" style="visibility:hidden">-1</span></td>
-    <td><input id="inputCC106" style="visibility:hidden" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(106, value)"></td>
+    <td><input id="inputCC106" style="visibility:hidden" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(CC106, value)"></td>
     <td><span   id="spanCC106" style="visibility:hidden">-1</span></td>
-    <td><input id="inputCC107" style="visibility:hidden" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(107, value)"></td>
+    <td><input id="inputCC107" style="visibility:hidden" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(CC107, value)"></td>
     <td><span   id="spanCC107" style="visibility:hidden">-1</span></td></tr>
 <tr><td>&nbsp;</td></tr>
 </table>
