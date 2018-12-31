@@ -82,7 +82,7 @@
     |                            16 | x             | o             | CUTOFF                |
     |                            17 | x             | o             | RESONANCE             |
     |                            18 | x             | o             | CUTOFF < EG (-/+)     |
-    |                            31 | x             | o             | AMP (GATE/EG)         |
+    |                            31 | x             | o             | AMP MODE (GATE/EG)    |
     |                               |               |               |                       |
     |                            23 | x             | o             | ATTACK                |
     |                            19 | x             | o             | DECAY                 |
