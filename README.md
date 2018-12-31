@@ -33,13 +33,13 @@
 
 ## VRA8-N CTRL
 
-- MIDI Controller (Parameter Editor) for VRA8-N, Web App
+- MIDI Controller (Editor) for VRA8-N, Web App
 - VRA8-N CTRL converts Program Changes (#0-7 for PRESET) into Control Changes
 - VRA8-N CTRL memorizes USER Programs (#8-15)
 - We recommend Google Chrome, which implements Web MIDI API
 - We recommend [loopMIDI](http://www.tobias-erichsen.de/software/loopmidi.html) (virtual loopback MIDI cable) to connect VRA8-N
 - **CAUTION**: Low CUTOFF with high RESONANCE can damage the speakers
-- **CAUTION**: Click sounds may occur when you change the parameters
+- **CAUTION**: Click sounds may occur when you change the control values
 
 
 ## MIDI Implementation Chart
@@ -70,7 +70,7 @@
     | Control                     1 | x             | o             | MODULATION DEPTH      |
     | Change                        |               |               |                       |
     |                            24 | x             | o             | OSC WAVE (SAW/SQ)     |
-    |                            25 | x             | o             | OSC1/2 MIX            |
+    |                            25 | x             | o             | OSC MIX (1/2)         |
     |                            20 | x             | o             | OSC2 COARSE (-/+)     |
     |                            21 | x             | o             | OSC2 FINE (-/+)       |
     |                               |               |               |                       |
@@ -89,7 +89,7 @@
     |                            27 | x             | o             | SUSTAIN               |
     |                            28 | x             | x             | RELEASE (OFF/ON)      |
     |                               |               |               |                       |
-    |                            14 | x             | o             | LFO TRI/D/S&H/U/SQ    |
+    |                            14 | x             | o             | LFO (T/D/S&H/U/SQ)    |
     |                            81 | x             | o             | LFO DEPTH             |
     |                            82 | x             | o             | LFO > PITCH (2/1+2)   |
     |                            83 | x             | o             | LFO > CUTOFF (-/+)    |
