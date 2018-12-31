@@ -89,7 +89,7 @@
     |                            27 | x             | o             | SUSTAIN               |
     |                            28 | x             | x             | (RESERVED)            |
     |                               |               |               |                       |
-    |                            14 | x             | o             | LFO WAVE (TRI/SQ)     |
+    |                            14 | x             | o             | LFO TRI/D/S&H/U/SQ    |
     |                            81 | x             | o             | LFO DEPTH             |
     |                            82 | x             | o             | LFO > PITCH (2/1+2)   |
     |                            83 | x             | o             | LFO > CUTOFF (-/+)    |

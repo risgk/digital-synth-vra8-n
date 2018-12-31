@@ -56,7 +56,7 @@ public:
       } else {
         IOsc<0>::set_portamento(0);
         IFilter<0>::note_on(cutoff_v);
-        IOsc<0>::reset_lfo_phase_if_sq();
+        IOsc<0>::reset_lfo_phase_unless_tri();
         IEnvGen<0>::note_on();
         IEnvGen<1>::note_on();
       }
@@ -64,7 +64,7 @@ public:
       IOsc<0>::set_portamento(m_portamento);
       if (m_key_assign_last || (m_current_note_number == NOTE_NUMBER_INVALID)) {
         IFilter<0>::note_on(cutoff_v);
-        IOsc<0>::reset_lfo_phase_if_sq();
+        IOsc<0>::reset_lfo_phase_unless_tri();
         IEnvGen<0>::note_on();
         IEnvGen<1>::note_on();
       }
@@ -96,14 +96,14 @@ public:
             IOsc<0>::set_portamento(m_portamento);
           } else {
             IOsc<0>::set_portamento(0);
-            IOsc<0>::reset_lfo_phase_if_sq();
+            IOsc<0>::reset_lfo_phase_unless_tri();
             IEnvGen<0>::note_on();
             IEnvGen<1>::note_on();
           }
         } else {
           IOsc<0>::set_portamento(m_portamento);
           if (m_key_assign_last || (m_current_note_number == NOTE_NUMBER_INVALID)) {
-            IOsc<0>::reset_lfo_phase_if_sq();
+            IOsc<0>::reset_lfo_phase_unless_tri();
             IEnvGen<0>::note_on();
             IEnvGen<1>::note_on();
           }
