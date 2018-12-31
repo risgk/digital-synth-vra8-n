@@ -109,3 +109,8 @@ const uint8_t   LFO_WAVEFORM_SAW_DOWN        = 32;
 const uint8_t   LFO_WAVEFORM_SAMPLE_AND_HOLD = 64;
 const uint8_t   LFO_WAVEFORM_SAW_UP          = 96;
 const uint8_t   LFO_WAVEFORM_SQ              = 127;
+
+const uint8_t   KEY_ASSIGN_LOW  = 0;
+const uint8_t   KEY_ASSIGN_DUO  = 64;
+const uint8_t   KEY_ASSIGN_HIGH = 96;
+const uint8_t   KEY_ASSIGN_LAST = 127;
