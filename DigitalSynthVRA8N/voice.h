@@ -180,7 +180,11 @@ public:
       break;
     case EG_SUSTAIN:
       {
-        m_sustain = controller_value;
+        if (controller_value >= 64) {
+          m_sustain = 127;
+        } else {
+          m_sustain = 0;
+        }
 
         if (m_amp_env_gen >= 64) {
           IEnvGen<0>::set_sustain(m_sustain);

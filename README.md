@@ -86,12 +86,12 @@
     |                               |               |               |                       |
     |                            23 | x             | o             | ATTACK                |
     |                            19 | x             | o             | DECAY                 |
-    |                            27 | x             | o             | SUSTAIN               |
+    |                            27 | x             | o             | SUSTAIN (OFF/ON)      |
     |                            28 | x             | x             | RELEASE (OFF/ON)      |
     |                               |               |               |                       |
     |                            14 | x             | o             | LFO (T/D/S&H/U/SQ)    |
     |                            81 | x             | o             | LFO DEPTH             |
-    |                            82 | x             | o             | LFO > PITCH (2/1+2)   |
+    |                            82 | x             | o             | LFO > PITCH (2/1&2)   |
     |                            83 | x             | o             | LFO > CUTOFF (-/+)    |
     |                               |               |               |                       |
     |                            80 | x             | o             | LFO RATE              |
