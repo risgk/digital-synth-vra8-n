@@ -16,6 +16,7 @@ class Voice {
   static uint8_t m_attack;
   static uint8_t m_decay;
   static uint8_t m_sustain;
+  static uint8_t m_release;
   static uint8_t m_amp_env_gen;
 
 public:
@@ -36,6 +37,7 @@ public:
     m_attack = 0;
     m_decay = 0;
     m_sustain = 127;
+    m_release = 0;
     m_amp_env_gen = 127;
     update_env_gen();
   }
@@ -144,12 +146,7 @@ public:
       break;
     case EG_DECAY:
       m_decay = controller_value;
-      if (m_amp_env_gen >= 64) {
-        IEnvGen<0>::set_decay(m_decay);
-        IEnvGen<1>::set_decay(m_decay);
-      } else {
-        IEnvGen<0>::set_decay(m_decay);
-      }
+      update_decay_release();
       break;
 
     case OSC2_COARSE:
@@ -246,6 +243,11 @@ public:
       }
       break;
 
+    case EG_RELEASE:
+      m_release = controller_value;
+      update_decay_release();
+      break;
+
     case ALL_NOTES_OFF:
     case OMNI_MODE_OFF:
     case OMNI_MODE_ON:
@@ -284,7 +286,7 @@ public:
     control_change(EG_ATTACK    , preset_table_EG_ATTACK    [program_number]);
     control_change(EG_DECAY     , preset_table_EG_DECAY     [program_number]);
     control_change(EG_SUSTAIN   , preset_table_EG_SUSTAIN   [program_number]);
-    control_change(CC28         , preset_table_CC28         [program_number]);
+    control_change(EG_RELEASE   , preset_table_EG_RELEASE   [program_number]);
 
     control_change(LFO_WAVE     , preset_table_LFO_WAVE     [program_number]);
     control_change(LFO_RATE     , preset_table_LFO_RATE     [program_number]);
@@ -390,21 +392,55 @@ private:
     return lowest_on_note;
   }
 
+  INLINE static void update_decay_release() {
+    if (m_amp_env_gen >= 64) {
+      IEnvGen<0>::set_decay(m_decay);
+      IEnvGen<1>::set_decay(m_decay);
+      if (m_release >= 64) {
+        IEnvGen<0>::set_release(m_decay);
+        IEnvGen<1>::set_release(m_decay);
+      } else {
+        IEnvGen<0>::set_release(0);
+        IEnvGen<1>::set_release(0);
+      }
+    } else {
+      IEnvGen<0>::set_decay(m_decay);
+      if (m_release >= 64) {
+        IEnvGen<0>::set_release(m_decay);
+      } else {
+        IEnvGen<0>::set_release(0);
+      }
+    }
+  }
+
   INLINE static void update_env_gen() {
     if (m_amp_env_gen >= 64) {
       IEnvGen<0>::set_attack(m_attack);
-      IEnvGen<0>::set_decay(m_decay);
-      IEnvGen<0>::set_sustain(m_sustain);
       IEnvGen<1>::set_attack(m_attack);
+      IEnvGen<0>::set_decay(m_decay);
       IEnvGen<1>::set_decay(m_decay);
+      IEnvGen<0>::set_sustain(m_sustain);
       IEnvGen<1>::set_sustain(m_sustain);
+      if (m_release >= 64) {
+        IEnvGen<0>::set_release(m_decay);
+        IEnvGen<1>::set_release(m_decay);
+      } else {
+        IEnvGen<0>::set_release(0);
+        IEnvGen<1>::set_release(0);
+      }
     } else {
       IEnvGen<0>::set_attack(m_attack);
-      IEnvGen<0>::set_decay(m_decay);
-      IEnvGen<0>::set_sustain(m_sustain);
       IEnvGen<1>::set_attack(0);
+      IEnvGen<0>::set_decay(m_decay);
       IEnvGen<1>::set_decay(m_amp_env_gen << 1);
+      IEnvGen<0>::set_sustain(m_sustain);
       IEnvGen<1>::set_sustain(127);
+      if (m_release >= 64) {
+        IEnvGen<0>::set_release(m_decay);
+      } else {
+        IEnvGen<0>::set_release(0);
+      }
+      IEnvGen<1>::set_release(m_amp_env_gen << 1);
     }
   }
 };
@@ -422,4 +458,5 @@ template <uint8_t T> int8_t Voice<T>::m_cutoff_velocity_amt;
 template <uint8_t T> uint8_t Voice<T>::m_attack;
 template <uint8_t T> uint8_t Voice<T>::m_decay;
 template <uint8_t T> uint8_t Voice<T>::m_sustain;
+template <uint8_t T> uint8_t Voice<T>::m_release;
 template <uint8_t T> uint8_t Voice<T>::m_amp_env_gen;

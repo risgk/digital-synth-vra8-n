@@ -70,7 +70,7 @@ AMP_EG_ON     = 31
 EG_ATTACK     = 23
 EG_DECAY      = 19
 EG_SUSTAIN    = 27
-CC28          = 28
+EG_RELEASE    = 28
 
 LFO_WAVE      = 14
 LFO_DEPTH     = 81

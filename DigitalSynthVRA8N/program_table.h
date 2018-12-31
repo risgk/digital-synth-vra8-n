@@ -19,7 +19,7 @@ const uint8_t preset_table_AMP_EG_ON    [] = {127, 32 , 127, 127, 127, 127, 127,
 const uint8_t preset_table_EG_ATTACK    [] = {0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  };
 const uint8_t preset_table_EG_DECAY     [] = {64 , 96 , 96 , 0  , 0  , 0  , 0  , 0  };
 const uint8_t preset_table_EG_SUSTAIN   [] = {127, 0  , 0  , 127, 127, 127, 127, 127};
-const uint8_t preset_table_CC28         [] = {0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  };
+const uint8_t preset_table_EG_RELEASE   [] = {127, 127, 127, 127, 127, 127, 127, 127};
 
 const uint8_t preset_table_LFO_WAVE     [] = {0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  };
 const uint8_t preset_table_LFO_RATE     [] = {64 , 64 , 64 , 64 , 64 , 64 , 64 , 64 };

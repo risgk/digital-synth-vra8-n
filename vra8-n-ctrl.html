@@ -67,7 +67,7 @@ const AMP_EG_ON     = 31;
 const EG_ATTACK     = 23;
 const EG_DECAY      = 19;
 const EG_SUSTAIN    = 27;
-const CC28          = 28;
+const EG_RELEASE    = 28;
 
 const LFO_WAVE      = 14;
 const LFO_DEPTH     = 81;
@@ -121,7 +121,7 @@ var controllersInLocalStorage = [
   EG_ATTACK    ,
   EG_DECAY     ,
   EG_SUSTAIN   ,
-//CC28         ,
+  EG_RELEASE   ,
 
   LFO_WAVE     ,
   LFO_RATE     ,
@@ -367,7 +367,7 @@ function preset(number) {
   presetControllers[EG_ATTACK    ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
   presetControllers[EG_DECAY     ] = [64 , 96 , 96 , 0  , 0  , 0  , 0  , 0  ];
   presetControllers[EG_SUSTAIN   ] = [127, 0  , 0  , 127, 127, 127, 127, 127];
-  presetControllers[CC28         ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
+  presetControllers[EG_RELEASE   ] = [127, 127, 127, 127, 127, 127, 127, 127];
 
   presetControllers[LFO_WAVE     ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
   presetControllers[LFO_RATE     ] = [64 , 64 , 64 , 64 , 64 , 64 , 64 , 64 ];
@@ -553,15 +553,15 @@ function noteOff(noteNumber) {
 <tr><td>ATTACK                </td><td></td>
     <td>DECAY                 </td><td></td>
     <td>SUSTAIN               </td><td></td>
-    <td>                      </td><td></td></tr>
+    <td>RELEASE (OFF/ON)      </td><td></td></tr>
 <tr><td><input id="inputCC23" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(EG_ATTACK, value)"></td>
     <td><span   id="spanCC23">-1</span></td>
     <td><input id="inputCC19" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(EG_DECAY, value)"></td>
     <td><span   id="spanCC19">-1</span></td>
     <td><input id="inputCC27" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(EG_SUSTAIN, value)"></td>
     <td><span   id="spanCC27">-1</span></td>
-    <td><input id="inputCC28" style="visibility:hidden" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(CC28, value)"></td>
-    <td><span   id="spanCC28" style="visibility:hidden">-1</span></td></tr>
+    <td><input id="inputCC28" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(EG_RELEASE, value)"></td>
+    <td><span   id="spanCC28">-1</span></td></tr>
 <tr><td>&nbsp;</td></tr>
     <td>LFO TRI/D/S&H/U/SQ    </td><td></td>
     <td>LFO RATE              </td><td></td>

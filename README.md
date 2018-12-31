@@ -87,7 +87,7 @@
     |                            23 | x             | o             | ATTACK                |
     |                            19 | x             | o             | DECAY                 |
     |                            27 | x             | o             | SUSTAIN               |
-    |                            28 | x             | x             | (RESERVED)            |
+    |                            28 | x             | x             | RELEASE (OFF/ON)      |
     |                               |               |               |                       |
     |                            14 | x             | o             | LFO TRI/D/S&H/U/SQ    |
     |                            81 | x             | o             | LFO DEPTH             |

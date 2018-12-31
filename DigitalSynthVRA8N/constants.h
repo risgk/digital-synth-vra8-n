@@ -70,7 +70,7 @@ const uint8_t   AMP_EG_ON     = 31;
 const uint8_t   EG_ATTACK     = 23;
 const uint8_t   EG_DECAY      = 19;
 const uint8_t   EG_SUSTAIN    = 27;
-const uint8_t   CC28          = 28;
+const uint8_t   EG_RELEASE    = 28;
 
 const uint8_t   LFO_WAVE      = 14;
 const uint8_t   LFO_DEPTH     = 81;
