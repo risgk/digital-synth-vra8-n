@@ -370,7 +370,8 @@ private:
   INLINE static int8_t get_lfo_wave_level(uint16_t phase) {
     int8_t level = high_sbyte(phase);
 
-    if (m_lfo_waveform == LFO_WAVEFORM_TRI) {
+    switch (m_lfo_waveform) {
+    case LFO_WAVEFORM_TRI:
       if (level < -64) {
         level = -64 - (level + 64);
       } else if (level < 64) {
@@ -379,12 +380,14 @@ private:
         level = 64 - (level - 64);
       }
       level = -level;
-    } else {           // LFO_WAVEFORM_SQ
+      break;
+    case LFO_WAVEFORM_SQ:
       if (level >= 0) {
         level = 0;
       } else {
         level = -128;
       }
+      break;
     }
 
     return level;
