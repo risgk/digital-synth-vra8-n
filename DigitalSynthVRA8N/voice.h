@@ -176,7 +176,7 @@ public:
       IOsc<0>::set_waveform<1>(controller_value);
       break;
     case OSC2_MIX:
-      IOsc<0>::set_osc_mix((controller_value + 1) >> 1);
+      IOsc<0>::set_osc_mix(controller_value);
       break;
     case SUB_OSC_MIX:
       IOsc<0>::set_sub_osc_level(controller_value);

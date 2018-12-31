@@ -70,7 +70,7 @@
     | Control                     1 | x             | o             | MODULATION DEPTH      |
     | Change                        |               |               |                       |
     |                            24 | x             | o             | OSC WAVE (SAW/SQ)     |
-    |                            25 | x             | o             | OSC2 MIX              |
+    |                            25 | x             | o             | OSC1/2 MIX            |
     |                            20 | x             | o             | OSC2 COARSE (-/+)     |
     |                            21 | x             | o             | OSC2 FINE (-/+)       |
     |                               |               |               |                       |

@@ -2,7 +2,7 @@
 
 // PRESET                                     #0   #1   #2   #3   #4   #5   #6   #7   
 const uint8_t preset_table_OSC_WAVE     [] = {0  , 0  , 0  , 127, 0  , 0  , 0  , 0  };
-const uint8_t preset_table_OSC2_MIX     [] = {127, 127, 127, 127, 0  , 0  , 0  , 0  };
+const uint8_t preset_table_OSC2_MIX     [] = {64 , 64 , 64 , 64 , 0  , 0  , 0  , 0  };
 const uint8_t preset_table_OSC2_COARSE  [] = {71 , 64 , 64 , 64 , 64 , 64 , 64 , 64 };
 const uint8_t preset_table_OSC2_FINE    [] = {68 , 72 , 66 , 72 , 64 , 64 , 64 , 64 };
 
