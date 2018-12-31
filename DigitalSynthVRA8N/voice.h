@@ -432,7 +432,7 @@ private:
       IEnvGen<0>::set_attack(m_attack);
       IEnvGen<1>::set_attack(0);
       IEnvGen<0>::set_decay(m_decay);
-      IEnvGen<1>::set_decay(m_amp_env_gen << 1);
+      IEnvGen<1>::set_decay(0);
       IEnvGen<0>::set_sustain(m_sustain);
       IEnvGen<1>::set_sustain(127);
       if (m_release >= 64) {
@@ -440,7 +440,7 @@ private:
       } else {
         IEnvGen<0>::set_release(0);
       }
-      IEnvGen<1>::set_release(m_amp_env_gen << 1);
+      IEnvGen<1>::set_release(0);
     }
   }
 };

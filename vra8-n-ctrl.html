@@ -362,7 +362,7 @@ function preset(number) {
   presetControllers[FILTER_CUTOFF] = [79 , 31 , 7  , 127, 127, 127, 127, 127];
   presetControllers[FILTER_RESO  ] = [80 , 64 , 127, 0  , 0  , 0  , 0  , 0  ];
   presetControllers[CUTOFF_EG_AMT] = [82 , 112, 94,  64 , 64 , 64 , 64 , 64 ];
-  presetControllers[AMP_EG_ON    ] = [127, 32 , 127, 127, 127, 127, 127, 127];
+  presetControllers[AMP_EG_ON    ] = [127, 0  , 127, 127, 127, 127, 127, 127];
 
   presetControllers[EG_ATTACK    ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
   presetControllers[EG_DECAY     ] = [64 , 96 , 96 , 0  , 0  , 0  , 0  , 0  ];
@@ -541,7 +541,7 @@ function noteOff(noteNumber) {
 <tr><td>CUTOFF                </td><td></td>
     <td>RESONANCE             </td><td></td>
     <td>CUTOFF < EG (-/+)     </td><td></td>
-    <td>AMP (GATE+RLS/EG)     </td><td></td></tr>
+    <td>AMP (GATE/EG)         </td><td></td></tr>
 <tr><td><input id="inputCC16" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(FILTER_CUTOFF, value)"></td>
     <td><span   id="spanCC16">-1</span></td>
     <td><input id="inputCC17" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(FILTER_RESO, value)"></td>
