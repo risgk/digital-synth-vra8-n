@@ -89,7 +89,7 @@
     |                            27 | x             | o             | SUSTAIN (OFF/ON)      |
     |                            28 | x             | x             | RELEASE (OFF/ON)      |
     |                               |               |               |                       |
-    |                            14 | x             | o             | LFO (T/D/S&H/U/SQ)    |
+    |                            14 | x             | o             | LFO (T/2/S&H/SA/SQ)   |
     |                            80 | x             | o             | LFO RATE              |
     |                            82 | x             | o             | LFO > PITCH (2/1&2)   |
     |                            83 | x             | o             | LFO > CUTOFF (-/+)    |
