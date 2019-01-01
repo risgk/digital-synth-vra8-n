@@ -458,7 +458,7 @@ private:
     m_pitch_real[N] += (64 << 8) + high_sbyte((m_fluctuation >> 2) * static_cast<int8_t>(get_red_noise_8() - 127));
 
     int16_t pitch_eg_mod_level = 0;
-    if ((N == 0) || m_pitch_eg_target_both) {
+    if ((N == 1) || m_pitch_eg_target_both) {
       pitch_eg_mod_level = eg_level * (m_pitch_eg_amt << 1);
     }
     m_pitch_real[N] += pitch_eg_mod_level;
