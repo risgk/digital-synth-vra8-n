@@ -143,6 +143,51 @@ var controllersInLocalStorage = [
   KEY_ASSIGN   ,
 //CC89         ,
 ];
+
+var presetControllers = {};
+
+// PRESET                           #0   #1   #2   #3   #4   #5   #6   #7   
+presetControllers[OSC_WAVE     ] = [0  , 0  , 0  , 127, 0  , 0  , 0  , 0  ];
+presetControllers[OSC2_MIX     ] = [64 , 64 , 64 , 64 , 0  , 0  , 0  , 0  ];
+presetControllers[OSC2_COARSE  ] = [71 , 64 , 64 , 64 , 64 , 64 , 64 , 64 ];
+presetControllers[OSC2_FINE    ] = [68 , 72 , 66 , 72 , 64 , 64 , 64 , 64 ];
+
+presetControllers[SUB_OSC_WAVE ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
+presetControllers[SUB_OSC_MIX  ] = [127, 127, 127, 0  , 0  , 0  , 0  , 0  ];
+presetControllers[PITCH_EG_AMT ] = [64 , 64 , 64 , 64 , 64 , 64 , 64 , 64 ];
+presetControllers[PITCH_EG_TGT ] = [127, 127, 127, 127, 127, 127, 127, 127];
+
+presetControllers[FILTER_CUTOFF] = [79 , 31 , 7  , 127, 127, 127, 127, 127];
+presetControllers[FILTER_RESO  ] = [80 , 64 , 127, 0  , 0  , 0  , 0  , 0  ];
+presetControllers[CUTOFF_EG_AMT] = [82 , 112, 94,  64 , 64 , 64 , 64 , 64 ];
+presetControllers[AMP_EG_ON    ] = [127, 0  , 127, 127, 127, 127, 127, 127];
+
+presetControllers[EG_ATTACK    ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
+presetControllers[EG_DECAY     ] = [64 , 96 , 96 , 0  , 0  , 0  , 0  , 0  ];
+presetControllers[EG_SUSTAIN   ] = [127, 0  , 0  , 127, 127, 127, 127, 127];
+presetControllers[EG_RELEASE   ] = [127, 127, 127, 127, 127, 127, 127, 127];
+
+presetControllers[LFO_WAVE     ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
+presetControllers[LFO_RATE     ] = [64 , 64 , 64 , 64 , 64 , 64 , 64 , 64 ];
+presetControllers[PITCH_LFO_AMT] = [65 , 65 , 64 , 65 , 64 , 64 , 64 , 64 ];
+presetControllers[CO_LFO_AMT   ] = [64 , 64 , 52 , 64 , 64 , 64 , 64 , 64 ];
+
+presetControllers[LFO_DEPTH    ] = [16 , 16 , 0  , 16 , 0  , 0  , 0  , 0  ];
+presetControllers[CC3          ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
+presetControllers[PITCH_LFO_TGT] = [0  , 127, 127, 127, 127, 127, 127, 127];
+presetControllers[CC15         ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
+
+presetControllers[PB_RANGE     ] = [2  , 2  , 2  , 2  , 2  , 2  , 2  , 2  ];
+presetControllers[CC86         ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
+presetControllers[CC106        ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
+presetControllers[CC107        ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
+
+presetControllers[PORTAMENTO   ] = [0  , 32 , 32 , 32 , 0  , 0  , 0  , 0  ];
+presetControllers[LEGATO       ] = [127, 127, 127, 127, 0  , 0  , 0  , 0  ];
+presetControllers[KEY_ASSIGN   ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
+presetControllers[CC89         ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
+
+const PRESET_NUMBER_NEUTRAL = 7;
 </script>
 <script>
 var transpose = 0;
@@ -346,49 +391,6 @@ function onChangeControlChange(number, value) {
 }
 
 function preset(number) {
-  var presetControllers = {};
-
-// PRESET                             #0   #1   #2   #3   #4   #5   #6   #7   
-  presetControllers[OSC_WAVE     ] = [0  , 0  , 0  , 127, 0  , 0  , 0  , 0  ];
-  presetControllers[OSC2_MIX     ] = [64 , 64 , 64 , 64 , 0  , 0  , 0  , 0  ];
-  presetControllers[OSC2_COARSE  ] = [71 , 64 , 64 , 64 , 64 , 64 , 64 , 64 ];
-  presetControllers[OSC2_FINE    ] = [68 , 72 , 66 , 72 , 64 , 64 , 64 , 64 ];
-
-  presetControllers[SUB_OSC_WAVE ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
-  presetControllers[SUB_OSC_MIX  ] = [127, 127, 127, 0  , 0  , 0  , 0  , 0  ];
-  presetControllers[PITCH_EG_AMT ] = [64 , 64 , 64 , 64 , 64 , 64 , 64 , 64 ];
-  presetControllers[PITCH_EG_TGT ] = [127, 127, 127, 127, 127, 127, 127, 127];
-
-  presetControllers[FILTER_CUTOFF] = [79 , 31 , 7  , 127, 127, 127, 127, 127];
-  presetControllers[FILTER_RESO  ] = [80 , 64 , 127, 0  , 0  , 0  , 0  , 0  ];
-  presetControllers[CUTOFF_EG_AMT] = [82 , 112, 94,  64 , 64 , 64 , 64 , 64 ];
-  presetControllers[AMP_EG_ON    ] = [127, 0  , 127, 127, 127, 127, 127, 127];
-
-  presetControllers[EG_ATTACK    ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
-  presetControllers[EG_DECAY     ] = [64 , 96 , 96 , 0  , 0  , 0  , 0  , 0  ];
-  presetControllers[EG_SUSTAIN   ] = [127, 0  , 0  , 127, 127, 127, 127, 127];
-  presetControllers[EG_RELEASE   ] = [127, 127, 127, 127, 127, 127, 127, 127];
-
-  presetControllers[LFO_WAVE     ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
-  presetControllers[LFO_RATE     ] = [64 , 64 , 64 , 64 , 64 , 64 , 64 , 64 ];
-  presetControllers[PITCH_LFO_AMT] = [65 , 65 , 64 , 65 , 64 , 64 , 64 , 64 ];
-  presetControllers[CO_LFO_AMT   ] = [64 , 64 , 52 , 64 , 64 , 64 , 64 , 64 ];
-
-  presetControllers[LFO_DEPTH    ] = [16 , 16 , 0  , 16 , 0  , 0  , 0  , 0  ];
-  presetControllers[CC3          ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
-  presetControllers[PITCH_LFO_TGT] = [0  , 127, 127, 127, 127, 127, 127, 127];
-  presetControllers[CC15         ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
-
-  presetControllers[PB_RANGE     ] = [2  , 2  , 2  , 2  , 2  , 2  , 2  , 2  ];
-  presetControllers[CC86         ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
-  presetControllers[CC106        ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
-  presetControllers[CC107        ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
-
-  presetControllers[PORTAMENTO   ] = [0  , 32 , 32 , 32 , 0  , 0  , 0  , 0  ];
-  presetControllers[LEGATO       ] = [127, 127, 127, 127, 0  , 0  , 0  , 0  ];
-  presetControllers[KEY_ASSIGN   ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
-  presetControllers[CC89         ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
-
   controllersInLocalStorage.forEach(function(i) {
     onChangeControlChange(i, presetControllers[i][number]);
   });
@@ -409,7 +411,7 @@ function loadControllers(number) {
   controllersInLocalStorage.forEach(function(i) {
     value = localStorage.getItem("keyMemory" + String(number) + "CC" + String(i));
     if (!value) {
-      value = 0;
+      value = presetControllers[i][PRESET_NUMBER_NEUTRAL];
     }
     onChangeControlChange(i, value);
   });
