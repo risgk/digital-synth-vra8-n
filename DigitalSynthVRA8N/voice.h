@@ -279,6 +279,16 @@ public:
         IOsc<0>::set_lfo_target_both(true);
       }
       break;
+    case PITCH_EG_AMT:
+      IOsc<0>::set_pitch_eg_amt(controller_value);
+      break;
+    case PITCH_EG_TGT:
+      if (controller_value < 64) {
+        IOsc<0>::set_pitch_eg_target_both(false);
+      } else {
+        IOsc<0>::set_pitch_eg_target_both(true);
+      }
+      break;
 
     case ALL_NOTES_OFF:
     case OMNI_MODE_OFF:
@@ -307,8 +317,8 @@ public:
 
     control_change(SUB_OSC_WAVE , preset_table_SUB_OSC_WAVE [program_number]);
     control_change(SUB_OSC_MIX  , preset_table_SUB_OSC_MIX  [program_number]);
-    control_change(CC104        , preset_table_CC104        [program_number]);
-    control_change(CC105        , preset_table_CC105        [program_number]);
+    control_change(PITCH_EG_AMT , preset_table_PITCH_EG_AMT [program_number]);
+    control_change(PITCH_EG_TGT , preset_table_PITCH_EG_TGT [program_number]);
 
     control_change(FILTER_CUTOFF, preset_table_FILTER_CUTOFF[program_number]);
     control_change(FILTER_RESO  , preset_table_FILTER_RESO  [program_number]);
@@ -344,9 +354,9 @@ public:
   INLINE static int8_t clock() {
     m_count++;
 
-    int16_t osc_output = IOsc<0>::clock(m_count);
-    int16_t lfo_output = IOsc<0>::get_lfo_level();
     uint8_t env_gen_output_0 = IEnvGen<0>::clock(m_count);
+    int16_t osc_output = IOsc<0>::clock(m_count, env_gen_output_0);
+    int16_t lfo_output = IOsc<0>::get_lfo_level();
     int16_t filter_output = IFilter<0>::clock(m_count, osc_output, env_gen_output_0, lfo_output);
     uint8_t env_gen_output_1 = IEnvGen<1>::clock(m_count);
     int16_t amp_output = IAmp<0>::clock(filter_output, env_gen_output_1);

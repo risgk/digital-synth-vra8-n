@@ -59,8 +59,8 @@ const uint8_t   OSC2_FINE     = 21;
 
 const uint8_t   SUB_OSC_WAVE  = 29;
 const uint8_t   SUB_OSC_MIX   = 26;
-const uint8_t   CC104         = 104;
-const uint8_t   CC105         = 105;
+const uint8_t   PITCH_EG_AMT  = 104;
+const uint8_t   PITCH_EG_TGT  = 105;
 
 const uint8_t   FILTER_CUTOFF = 16;
 const uint8_t   FILTER_RESO   = 17;

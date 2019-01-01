@@ -8,8 +8,8 @@ const uint8_t preset_table_OSC2_FINE    [] = {68 , 72 , 66 , 72 , 64 , 64 , 64 ,
 
 const uint8_t preset_table_SUB_OSC_WAVE [] = {0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  };
 const uint8_t preset_table_SUB_OSC_MIX  [] = {127, 127, 127, 0  , 0  , 0  , 0  , 0  };
-const uint8_t preset_table_CC104        [] = {0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  };
-const uint8_t preset_table_CC105        [] = {0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  };
+const uint8_t preset_table_PITCH_EG_AMT [] = {64 , 64 , 64 , 64 , 64 , 64 , 64 , 64 };
+const uint8_t preset_table_PITCH_EG_TGT [] = {127, 127, 127, 127, 127, 127, 127, 127};
 
 const uint8_t preset_table_FILTER_CUTOFF[] = {79 , 31 , 7  , 127, 127, 127, 127, 127};
 const uint8_t preset_table_FILTER_RESO  [] = {80 , 64 , 127, 0  , 0  , 0  , 0  , 0  };

@@ -56,8 +56,8 @@ const OSC2_FINE     = 21;
 
 const SUB_OSC_WAVE  = 29;
 const SUB_OSC_MIX   = 26;
-const CC104         = 104;
-const CC105         = 105;
+const PITCH_EG_AMT  = 104;
+const PITCH_EG_TGT  = 105;
 
 const FILTER_CUTOFF = 16;
 const FILTER_RESO   = 17;
@@ -110,8 +110,8 @@ var controllersInLocalStorage = [
 
   SUB_OSC_WAVE ,
   SUB_OSC_MIX  ,
-//CC104        ,
-//CC105        ,
+  PITCH_EG_AMT ,
+  PITCH_EG_TGT ,
 
   FILTER_CUTOFF,
   FILTER_RESO  ,
@@ -356,8 +356,8 @@ function preset(number) {
 
   presetControllers[SUB_OSC_WAVE ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
   presetControllers[SUB_OSC_MIX  ] = [127, 127, 127, 0  , 0  , 0  , 0  , 0  ];
-  presetControllers[CC104        ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
-  presetControllers[CC105        ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
+  presetControllers[PITCH_EG_AMT ] = [64 , 64 , 64 , 64 , 64 , 64 , 64 , 64 ];
+  presetControllers[PITCH_EG_TGT ] = [127, 127, 127, 127, 127, 127, 127, 127];
 
   presetControllers[FILTER_CUTOFF] = [79 , 31 , 7  , 127, 127, 127, 127, 127];
   presetControllers[FILTER_RESO  ] = [80 , 64 , 127, 0  , 0  , 0  , 0  , 0  ];
@@ -547,16 +547,16 @@ function noteOff(noteNumber) {
     <td><span   id="spanCC21">-1</span></td></tr>
 <tr><td>SUB WAVE (SIN/SQ)     </td><td></td>
     <td>SUB OSC MIX           </td><td></td>
-    <td>                      </td><td></td>
-    <td>                      </td><td></td></tr>
+    <td>PITCH < EG (-/+)      </td><td></td>
+    <td>P. < EG TGT (2/1&2)   </td><td></td></tr>
 <tr><td><input id="inputCC29" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(SUB_OSC_WAVE, value)"></td>
     <td><span   id="spanCC29">-1</span></td>
     <td><input id="inputCC26" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(SUB_OSC_MIX, value)"></td>
     <td><span   id="spanCC26">-1</span></td>
-    <td><input id="inputCC104" style="visibility:hidden" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(CC104, value)"></td>
-    <td><span   id="spanCC104" style="visibility:hidden">-1</span></td>
-    <td><input id="inputCC105" style="visibility:hidden" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(CC105, value)"></td>
-    <td><span   id="spanCC105" style="visibility:hidden">-1</span></td></tr>
+    <td><input id="inputCC104" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(PITCH_EG_AMT, value)"></td>
+    <td><span   id="spanCC104">-1</span></td>
+    <td><input id="inputCC105" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(PITCH_EG_TGT, value)"></td>
+    <td><span   id="spanCC105">-1</span></td></tr>
 <tr><td>&nbsp;</td></tr>
 <tr><td>CUTOFF                </td><td></td>
     <td>RESONANCE             </td><td></td>

@@ -23,7 +23,7 @@ class Osc {
   static int8_t         m_detune;
   static uint8_t        m_fluctuation;
   static uint8_t        m_portamento_coef;
-  static int16_t        m_mod_level[2];
+  static int16_t        m_lfo_mod_level[2];
   static uint16_t       m_lfo_phase;
   static int8_t         m_lfo_wave_level;
   static int16_t        m_lfo_level;
@@ -52,6 +52,9 @@ class Osc {
   static uint8_t        m_rnd;
   static uint8_t        m_rnd_prev;
   static boolean        m_note_on[2];
+  static int16_t        m_pitch_eg_mod_level[2];
+  static boolean        m_pitch_eg_target_both;
+  static int8_t         m_pitch_eg_amt;
 
 public:
   INLINE static void initialize() {
@@ -66,8 +69,8 @@ public:
     m_detune = 0;
     m_fluctuation = FLUCTUATION_INIT;
     m_portamento_coef = 0;
-    m_mod_level[0] = 0;
-    m_mod_level[1] = 0;
+    m_lfo_mod_level[0] = 0;
+    m_lfo_mod_level[1] = 0;
     m_lfo_phase = 0;
     m_lfo_wave_level = 0;
     m_lfo_level = 0;
@@ -104,6 +107,10 @@ public:
     m_rnd_prev = 0;
     m_note_on[0] = false;
     m_note_on[1] = false;
+    m_pitch_eg_mod_level[0] = 0;
+    m_pitch_eg_mod_level[1] = 0;
+    m_pitch_eg_target_both = true;
+    m_pitch_eg_amt = 0;
     set_pitch_bend_minus_range(2);
     set_pitch_bend_plus_range(2);
   }
@@ -211,6 +218,20 @@ public:
     }
   }
 
+  INLINE static void set_pitch_eg_amt(uint8_t controller_value) {
+    if (controller_value < 4) {
+      m_pitch_eg_amt = -60;
+    } else if (controller_value < 124) {
+      m_pitch_eg_amt = controller_value - 64;
+    } else {
+      m_pitch_eg_amt = 60;
+    }
+  }
+
+  INLINE static void set_pitch_eg_target_both(boolean pitch_eg_target_both) {
+    m_pitch_eg_target_both = pitch_eg_target_both;
+  }
+
   template <uint8_t N>
   INLINE static void note_on(uint8_t note_number) {
     m_pitch_target[N] = note_number << 8;
@@ -263,7 +284,7 @@ public:
     return m_lfo_level;
   }
 
-  INLINE static int16_t clock(uint8_t count) {
+  INLINE static int16_t clock(uint8_t count, uint8_t eg_level) {
     if ((count & 0x01) == 1) {
       int16_t wave_0_sub = get_wave_level(m_wave_table[2], m_phase[0] >> 8);
       int8_t mix_sub = m_mix_sub_current;
@@ -279,7 +300,7 @@ public:
         update_freq_0th<0>();
         break;
       case 0x1:
-        update_freq_1st<0>();
+        update_freq_1st<0>(eg_level);
         break;
       case 0x2:
         update_freq_2nd<0>();
@@ -306,7 +327,7 @@ public:
         update_freq_0th<1>();
         break;
       case 0x9:
-        update_freq_1st<1>();
+        update_freq_1st<1>(eg_level);
         break;
       case 0xA:
         update_freq_2nd<1>();
@@ -436,9 +457,17 @@ private:
   }
 
   template <uint8_t N>
-  INLINE static void update_freq_1st() {
+  INLINE static void update_freq_1st(uint8_t eg_level) {
     m_pitch_real[N] += (64 << 8) + high_sbyte((m_fluctuation >> 2) * static_cast<int8_t>(get_red_noise_8() - 127));
-    m_pitch_real[N] += m_mod_level[N];
+    m_pitch_real[N] += m_lfo_mod_level[N];
+
+    // todo: improve performance
+    if ((N == 0) || m_pitch_eg_target_both) {
+      m_pitch_eg_mod_level[N] = eg_level * (m_pitch_eg_amt << 1);
+    } else {
+      m_pitch_eg_mod_level[N] = 0;
+    }
+    m_pitch_real[N] += m_pitch_eg_mod_level[N];
 
     if (N == 1) {
       /* For OSC 2 */
@@ -510,11 +539,11 @@ private:
   }
 
   INLINE static void update_lfo_2nd() {
-    m_mod_level[1] = -mul_q15_q7(m_lfo_level, m_pitch_lfo_amt);
+    m_lfo_mod_level[1] = -mul_q15_q7(m_lfo_level, m_pitch_lfo_amt);
     if (m_pitch_lfo_target_both) {
-      m_mod_level[0] = m_mod_level[1];
+      m_lfo_mod_level[0] = m_lfo_mod_level[1];
     } else {
-      m_mod_level[0] = 0;
+      m_lfo_mod_level[0] = 0;
     }
   }
 
@@ -561,7 +590,7 @@ template <uint8_t T> int8_t          Osc<T>::m_pitch_offset_1;
 template <uint8_t T> int8_t          Osc<T>::m_detune;
 template <uint8_t T> uint8_t         Osc<T>::m_fluctuation;
 template <uint8_t T> uint8_t         Osc<T>::m_portamento_coef;
-template <uint8_t T> int16_t         Osc<T>::m_mod_level[2];
+template <uint8_t T> int16_t         Osc<T>::m_lfo_mod_level[2];
 template <uint8_t T> uint16_t        Osc<T>::m_lfo_phase;
 template <uint8_t T> int8_t          Osc<T>::m_lfo_wave_level;
 template <uint8_t T> int16_t         Osc<T>::m_lfo_level;
@@ -590,3 +619,6 @@ template <uint8_t T> uint16_t        Osc<T>::m_rnd_temp;
 template <uint8_t T> uint8_t         Osc<T>::m_rnd;
 template <uint8_t T> uint8_t         Osc<T>::m_rnd_prev;
 template <uint8_t T> boolean         Osc<T>::m_note_on[2];
+template <uint8_t T> int16_t         Osc<T>::m_pitch_eg_mod_level[2];
+template <uint8_t T> boolean         Osc<T>::m_pitch_eg_target_both;
+template <uint8_t T> int8_t          Osc<T>::m_pitch_eg_amt;
