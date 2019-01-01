@@ -52,7 +52,6 @@ class Osc {
   static uint8_t        m_rnd;
   static uint8_t        m_rnd_prev;
   static boolean        m_note_on[2];
-  static int16_t        m_pitch_eg_mod_level[2];
   static boolean        m_pitch_eg_target_both;
   static int8_t         m_pitch_eg_amt;
 
@@ -107,8 +106,6 @@ public:
     m_rnd_prev = 0;
     m_note_on[0] = false;
     m_note_on[1] = false;
-    m_pitch_eg_mod_level[0] = 0;
-    m_pitch_eg_mod_level[1] = 0;
     m_pitch_eg_target_both = true;
     m_pitch_eg_amt = 0;
     set_pitch_bend_minus_range(2);
@@ -459,24 +456,23 @@ private:
   template <uint8_t N>
   INLINE static void update_freq_1st(uint8_t eg_level) {
     m_pitch_real[N] += (64 << 8) + high_sbyte((m_fluctuation >> 2) * static_cast<int8_t>(get_red_noise_8() - 127));
-    m_pitch_real[N] += m_lfo_mod_level[N];
 
-    // todo: improve performance
+    int16_t pitch_eg_mod_level = 0;
     if ((N == 0) || m_pitch_eg_target_both) {
-      m_pitch_eg_mod_level[N] = eg_level * (m_pitch_eg_amt << 1);
-    } else {
-      m_pitch_eg_mod_level[N] = 0;
+      pitch_eg_mod_level = eg_level * (m_pitch_eg_amt << 1);
     }
-    m_pitch_real[N] += m_pitch_eg_mod_level[N];
+    m_pitch_real[N] += pitch_eg_mod_level;
+  }
+
+  template <uint8_t N>
+  INLINE static void update_freq_2nd() {
+    m_pitch_real[N] += m_lfo_mod_level[N];
 
     if (N == 1) {
       /* For OSC 2 */
       m_pitch_real[N] += (m_pitch_offset_1 << 8) + m_detune + m_detune;
     }
-  }
 
-  template <uint8_t N>
-  INLINE static void update_freq_2nd() {
     uint8_t coarse = high_byte(m_pitch_real[N]);
     if (coarse <= (NOTE_NUMBER_MIN + 64)) {
       m_pitch_real[N] = NOTE_NUMBER_MIN << 8;
@@ -619,6 +615,5 @@ template <uint8_t T> uint16_t        Osc<T>::m_rnd_temp;
 template <uint8_t T> uint8_t         Osc<T>::m_rnd;
 template <uint8_t T> uint8_t         Osc<T>::m_rnd_prev;
 template <uint8_t T> boolean         Osc<T>::m_note_on[2];
-template <uint8_t T> int16_t         Osc<T>::m_pitch_eg_mod_level[2];
 template <uint8_t T> boolean         Osc<T>::m_pitch_eg_target_both;
 template <uint8_t T> int8_t          Osc<T>::m_pitch_eg_amt;
