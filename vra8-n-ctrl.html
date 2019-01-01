@@ -416,7 +416,7 @@ function loadControllers(number) {
 }
 
 function saveControllers(number) {
-  var r = confirm("Save current parameters to Memory #" + String(number) + "?");
+  var r = confirm("Store control values to the program #" + String(number) + "?");
   if (r == false) {
     return;
   }
@@ -454,61 +454,81 @@ function noteOff(noteNumber) {
     <td>&nbsp;</td>
     <td>MIDI OUT</td>
     <td><select id="selectOutputPort" size="1" onchange="onChangeOutputPort()"></select></td>
-    <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
     <td>&nbsp;</td>
-    <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-    <td style="display:none">&nbsp;</td>
-    <td style="display:none">&nbsp;</td>
-    <td style="display:none">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+    <td>P. BEND</td>
+    <td>&nbsp;</td>
+    <td><span id="spanPB">-</span></td></tr>
 <tr><td>MIDI IN 2</td>
     <td><select id="selectInputPort2" size="1" onchange="onChangeInputPort2()"></select></td>
     <td>&nbsp;</td>
-    <td>KBD TR</td>
+    <td>KBD TRS</td>
     <td><input id="inputTranspose" type="range" min="-60" max="60" step="12" oninput="onChangeTranspose(value)" ></td>
     <td><span id="spanTranspose" >-1</span></td>
-    <td>P. BEND</td>
-    <td><span id="spanPB">-</span></td>
     <td>&nbsp;</td>
     <td>MOD</td>
+    <td>&nbsp;</td>
     <td><span id="spanCC1">-</span></td>
     <td style="display:none">&nbsp;</td>
     <td style="display:none">VEL</td>
+    <td style="display:none">&nbsp;</td>
     <td style="display:none"><span id="spanNoteOnVelocity">-</span></td></tr>
 </table>
 
 <table>
 <tr><td>PRESET</td>
     <td><input type="button" value="#0 FIFTH"       onclick="preset(0)"></td>
+    <td>&nbsp;</td>
     <td><input type="button" value="#1 LEAD"        onclick="preset(1)"></td>
+    <td>&nbsp;</td>
     <td><input type="button" value="#2 BASS"        onclick="preset(2)"></td>
+    <td>&nbsp;</td>
     <td><input type="button" value="#3 SQ"          onclick="preset(3)"></td>
     <td>&nbsp;</td>
     <td><input type="button" value="#7 NEUTRAL"     onclick="preset(7)"></td></tr>
 </table>
 
 <table>
-<tr><td><input type="button" value="LOAD #12"       onclick="loadControllers(12)"></td>
-    <td><input type="button" value="LOAD #13"       onclick="loadControllers(13)"></td>
-    <td><input type="button" value="LOAD #14"       onclick="loadControllers(14)"></td>
-    <td><input type="button" value="LOAD #15"       onclick="loadControllers(15)"></td>
+<tr><td>RECALL</td>
+    <td><input type="button" value="#12"           onclick="loadControllers(12)"></td>
     <td>&nbsp;</td>
-    <td><input type="button" value="SAVE #12"       onclick="saveControllers(12)"></td>
-    <td><input type="button" value="SAVE #13"       onclick="saveControllers(13)"></td>
-    <td><input type="button" value="SAVE #14"       onclick="saveControllers(14)"></td>
-    <td><input type="button" value="SAVE #15"       onclick="saveControllers(15)"></td>
+    <td><input type="button" value="#13"           onclick="loadControllers(13)"></td>
     <td>&nbsp;</td>
-    <td><input type="button" value="ALL NOTES OFF"  onclick="allNotesOff()"></td></tr>
-<tr><td><input type="button" value="LOAD #8"        onclick="loadControllers(8)"></td>
-    <td><input type="button" value="LOAD #9"        onclick="loadControllers(9)"></td>
-    <td><input type="button" value="LOAD #10"       onclick="loadControllers(10)"></td>
-    <td><input type="button" value="LOAD #11"       onclick="loadControllers(11)"></td>
+    <td><input type="button" value="#14"           onclick="loadControllers(14)"></td>
     <td>&nbsp;</td>
-    <td><input type="button" value="SAVE #8"        onclick="saveControllers(8)"></td>
-    <td><input type="button" value="SAVE #9"        onclick="saveControllers(9)"></td>
-    <td><input type="button" value="SAVE #10"       onclick="saveControllers(10)"></td>
-    <td><input type="button" value="SAVE #11"       onclick="saveControllers(11)"></td>
+    <td><input type="button" value="#15"           onclick="loadControllers(15)"></td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>STORE</td>
+    <td><input type="button" value="#12"           onclick="saveControllers(12)"></td>
     <td>&nbsp;</td>
-    <td><input type="button" value="RANDOM"         onclick="setRandom()"       ></td></tr>
+    <td><input type="button" value="#13"           onclick="saveControllers(13)"></td>
+    <td>&nbsp;</td>
+    <td><input type="button" value="#14"           onclick="saveControllers(14)"></td>
+    <td>&nbsp;</td>
+    <td><input type="button" value="#15"           onclick="saveControllers(15)"></td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>MISC</td>
+    <td><input type="button" value="ALL NOTES OFF" onclick="allNotesOff()"      ></td></tr>
+<tr><td>&nbsp;</td>
+    <td><input type="button" value="#8 "           onclick="loadControllers(8)" ></td>
+    <td>&nbsp;</td>
+    <td><input type="button" value="#9 "           onclick="loadControllers(9)" ></td>
+    <td>&nbsp;</td>
+    <td><input type="button" value="#10"           onclick="loadControllers(10)"></td>
+    <td>&nbsp;</td>
+    <td><input type="button" value="#11"           onclick="loadControllers(11)"></td>
+    <td>&nbsp;&nbsp;</td>
+    <td>&nbsp;</td>
+    <td><input type="button" value="#8 "           onclick="saveControllers(8)" ></td>
+    <td>&nbsp;</td>
+    <td><input type="button" value="#9 "           onclick="saveControllers(9)" ></td>
+    <td>&nbsp;</td>
+    <td><input type="button" value="#10"           onclick="saveControllers(10)"></td>
+    <td>&nbsp;</td>
+    <td><input type="button" value="#11"           onclick="saveControllers(11)"></td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>&nbsp;</td>
+    <td><input type="button" value="RANDOM"        onclick="setRandom()"        ></td></tr>
 <tr><td>&nbsp;</td></tr>
 </table>
 
@@ -588,7 +608,7 @@ function noteOff(noteNumber) {
     <td><input id="inputCC15" style="visibility:hidden" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(CC15, value)"></td>
     <td><span   id="spanCC15" style="visibility:hidden">-1</span></td></tr>
 <tr><td>&nbsp;</td></tr>
-    <td>P. BEND RANGE         </td><td></td>
+<tr><td>P. BEND RANGE         </td><td></td>
     <td>                      </td><td></td>
     <td>                      </td><td></td>
     <td>                      </td><td></td></tr>
