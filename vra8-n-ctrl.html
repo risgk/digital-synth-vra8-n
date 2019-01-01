@@ -70,13 +70,13 @@ const EG_SUSTAIN    = 27;
 const EG_RELEASE    = 28;
 
 const LFO_WAVE      = 14;
-const LFO_DEPTH     = 81;
+const LFO_RATE      = 80;
 const PITCH_LFO_AMT = 82;
 const CO_LFO_AMT    = 83;
 
-const LFO_RATE      = 80;
+const LFO_DEPTH     = 81;
 const CC3           = 3;
-const CC9           = 9;
+const PITCH_LFO_TGT = 9;
 const CC15          = 15;
 
 const PB_RANGE      = 85;
@@ -130,7 +130,7 @@ var controllersInLocalStorage = [
 
   LFO_DEPTH    ,
 //CC3          ,
-//CC9          ,
+  PITCH_LFO_TGT,
 //CC15         ,
 
   PB_RANGE     ,
@@ -371,12 +371,12 @@ function preset(number) {
 
   presetControllers[LFO_WAVE     ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
   presetControllers[LFO_RATE     ] = [64 , 64 , 64 , 64 , 64 , 64 , 64 , 64 ];
-  presetControllers[PITCH_LFO_AMT] = [63 , 65 , 64 , 65 , 64 , 64 , 64 , 64 ];
+  presetControllers[PITCH_LFO_AMT] = [65 , 65 , 64 , 65 , 64 , 64 , 64 , 64 ];
   presetControllers[CO_LFO_AMT   ] = [64 , 64 , 52 , 64 , 64 , 64 , 64 , 64 ];
 
-  presetControllers[LFO_DEPTH    ] = [16 , 16 , 16 , 16 , 0  , 0  , 0  , 0  ];
+  presetControllers[LFO_DEPTH    ] = [16 , 16 , 0  , 16 , 0  , 0  , 0  , 0  ];
   presetControllers[CC3          ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
-  presetControllers[CC9          ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
+  presetControllers[PITCH_LFO_TGT] = [0  , 127, 127, 127, 127, 127, 127, 127];
   presetControllers[CC15         ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
 
   presetControllers[PB_RANGE     ] = [2  , 2  , 2  , 2  , 2  , 2  , 2  , 2  ];
@@ -563,9 +563,9 @@ function noteOff(noteNumber) {
     <td><input id="inputCC28" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(EG_RELEASE, value)"></td>
     <td><span   id="spanCC28">-1</span></td></tr>
 <tr><td>&nbsp;</td></tr>
-    <td>LFO (T/D/S&H/U/SQ)    </td><td></td>
+    <td>LFO (T/2/S&H/SA/SQ)   </td><td></td>
     <td>LFO RATE              </td><td></td>
-    <td>LFO > PITCH (2/1&2)   </td><td></td>
+    <td>LFO > PITCH (-/+)     </td><td></td>
     <td>LFO > CUTOFF (-/+)    </td><td></td></tr>
 <tr><td><input id="inputCC14" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(LFO_WAVE, value)"></td>
     <td><span   id="spanCC14">-1</span></td>
@@ -577,14 +577,14 @@ function noteOff(noteNumber) {
     <td><span   id="spanCC83">-1</span></td></tr>
 <tr><td>LFO DEPTH             </td><td></td>
     <td>                      </td><td></td>
-    <td>                      </td><td></td>
+    <td>LFO > P. TGT (2/1&2)  </td><td></td>
     <td>                      </td><td></td></tr>
 <tr><td><input id="inputCC81" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(LFO_DEPTH, value)"></td>
     <td><span   id="spanCC81">-1</span></td>
     <td><input id="inputCC3"  style="visibility:hidden" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(CC3,  value)"></td>
     <td><span   id="spanCC3"  style="visibility:hidden">-1</span></td>
-    <td><input id="inputCC9"  style="visibility:hidden" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(CC9,  value)"></td>
-    <td><span   id="spanCC9"  style="visibility:hidden">-1</span></td>
+    <td><input id="inputCC9"  type="range" min="0" max="127" step="1" oninput="onChangeControlChange(PITCH_LFO_TGT, value)"></td>
+    <td><span   id="spanCC9" >-1</span></td>
     <td><input id="inputCC15" style="visibility:hidden" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(CC15, value)"></td>
     <td><span   id="spanCC15" style="visibility:hidden">-1</span></td></tr>
 <tr><td>&nbsp;</td></tr>

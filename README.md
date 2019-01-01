@@ -90,13 +90,13 @@
     |                            28 | x             | x             | RELEASE (OFF/ON)      |
     |                               |               |               |                       |
     |                            14 | x             | o             | LFO (T/D/S&H/U/SQ)    |
-    |                            81 | x             | o             | LFO DEPTH             |
+    |                            80 | x             | o             | LFO RATE              |
     |                            82 | x             | o             | LFO > PITCH (2/1&2)   |
     |                            83 | x             | o             | LFO > CUTOFF (-/+)    |
     |                               |               |               |                       |
-    |                            80 | x             | o             | LFO RATE              |
+    |                            81 | x             | o             | LFO DEPTH             |
     |                             3 | x             | x             | (RESERVED)            |
-    |                             9 | x             | x             | (RESERVED)            |
+    |                             9 | x             | x             | LFO > P. TGT (2/1&2)  |
     |                            15 | x             | x             | (RESERVED)            |
     |                               |               |               |                       |
     |                            85 | x             | o             | P. BEND RANGE         |

@@ -58,7 +58,7 @@ public:
       } else {
         IOsc<0>::set_portamento(0);
         IFilter<0>::note_on(cutoff_v);
-        IOsc<0>::reset_lfo_phase_unless_tri();
+        IOsc<0>::reset_lfo_phase_unless_async();
         IEnvGen<0>::note_on();
         IEnvGen<1>::note_on();
       }
@@ -66,7 +66,7 @@ public:
       IOsc<0>::set_portamento(m_portamento);
       if ((m_key_assign == KEY_ASSIGN_LAST) || (m_last_note_number == NOTE_NUMBER_INVALID)) {
         IFilter<0>::note_on(cutoff_v);
-        IOsc<0>::reset_lfo_phase_unless_tri();
+        IOsc<0>::reset_lfo_phase_unless_async();
         IEnvGen<0>::note_on();
         IEnvGen<1>::note_on();
       }
@@ -117,14 +117,14 @@ public:
             IOsc<0>::set_portamento(m_portamento);
           } else {
             IOsc<0>::set_portamento(0);
-            IOsc<0>::reset_lfo_phase_unless_tri();
+            IOsc<0>::reset_lfo_phase_unless_async();
             IEnvGen<0>::note_on();
             IEnvGen<1>::note_on();
           }
         } else {
           IOsc<0>::set_portamento(m_portamento);
           if (m_last_note_number == NOTE_NUMBER_INVALID) {
-            IOsc<0>::reset_lfo_phase_unless_tri();
+            IOsc<0>::reset_lfo_phase_unless_async();
             IEnvGen<0>::note_on();
             IEnvGen<1>::note_on();
           }
@@ -272,6 +272,13 @@ public:
       m_release = controller_value;
       update_decay_release();
       break;
+    case PITCH_LFO_TGT:
+      if (controller_value < 64) {
+        IOsc<0>::set_lfo_target_both(false);
+      } else {
+        IOsc<0>::set_lfo_target_both(true);
+      }
+      break;
 
     case ALL_NOTES_OFF:
     case OMNI_MODE_OFF:
@@ -320,7 +327,7 @@ public:
 
     control_change(LFO_DEPTH    , preset_table_LFO_DEPTH    [program_number]);
     control_change(CC3          , preset_table_CC3          [program_number]);
-    control_change(CC9          , preset_table_CC9          [program_number]);
+    control_change(PITCH_LFO_TGT, preset_table_PITCH_LFO_TGT[program_number]);
     control_change(CC15         , preset_table_CC15         [program_number]);
 
     control_change(PB_RANGE     , preset_table_PB_RANGE     [program_number]);

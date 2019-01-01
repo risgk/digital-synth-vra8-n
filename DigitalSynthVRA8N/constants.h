@@ -73,13 +73,13 @@ const uint8_t   EG_SUSTAIN    = 27;
 const uint8_t   EG_RELEASE    = 28;
 
 const uint8_t   LFO_WAVE      = 14;
-const uint8_t   LFO_DEPTH     = 81;
+const uint8_t   LFO_RATE      = 80;
 const uint8_t   PITCH_LFO_AMT = 82;
 const uint8_t   CO_LFO_AMT    = 83;
 
-const uint8_t   LFO_RATE      = 80;
+const uint8_t   LFO_DEPTH     = 81;
 const uint8_t   CC3           = 3;
-const uint8_t   CC9           = 9;
+const uint8_t   PITCH_LFO_TGT = 9;
 const uint8_t   CC15          = 15;
 
 const uint8_t   PB_RANGE      = 85;
@@ -104,8 +104,8 @@ const uint8_t   OSC_WAVEFORM_SQ  = 127;
 const uint8_t   SUB_WAVEFORM_SIN = 0;
 const uint8_t   SUB_WAVEFORM_SQ  = 127;
 
-const uint8_t   LFO_WAVEFORM_TRI             = 0;
-const uint8_t   LFO_WAVEFORM_SAW_DOWN        = 32;
+const uint8_t   LFO_WAVEFORM_TRI_ASYNC       = 0;
+const uint8_t   LFO_WAVEFORM_TRI_SYNC        = 32;
 const uint8_t   LFO_WAVEFORM_SAMPLE_AND_HOLD = 64;
 const uint8_t   LFO_WAVEFORM_SAW_UP          = 96;
 const uint8_t   LFO_WAVEFORM_SQ              = 127;

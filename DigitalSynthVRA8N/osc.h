@@ -30,7 +30,7 @@ class Osc {
   static uint16_t       m_lfo_rate;
   static uint8_t        m_lfo_depth[2];
   static boolean        m_pitch_lfo_target_both;
-  static uint8_t        m_pitch_lfo_amt;
+  static int8_t         m_pitch_lfo_amt;
   static uint8_t        m_waveform[2];
   static uint8_t        m_sub_waveform;
   static uint8_t        m_lfo_waveform;
@@ -74,10 +74,11 @@ public:
     m_lfo_rate = 0;
     m_lfo_depth[0] = 0;
     m_lfo_depth[1] = 0;
+    m_pitch_lfo_target_both = true;
     m_waveform[0] = OSC_WAVEFORM_SAW;
     m_waveform[1] = OSC_WAVEFORM_SAW;
     m_sub_waveform = SUB_WAVEFORM_SIN;
-    m_lfo_waveform = LFO_WAVEFORM_TRI;
+    m_lfo_waveform = LFO_WAVEFORM_TRI_ASYNC;
     m_lfo_sampled = 64;
     m_pitch_bend_normalized = 0;
     m_pitch_target[0] = NOTE_NUMBER_MIN << 8;
@@ -139,9 +140,9 @@ public:
 
   INLINE static void set_lfo_waveform(uint8_t controller_value) {
     if        (controller_value < 16) {
-      m_lfo_waveform = LFO_WAVEFORM_TRI;
+      m_lfo_waveform = LFO_WAVEFORM_TRI_ASYNC;
     } else if (controller_value < 48) {
-      m_lfo_waveform = LFO_WAVEFORM_SAW_DOWN;
+      m_lfo_waveform = LFO_WAVEFORM_TRI_SYNC;
     } else if (controller_value < 80) {
       m_lfo_waveform = LFO_WAVEFORM_SAMPLE_AND_HOLD;
     } else if (controller_value < 112) {
@@ -195,20 +196,18 @@ public:
     m_lfo_depth[N] = controller_value;
   }
 
+  INLINE static void set_lfo_target_both(boolean lfo_target_both) {
+    m_pitch_lfo_target_both = lfo_target_both;
+  }
+
   template <uint8_t N>
   INLINE static void set_pitch_lfo_amt(uint8_t controller_value) {
-    if (controller_value < 16) {
-      m_pitch_lfo_amt = 96;
-      m_pitch_lfo_target_both = false;
-    } else if (controller_value < 64) {
-      m_pitch_lfo_amt = (64 - controller_value) << 1;
-      m_pitch_lfo_target_both = false;
-    } else if (controller_value < 112) {
-      m_pitch_lfo_amt = (controller_value - 64) << 1;
-      m_pitch_lfo_target_both = true;
+    if (controller_value < 4) {
+      m_pitch_lfo_amt = -60;
+    } else if (controller_value < 124) {
+      m_pitch_lfo_amt = controller_value - 64;
     } else {
-      m_pitch_lfo_amt = 96;
-      m_pitch_lfo_target_both = true;
+      m_pitch_lfo_amt = 60;
     }
   }
 
@@ -223,8 +222,8 @@ public:
     m_note_on[N] = false;
   }
 
-  INLINE static void reset_lfo_phase_unless_tri() {
-    if (m_lfo_waveform != LFO_WAVEFORM_TRI) {
+  INLINE static void reset_lfo_phase_unless_async() {
+    if (m_lfo_waveform != LFO_WAVEFORM_TRI_ASYNC) {
       m_lfo_phase = 0xFFFF;
     }
   }
@@ -379,7 +378,8 @@ private:
     int8_t level = 0;
 
     switch (m_lfo_waveform) {
-    case LFO_WAVEFORM_TRI:
+    case LFO_WAVEFORM_TRI_ASYNC:
+    case LFO_WAVEFORM_TRI_SYNC:
       level = high_sbyte(phase);
       if (level < -64) {
         level = -64 - (level + 64);
@@ -389,13 +389,6 @@ private:
         level = 64 - (level - 64);
       }
       level = -level;
-      break;
-    case LFO_WAVEFORM_SAW_DOWN:
-      {
-        uint8_t b = high_byte(phase);
-        b >>= 1;
-        level = b;
-      }
       break;
     case LFO_WAVEFORM_SAMPLE_AND_HOLD:
       if (phase < m_lfo_rate) {
@@ -517,7 +510,7 @@ private:
   }
 
   INLINE static void update_lfo_2nd() {
-    m_mod_level[1] = -mul_q15_q8(m_lfo_level, m_pitch_lfo_amt);
+    m_mod_level[1] = -mul_q15_q7(m_lfo_level, m_pitch_lfo_amt);
     if (m_pitch_lfo_target_both) {
       m_mod_level[0] = m_mod_level[1];
     } else {
@@ -575,7 +568,7 @@ template <uint8_t T> int16_t         Osc<T>::m_lfo_level;
 template <uint8_t T> uint16_t        Osc<T>::m_lfo_rate;
 template <uint8_t T> uint8_t         Osc<T>::m_lfo_depth[2];
 template <uint8_t T> boolean         Osc<T>::m_pitch_lfo_target_both;
-template <uint8_t T> uint8_t         Osc<T>::m_pitch_lfo_amt;
+template <uint8_t T> int8_t          Osc<T>::m_pitch_lfo_amt;
 template <uint8_t T> uint8_t         Osc<T>::m_waveform[2];
 template <uint8_t T> uint8_t         Osc<T>::m_sub_waveform;
 template <uint8_t T> uint8_t         Osc<T>::m_lfo_waveform;
