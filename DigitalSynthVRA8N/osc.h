@@ -51,6 +51,7 @@ class Osc {
   static uint16_t       m_rnd_temp;
   static uint8_t        m_rnd;
   static uint8_t        m_rnd_prev;
+  static uint8_t        m_red_noise;
   static boolean        m_note_on[2];
   static boolean        m_pitch_eg_target_both;
   static int8_t         m_pitch_eg_amt;
@@ -104,6 +105,7 @@ public:
     m_rnd_temp = 1;
     m_rnd = 0;
     m_rnd_prev = 0;
+    m_red_noise = 0;
     m_note_on[0] = false;
     m_note_on[1] = false;
     m_pitch_eg_target_both = true;
@@ -274,7 +276,7 @@ public:
   }
 
   INLINE static uint8_t get_red_noise_8() {
-    return (m_rnd_prev + m_rnd);
+    return m_red_noise;
   }
 
   INLINE static int16_t get_lfo_level() {
@@ -309,9 +311,10 @@ public:
         update_freq_4th<0>();
         break;
       case 0x5:
+        update_rnd();
         m_rnd_cnt++;
         if ((m_rnd_cnt & 0x07) == 0x00) {
-          update_rnd();
+          m_red_noise = m_rnd_prev + m_rnd;
         }
         break;
       case 0x6:
@@ -336,8 +339,9 @@ public:
         update_freq_4th<1>();
         break;
       case 0xD:
+        update_rnd();
         if ((m_rnd_cnt & 0x07) == 0x00) {
-          update_rnd();
+          m_red_noise = m_rnd_prev + m_rnd;
         }
         break;
       case 0xE:
@@ -614,6 +618,7 @@ template <uint8_t T> uint8_t         Osc<T>::m_rnd_cnt;
 template <uint8_t T> uint16_t        Osc<T>::m_rnd_temp;
 template <uint8_t T> uint8_t         Osc<T>::m_rnd;
 template <uint8_t T> uint8_t         Osc<T>::m_rnd_prev;
+template <uint8_t T> uint8_t         Osc<T>::m_red_noise;
 template <uint8_t T> boolean         Osc<T>::m_note_on[2];
 template <uint8_t T> boolean         Osc<T>::m_pitch_eg_target_both;
 template <uint8_t T> int8_t          Osc<T>::m_pitch_eg_amt;
