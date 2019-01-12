@@ -54,7 +54,7 @@ class Osc {
   static uint8_t        m_red_noise;
   static boolean        m_note_on[2];
   static boolean        m_pitch_eg_target_both;
-  static int8_t         m_pitch_eg_amt;
+  static int16_t        m_pitch_eg_amt;
 
 public:
   INLINE static void initialize() {
@@ -218,12 +218,16 @@ public:
   }
 
   INLINE static void set_pitch_eg_amt(uint8_t controller_value) {
-    if (controller_value < 4) {
-      m_pitch_eg_amt = -60;
-    } else if (controller_value < 124) {
-      m_pitch_eg_amt = controller_value - 64;
+    if (controller_value < 2) {
+      m_pitch_eg_amt = -30 << 8 << 1;
+    } else if (controller_value < 32) {
+      m_pitch_eg_amt = (controller_value - 32) << 8 << 1;
+    } else if (controller_value < 97) {
+      m_pitch_eg_amt = (controller_value - 64) << 3 << 1;
+    } else if (controller_value < 127) {
+      m_pitch_eg_amt = (controller_value - 96) << 8 << 1;
     } else {
-      m_pitch_eg_amt = 60;
+      m_pitch_eg_amt = 30 << 8 << 1;
     }
   }
 
@@ -463,7 +467,7 @@ private:
 
     int16_t pitch_eg_mod_level = 0;
     if ((N == 1) || m_pitch_eg_target_both) {
-      pitch_eg_mod_level = eg_level * (m_pitch_eg_amt << 1);
+      pitch_eg_mod_level = mul_q15_q8(m_pitch_eg_amt, eg_level);
     }
     m_pitch_real[N] += pitch_eg_mod_level;
   }
@@ -621,4 +625,4 @@ template <uint8_t T> uint8_t         Osc<T>::m_rnd_prev;
 template <uint8_t T> uint8_t         Osc<T>::m_red_noise;
 template <uint8_t T> boolean         Osc<T>::m_note_on[2];
 template <uint8_t T> boolean         Osc<T>::m_pitch_eg_target_both;
-template <uint8_t T> int8_t          Osc<T>::m_pitch_eg_amt;
+template <uint8_t T> int16_t         Osc<T>::m_pitch_eg_amt;
