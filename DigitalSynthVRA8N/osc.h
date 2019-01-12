@@ -418,7 +418,7 @@ private:
       {
         uint8_t b = high_byte(phase);
         b >>= 1;
-        level = -b;
+        level = b - 127;
       }
       break;
     case LFO_WAVEFORM_SQ:
