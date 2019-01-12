@@ -76,12 +76,12 @@
     |                               |               |               |                       |
     |                            29 | x             | o             | SUB WAVE (SIN/SQ)     |
     |                            26 | x             | o             | SUB OSC MIX           |
-    |                           104 | x             | x             | (RESERVED)            |
-    |                           105 | x             | x             | (RESERVED)            |
+    |                           104 | x             | x             | EG > PITCH(-/+)       |
+    |                           105 | x             | x             | EG > P. TGT (2/1&2)   |
     |                               |               |               |                       |
     |                            16 | x             | o             | CUTOFF                |
     |                            17 | x             | o             | RESONANCE             |
-    |                            18 | x             | o             | CUTOFF < EG (-/+)     |
+    |                            18 | x             | o             | EG > CUTOFF (-/+)     |
     |                            31 | x             | o             | AMP MODE (GATE/EG)    |
     |                               |               |               |                       |
     |                            23 | x             | o             | ATTACK                |
