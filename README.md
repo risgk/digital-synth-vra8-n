@@ -15,6 +15,7 @@
     - Change the layout of VRA8-N CTRL
     - Add "EG > PITCH(-/+)", "EG > P. TGT (2/1&2)", "RELEASE (OFF/ON)", and "EG > LFO RATE (-/+)"
     - Change "OSC2 MIX" to "OSC MIX (1/2)"
+    - Change "SUB WAVE (SIN/SQ)" to "SUB (SIN/NOISE/SQ)"
     - Change "AMP (GATE+RLS/EG)" to "AMP MODE (GATE/EG)"
     - Change "SUSTAIN" to "SUSTAIN (OFF/ON)"
     - Change "LFO WAVE (TRI/SQ)" to "LFO (T/2/S&H/SA/SQ)"
@@ -110,7 +111,7 @@
     |                            20 | x             | o             | OSC2 COARSE (-/+)     |
     |                            21 | x             | o             | OSC2 FINE (-/+)       |
     |                               |               |               |                       |
-    |                            29 | x             | o             | SUB WAVE (SIN/SQ)     |
+    |                            29 | x             | o             | SUB (SIN/NOISE/SQ)    |
     |                            26 | x             | o             | SUB OSC MIX           |
     |                           104 | x             | x             | EG > PITCH(-/+)       |
     |                           105 | x             | x             | EG > P. TGT (2/1&2)   |

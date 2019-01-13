@@ -57,6 +57,7 @@ class Osc {
   static boolean        m_note_on[2];
   static boolean        m_pitch_eg_target_both;
   static int16_t        m_pitch_eg_amt;
+  static uint16_t       m_lfsr;
 
 public:
   INLINE static void initialize() {
@@ -114,6 +115,7 @@ public:
     m_note_on[1] = false;
     m_pitch_eg_target_both = true;
     m_pitch_eg_amt = 0;
+    m_lfsr = 0x0001u;
     set_pitch_bend_minus_range(2);
     set_pitch_bend_plus_range(2);
   }
@@ -141,8 +143,10 @@ public:
   }
 
   INLINE static void set_sub_waveform(uint8_t controller_value) {
-    if (controller_value < 64) {
+    if (controller_value < 32) {
       m_sub_waveform = SUB_WAVEFORM_SIN;
+    } else if (controller_value < 96) {
+      m_sub_waveform = SUB_WAVEFORM_NOISE;
     } else {
       m_sub_waveform = SUB_WAVEFORM_SQ;
     }
@@ -292,7 +296,20 @@ public:
 
   INLINE static int16_t clock(uint8_t count, uint8_t eg_level) {
     if ((count & 0x01) == 1) {
-      int16_t wave_0_sub = get_wave_level(m_wave_table[2], m_phase[0] >> 8);
+      int8_t wave_0_sub = 0;
+      if (m_sub_waveform == SUB_WAVEFORM_NOISE) {
+        uint8_t lsb = m_lfsr & 0x0001u;
+        m_lfsr >>= 1;
+        m_lfsr ^= (-lsb) & 0xb400u;
+        if (lsb) {
+          wave_0_sub = +(OSC_WAVE_TABLE_AMPLITUDE >> 2);
+        } else {
+          wave_0_sub = -(OSC_WAVE_TABLE_AMPLITUDE >> 2);
+        }
+      } else {
+        wave_0_sub = get_wave_level(m_wave_table[2], m_phase[0] >> 8);
+      }
+
       int8_t mix_sub = m_mix_sub_current;
       if (m_sub_waveform == SUB_WAVEFORM_SQ) {
         mix_sub = mix_sub >> 1;
@@ -515,11 +532,11 @@ private:
   }
 
   INLINE static void update_sub_waveform() {
-    if (m_sub_waveform == SUB_WAVEFORM_SIN) {
-      m_wave_table[2] = g_osc_sin_wave_table_h1;
-    } else {           // SUB_WAVEFORM_SQ
+    if (m_sub_waveform == SUB_WAVEFORM_SQ) {
       uint8_t coarse = high_byte(m_pitch_real[0]);
       m_wave_table[2] = get_wave_table(OSC_WAVEFORM_SQ, coarse);
+    } else {
+      m_wave_table[2] = g_osc_sin_wave_table_h1;
     }
   }
 
@@ -649,3 +666,4 @@ template <uint8_t T> uint8_t         Osc<T>::m_red_noise;
 template <uint8_t T> boolean         Osc<T>::m_note_on[2];
 template <uint8_t T> boolean         Osc<T>::m_pitch_eg_target_both;
 template <uint8_t T> int16_t         Osc<T>::m_pitch_eg_amt;
+template <uint8_t T> uint16_t        Osc<T>::m_lfsr;
