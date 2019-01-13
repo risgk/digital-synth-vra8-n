@@ -541,10 +541,10 @@ private:
     }
 
     if (lfo_rate >= 32) {
-      m_lfo_rate_actual = ((high_byte((lfo_rate << 1) *
-                                      (lfo_rate << 1)) + 2) * 24) >> 1;
+      m_lfo_rate_actual = (high_byte((lfo_rate << 1) *
+                                     (lfo_rate << 1)) + 2) * 12;
     } else {
-      m_lfo_rate_actual = (((lfo_rate >> 1) + 2) * 24) >> 1;
+      m_lfo_rate_actual = ((lfo_rate >> 1) + 2) * 12;
     }
   }
 
