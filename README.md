@@ -13,7 +13,8 @@
 
 - v1.x
     - Change the layout of VRA8-N CTRL
-    - Add "EG > PITCH(-/+)", "EG > P. TGT (2/1&2)", and "RELEASE (OFF/ON)"
+    - Add "EG > PITCH(-/+)", "EG > P. TGT (2/1&2)", and "RELEASE (OFF/ON)".
+    - Add "EG > LFO RATE (-/+)" and "EG > LFO DPT. (-/+)".
     - Change "OSC2 MIX" to "OSC MIX (1/2)"
     - Change "AMP (GATE+RLS/EG)" to "AMP MODE (GATE/EG)"
     - Change "SUSTAIN" to "SUSTAIN (OFF/ON)"
@@ -133,7 +134,7 @@
     |                            81 | x             | o             | LFO DEPTH             |
     |                             3 | x             | x             | EG > LFO RATE (-/+)   |
     |                             9 | x             | x             | LFO > P. TGT (2/1&2)  |
-    |                            15 | x             | x             | (RESERVED)            |
+    |                            15 | x             | x             | EG > LFO DPT. (-/+)   |
     |                               |               |               |                       |
     |                            85 | x             | o             | P. BEND RANGE         |
     |                            86 | x             | x             | (RESERVED)            |
