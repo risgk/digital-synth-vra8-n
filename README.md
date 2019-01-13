@@ -9,6 +9,20 @@
 - Monophonic Synthesizer (MIDI Sound Module) for Arduino Uno
 
 
+## History
+
+- v1.x
+    - Change the layout of VRA8-N CTRL
+    - Add "EG > PITCH(-/+)", "EG > P. TGT (2/1&2)", and "RELEASE (OFF/ON)"
+    - Change "OSC2 MIX" to "OSC MIX (1/2)"
+    - Change "AMP (GATE+RLS/EG)" to "AMP MODE (GATE/EG)"
+    - Change "SUSTAIN" to "SUSTAIN (OFF/ON)"
+    - Change "LFO WAVE (TRI/SQ)" to "LFO (T/2/S&H/SA/SQ)"
+    - Change "LFO > PITCH (2/1&2)" to "LFO > PITCH (-/+)" and "LFO > P. TGT (2/1&2)"
+    - Change "KEY ASGN (LO/LAST)" to "K. ASN (L/L/P/H/LST)"
+- v1.1
+    - Add "SUB WAVE (SIN/SQ)" and "LFO WAVE (TRI/SQ)"
+
 ## Features
 
 - Sampling Rate: 31.25 kHz, Bit Depth: 8 bit, LPF Attenuation Slope: -12 dB/oct
@@ -30,7 +44,6 @@
         - Requiring a Ruby execution environment
 - We recommend Arduino IDE 1.8.5
 
-
 ## VRA8-N CTRL
 
 - MIDI Controller (Editor) for VRA8-N, Web App
@@ -41,6 +54,29 @@
 - **CAUTION**: Low CUTOFF with high RESONANCE can damage the speakers
 - **CAUTION**: Click sounds may occur when you change the control values
 
+## Details of Controllers
+
+- "LFO (T/2/S&H/SA/SQ)" = LFO WAVE
+    - Values 0-15: TRIANGLE1 (Async)
+    - Values 16-47: TRIANGLE2 (Sync)
+    - Values 48-79: SAMPLE AND HOLD (Sync)
+    - Values 80-111: SAW DOWN (Sync)
+    - Values 112-127: SQUARE UP (Sync)
+- "K. ASN (L/L/P/H/LST)" = KEY ASSIGN
+    - Values 0-47: LOWEST Note
+    - Values 48-79: PARAPHONIC (Lowest and Highest Notes)
+    - Values 80-111: HIGHEST Note
+    - Values 112-127: LAST One Note
+
+## A Sample Setting of a Physical Controller (8-Knob)
+
+    +-------------------+---------------+---------------+---------------+
+    | CC #16            | CC #17        | CC #23        | CC #19        |
+    | CUTOFF            | RESONANCE     | ATTACK        | DECAY         |
+    +-------------------+---------------+---------------+---------------+
+    | CC #24            | CC #25        | CC #26        | CC #22        |
+    | OSC WAVE (SAW/SQ) | OSC MIX (1/2) | SUB OSC MIX   | PORTAMENTO    |
+    +-------------------+---------------+---------------+---------------+
 
 ## MIDI Implementation Chart
 
@@ -91,7 +127,7 @@
     |                               |               |               |                       |
     |                            14 | x             | o             | LFO (T/2/S&H/SA/SQ)   |
     |                            80 | x             | o             | LFO RATE              |
-    |                            82 | x             | o             | LFO > PITCH (2/1&2)   |
+    |                            82 | x             | o             | LFO > PITCH (-/+)     |
     |                            83 | x             | o             | LFO > CUTOFF (-/+)    |
     |                               |               |               |                       |
     |                            81 | x             | o             | LFO DEPTH             |
