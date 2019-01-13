@@ -27,9 +27,7 @@ class Osc {
   static uint16_t       m_lfo_phase;
   static int8_t         m_lfo_wave_level;
   static int16_t        m_lfo_level;
-  static uint16_t       m_lfo_rate_actual;
-  static uint8_t        m_lfo_rate;
-  static int8_t         m_lfo_rate_eg_amt;
+  static uint16_t       m_lfo_rate;
   static uint8_t        m_lfo_depth[2];
   static boolean        m_pitch_lfo_target_both;
   static int8_t         m_pitch_lfo_amt;
@@ -76,9 +74,7 @@ public:
     m_lfo_phase = 0;
     m_lfo_wave_level = 0;
     m_lfo_level = 0;
-    m_lfo_rate_actual = 0;
     m_lfo_rate = 0;
-    m_lfo_rate_eg_amt = 0;
     m_lfo_depth[0] = 0;
     m_lfo_depth[1] = 0;
     m_pitch_lfo_target_both = true;
@@ -193,11 +189,12 @@ public:
   }
 
   INLINE static void set_lfo_rate(uint8_t controller_value) {
-    m_lfo_rate = controller_value;
-  }
-
-  INLINE static void set_lfo_rate_eg_amt(uint8_t controller_value) {
-    m_lfo_rate_eg_amt = (controller_value - 64) << 1;
+    if (controller_value >= 32) {
+      m_lfo_rate = ((high_byte((controller_value << 1) *
+                               (controller_value << 1)) + 2) * 24) >> 1;
+    } else {
+      m_lfo_rate = (((controller_value >> 1) + 2) * 24) >> 1;
+    }
   }
 
   template <uint8_t N>
@@ -326,10 +323,9 @@ public:
         break;
       case 0x6:
         update_sub_waveform();
-        update_mix();
         break;
       case 0x7:
-        update_lfo_0th(eg_level);
+        update_mix();
         break;
       case 0x8:
         update_freq_0th<1>();
@@ -421,7 +417,7 @@ private:
       level = -level;
       break;
     case LFO_WAVEFORM_SAMPLE_AND_HOLD:
-      if (phase < m_lfo_rate_actual) {
+      if (phase < m_lfo_rate) {
         m_lfo_sampled = get_white_noise_7();
       }
       level = m_lfo_sampled - 64;
@@ -531,25 +527,8 @@ private:
     m_rnd = low_byte(m_rnd_temp) >> 1;
   }
 
-  INLINE static void update_lfo_0th(uint8_t eg_level) {
-    int8_t lfo_rate_mod = high_sbyte(m_lfo_rate_eg_amt * eg_level);
-    int16_t lfo_rate = m_lfo_rate + lfo_rate_mod + lfo_rate_mod;
-    if (lfo_rate > 127) {
-      lfo_rate = 127;
-    } else if (lfo_rate < 0) {
-      lfo_rate = 0;
-    }
-
-    if (lfo_rate >= 32) {
-      m_lfo_rate_actual = ((high_byte((lfo_rate << 1) *
-                                      (lfo_rate << 1)) + 2) * 24) >> 1;
-    } else {
-      m_lfo_rate_actual = (((lfo_rate >> 1) + 2) * 24) >> 1;
-    }
-  }
-
   INLINE static void update_lfo_1st() {
-    m_lfo_phase += m_lfo_rate_actual;
+    m_lfo_phase += m_lfo_rate;
     m_lfo_wave_level = get_lfo_wave_level(m_lfo_phase);
     uint8_t lfo_depth = m_lfo_depth[0] + m_lfo_depth[1];
     if (lfo_depth > 127) {
@@ -619,9 +598,7 @@ template <uint8_t T> int16_t         Osc<T>::m_lfo_mod_level[2];
 template <uint8_t T> uint16_t        Osc<T>::m_lfo_phase;
 template <uint8_t T> int8_t          Osc<T>::m_lfo_wave_level;
 template <uint8_t T> int16_t         Osc<T>::m_lfo_level;
-template <uint8_t T> uint16_t        Osc<T>::m_lfo_rate_actual;
-template <uint8_t T> uint8_t         Osc<T>::m_lfo_rate;
-template <uint8_t T> int8_t          Osc<T>::m_lfo_rate_eg_amt;
+template <uint8_t T> uint16_t        Osc<T>::m_lfo_rate;
 template <uint8_t T> uint8_t         Osc<T>::m_lfo_depth[2];
 template <uint8_t T> boolean         Osc<T>::m_pitch_lfo_target_both;
 template <uint8_t T> int8_t          Osc<T>::m_pitch_lfo_amt;

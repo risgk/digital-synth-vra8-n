@@ -131,7 +131,7 @@
     |                            83 | x             | o             | LFO > CUTOFF (-/+)    |
     |                               |               |               |                       |
     |                            81 | x             | o             | LFO DEPTH             |
-    |                             3 | x             | x             | EG > LFO RATE (-/+)   |
+    |                             3 | x             | x             | (RESERVED)            |
     |                             9 | x             | x             | LFO > P. TGT (2/1&2)  |
     |                            15 | x             | x             | (RESERVED)            |
     |                               |               |               |                       |

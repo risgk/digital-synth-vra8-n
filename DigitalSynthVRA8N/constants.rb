@@ -78,7 +78,7 @@ PITCH_LFO_AMT = 82
 CO_LFO_AMT    = 83
 
 LFO_DEPTH     = 81
-LFO_RT_EG_AMT = 3
+CC3           = 3
 PITCH_LFO_TGT = 9
 CC15          = 15
 
