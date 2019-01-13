@@ -15,6 +15,7 @@
     - Change the layout of VRA8-N CTRL
     - Add "EG > PITCH(-/+)", "EG > P. TGT (2/1&2)", "RELEASE (OFF/ON)", and "EG > LFO RATE (-/+)"
     - Change "OSC2 MIX" to "OSC MIX (1/2)"
+    - Change "SUB OSC MIX" to "SUB MIX"
     - Change "SUB WAVE (SIN/SQ)" to "SUB (SIN/NOISE/SQ)"
     - Change "AMP (GATE+RLS/EG)" to "AMP MODE (GATE/EG)"
     - Change "SUSTAIN" to "SUSTAIN (OFF/ON)"
@@ -76,7 +77,7 @@
     | CUTOFF            | RESONANCE     | ATTACK        | DECAY         |
     +-------------------+---------------+---------------+---------------+
     | CC #24            | CC #25        | CC #26        | CC #22        |
-    | OSC WAVE (SAW/SQ) | OSC MIX (1/2) | SUB OSC MIX   | PORTAMENTO    |
+    | OSC WAVE (SAW/SQ) | OSC MIX (1/2) | SUB MIX       | PORTAMENTO    |
     +-------------------+---------------+---------------+---------------+
 
 ## MIDI Implementation Chart
@@ -112,7 +113,7 @@
     |                            21 | x             | o             | OSC2 FINE (-/+)       |
     |                               |               |               |                       |
     |                            29 | x             | o             | SUB (SIN/NOISE/SQ)    |
-    |                            26 | x             | o             | SUB OSC MIX           |
+    |                            26 | x             | o             | SUB MIX               |
     |                           104 | x             | x             | EG > PITCH(-/+)       |
     |                           105 | x             | x             | EG > P. TGT (2/1&2)   |
     |                               |               |               |                       |

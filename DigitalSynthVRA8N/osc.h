@@ -57,7 +57,7 @@ class Osc {
   static boolean        m_note_on[2];
   static boolean        m_pitch_eg_target_both;
   static int16_t        m_pitch_eg_amt;
-  static uint16_t       m_lfsr;
+  static __uint24       m_lfsr;
 
 public:
   INLINE static void initialize() {
@@ -298,9 +298,9 @@ public:
     if ((count & 0x01) == 1) {
       int8_t wave_0_sub = 0;
       if (m_sub_waveform == SUB_WAVEFORM_NOISE) {
-        uint8_t lsb = m_lfsr & 0x0001u;
+        uint8_t lsb = m_lfsr & 0x000001u;
         m_lfsr >>= 1;
-        m_lfsr ^= (-lsb) & 0xb400u;
+        m_lfsr ^= (-lsb) & 0xE10000u;
         if (lsb) {
           wave_0_sub = +(OSC_WAVE_TABLE_AMPLITUDE >> 2);
         } else {
@@ -666,4 +666,4 @@ template <uint8_t T> uint8_t         Osc<T>::m_red_noise;
 template <uint8_t T> boolean         Osc<T>::m_note_on[2];
 template <uint8_t T> boolean         Osc<T>::m_pitch_eg_target_both;
 template <uint8_t T> int16_t         Osc<T>::m_pitch_eg_amt;
-template <uint8_t T> uint16_t        Osc<T>::m_lfsr;
+template <uint8_t T> __uint24        Osc<T>::m_lfsr;
