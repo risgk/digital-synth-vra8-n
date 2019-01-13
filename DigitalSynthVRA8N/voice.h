@@ -292,6 +292,9 @@ public:
     case LFO_RT_EG_AMT:
       IOsc<0>::set_lfo_rate_eg_amt(controller_value);
       break;
+    case LFO_DP_EG_AMT:
+      IOsc<0>::set_lfo_depth_eg_amt(controller_value);
+      break;
 
     case ALL_NOTES_OFF:
     case OMNI_MODE_OFF:
@@ -341,7 +344,7 @@ public:
     control_change(LFO_DEPTH    , preset_table_LFO_DEPTH    [program_number]);
     control_change(LFO_RT_EG_AMT, preset_table_LFO_RT_EG_AMT[program_number]);
     control_change(PITCH_LFO_TGT, preset_table_PITCH_LFO_TGT[program_number]);
-    control_change(CC15         , preset_table_CC15         [program_number]);
+    control_change(LFO_DP_EG_AMT, preset_table_LFO_DP_EG_AMT[program_number]);
 
     control_change(PB_RANGE     , preset_table_PB_RANGE     [program_number]);
     control_change(CC86         , preset_table_CC86         [program_number]);
