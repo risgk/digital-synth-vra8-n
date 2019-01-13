@@ -77,7 +77,7 @@ const CO_LFO_AMT    = 83;
 const LFO_DEPTH     = 81;
 const LFO_RT_EG_AMT = 3;
 const PITCH_LFO_TGT = 9;
-const LFO_DP_EG_AMT = 15;
+const CC15          = 15;
 
 const PB_RANGE      = 85;
 const CC86          = 86;
@@ -131,7 +131,7 @@ var controllersInLocalStorage = [
   LFO_DEPTH    ,
   LFO_RT_EG_AMT,
   PITCH_LFO_TGT,
-  LFO_DP_EG_AMT,
+//CC15         ,
 
   PB_RANGE     ,
 //CC86         ,
@@ -175,7 +175,7 @@ presetControllers[CO_LFO_AMT   ] = [64 , 64 , 52 , 64 , 64 , 64 , 64 , 64 ];
 presetControllers[LFO_DEPTH    ] = [16 , 16 , 0  , 0  , 0  , 0  , 0  , 0  ];
 presetControllers[LFO_RT_EG_AMT] = [64 , 64 , 64 , 32 , 64 , 64 , 64 , 64 ];
 presetControllers[PITCH_LFO_TGT] = [0  , 127, 127, 127, 127, 127, 127, 127];
-presetControllers[LFO_DP_EG_AMT] = [64 , 64 , 64 , 64 , 64 , 64 , 64 , 64 ];
+presetControllers[CC15         ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
 
 presetControllers[PB_RANGE     ] = [2  , 2  , 2  , 2  , 2  , 2  , 2  , 2  ];
 presetControllers[CC86         ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
@@ -602,15 +602,15 @@ function noteOff(noteNumber) {
 <tr><td>LFO DEPTH             </td><td></td>
     <td>EG > LFO RATE (-/+)   </td><td></td>
     <td>LFO > P. TGT (2/1&2)  </td><td></td>
-    <td>EG > LFO DPT. (-/+)   </td><td></td></tr>
+    <td>                      </td><td></td></tr>
 <tr><td><input id="inputCC81" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(LFO_DEPTH, value)"></td>
     <td><span   id="spanCC81">-1</span></td>
     <td><input id="inputCC3"  type="range" min="0" max="127" step="1" oninput="onChangeControlChange(LFO_RT_EG_AMT, value)"></td>
     <td><span   id="spanCC3" >-1</span></td>
     <td><input id="inputCC9"  type="range" min="0" max="127" step="1" oninput="onChangeControlChange(PITCH_LFO_TGT, value)"></td>
     <td><span   id="spanCC9" >-1</span></td>
-    <td><input id="inputCC15" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(LFO_DP_EG_AMT, value)"></td>
-    <td><span   id="spanCC15">-1</span></td></tr>
+    <td><input id="inputCC15" style="visibility:hidden" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(CC15, value)"></td>
+    <td><span   id="spanCC15" style="visibility:hidden">-1</span></td></tr>
 <tr><td>&nbsp;</td></tr>
 <tr><td>P. BEND RANGE         </td><td></td>
     <td>                      </td><td></td>
