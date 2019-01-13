@@ -13,7 +13,7 @@
 
 - v1.x
     - Change the layout of VRA8-N CTRL
-    - Add "EG > PITCH(-/+)", "EG > P. TGT (2/1&2)", and "RELEASE (OFF/ON)"
+    - Add "EG > PITCH(-/+)", "EG > P. TGT (2/1&2)", "RELEASE (OFF/ON)", and "EG > LFO RATE (-/+)"
     - Change "OSC2 MIX" to "OSC MIX (1/2)"
     - Change "AMP (GATE+RLS/EG)" to "AMP MODE (GATE/EG)"
     - Change "SUSTAIN" to "SUSTAIN (OFF/ON)"
