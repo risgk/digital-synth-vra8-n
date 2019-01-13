@@ -156,7 +156,7 @@ public:
     } else if (controller_value < 80) {
       m_lfo_waveform = LFO_WAVEFORM_SAMPLE_AND_HOLD;
     } else if (controller_value < 112) {
-      m_lfo_waveform = LFO_WAVEFORM_SAW_UP;
+      m_lfo_waveform = LFO_WAVEFORM_SAW_DOWN;
     } else {
       m_lfo_waveform = LFO_WAVEFORM_SQ;
     }
@@ -426,11 +426,11 @@ private:
       }
       level = m_lfo_sampled - 64;
       break;
-    case LFO_WAVEFORM_SAW_UP:
+    case LFO_WAVEFORM_SAW_DOWN:
       {
         uint8_t b = high_byte(phase);
         b >>= 1;
-        level = b - 127;
+        level = b - 64;
       }
       break;
     case LFO_WAVEFORM_SQ:
