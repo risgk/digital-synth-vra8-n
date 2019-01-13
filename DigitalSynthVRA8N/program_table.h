@@ -27,7 +27,7 @@ const uint8_t preset_table_PITCH_LFO_AMT[] = {65 , 65 , 64 , 88 , 65 , 64 , 64 ,
 const uint8_t preset_table_CO_LFO_AMT   [] = {64 , 64 , 52 , 64 , 64 , 64 , 64 , 64 };
 
 const uint8_t preset_table_LFO_DEPTH    [] = {16 , 16 , 0  , 0  , 0  , 0  , 0  , 0  };
-const uint8_t preset_table_LFO_RT_EG_AMT[] = {64 , 64 , 64 , 32 , 64 , 64 , 64 , 64 };
+const uint8_t preset_table_LFO_RT_EG_AMT[] = {64 , 64 , 64 , 48 , 64 , 64 , 64 , 64 };
 const uint8_t preset_table_PITCH_LFO_TGT[] = {0  , 127, 127, 127, 127, 127, 127, 127};
 const uint8_t preset_table_CC15         [] = {0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  };
 
