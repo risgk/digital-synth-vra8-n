@@ -21,7 +21,7 @@
     - Change "SUB WAVE (SIN/SQ)" to "SUB (SIN/NOISE/SQ)"
     - Change "AMP (GATE+RLS/EG)" to "AMP MODE (GATE/EG)" (No Release)
     - Change "SUSTAIN" to "SUSTAIN (OFF/ON)"
-    - Change "LFO WAVE (TRI/SQ)" to "LFO (A/S/SA/S&H/SQ)"
+    - Change "LFO WAVE (TRI/SQ)" to "LFO (T/2/SA/S&H/SQ)"
     - Change "LFO > PITCH (2/1&2)" to "LFO > PITCH (-/+)" and "LFO > P. TGT (2/1&2)"
     - Change "KEY ASGN (LO/LAST)" to "K. ASN (L/L/P/H/LST)"
     - Change PRESETs
@@ -61,9 +61,9 @@
 
 ## Details of Controllers
 
-- "LFO (A/S/SA/S&H/SQ)": LFO Wave
-    - Values 0-15: Async (Triangle)
-    - Values 16-47: Sync (Triangle)
+- "LFO (T/2/SA/S&H/SQ)": LFO Wave
+    - Values 0-15: Triangle (Async)
+    - Values 16-47: Triangle 2 (Sync)
     - Values 48-79: SAw Down (Sync)
     - Values 80-111: Sample And Hold (Sync)
     - Values 112-127: SQuare Up (Sync)
@@ -130,7 +130,7 @@
     |                            27 | x             | o             | SUSTAIN (OFF/ON)      |
     |                            28 | x             | x             | RELEASE (OFF/ON)      |
     |                               |               |               |                       |
-    |                            14 | x             | o             | LFO (A/S/SA/S&H/SQ)   |
+    |                            14 | x             | o             | LFO (T/2/SA/S&H/SQ)   |
     |                            80 | x             | o             | LFO RATE              |
     |                            82 | x             | o             | LFO > PITCH (-/+)     |
     |                            83 | x             | o             | LFO > CUTOFF (-/+)    |
