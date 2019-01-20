@@ -58,7 +58,7 @@ const uint8_t   OSC2_COARSE   = 20;
 const uint8_t   OSC2_FINE     = 21;
 
 const uint8_t   SUB_OSC_WAVE  = 29;
-const uint8_t   SUB_OSC_MIX   = 26;
+const uint8_t   SUB_OSC_LEVEL = 26;
 const uint8_t   PITCH_EG_AMT  = 104;
 const uint8_t   PITCH_EG_TGT  = 105;
 

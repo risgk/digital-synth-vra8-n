@@ -7,7 +7,7 @@ const uint8_t preset_table_OSC2_COARSE  [] = {71 , 64 , 64 , 64 , 64 , 64 , 64 ,
 const uint8_t preset_table_OSC2_FINE    [] = {68 , 72 , 66 , 72 , 68 , 64 , 64 , 64 };
 
 const uint8_t preset_table_SUB_OSC_WAVE [] = {0  , 127, 0  , 0  , 0  , 0  , 0  , 0  };
-const uint8_t preset_table_SUB_OSC_MIX  [] = {127, 127, 127, 0  , 0  , 0  , 0  , 0  };
+const uint8_t preset_table_SUB_OSC_LEVEL[] = {127, 127, 127, 0  , 0  , 0  , 0  , 0  };
 const uint8_t preset_table_PITCH_EG_AMT [] = {64 , 62 , 64 , 64 , 64 , 64 , 64 , 64 };
 const uint8_t preset_table_PITCH_EG_TGT [] = {127, 0  , 127, 127, 127, 127, 127, 127};
 

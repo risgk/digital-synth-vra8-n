@@ -200,7 +200,7 @@ public:
     case OSC2_MIX:
       IOsc<0>::set_osc_mix(controller_value);
       break;
-    case SUB_OSC_MIX:
+    case SUB_OSC_LEVEL:
       IOsc<0>::set_sub_osc_level(controller_value);
       break;
     case EG_SUSTAIN:
@@ -319,7 +319,7 @@ public:
     control_change(OSC2_FINE    , preset_table_OSC2_FINE    [program_number]);
 
     control_change(SUB_OSC_WAVE , preset_table_SUB_OSC_WAVE [program_number]);
-    control_change(SUB_OSC_MIX  , preset_table_SUB_OSC_MIX  [program_number]);
+    control_change(SUB_OSC_LEVEL, preset_table_SUB_OSC_LEVEL[program_number]);
     control_change(PITCH_EG_AMT , preset_table_PITCH_EG_AMT [program_number]);
     control_change(PITCH_EG_TGT , preset_table_PITCH_EG_TGT [program_number]);
 

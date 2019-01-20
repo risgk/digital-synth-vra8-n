@@ -77,7 +77,7 @@
     | CUTOFF            | RESONANCE     | ATTACK        | DECAY         |
     +-------------------+---------------+---------------+---------------+
     | CC #24            | CC #25        | CC #26        | CC #22        |
-    | OSC WAVE (SAW/SQ) | OSC MIX (1/2) | SUB MIX       | PORTAMENTO    |
+    | OSC (SAW/SQ)      | OSC MIX (1/2) | SUB LEVEL     | PORTAMENTO    |
     +-------------------+---------------+---------------+---------------+
 
 ## MIDI Implementation Chart
@@ -107,13 +107,13 @@
     +-------------------------------+---------------+---------------+-----------------------+
     | Control                     1 | x             | o             | MODULATION DEPTH      |
     | Change                        |               |               |                       |
-    |                            24 | x             | o             | OSC WAVE (SAW/SQ)     |
+    |                            24 | x             | o             | OSC (SAW/SQ)          |
     |                            25 | x             | o             | OSC MIX (1/2)         |
     |                            20 | x             | o             | OSC2 COARSE (-/+)     |
     |                            21 | x             | o             | OSC2 FINE (-/+)       |
     |                               |               |               |                       |
     |                            29 | x             | o             | SUB (SIN/NOISE/SQ)    |
-    |                            26 | x             | o             | SUB MIX               |
+    |                            26 | x             | o             | SUB LEVEL             |
     |                           104 | x             | x             | EG > PITCH(-/+)       |
     |                           105 | x             | x             | EG > P. TGT (2/1&2)   |
     |                               |               |               |                       |

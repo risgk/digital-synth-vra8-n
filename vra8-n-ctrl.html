@@ -55,7 +55,7 @@ const OSC2_COARSE   = 20;
 const OSC2_FINE     = 21;
 
 const SUB_OSC_WAVE  = 29;
-const SUB_OSC_MIX   = 26;
+const SUB_OSC_LEVEL = 26;
 const PITCH_EG_AMT  = 104;
 const PITCH_EG_TGT  = 105;
 
@@ -109,7 +109,7 @@ var controllersInLocalStorage = [
   OSC2_FINE    ,
 
   SUB_OSC_WAVE ,
-  SUB_OSC_MIX  ,
+  SUB_OSC_LEVEL,
   PITCH_EG_AMT ,
   PITCH_EG_TGT ,
 
@@ -153,7 +153,7 @@ presetControllers[OSC2_COARSE  ] = [71 , 64 , 64 , 64 , 64 , 64 , 64 , 64 ];
 presetControllers[OSC2_FINE    ] = [68 , 72 , 66 , 72 , 68 , 64 , 64 , 64 ];
 
 presetControllers[SUB_OSC_WAVE ] = [0  , 127, 0  , 0  , 0  , 0  , 0  , 0  ];
-presetControllers[SUB_OSC_MIX  ] = [127, 127, 127, 0  , 0  , 0  , 0  , 0  ];
+presetControllers[SUB_OSC_LEVEL] = [127, 127, 127, 0  , 0  , 0  , 0  , 0  ];
 presetControllers[PITCH_EG_AMT ] = [64 , 62 , 64 , 64 , 64 , 64 , 64 , 64 ];
 presetControllers[PITCH_EG_TGT ] = [127, 0  , 127, 127, 127, 127, 127, 127];
 
@@ -537,7 +537,7 @@ function noteOff(noteNumber) {
 </table>
 
 <table>
-<tr><td>OSC WAVE (SAW/SQ)     </td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+<tr><td>OSC (SAW/SQ)          </td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
     <td>OSC MIX (1/2)         </td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
     <td>OSC2 COARSE (-/+)     </td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
     <td>OSC2 FINE (-/+)       </td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
@@ -550,12 +550,12 @@ function noteOff(noteNumber) {
     <td><input id="inputCC21" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(OSC2_FINE, value)"></td>
     <td><span   id="spanCC21">-1</span></td></tr>
 <tr><td>SUB (SIN/NOISE/SQ)    </td><td></td>
-    <td>SUB MIX               </td><td></td>
+    <td>SUB LEVEL             </td><td></td>
     <td>EG > PITCH (-/+)      </td><td></td>
     <td>EG > P. TGT (2/1&2)   </td><td></td></tr>
 <tr><td><input id="inputCC29" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(SUB_OSC_WAVE, value)"></td>
     <td><span   id="spanCC29">-1</span></td>
-    <td><input id="inputCC26" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(SUB_OSC_MIX, value)"></td>
+    <td><input id="inputCC26" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(SUB_OSC_LEVEL, value)"></td>
     <td><span   id="spanCC26">-1</span></td>
     <td><input id="inputCC104" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(PITCH_EG_AMT, value)"></td>
     <td><span   id="spanCC104">-1</span></td>
