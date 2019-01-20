@@ -31,7 +31,7 @@ const uint8_t preset_table_LFO_RT_EG_AMT[] = {64 , 64 , 64 , 72 , 64 , 64 , 64 ,
 const uint8_t preset_table_PITCH_LFO_TGT[] = {0  , 127, 127, 127, 127, 127, 127, 127};
 const uint8_t preset_table_CC15         [] = {0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  };
 
-const uint8_t preset_table_PB_RANGE     [] = {2  , 2  , 2  , 2  , 2  , 2  , 2  , 2  };
+const uint8_t preset_table_PB_RANGE     [] = {2  , 2  , 2  , 2  , 12 , 2  , 2  , 2  };
 const uint8_t preset_table_CC86         [] = {0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  };
 const uint8_t preset_table_CC106        [] = {0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  };
 const uint8_t preset_table_CC107        [] = {0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  };
