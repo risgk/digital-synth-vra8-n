@@ -24,6 +24,7 @@
     - Change "LFO WAVE (TRI/SQ)" to "LFO (A/S/SA/S&H/SQ)"
     - Change "LFO > PITCH (2/1&2)" to "LFO > PITCH (-/+)" and "LFO > P. TGT (2/1&2)"
     - Change "KEY ASGN (LO/LAST)" to "K. ASN (L/L/P/H/LST)"
+    - Change PRESETs
 - v1.1
     - Add "SUB WAVE (SIN/SQ)" and "LFO WAVE (TRI/SQ)"
 
