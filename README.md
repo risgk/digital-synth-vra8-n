@@ -14,12 +14,13 @@
 - v1.x
     - Change the layout of VRA8-N CTRL
     - Add "EG > PITCH(-/+)", "EG > P. TGT (2/1&2)", "RELEASE (OFF/ON)", and "EG > LFO RATE (-/+)"
-    - Change "OSC2 MIX" to "OSC MIX (1/2)"
-    - Change "SUB OSC MIX" to "SUB MIX"
+    - Change "OSC WAVE (SAW/SQ)" to "OSC (SAW/SQ)"
+    - Change "OSC2 MIX" (OSC2 Max 50%) to "OSC MIX (1/2)" (OSC2 Max 100%)
+    - Change "SUB OSC MIX" to "SUB LEVEL"
     - Change "SUB WAVE (SIN/SQ)" to "SUB (SIN/NOISE/SQ)"
-    - Change "AMP (GATE+RLS/EG)" to "AMP MODE (GATE/EG)"
+    - Change "AMP (GATE+RLS/EG)" to "AMP MODE (GATE/EG)" (No Release)
     - Change "SUSTAIN" to "SUSTAIN (OFF/ON)"
-    - Change "LFO WAVE (TRI/SQ)" to "LFO (T/2/S&H/SA/SQ)"
+    - Change "LFO WAVE (TRI/SQ)" to "LFO (A/S/SA/S&H/SQ)"
     - Change "LFO > PITCH (2/1&2)" to "LFO > PITCH (-/+)" and "LFO > P. TGT (2/1&2)"
     - Change "KEY ASGN (LO/LAST)" to "K. ASN (L/L/P/H/LST)"
 - v1.1
@@ -58,17 +59,17 @@
 
 ## Details of Controllers
 
-- "LFO (T/2/S&H/SA/SQ)" = LFO WAVE
-    - Values 0-15: TRIANGLE1 (Async)
-    - Values 16-47: TRIANGLE2 (Sync)
-    - Values 48-79: SAMPLE AND HOLD (Sync)
-    - Values 80-111: SAW DOWN (Sync)
-    - Values 112-127: SQUARE UP (Sync)
-- "K. ASN (L/L/P/H/LST)" = KEY ASSIGN
-    - Values 0-47: LOWEST Note
-    - Values 48-79: PARAPHONIC (Lowest and Highest Notes)
-    - Values 80-111: HIGHEST Note
-    - Values 112-127: LAST One Note
+- "LFO (A/S/SA/S&H/SQ)": LFO Wave
+    - Values 0-15: Async (Triangle)
+    - Values 16-47: Sync (Triangle)
+    - Values 48-79: SAw Down (Sync)
+    - Values 80-111: Sample And Hold (Sync)
+    - Values 112-127: SQuare Up (Sync)
+- "K. ASN (L/L/P/H/LST)": Key ASsigN
+    - Values 0-47: Lowest Note
+    - Values 48-79: Paraphonic (Lowest and Highest Notes)
+    - Values 80-111: Highest Note
+    - Values 112-127: LaST One Note
 
 ## A Sample Setting of a Physical Controller (8-Knob)
 
@@ -127,7 +128,7 @@
     |                            27 | x             | o             | SUSTAIN (OFF/ON)      |
     |                            28 | x             | x             | RELEASE (OFF/ON)      |
     |                               |               |               |                       |
-    |                            14 | x             | o             | LFO (T/2/S&H/SA/SQ)   |
+    |                            14 | x             | o             | LFO (A/S/SA/S&H/SQ)   |
     |                            80 | x             | o             | LFO RATE              |
     |                            82 | x             | o             | LFO > PITCH (-/+)     |
     |                            83 | x             | o             | LFO > CUTOFF (-/+)    |
