@@ -11,7 +11,7 @@ const uint8_t preset_table_SUB_OSC_LEVEL[] = {127, 127, 127, 0  , 0  , 0  , 0  ,
 const uint8_t preset_table_PITCH_EG_AMT [] = {64 , 62 , 64 , 64 , 64 , 64 , 64 , 64 };
 const uint8_t preset_table_PITCH_EG_TGT [] = {127, 0  , 127, 127, 127, 127, 127, 127};
 
-const uint8_t preset_table_FILTER_CUTOFF[] = {79 , 31 , 7  , 127, 127, 127, 127, 127};
+const uint8_t preset_table_FILTER_CUTOFF[] = {76 , 28 , 4  , 124, 124, 124, 124, 124};
 const uint8_t preset_table_FILTER_RESO  [] = {80 , 64 , 127, 0  , 0  , 0  , 0  , 0  };
 const uint8_t preset_table_CUTOFF_EG_AMT[] = {82 , 112, 94,  64 , 64 , 64 , 64 , 64 };
 const uint8_t preset_table_AMP_EG_ON    [] = {127, 0  , 127, 0  , 127, 127, 127, 127};

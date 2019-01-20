@@ -12,7 +12,8 @@
 ## History
 
 - v1.x
-    - Change the layout of VRA8-N CTRL
+    - Change the layout and the display of VRA8-N CTRL
+    - Change the variation range of CUTOFF 7-127 to 4-124
     - Add "EG > PITCH(-/+)", "EG > P. TGT (2/1&2)", "RELEASE (OFF/ON)", and "EG > LFO RATE (-/+)"
     - Change "OSC WAVE (SAW/SQ)" to "OSC (SAW/SQ)"
     - Change "OSC2 MIX" (OSC2 Max 50%) to "OSC MIX (1/2)" (OSC2 Max 100%)
