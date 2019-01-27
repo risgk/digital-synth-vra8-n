@@ -1,6 +1,6 @@
-# Digital Synth VRA8-N v1.x.0
+# Digital Synth VRA8-N v1.2.0
 
-- 201x-xx-xx ISGK Instruments
+- 2019-01-27 ISGK Instruments
 - <https://github.com/risgk/digital-synth-vra8-n>
 
 ## Concept
@@ -9,7 +9,7 @@
 
 ## Change History
 
-- v1.x (Major Changes)
+- v1.2 (Major Changes)
     - Add "EG > PITCH(-/+)", "EG > P. TGT (1&2/2)", "RELEASE (OFF/ON)", and "EG > LFO RATE (-/+)"
     - Change "OSC2 MIX" (OSC2 Max 50%) to "OSC MIX (1/2)" (OSC2 Max 100%)
     - Change "SUB WAVE (SIN/SQ)" to "SUB (SIN/NOISE/SQ)"
@@ -82,8 +82,8 @@
 
 ## MIDI Implementation Chart
 
-      [Monophonic Synthesizer]                                        Date: 201x-xx-xx       
-      Model: Digital Synth VRA8-N     MIDI Implementation Chart       Version: 1.x.0         
+      [Monophonic Synthesizer]                                        Date: 2019-01-27       
+      Model: Digital Synth VRA8-N     MIDI Implementation Chart       Version: 1.2.0         
     +-------------------------------+---------------+---------------+-----------------------+
     | Function...                   | Transmitted   | Recognized    | Remarks               |
     +-------------------------------+---------------+---------------+-----------------------+
