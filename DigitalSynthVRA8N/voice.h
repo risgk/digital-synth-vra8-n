@@ -274,9 +274,9 @@ public:
       break;
     case PITCH_LFO_TGT:
       if (controller_value < 64) {
-        IOsc<0>::set_lfo_target_both(false);
-      } else {
         IOsc<0>::set_lfo_target_both(true);
+      } else {
+        IOsc<0>::set_lfo_target_both(false);
       }
       break;
     case PITCH_EG_AMT:
@@ -284,9 +284,9 @@ public:
       break;
     case PITCH_EG_TGT:
       if (controller_value < 64) {
-        IOsc<0>::set_pitch_eg_target_both(false);
-      } else {
         IOsc<0>::set_pitch_eg_target_both(true);
+      } else {
+        IOsc<0>::set_pitch_eg_target_both(false);
       }
       break;
     case LFO_RT_EG_AMT:

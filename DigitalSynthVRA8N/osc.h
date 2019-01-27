@@ -160,7 +160,7 @@ public:
     } else if (controller_value < 80) {
       m_lfo_waveform = LFO_WAVEFORM_SAW_DOWN;
     } else if (controller_value < 112) {
-      m_lfo_waveform = LFO_WAVEFORM_SAMPLE_AND_HOLD;
+      m_lfo_waveform = LFO_WAVEFORM_RANDOM;
     } else {
       m_lfo_waveform = LFO_WAVEFORM_SQ;
     }
@@ -444,7 +444,7 @@ private:
         level = b - 64;
       }
       break;
-    case LFO_WAVEFORM_SAMPLE_AND_HOLD:
+    case LFO_WAVEFORM_RANDOM:
       if (phase < m_lfo_rate_actual) {
         m_lfo_sampled = get_white_noise_7();
       }

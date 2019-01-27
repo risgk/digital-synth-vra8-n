@@ -3,29 +3,26 @@
 - 201x-xx-xx ISGK Instruments
 - <https://github.com/risgk/digital-synth-vra8-n>
 
-
 ## Concept
 
 - Monophonic Synthesizer (MIDI Sound Module) for Arduino Uno
 
+## Change History
 
-## History
-
-- v1.x
-    - Change the layout and the display of VRA8-N CTRL
-    - Change the variation range of CUTOFF 7-127 to 4-124
-    - Add "EG > PITCH(-/+)", "EG > P. TGT (2/1&2)", "RELEASE (OFF/ON)", and "EG > LFO RATE (-/+)"
-    - Change "OSC WAVE (SAW/SQ)" to "OSC (SAW/SQ)"
+- v1.x (Major Changes)
+    - Add "EG > PITCH(-/+)", "EG > P. TGT (1&2/2)", "RELEASE (OFF/ON)", and "EG > LFO RATE (-/+)"
     - Change "OSC2 MIX" (OSC2 Max 50%) to "OSC MIX (1/2)" (OSC2 Max 100%)
-    - Change "SUB OSC MIX" to "SUB LEVEL"
     - Change "SUB WAVE (SIN/SQ)" to "SUB (SIN/NOISE/SQ)"
-    - Change "AMP (GATE+RLS/EG)" to "AMP MODE (GATE/EG)" (No Release)
+    - Change "AMP (GATE+RLS/EG)" to "AMP EG (OFF/ON)" (No Release)
     - Change "SUSTAIN" to "SUSTAIN (OFF/ON)"
-    - Change "LFO WAVE (TRI/SQ)" to "LFO (T/2/SA/S&H/SQ)"
-    - Change "LFO > PITCH (2/1&2)" to "LFO > PITCH (-/+)" and "LFO > P. TGT (2/1&2)"
+    - Change "LFO WAVE (TRI/SQ)" to "LFO (T/2/SA/RND/SQ)"
+    - Change "LFO > PITCH (2/1+2)" to "LFO > PITCH (-/+)" and "LFO > P. TGT (1&2/2)"
     - Change "KEY ASGN (LO/LAST)" to "K. ASN (L/L/P/H/LST)"
+    - Change the variation range of "CUTOFF" 7-127 to 4-124
+    - Change the names of controllers
+    - Change the layout and the display of VRA8-N CTRL
     - Change PRESETs
-- v1.1
+- v1.1 (Major Changes)
     - Add "SUB WAVE (SIN/SQ)" and "LFO WAVE (TRI/SQ)"
 
 ## Features
@@ -62,11 +59,11 @@
 ## Details of Controllers
 
 - "LFO (T/2/SA/S&H/SQ)": LFO Wave
-    - Values 0-15: Triangle (Async)
-    - Values 16-47: Triangle 2 (Sync)
-    - Values 48-79: SAw Down (Sync)
-    - Values 80-111: Sample And Hold (Sync)
-    - Values 112-127: SQuare Up (Sync)
+    - Values 0-15: Triangle (Key Trigger: Off)
+    - Values 16-47: Triangle 2 (Key Trigger: On)
+    - Values 48-79: SAw Down (Key Trigger: On)
+    - Values 80-111: RaNDom (Key Trigger: On)
+    - Values 112-127: SQuare Up (Key Trigger: On)
 - "K. ASN (L/L/P/H/LST)": Key ASsigN
     - Values 0-47: Lowest Note
     - Values 48-79: Paraphonic (Lowest and Highest Notes)
@@ -118,26 +115,26 @@
     |                            29 | x             | o             | SUB (SIN/NOISE/SQ)    |
     |                            26 | x             | o             | SUB LEVEL             |
     |                           104 | x             | x             | EG > PITCH(-/+)       |
-    |                           105 | x             | x             | EG > P. TGT (2/1&2)   |
+    |                           105 | x             | x             | EG > P. TGT (1&2/2)   |
     |                               |               |               |                       |
     |                            16 | x             | o             | CUTOFF                |
     |                            17 | x             | o             | RESONANCE             |
     |                            18 | x             | o             | EG > CUTOFF (-/+)     |
-    |                            31 | x             | o             | AMP MODE (GATE/EG)    |
+    |                            31 | x             | o             | AMP EG (OFF/ON)       |
     |                               |               |               |                       |
     |                            23 | x             | o             | ATTACK                |
     |                            19 | x             | o             | DECAY                 |
     |                            27 | x             | o             | SUSTAIN (OFF/ON)      |
     |                            28 | x             | x             | RELEASE (OFF/ON)      |
     |                               |               |               |                       |
-    |                            14 | x             | o             | LFO (T/2/SA/S&H/SQ)   |
+    |                            14 | x             | o             | LFO (T/2/SA/RND/SQ)   |
     |                            80 | x             | o             | LFO RATE              |
     |                            82 | x             | o             | LFO > PITCH (-/+)     |
     |                            83 | x             | o             | LFO > CUTOFF (-/+)    |
     |                               |               |               |                       |
     |                            81 | x             | o             | LFO DEPTH             |
     |                             3 | x             | x             | EG > LFO RATE (-/+)   |
-    |                             9 | x             | x             | LFO > P. TGT (2/1&2)  |
+    |                             9 | x             | x             | LFO > P. TGT (1&2/2)  |
     |                            15 | x             | x             | (RESERVED)            |
     |                               |               |               |                       |
     |                            85 | x             | o             | P. BEND RANGE         |

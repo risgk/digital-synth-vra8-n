@@ -155,9 +155,9 @@ presetControllers[OSC2_FINE    ] = [68 , 72 , 66 , 72 , 68 , 64 , 64 , 64 ];
 presetControllers[SUB_OSC_WAVE ] = [127, 0  , 0  , 0  , 127, 0  , 0  , 0  ];
 presetControllers[SUB_OSC_LEVEL] = [127, 127, 127, 0  , 0  , 0  , 0  , 0  ];
 presetControllers[PITCH_EG_AMT ] = [64 , 62 , 64 , 64 , 64 , 64 , 64 , 64 ];
-presetControllers[PITCH_EG_TGT ] = [127, 0  , 127, 127, 127, 127, 127, 127];
+presetControllers[PITCH_EG_TGT ] = [0  , 127, 0  , 0  , 0  , 0  , 0  , 0  ];
 
-presetControllers[FILTER_CUTOFF] = [76 , 28 , 4  , 124, 124, 124, 124, 124];
+presetControllers[FILTER_CUTOFF] = [76 , 28 , 0  , 127, 127, 127, 127, 127];
 presetControllers[FILTER_RESO  ] = [80 , 64 , 127, 0  , 0  , 0  , 0  , 0  ];
 presetControllers[CUTOFF_EG_AMT] = [82 , 112, 94,  64 , 64 , 64 , 64 , 64 ];
 presetControllers[AMP_EG_ON    ] = [127, 0  , 127, 0  , 127, 127, 127, 127];
@@ -174,7 +174,7 @@ presetControllers[CO_LFO_AMT   ] = [64 , 64 , 52 , 64 , 64 , 64 , 64 , 64 ];
 
 presetControllers[LFO_DEPTH    ] = [16 , 16 , 0  , 0  , 0  , 0  , 0  , 0  ];
 presetControllers[LFO_RT_EG_AMT] = [64 , 64 , 64 , 72 , 64 , 64 , 64 , 64 ];
-presetControllers[PITCH_LFO_TGT] = [0  , 127, 127, 127, 127, 127, 127, 127];
+presetControllers[PITCH_LFO_TGT] = [127, 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
 presetControllers[CC15         ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
 
 presetControllers[PB_RANGE     ] = [2  , 2  , 2  , 2  , 12 , 2  , 2  , 2  ];
@@ -251,6 +251,11 @@ function restoreControllers() {
 function onChangeTranspose(value) {
   document.getElementById("inputTranspose").value = parseInt(value);
   document.getElementById("spanTranspose").innerHTML = value;
+  if (value >= 0) {
+    document.getElementById("spanTranspose").innerHTML = "+" + String(value);
+  } else {
+    document.getElementById("spanTranspose").innerHTML = value;
+  }
   localStorage.setItem("keyTranspose", value);
   transpose = parseInt(value);
 }
@@ -289,6 +294,11 @@ function onMIDIMessage(event) {
   } else if (event.data[0] == (PITCH_BEND | MIDI_CH)) {
     var value = event.data[1] + (event.data[2] * 128) - 8192;
     document.getElementById("spanPB").innerHTML = value;
+    if (value >= 0) {
+      document.getElementById("spanPB").innerHTML = "+" + String(value);
+    } else {
+      document.getElementById("spanPB").innerHTML = value;
+    }
   } else if (event.data[0] == (NOTE_ON | MIDI_CH)) {
     var value = event.data[2];
     document.getElementById("spanNoteOnVelocity").innerHTML = value;
@@ -551,7 +561,7 @@ function noteOff(noteNumber) {
     <td><input type="button" value="#11"           onclick="saveControllers(11)"></td>
     <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
     <td>&nbsp;</td>
-    <td><input type="button" value="RANDOM"        onclick="setRandom()"        ></td></tr>
+    <td><input type="button" value="RANDOM CTRL"   onclick="setRandom()"        ></td></tr>
 <tr><td>&nbsp;</td></tr>
 </table>
 
@@ -571,7 +581,7 @@ function noteOff(noteNumber) {
 <tr><td>SUB (SIN/NOISE/SQ)    </td><td></td>
     <td>SUB LEVEL             </td><td></td>
     <td>EG > PITCH (-/+)      </td><td></td>
-    <td>EG > P. TGT (2/1&2)   </td><td></td></tr>
+    <td>EG > P. TGT (1&2/2)   </td><td></td></tr>
 <tr><td><input id="inputCC29" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(SUB_OSC_WAVE, value)"></td>
     <td><span   id="spanCC29">-1</span></td>
     <td><input id="inputCC26" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(SUB_OSC_LEVEL, value)"></td>
@@ -584,7 +594,7 @@ function noteOff(noteNumber) {
 <tr><td>CUTOFF                </td><td></td>
     <td>RESONANCE             </td><td></td>
     <td>EG > CUTOFF (-/+)     </td><td></td>
-    <td>AMP MODE (GATE/EG)    </td><td></td></tr>
+    <td>AMP EG (OFF/ON)       </td><td></td></tr>
 <tr><td><input id="inputCC16" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(FILTER_CUTOFF, value)"></td>
     <td><span   id="spanCC16">-1</span></td>
     <td><input id="inputCC17" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(FILTER_RESO, value)"></td>
@@ -606,7 +616,7 @@ function noteOff(noteNumber) {
     <td><input id="inputCC28" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(EG_RELEASE, value)"></td>
     <td><span   id="spanCC28">-1</span></td></tr>
 <tr><td>&nbsp;</td></tr>
-    <td>LFO (T/2/SA/S&H/SQ)   </td><td></td>
+    <td>LFO (T/2/SA/RND/SQ)   </td><td></td>
     <td>LFO RATE              </td><td></td>
     <td>LFO > PITCH (-/+)     </td><td></td>
     <td>LFO > CUTOFF (-/+)    </td><td></td></tr>
@@ -620,7 +630,7 @@ function noteOff(noteNumber) {
     <td><span   id="spanCC83">-1</span></td></tr>
 <tr><td>LFO DEPTH             </td><td></td>
     <td>EG > LFO RATE (-/+)   </td><td></td>
-    <td>LFO > P. TGT (2/1&2)  </td><td></td>
+    <td>LFO > P. TGT (1&2/2)  </td><td></td>
     <td>                      </td><td></td></tr>
 <tr><td><input id="inputCC81" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(LFO_DEPTH, value)"></td>
     <td><span   id="spanCC81">-1</span></td>
