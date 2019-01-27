@@ -13,6 +13,7 @@ class EnvGen {
   static uint16_t m_level;
   static uint8_t  m_attack_update_coef;
   static uint8_t  m_decay_update_coef;
+  static uint8_t  m_release_update_coef;
   static uint16_t m_sustain;
   static uint8_t  m_rest;
 
@@ -23,6 +24,7 @@ public:
     set_attack(0);
     set_decay(0);
     set_sustain(127);
+    set_release(0);
   }
 
   INLINE static void set_attack(uint8_t controller_value) {
@@ -31,6 +33,10 @@ public:
 
   INLINE static void set_decay(uint8_t controller_value) {
     m_decay_update_coef = ((controller_value >> 1) << 1) + 2;
+  }
+
+  INLINE static void set_release(uint8_t controller_value) {
+    m_release_update_coef = ((controller_value >> 1) << 1) + 2;
   }
 
   INLINE static void set_sustain(uint8_t controller_value) {
@@ -85,9 +91,9 @@ public:
       case STATE_IDLE:
         m_rest--;
         if (m_rest == 0) {
-          m_rest = m_decay_update_coef;
+          m_rest = m_release_update_coef;
           if (m_level > 0) {
-            m_level = mul_q16_q8(m_level, 188 + (m_decay_update_coef >> 1));
+            m_level = mul_q16_q8(m_level, 188 + (m_release_update_coef >> 1));
             if (m_level < ((T == 0) ? 0x0100 : 0x0400 /* gate for amp */)) {
               m_level = 0;
             }
@@ -105,5 +111,6 @@ template <uint8_t T> uint8_t  EnvGen<T>::m_state;
 template <uint8_t T> uint16_t EnvGen<T>::m_level;
 template <uint8_t T> uint8_t  EnvGen<T>::m_attack_update_coef;
 template <uint8_t T> uint8_t  EnvGen<T>::m_decay_update_coef;
+template <uint8_t T> uint8_t  EnvGen<T>::m_release_update_coef;
 template <uint8_t T> uint16_t EnvGen<T>::m_sustain;
 template <uint8_t T> uint8_t  EnvGen<T>::m_rest;

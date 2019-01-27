@@ -52,38 +52,43 @@ const uint8_t   ACTIVE_SENSING        = 0xFE;
 
 const uint8_t   MODULATION    = 1;
 
+const uint8_t   OSC_WAVE      = 24;
+const uint8_t   OSC2_MIX      = 25;
+const uint8_t   OSC2_COARSE   = 20;
+const uint8_t   OSC2_FINE     = 21;
+
+const uint8_t   SUB_OSC_WAVE  = 29;
+const uint8_t   SUB_OSC_LEVEL = 26;
+const uint8_t   PITCH_EG_AMT  = 104;
+const uint8_t   PITCH_EG_TGT  = 105;
+
 const uint8_t   FILTER_CUTOFF = 16;
 const uint8_t   FILTER_RESO   = 17;
 const uint8_t   CUTOFF_EG_AMT = 18;
-const uint8_t   EG_DECAY      = 19;
-
-const uint8_t   OSC2_COARSE   = 20;
-const uint8_t   OSC2_FINE     = 21;
-const uint8_t   PORTAMENTO    = 22;
-const uint8_t   EG_ATTACK     = 23;
-
-const uint8_t   OSC_WAVE      = 24;
-const uint8_t   OSC2_MIX      = 25;
-const uint8_t   SUB_OSC_MIX   = 26;
-const uint8_t   EG_SUSTAIN    = 27;
-
-const uint8_t   CC28          = 28;
-const uint8_t   SUB_OSC_WAVE  = 29;
-const uint8_t   LEGATO        = 30;
 const uint8_t   AMP_EG_ON     = 31;
 
+const uint8_t   EG_ATTACK     = 23;
+const uint8_t   EG_DECAY      = 19;
+const uint8_t   EG_SUSTAIN    = 27;
+const uint8_t   EG_RELEASE    = 28;
+
+const uint8_t   LFO_WAVE      = 14;
 const uint8_t   LFO_RATE      = 80;
-const uint8_t   LFO_DEPTH     = 81;
 const uint8_t   PITCH_LFO_AMT = 82;
 const uint8_t   CO_LFO_AMT    = 83;
 
-const uint8_t   CC3           = 3;
-const uint8_t   CC9           = 9;
-const uint8_t   LFO_WAVE      = 14;
+const uint8_t   LFO_DEPTH     = 81;
+const uint8_t   LFO_RT_EG_AMT = 3;
+const uint8_t   PITCH_LFO_TGT = 9;
 const uint8_t   CC15          = 15;
 
 const uint8_t   PB_RANGE      = 85;
 const uint8_t   CC86          = 86;
+const uint8_t   CC106         = 106;
+const uint8_t   CC107         = 107;
+
+const uint8_t   PORTAMENTO    = 22;
+const uint8_t   LEGATO        = 30;
 const uint8_t   KEY_ASSIGN    = 87;
 const uint8_t   CC89          = 89;
 
@@ -96,8 +101,17 @@ const uint8_t   POLY_MODE_ON  = 127;
 const uint8_t   OSC_WAVEFORM_SAW = 0;
 const uint8_t   OSC_WAVEFORM_SQ  = 127;
 
-const uint8_t   SUB_WAVEFORM_SIN = 0;
-const uint8_t   SUB_WAVEFORM_SQ  = 127;
+const uint8_t   SUB_WAVEFORM_SIN   = 0;
+const uint8_t   SUB_WAVEFORM_NOISE = 64;
+const uint8_t   SUB_WAVEFORM_SQ    = 127;
 
-const uint8_t   LFO_WAVEFORM_TRI = 0;
-const uint8_t   LFO_WAVEFORM_SQ  = 127;
+const uint8_t   LFO_WAVEFORM_TRI_ASYNC = 0;
+const uint8_t   LFO_WAVEFORM_TRI_SYNC  = 32;
+const uint8_t   LFO_WAVEFORM_SAW_DOWN  = 64;
+const uint8_t   LFO_WAVEFORM_RANDOM    = 96;
+const uint8_t   LFO_WAVEFORM_SQ        = 127;
+
+const uint8_t   KEY_ASSIGN_LOW  = 0;
+const uint8_t   KEY_ASSIGN_DUO  = 64;
+const uint8_t   KEY_ASSIGN_HIGH = 96;
+const uint8_t   KEY_ASSIGN_LAST = 127;
