@@ -1,6 +1,6 @@
-# Digital Synth VRA8-N v1.2.0
+# Digital Synth VRA8-N v1.x.x
 
-- 2019-01-27 ISGK Instruments
+- 2019-xx-xx ISGK Instruments
 - <https://github.com/risgk/digital-synth-vra8-n>
 
 ## Concept
@@ -9,6 +9,8 @@
 
 ## Change History
 
+- v2.0 (Major Changes)
+    - Change "OSC (SAW/SQ)" to "OSC1|2 (SA/N|SI/SQ)"
 - v1.2 (Major Changes)
     - Add "EG > PITCH(-/+)", "EG > P. TGT (1&2/2)", "RELEASE (OFF/ON)", and "EG > LFO RATE (-/+)"
     - Change "OSC2 MIX" (OSC2 Max 50%) to "OSC MIX (1/2)" (OSC2 Max 100%)
@@ -58,6 +60,20 @@
 
 ## Details of Controllers
 
+- "OSC1|2 (SA/N|SI/SQ)": OSC1 and OSC2 Wave
+    - Values 0-7: OSC1 SAw, OSC2 SAw
+    - Values 8-23: OSC1 SAw, OSC2 SIn
+    - Values 24-39: OSC1 SAw, OSC2 SQuare
+    - Values 40-55: OSC1 Noise, OSC2 SAw
+    - Values 56-71: OSC1 Noise, OSC2 SIn
+    - Values 72-87: OSC1 Noise, OSC2 SQuare
+    - Values 88-103: OSC1 SQuare, OSC2 SAw
+    - Values 104-119: OSC1 SQuare, OSC2 SIn
+    - Values 120-127: OSC1 SQuare, OSC2 SQuare
+- "SUB (SIN/NOISE/SQ)": SUB Osc Wave
+    - Values 0-31: SIn
+    - Values 32-95: NOISE
+    - Values 96-127: SQuare
 - "LFO (T/2/SA/S&H/SQ)": LFO Wave
     - Values 0-15: Triangle (Key Trigger: Off)
     - Values 16-47: Triangle 2 (Key Trigger: On)
@@ -82,8 +98,8 @@
 
 ## MIDI Implementation Chart
 
-      [Monophonic Synthesizer]                                        Date: 2019-01-27       
-      Model: Digital Synth VRA8-N     MIDI Implementation Chart       Version: 1.2.0         
+      [Monophonic Synthesizer]                                        Date: 2019-xx-xx       
+      Model: Digital Synth VRA8-N     MIDI Implementation Chart       Version: 1.x.x         
     +-------------------------------+---------------+---------------+-----------------------+
     | Function...                   | Transmitted   | Recognized    | Remarks               |
     +-------------------------------+---------------+---------------+-----------------------+
@@ -107,7 +123,7 @@
     +-------------------------------+---------------+---------------+-----------------------+
     | Control                     1 | x             | o             | MODULATION DEPTH      |
     | Change                        |               |               |                       |
-    |                            24 | x             | o             | OSC (SAW/SQ)          |
+    |                            24 | x             | o             | OSC1|2 (SA/N|SI/SQ)   |
     |                            25 | x             | o             | OSC MIX (1/2)         |
     |                            20 | x             | o             | OSC2 COARSE (-/+)     |
     |                            21 | x             | o             | OSC2 FINE (-/+)       |
