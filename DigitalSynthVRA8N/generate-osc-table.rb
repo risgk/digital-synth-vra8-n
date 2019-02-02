@@ -98,8 +98,8 @@ generate_osc_wave_table_arrays do |last|
 end
 
 generate_osc_wave_table_arrays(true) do |last|
-  generate_osc_wave_table("organ", last, 2.0 / 6.0) do |n, k|
-    if k <= 8
+  generate_osc_wave_table("organ", last, 1.8 / 6.0) do |n, k|
+    if k <= 9
       (2.0 / Math::PI) * Math.sin((2.0 * Math::PI) * ((n + 0.5) /
       (1 << OSC_WAVE_TABLE_SAMPLES_BITS)) * k)
     else
