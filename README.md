@@ -10,7 +10,7 @@
 ## Change History
 
 - v2.0 (Major Changes)
-    - Change "OSC (SAW/SQ)" to "OSC1/2 (SA/ORG/SQ)"
+    - Change "OSC (SAW/SQ)" to "OSC1/2 (SAW/P3/SQ)"
 - v1.2 (Major Changes)
     - Add "EG > PITCH(-/+)", "EG > P. TGT (1&2/2)", "RELEASE (OFF/ON)", and "EG > LFO RATE (-/+)"
     - Change "OSC2 MIX" (OSC2 Max 50%) to "OSC MIX (1/2)" (OSC2 Max 100%)
@@ -60,15 +60,15 @@
 
 ## Details of Controllers
 
-- "OSC1|2 (SA/N|SI/SQ)": OSC1 and OSC2 Wave
+- "OSC1/2 (SAW/P3/SQ)": OSC1 and OSC2 Wave
     - Values 0-7: OSC1 SAw, OSC2 SAw
-    - Values 8-23: OSC1 SAw, OSC2 SIn
+    - Values 8-23: OSC1 SAw, OSC2 Pulse (33.3%)
     - Values 24-39: OSC1 SAw, OSC2 SQuare
-    - Values 40-55: OSC1 Noise, OSC2 SAw
-    - Values 56-71: OSC1 Noise, OSC2 SIn
-    - Values 72-87: OSC1 Noise, OSC2 SQuare
+    - Values 40-55: OSC1 Pulse (33.3%), OSC2 SAw
+    - Values 56-71: OSC1 Pulse (33.3%), OSC2 Pulse (33.3%)
+    - Values 72-87: OSC1 Pulse (33.3%), OSC2 SQuare
     - Values 88-103: OSC1 SQuare, OSC2 SAw
-    - Values 104-119: OSC1 SQuare, OSC2 SIn
+    - Values 104-119: OSC1 SQuare, OSC2 Pulse (33.3%)
     - Values 120-127: OSC1 SQuare, OSC2 SQuare
 - "SUB (SIN/NOISE/SQ)": SUB Osc Wave
     - Values 0-31: SIn
@@ -123,7 +123,7 @@
     +-------------------------------+---------------+---------------+-----------------------+
     | Control                     1 | x             | o             | MODULATION DEPTH      |
     | Change                        |               |               |                       |
-    |                            24 | x             | o             | OSC1/2 (SA/ORG/SQ)    |
+    |                            24 | x             | o             | OSC1/2 (SAW/P3/SQ)    |
     |                            25 | x             | o             | OSC MIX (1/2)         |
     |                            20 | x             | o             | OSC2 COARSE (-/+)     |
     |                            21 | x             | o             | OSC2 FINE (-/+)       |

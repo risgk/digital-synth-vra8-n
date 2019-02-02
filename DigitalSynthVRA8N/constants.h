@@ -98,9 +98,9 @@ const uint8_t   OMNI_MODE_ON  = 125;
 const uint8_t   MONO_MODE_ON  = 126;
 const uint8_t   POLY_MODE_ON  = 127;
 
-const uint8_t   OSC_WAVEFORM_SAW   = 0;
-const uint8_t   OSC_WAVEFORM_ORGAN = 64;
-const uint8_t   OSC_WAVEFORM_SQ    = 127;
+const uint8_t   OSC_WAVEFORM_SAW         = 0;
+const uint8_t   OSC_WAVEFORM_PULSE_33_3P = 64;
+const uint8_t   OSC_WAVEFORM_SQ          = 127;
 
 const uint8_t   SUB_WAVEFORM_SIN   = 0;
 const uint8_t   SUB_WAVEFORM_NOISE = 64;
