@@ -10,7 +10,7 @@
 ## Change History
 
 - v2.0 (Major Changes)
-    - Change "OSC (SAW/SQ)" to "OSC1|2 (SA/N|SI/SQ)"
+    - Change "OSC (SAW/SQ)" to "OSC1/2 (SA/ORG/SQ)"
 - v1.2 (Major Changes)
     - Add "EG > PITCH(-/+)", "EG > P. TGT (1&2/2)", "RELEASE (OFF/ON)", and "EG > LFO RATE (-/+)"
     - Change "OSC2 MIX" (OSC2 Max 50%) to "OSC MIX (1/2)" (OSC2 Max 100%)
@@ -123,7 +123,7 @@
     +-------------------------------+---------------+---------------+-----------------------+
     | Control                     1 | x             | o             | MODULATION DEPTH      |
     | Change                        |               |               |                       |
-    |                            24 | x             | o             | OSC1|2 (SA/N|SI/SQ)   |
+    |                            24 | x             | o             | OSC1/2 (SA/ORG/SQ)    |
     |                            25 | x             | o             | OSC MIX (1/2)         |
     |                            20 | x             | o             | OSC2 COARSE (-/+)     |
     |                            21 | x             | o             | OSC2 FINE (-/+)       |

@@ -142,25 +142,25 @@ public:
       set_osc_waveform<1>(OSC_WAVEFORM_SAW);
     } else if (controller_value < 24) {
       set_osc_waveform<0>(OSC_WAVEFORM_SAW);
-      set_osc_waveform<1>(OSC_WAVEFORM_SIN);
+      set_osc_waveform<1>(OSC_WAVEFORM_ORGAN);
     } else if (controller_value < 40) {
       set_osc_waveform<0>(OSC_WAVEFORM_SAW);
       set_osc_waveform<1>(OSC_WAVEFORM_SQ);
     } else if (controller_value < 56) {
-      set_osc_waveform<0>(OSC_WAVEFORM_NOISE);
+      set_osc_waveform<0>(OSC_WAVEFORM_ORGAN);
       set_osc_waveform<1>(OSC_WAVEFORM_SAW);
     } else if (controller_value < 72) {
-      set_osc_waveform<0>(OSC_WAVEFORM_NOISE);
-      set_osc_waveform<1>(OSC_WAVEFORM_SIN);
+      set_osc_waveform<0>(OSC_WAVEFORM_ORGAN);
+      set_osc_waveform<1>(OSC_WAVEFORM_ORGAN);
     } else if (controller_value < 88) {
-      set_osc_waveform<0>(OSC_WAVEFORM_NOISE);
+      set_osc_waveform<0>(OSC_WAVEFORM_ORGAN);
       set_osc_waveform<1>(OSC_WAVEFORM_SQ);
     } else if (controller_value < 104) {
       set_osc_waveform<0>(OSC_WAVEFORM_SQ);
       set_osc_waveform<1>(OSC_WAVEFORM_SAW);
     } else if (controller_value < 120) {
       set_osc_waveform<0>(OSC_WAVEFORM_SQ);
-      set_osc_waveform<1>(OSC_WAVEFORM_SIN);
+      set_osc_waveform<1>(OSC_WAVEFORM_ORGAN);
     } else {
       set_osc_waveform<0>(OSC_WAVEFORM_SQ);
       set_osc_waveform<1>(OSC_WAVEFORM_SQ);
@@ -422,11 +422,11 @@ private:
     m_mix_0_target = m_mix_table[(OSC_MIX_TABLE_LENGTH - 1) - (m_osc_mix >> 2)];
     m_mix_1_target = m_mix_table[                             (m_osc_mix >> 2)];
 
-    if (m_waveform[0] == OSC_WAVEFORM_SIN) {
+    if (m_waveform[0] == OSC_WAVEFORM_ORGAN) {
       m_mix_0_target <<= 1;
     }
 
-    if (m_waveform[1] == OSC_WAVEFORM_SIN) {
+    if (m_waveform[1] == OSC_WAVEFORM_ORGAN) {
       m_mix_1_target <<= 1;
     }
   }
@@ -443,8 +443,8 @@ private:
       result = g_osc_saw_wave_tables[note_number - NOTE_NUMBER_MIN];
     } else if (waveform == OSC_WAVEFORM_SQ) {
       result = g_osc_sq_wave_tables[note_number - NOTE_NUMBER_MIN];
-    } else {     // OSC_WAVEFORM_SIN
-      result = g_osc_sin_wave_table_h1;
+    } else {     // OSC_WAVEFORM_ORGAN
+      result = g_osc_organ_wave_tables[note_number - NOTE_NUMBER_MIN];
     }
     return result;
   }
