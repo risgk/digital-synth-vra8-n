@@ -194,8 +194,7 @@ public:
       break;
 
     case OSC_WAVE :
-      IOsc<0>::set_waveform<0>(controller_value);
-      IOsc<0>::set_waveform<1>(controller_value);
+      IOsc<0>::set_osc_waveforms(controller_value);
       break;
     case OSC2_MIX:
       IOsc<0>::set_osc_mix(controller_value);
