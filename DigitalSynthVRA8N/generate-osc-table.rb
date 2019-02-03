@@ -79,7 +79,7 @@ def last_harmonic(freq, organ = false, organ_last)
                         ((freq + OSC_DETUNE_FREQ_MAX) * 2 * SAMPLING_RATE)) : 0
   last = organ_last if organ && last > organ_last
   last = last - 1 if last.even?
-  last = 9 if last == 11
+  last = 3 if last == 5
   last = [last, 99].min
   last
 end
