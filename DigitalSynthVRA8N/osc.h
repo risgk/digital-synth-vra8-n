@@ -431,13 +431,12 @@ private:
 
   INLINE static const uint8_t* get_wave_table(uint8_t waveform, uint8_t note_number) {
     const uint8_t* result;
-    uint8_t index = (note_number - NOTE_NUMBER_MIN) >> 2;
     if (waveform == OSC_WAVEFORM_SAW) {
-      result = g_osc_saw_wave_tables[index];
+      result = g_osc_saw_wave_tables[note_number - NOTE_NUMBER_MIN];
     } else if (waveform == OSC_WAVEFORM_SQ) {
-      result = g_osc_sq_wave_tables[index];
+      result = g_osc_sq_wave_tables[note_number - NOTE_NUMBER_MIN];
     } else {     // OSC_WAVEFORM_PULSE_33_3P
-      result = g_osc_pulse3_wave_tables[index];
+      result = g_osc_pulse3_wave_tables[note_number - NOTE_NUMBER_MIN];
     }
     return result;
   }
