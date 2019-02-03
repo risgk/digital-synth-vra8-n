@@ -893,6 +893,7 @@ const uint8_t* g_osc_saw_wave_tables[] = {
   g_osc_saw_wave_table_h127, g_osc_saw_wave_table_h127, g_osc_saw_wave_table_h127,
   g_osc_saw_wave_table_h127, g_osc_saw_wave_table_h127, g_osc_saw_wave_table_h127,
   g_osc_saw_wave_table_h127, g_osc_saw_wave_table_h127, g_osc_saw_wave_table_h127,
+  g_osc_saw_wave_table_h127, g_osc_saw_wave_table_h127, g_osc_saw_wave_table_h127,
   g_osc_saw_wave_table_h119, g_osc_saw_wave_table_h119, g_osc_saw_wave_table_h119,
   g_osc_saw_wave_table_h99 , g_osc_saw_wave_table_h99 , g_osc_saw_wave_table_h99 ,
   g_osc_saw_wave_table_h83 , g_osc_saw_wave_table_h83 , g_osc_saw_wave_table_h83 ,
@@ -918,10 +919,10 @@ const uint8_t* g_osc_saw_wave_tables[] = {
   g_osc_saw_wave_table_h1  , g_osc_saw_wave_table_h1  , g_osc_saw_wave_table_h1  ,
   g_osc_saw_wave_table_h1  , g_osc_saw_wave_table_h1  , g_osc_saw_wave_table_h1  ,
   g_osc_saw_wave_table_h1  , g_osc_saw_wave_table_h1  , g_osc_saw_wave_table_h1  ,
-  g_osc_saw_wave_table_h1  , g_osc_saw_wave_table_h1  , g_osc_saw_wave_table_h1  ,
   g_osc_saw_wave_table_h1  , };
 
 const uint8_t* g_osc_sq_wave_tables[] = {
+  g_osc_sq_wave_table_h127, g_osc_sq_wave_table_h127, g_osc_sq_wave_table_h127,
   g_osc_sq_wave_table_h127, g_osc_sq_wave_table_h127, g_osc_sq_wave_table_h127,
   g_osc_sq_wave_table_h127, g_osc_sq_wave_table_h127, g_osc_sq_wave_table_h127,
   g_osc_sq_wave_table_h127, g_osc_sq_wave_table_h127, g_osc_sq_wave_table_h127,
@@ -958,7 +959,6 @@ const uint8_t* g_osc_sq_wave_tables[] = {
   g_osc_sq_wave_table_h3  , g_osc_sq_wave_table_h3  , g_osc_sq_wave_table_h3  ,
   g_osc_sq_wave_table_h3  , g_osc_sq_wave_table_h3  , g_osc_sq_wave_table_h3  ,
   g_osc_sq_wave_table_h3  , g_osc_sq_wave_table_h3  , g_osc_sq_wave_table_h3  ,
-  g_osc_sq_wave_table_h1  , g_osc_sq_wave_table_h1  , g_osc_sq_wave_table_h1  ,
   g_osc_sq_wave_table_h1  , g_osc_sq_wave_table_h1  , g_osc_sq_wave_table_h1  ,
   g_osc_sq_wave_table_h1  , g_osc_sq_wave_table_h1  , g_osc_sq_wave_table_h1  ,
   g_osc_sq_wave_table_h1  , g_osc_sq_wave_table_h1  , g_osc_sq_wave_table_h1  ,

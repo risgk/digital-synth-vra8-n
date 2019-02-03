@@ -1,6 +1,6 @@
-# Digital Synth VRA8-N v1.2.0
+# Digital Synth VRA8-N v1.2.1
 
-- 2019-01-27 ISGK Instruments
+- 2019-02-03 ISGK Instruments
 - <https://github.com/risgk/digital-synth-vra8-n>
 
 ## Concept
@@ -9,7 +9,10 @@
 
 ## Change History
 
-- v1.2 (Major Changes)
+- v1.2.1
+    - Improve sound quality
+    - Improve VRA8-N CTRL compatibility between versions
+- v1.2.0 (Major Changes)
     - Add "EG > PITCH(-/+)", "EG > P. TGT (1&2/2)", "RELEASE (OFF/ON)", and "EG > LFO RATE (-/+)"
     - Change "OSC2 MIX" (OSC2 Max 50%) to "OSC MIX (1/2)" (OSC2 Max 100%)
     - Change "SUB WAVE (SIN/SQ)" to "SUB (SIN/NOISE/SQ)"
@@ -22,7 +25,7 @@
     - Change the names of controllers
     - Change the layout and the display of VRA8-N CTRL
     - Change PRESETs
-- v1.1 (Major Changes)
+- v1.1.0 (Major Changes)
     - Add "SUB WAVE (SIN/SQ)" and "LFO WAVE (TRI/SQ)"
 
 ## Features
@@ -44,7 +47,8 @@
         - `make-sample-wav-file-cc.bat` makes a sample WAV file (working on Windows)
     - `generate-*.rb` generates source files
         - Requiring a Ruby execution environment
-- We recommend Arduino IDE 1.8.5
+- **CAUTION**: We *strongly recommend* **Arduino IDE 1.8.5**
+    - `DigitalSynthVRA8N.ino` *does not work well* with Arduino IDE 1.8.6 or later
 
 ## VRA8-N CTRL
 
@@ -82,8 +86,8 @@
 
 ## MIDI Implementation Chart
 
-      [Monophonic Synthesizer]                                        Date: 2019-01-27       
-      Model: Digital Synth VRA8-N     MIDI Implementation Chart       Version: 1.2.0         
+      [Monophonic Synthesizer]                                        Date: 2019-02-03       
+      Model: Digital Synth VRA8-N     MIDI Implementation Chart       Version: 1.2.1         
     +-------------------------------+---------------+---------------+-----------------------+
     | Function...                   | Transmitted   | Recognized    | Remarks               |
     +-------------------------------+---------------+---------------+-----------------------+
