@@ -1,6 +1,6 @@
-# Digital Synth VRA8-N v1.2.0
+# Digital Synth VRA8-N v1.x.x
 
-- 2019-01-27 ISGK Instruments
+- 2019-xx-xx ISGK Instruments
 - <https://github.com/risgk/digital-synth-vra8-n>
 
 ## Concept
@@ -44,7 +44,8 @@
         - `make-sample-wav-file-cc.bat` makes a sample WAV file (working on Windows)
     - `generate-*.rb` generates source files
         - Requiring a Ruby execution environment
-- We recommend Arduino IDE 1.8.5
+- **CAUTION**: We *strongly recommend* **Arduino IDE 1.8.5**
+    - `DigitalSynthVRA8N.ino` *does not work well* with Arduino IDE 1.8.6 or later
 
 ## VRA8-N CTRL
 
@@ -82,8 +83,8 @@
 
 ## MIDI Implementation Chart
 
-      [Monophonic Synthesizer]                                        Date: 2019-01-27       
-      Model: Digital Synth VRA8-N     MIDI Implementation Chart       Version: 1.2.0         
+      [Monophonic Synthesizer]                                        Date: 2019-xx-xx       
+      Model: Digital Synth VRA8-N     MIDI Implementation Chart       Version: 1.x.x         
     +-------------------------------+---------------+---------------+-----------------------+
     | Function...                   | Transmitted   | Recognized    | Remarks               |
     +-------------------------------+---------------+---------------+-----------------------+
