@@ -11,13 +11,12 @@ template <uint8_t T>
 class Osc {
   static const uint8_t FLUCTUATION_INIT = 32;
 
-  static uint8_t        m_osc_mix;
-  static uint8_t        m_mix_0_target;
-  static uint8_t        m_mix_0_current;
-  static uint8_t        m_mix_1_target;
-  static uint8_t        m_mix_1_current;
-  static uint8_t        m_mix_sub_target;
-  static uint8_t        m_mix_sub_current;
+  static int8_t         m_mix_0_target;
+  static int8_t         m_mix_0_current;
+  static int8_t         m_mix_1_target;
+  static int8_t         m_mix_1_current;
+  static int8_t         m_mix_sub_target;
+  static int8_t         m_mix_sub_current;
   static int16_t        m_level_sub;
   static int8_t         m_mix_table[OSC_MIX_TABLE_LENGTH];
   static int8_t         m_pitch_offset_1;
@@ -66,6 +65,7 @@ public:
       m_mix_table[i] = static_cast<uint8_t>(sqrtf(static_cast<float>(i) /
                                                   (OSC_MIX_TABLE_LENGTH - 1)) * 80);
     }
+    set_osc_mix(0);
     set_sub_osc_level(0);
     m_level_sub = 0;
     m_pitch_offset_1 = 0;
@@ -85,7 +85,6 @@ public:
     m_pitch_lfo_target_both = true;
     m_waveform[0] = OSC_WAVEFORM_SAW;
     m_waveform[1] = OSC_WAVEFORM_SAW;
-    set_osc_mix(0);
     m_sub_waveform = SUB_WAVEFORM_SIN;
     m_lfo_waveform = LFO_WAVEFORM_TRI_ASYNC;
     m_lfo_sampled = 64;
@@ -122,48 +121,24 @@ public:
   }
 
   INLINE static void set_osc_mix(uint8_t controller_value) {
-    uint8_t value = controller_value;
-
-    if (value >= 2) {
-      value -= 2;
+    if (controller_value >= 2) {
+      controller_value -= 2;
     }
 
-    if (value > 123) {
-      value = 123;
+    if (controller_value > 123) {
+      controller_value = 123;
     }
 
-    m_osc_mix = value;
-    update_mix_targets();
+    m_mix_0_target = m_mix_table[(OSC_MIX_TABLE_LENGTH - 1) - (controller_value >> 2)];
+    m_mix_1_target = m_mix_table[                             (controller_value >> 2)];
   }
 
-  INLINE static void set_osc_waveforms(uint8_t controller_value) {
-    if (controller_value < 8) {
-      set_osc_waveform<0>(OSC_WAVEFORM_SAW);
-      set_osc_waveform<1>(OSC_WAVEFORM_SAW);
-    } else if (controller_value < 24) {
-      set_osc_waveform<0>(OSC_WAVEFORM_SAW);
-      set_osc_waveform<1>(OSC_WAVEFORM_PULSE_33_3P);
-    } else if (controller_value < 40) {
-      set_osc_waveform<0>(OSC_WAVEFORM_SAW);
-      set_osc_waveform<1>(OSC_WAVEFORM_SQ);
-    } else if (controller_value < 56) {
-      set_osc_waveform<0>(OSC_WAVEFORM_PULSE_33_3P);
-      set_osc_waveform<1>(OSC_WAVEFORM_SAW);
-    } else if (controller_value < 72) {
-      set_osc_waveform<0>(OSC_WAVEFORM_PULSE_33_3P);
-      set_osc_waveform<1>(OSC_WAVEFORM_PULSE_33_3P);
-    } else if (controller_value < 88) {
-      set_osc_waveform<0>(OSC_WAVEFORM_PULSE_33_3P);
-      set_osc_waveform<1>(OSC_WAVEFORM_SQ);
-    } else if (controller_value < 104) {
-      set_osc_waveform<0>(OSC_WAVEFORM_SQ);
-      set_osc_waveform<1>(OSC_WAVEFORM_SAW);
-    } else if (controller_value < 120) {
-      set_osc_waveform<0>(OSC_WAVEFORM_SQ);
-      set_osc_waveform<1>(OSC_WAVEFORM_PULSE_33_3P);
+  template <uint8_t N>
+  INLINE static void set_waveform(uint8_t controller_value) {
+    if (controller_value < 64) {
+      m_waveform[N] = OSC_WAVEFORM_SAW;
     } else {
-      set_osc_waveform<0>(OSC_WAVEFORM_SQ);
-      set_osc_waveform<1>(OSC_WAVEFORM_SQ);
+      m_waveform[N] = OSC_WAVEFORM_SQ;
     }
   }
 
@@ -418,25 +393,12 @@ public:
   }
 
 private:
-  INLINE static void update_mix_targets() {
-    m_mix_0_target = m_mix_table[(OSC_MIX_TABLE_LENGTH - 1) - (m_osc_mix >> 2)];
-    m_mix_1_target = m_mix_table[                             (m_osc_mix >> 2)];
-  }
-
-  template <uint8_t N>
-  INLINE static void set_osc_waveform(uint8_t osc_waveform) {
-    m_waveform[N] = osc_waveform;
-    update_mix_targets();
-  }
-
   INLINE static const uint8_t* get_wave_table(uint8_t waveform, uint8_t note_number) {
     const uint8_t* result;
     if (waveform == OSC_WAVEFORM_SAW) {
       result = g_osc_saw_wave_tables[note_number - NOTE_NUMBER_MIN];
-    } else if (waveform == OSC_WAVEFORM_SQ) {
+    } else {     // OSC_WAVEFORM_SQ
       result = g_osc_sq_wave_tables[note_number - NOTE_NUMBER_MIN];
-    } else {     // OSC_WAVEFORM_PULSE_33_3P
-      result = g_osc_pulse3_wave_tables[note_number - NOTE_NUMBER_MIN];
     }
     return result;
   }
@@ -658,13 +620,12 @@ private:
   }
 };
 
-template <uint8_t T> uint8_t         Osc<T>::m_osc_mix;
-template <uint8_t T> uint8_t         Osc<T>::m_mix_0_target;
-template <uint8_t T> uint8_t         Osc<T>::m_mix_0_current;
-template <uint8_t T> uint8_t         Osc<T>::m_mix_1_target;
-template <uint8_t T> uint8_t         Osc<T>::m_mix_1_current;
-template <uint8_t T> uint8_t         Osc<T>::m_mix_sub_target;
-template <uint8_t T> uint8_t         Osc<T>::m_mix_sub_current;
+template <uint8_t T> int8_t          Osc<T>::m_mix_0_target;
+template <uint8_t T> int8_t          Osc<T>::m_mix_0_current;
+template <uint8_t T> int8_t          Osc<T>::m_mix_1_target;
+template <uint8_t T> int8_t          Osc<T>::m_mix_1_current;
+template <uint8_t T> int8_t          Osc<T>::m_mix_sub_target;
+template <uint8_t T> int8_t          Osc<T>::m_mix_sub_current;
 template <uint8_t T> int16_t         Osc<T>::m_level_sub;
 template <uint8_t T> int8_t          Osc<T>::m_mix_table[OSC_MIX_TABLE_LENGTH];
 template <uint8_t T> int8_t          Osc<T>::m_pitch_offset_1;

@@ -70,7 +70,7 @@ end
 $osc_harmonics_restriction_table = []
 
 (NOTE_NUMBER_MIN..NOTE_NUMBER_MAX).each do |note_number|
-  freq = freq_from_note_number((note_number / 4) * 4 + 4)
+  freq = freq_from_note_number((note_number / 3) * 3 + 6)
   $osc_harmonics_restriction_table << freq
 end
 
@@ -83,7 +83,7 @@ def last_harmonic(freq, organ = false, organ_last)
   last
 end
 
-def generate_osc_wave_table_arrays(organ = false, organ_last = 9)
+def generate_osc_wave_table_arrays(organ = false, organ_last = 8)
   $osc_harmonics_restriction_table.
     map { |freq| last_harmonic(freq, organ, organ_last) }.uniq.sort.reverse.each do |i|
     yield(i)
@@ -94,15 +94,6 @@ generate_osc_wave_table_arrays do |last|
   generate_osc_wave_table("saw", last, 6.0 / 6.0) do |n, k|
     (2.0 / Math::PI) * Math.sin((2.0 * Math::PI) * ((n + 0.5) /
     (1 << OSC_WAVE_TABLE_SAMPLES_BITS)) * k) / k
-  end
-end
-
-generate_osc_wave_table_arrays do |last|
-  generate_osc_wave_table("pulse3", last, 4.0 / 6.0) do |n, k|
-    ((2.0 / Math::PI) * Math.sin((2.0 * Math::PI) * ((n + 0.5) /
-     (1 << OSC_WAVE_TABLE_SAMPLES_BITS)) * k) / k) -
-    ((2.0 / Math::PI) * Math.sin((2.0 * Math::PI) * ((n + (1 << OSC_WAVE_TABLE_SAMPLES_BITS) * 2.0 / 3.0 + 0.5) /
-     (1 << OSC_WAVE_TABLE_SAMPLES_BITS)) * k) / k)
   end
 end
 
@@ -121,13 +112,13 @@ generate_osc_wave_table("sin", 1, 8.0 / 6.0) do |n, k|
   Math.sin((2.0 * Math::PI) * ((n + 0.5) / (1 << OSC_WAVE_TABLE_SAMPLES_BITS)) * k)
 end
 
-def generate_osc_wave_tables_array(name, organ = false, organ_last = 9)
+def generate_osc_wave_tables_array(name, organ = false, organ_last = 8)
   $file.printf("const uint8_t* g_osc_#{name}_wave_tables[] = {\n  ")
   $osc_harmonics_restriction_table.each_with_index do |freq, idx|
     $file.printf("g_osc_#{name}_wave_table_h%-3d,", last_harmonic(freq, organ, organ_last))
     if idx == DATA_BYTE_MAX
       $file.printf("\n")
-    elsif (idx + 4) % 4 == (4 - 1)
+    elsif (idx + 3) % 3 == (3 - 1)
       $file.printf("\n  ")
     else
       $file.printf(" ")
@@ -137,7 +128,6 @@ def generate_osc_wave_tables_array(name, organ = false, organ_last = 9)
 end
 
 generate_osc_wave_tables_array("saw")
-generate_osc_wave_tables_array("pulse3")
 generate_osc_wave_tables_array("sq")
 
 $file.close
