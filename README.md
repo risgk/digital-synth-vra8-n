@@ -9,6 +9,8 @@
 
 ## Change History
 
+- v2.0 (Major Changes)
+    - Improve sound quality
 - v1.2 (Major Changes)
     - Add "EG > PITCH(-/+)", "EG > P. TGT (1&2/2)", "RELEASE (OFF/ON)", and "EG > LFO RATE (-/+)"
     - Change "OSC2 MIX" (OSC2 Max 50%) to "OSC MIX (1/2)" (OSC2 Max 100%)
