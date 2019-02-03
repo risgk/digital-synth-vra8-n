@@ -46,7 +46,8 @@
         - `make-sample-wav-file-cc.bat` makes a sample WAV file (working on Windows)
     - `generate-*.rb` generates source files
         - Requiring a Ruby execution environment
-- We recommend Arduino IDE 1.8.5
+- **CAUTION**: We *strongly recommend* **Arduino IDE 1.8.5**
+    - `DigitalSynthVRA8N.ino` *does not work well* with Arduino IDE 1.8.6 or later
 
 ## VRA8-N CTRL
 
