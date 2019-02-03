@@ -129,10 +129,9 @@ def generate_osc_wave_tables_array(name, organ = false, organ_last = 9)
     elsif (idx + 4) % 4 == (4 - 1)
       $file.printf("g_osc_#{name}_wave_table_h%-3d,", last_harmonic(freq, organ, organ_last))
       $file.printf("\n  ")
-    else
-      $file.printf(" ")
     end
   end
+  $file.printf("g_osc_#{name}_wave_table_h%-3d,\n", 1)
   $file.printf("};\n\n")
 end
 
