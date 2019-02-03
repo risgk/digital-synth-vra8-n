@@ -234,7 +234,7 @@ function restoreControllers() {
   controllersInLocalStorage.forEach(function(i) {
     value = localStorage.getItem("keyCC" + String(i));
     if (!value) {
-      return false;
+      value = presetControllers[i][PRESET_NUMBER_NEUTRAL];
     }
     onChangeControlChange(i, value);
   });
