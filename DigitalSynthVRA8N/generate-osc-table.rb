@@ -70,7 +70,7 @@ end
 $osc_harmonics_restriction_table = []
 
 (NOTE_NUMBER_MIN..NOTE_NUMBER_MAX).each do |note_number|
-  freq = freq_from_note_number((note_number / 3) * 3 + 3)
+  freq = freq_from_note_number(((note_number + 2) / 3) * 3 + 1)
   $osc_harmonics_restriction_table << freq
 end
 
