@@ -59,7 +59,7 @@ public:
     }
     while ((TIFR1 & _BV(TOV1)) == 0);
     TIFR1 = _BV(TOV1);
-    OCR0A = 0x80 + level;
+    OCR0A = 0x7F - level;
   }
 };
 
