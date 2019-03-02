@@ -51,6 +51,7 @@ const uint8_t   REAL_TIME_MESSAGE_MIN = 0xF8;
 const uint8_t   ACTIVE_SENSING        = 0xFE;
 
 const uint8_t   MODULATION    = 1;
+const uint8_t   EXPRESSION    = 11;
 
 const uint8_t   OSC_WAVE      = 24;
 const uint8_t   OSC2_MIX      = 25;
