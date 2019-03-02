@@ -133,8 +133,24 @@ public:
     m_mix_1_target = m_mix_table[                             (controller_value >> 2)];
   }
 
+  INLINE static void set_osc_waveforms(uint8_t controller_value) {
+    if (controller_value < 16) {
+      set_osc_waveform<0>(OSC_WAVEFORM_SAW);
+      set_osc_waveform<1>(OSC_WAVEFORM_SAW);
+    } else if (controller_value < 64) {
+      set_osc_waveform<0>(OSC_WAVEFORM_SAW);
+      set_osc_waveform<1>(OSC_WAVEFORM_SQ);
+    } else if (controller_value < 112) {
+      set_osc_waveform<0>(OSC_WAVEFORM_SQ);
+      set_osc_waveform<1>(OSC_WAVEFORM_SAW);
+    } else {
+      set_osc_waveform<0>(OSC_WAVEFORM_SQ);
+      set_osc_waveform<1>(OSC_WAVEFORM_SQ);
+    }
+  }
+
   template <uint8_t N>
-  INLINE static void set_waveform(uint8_t controller_value) {
+  INLINE static void set_osc_waveform(uint8_t controller_value) {
     if (controller_value < 64) {
       m_waveform[N] = OSC_WAVEFORM_SAW;
     } else {

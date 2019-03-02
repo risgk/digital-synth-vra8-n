@@ -1,6 +1,6 @@
-# Digital Synth VRA8-N v1.2.1
+# Digital Synth VRA8-N vX.X.X
 
-- 2019-02-03 ISGK Instruments
+- 2019-XX-XX ISGK Instruments
 - <https://github.com/risgk/digital-synth-vra8-n>
 
 ## Concept
@@ -9,6 +9,8 @@
 
 ## Change History
 
+- vX.X.X
+    - Change "OSC (SAW/SQ)" to "OSC1/2 (SAW/SQ)"
 - v1.2.1
     - Improve sound quality
     - Improve VRA8-N CTRL compatibility between versions
@@ -62,6 +64,15 @@
 
 ## Details of Controllers
 
+- "OSC1/2 (SAW/SQ)": OSC1/2 Wave
+    - Values 0-15: OSC1 SAw, OSC2 SAw
+    - Values 16-63: OSC1 SAw, OSC2 SQuare
+    - Values 64-111: OSC1 SQuare, OSC2 SAw
+    - Values 112-127: OSC1 SQuare, OSC2 SQuare
+- "SUB (SIN/NOISE/SQ)": SUB Osc Wave
+    - Values 0-31: SIn
+    - Values 32-95: NOISE
+    - Values 96-127: SQuare
 - "LFO (T/2/SA/S&H/SQ)": LFO Wave
     - Values 0-15: Triangle (Key Trigger: Off)
     - Values 16-47: Triangle 2 (Key Trigger: On)
@@ -86,8 +97,8 @@
 
 ## MIDI Implementation Chart
 
-      [Monophonic Synthesizer]                                        Date: 2019-02-03       
-      Model: Digital Synth VRA8-N     MIDI Implementation Chart       Version: 1.2.1         
+      [Monophonic Synthesizer]                                        Date: 2019-XX-XX       
+      Model: Digital Synth VRA8-N     MIDI Implementation Chart       Version: X.X.X         
     +-------------------------------+---------------+---------------+-----------------------+
     | Function...                   | Transmitted   | Recognized    | Remarks               |
     +-------------------------------+---------------+---------------+-----------------------+
