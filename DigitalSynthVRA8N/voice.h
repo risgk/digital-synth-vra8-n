@@ -157,8 +157,8 @@ public:
   INLINE static void control_change(uint8_t controller_number, uint8_t controller_value) {
     switch (controller_number) {
     case EXPRESSION:
-      IOsc<0>::set_expression(controller_value);
       IFilter<0>::set_expression(controller_value);
+      IAmp<0>::set_expression(controller_value);
       break;
     case MODULATION:
       IOsc<0>::set_lfo_depth<1>(controller_value);
@@ -300,7 +300,7 @@ public:
       IFilter<0>::set_cutoff_exp_amt(controller_value);
       break;
     case VOL_EXP_AMT:
-      IOsc<0>::set_volume_exp_amt(controller_value);
+      IAmp<0>::set_volume_exp_amt(controller_value);
       break;
 
     case ALL_NOTES_OFF:
