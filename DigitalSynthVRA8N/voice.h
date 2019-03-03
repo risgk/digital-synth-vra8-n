@@ -158,6 +158,7 @@ public:
     switch (controller_number) {
     case EXPRESSION:
       IOsc<0>::set_expression(controller_value);
+      IFilter<0>::set_expression(controller_value);
       break;
     case MODULATION:
       IOsc<0>::set_lfo_depth<1>(controller_value);
@@ -295,6 +296,13 @@ public:
       IOsc<0>::set_lfo_rate_eg_amt(controller_value);
       break;
 
+    case CO_EXP_AMT:
+      IFilter<0>::set_cutoff_exp_amt(controller_value);
+      break;
+    case VOL_EXP_AMT:
+      IOsc<0>::set_volume_exp_amt(controller_value);
+      break;
+
     case ALL_NOTES_OFF:
     case OMNI_MODE_OFF:
     case OMNI_MODE_ON:
@@ -347,8 +355,8 @@ public:
 
     control_change(PB_RANGE     , preset_table_PB_RANGE     [program_number]);
     control_change(CC86         , preset_table_CC86         [program_number]);
-    control_change(CC106        , preset_table_CC106        [program_number]);
-    control_change(CC107        , preset_table_CC107        [program_number]);
+    control_change(CO_EXP_AMT   , preset_table_CO_EXP_AMT   [program_number]);
+    control_change(VOL_EXP_AMT  , preset_table_VOL_EXP_AMT  [program_number]);
 
     control_change(PORTAMENTO   , preset_table_PORTAMENTO   [program_number]);
     control_change(LEGATO       , preset_table_LEGATO       [program_number]);

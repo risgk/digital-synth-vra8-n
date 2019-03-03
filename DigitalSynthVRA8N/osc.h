@@ -69,7 +69,7 @@ public:
       m_mix_table[i] = static_cast<uint8_t>(sqrtf(static_cast<float>(i) /
                                                   (OSC_MIX_TABLE_LENGTH - 1)) * 80);
     }
-    m_expression = 254;
+    m_expression = 252;
     m_mix_0_current = 0;
     m_mix_0_actual = 0;
     m_mix_1_current = 0;
@@ -132,7 +132,11 @@ public:
   }
 
   INLINE static void set_expression(uint8_t controller_value) {
-    m_expression = high_byte(((controller_value << 1) + 1) * ((controller_value << 1) + 1));
+    m_expression = high_byte((controller_value << 1) * (controller_value << 1));
+  }
+
+  INLINE static void set_volume_exp_amt(uint8_t controller_value) {
+    // TODO
   }
 
   INLINE static void set_osc_mix(uint8_t controller_value) {

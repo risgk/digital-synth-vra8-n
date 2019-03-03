@@ -11,6 +11,7 @@
 
 - vX.X.X
     - Change "OSC (SAW/SQ)" to "OSC1/2 (SAW/SQ)"
+    - Add "EXPRESSION", "EXP > CUTOFF", and "EXP > VOLUME"
 - v1.2.1
     - Improve sound quality
     - Improve VRA8-N CTRL compatibility between versions
@@ -121,7 +122,8 @@
     | Pitch Bend                    | x             | o             |                       |
     +-------------------------------+---------------+---------------+-----------------------+
     | Control                     1 | x             | o             | MODULATION DEPTH      |
-    | Change                        |               |               |                       |
+    | Change                     11 | x             | o             | EXPRESSION            |
+    |                               |               |               |                       |
     |                            24 | x             | o             | OSC (SAW/SQ)          |
     |                            25 | x             | o             | OSC MIX (1/2)         |
     |                            20 | x             | o             | OSC2 COARSE (-/+)     |
@@ -129,8 +131,8 @@
     |                               |               |               |                       |
     |                            29 | x             | o             | SUB (SIN/NOISE/SQ)    |
     |                            26 | x             | o             | SUB LEVEL             |
-    |                           104 | x             | x             | EG > PITCH(-/+)       |
-    |                           105 | x             | x             | EG > P. TGT (1&2/2)   |
+    |                           104 | x             | o             | EG > PITCH(-/+)       |
+    |                           105 | x             | o             | EG > P. TGT (1&2/2)   |
     |                               |               |               |                       |
     |                            16 | x             | o             | CUTOFF                |
     |                            17 | x             | o             | RESONANCE             |
@@ -140,7 +142,7 @@
     |                            23 | x             | o             | ATTACK                |
     |                            19 | x             | o             | DECAY                 |
     |                            27 | x             | o             | SUSTAIN (OFF/ON)      |
-    |                            28 | x             | x             | RELEASE (OFF/ON)      |
+    |                            28 | x             | o             | RELEASE (OFF/ON)      |
     |                               |               |               |                       |
     |                            14 | x             | o             | LFO (T/2/SA/RND/SQ)   |
     |                            80 | x             | o             | LFO RATE              |
@@ -148,14 +150,14 @@
     |                            83 | x             | o             | LFO > CUTOFF (-/+)    |
     |                               |               |               |                       |
     |                            81 | x             | o             | LFO DEPTH             |
-    |                             3 | x             | x             | EG > LFO RATE (-/+)   |
-    |                             9 | x             | x             | LFO > P. TGT (1&2/2)  |
+    |                             3 | x             | o             | EG > LFO RATE (-/+)   |
+    |                             9 | x             | o             | LFO > P. TGT (1&2/2)  |
     |                            15 | x             | x             | (RESERVED)            |
     |                               |               |               |                       |
     |                            85 | x             | o             | P. BEND RANGE         |
     |                            86 | x             | x             | (RESERVED)            |
-    |                           106 | x             | x             | (RESERVED)            |
-    |                           107 | x             | x             | (RESERVED)            |
+    |                           106 | x             | o             | EXP > CUTOFF          |
+    |                           107 | x             | o             | EXP > VOLUME          |
     |                               |               |               |                       |
     |                            22 | x             | o             | PORTAMENTO            |
     |                            30 | x             | o             | LEGATO (OFF/ON)       |

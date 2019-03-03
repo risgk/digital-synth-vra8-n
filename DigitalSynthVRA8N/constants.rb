@@ -85,8 +85,8 @@ CC15          = 15
 
 PB_RANGE      = 85
 CC86          = 86
-CC106         = 106
-CC107         = 107
+CO_EXP_AMT    = 106
+VOL_EXP_AMT   = 107
 
 PORTAMENTO    = 22
 LEGATO        = 30
