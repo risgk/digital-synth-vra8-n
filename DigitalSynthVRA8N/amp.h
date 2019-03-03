@@ -19,9 +19,9 @@ public:
     // TODO
   }
 
-  INLINE static int16_t clock(int16_t audio_input, uint8_t gain_control) {
+  INLINE static int8_t clock(int8_t audio_input, uint8_t gain_control) {
     uint8_t gain = high_byte(gain_control * m_expression) << 1;
-    return mul_q15_q8(audio_input, gain);
+    return high_sbyte(audio_input * gain);
   }
 };
 

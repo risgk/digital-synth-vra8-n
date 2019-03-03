@@ -371,13 +371,14 @@ public:
     int16_t osc_output = IOsc<0>::clock(m_count, env_gen_output_0);
     int16_t lfo_output = IOsc<0>::get_lfo_level();
     int16_t filter_output = IFilter<0>::clock(m_count, osc_output, env_gen_output_0, lfo_output);
-    uint8_t env_gen_output_1 = IEnvGen<1>::clock(m_count);
-    int16_t amp_output = IAmp<0>::clock(filter_output, env_gen_output_1);
 
     // error diffusion
-    int16_t output = amp_output + m_output_error;
+    int16_t output = filter_output + m_output_error;
     m_output_error = low_byte(output);
-    return high_sbyte(output);
+
+    uint8_t env_gen_output_1 = IEnvGen<1>::clock(m_count);
+    int16_t amp_output = IAmp<0>::clock(high_sbyte(output), env_gen_output_1);
+    return amp_output;
   }
 
 private:
