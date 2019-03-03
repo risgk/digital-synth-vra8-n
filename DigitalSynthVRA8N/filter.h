@@ -37,7 +37,7 @@ public:
     m_y_2 = 0;
     m_cutoff_current = 127;
     m_cutoff_velocity = 64;
-    m_cutoff_expression = 0;
+    m_cutoff_expression = 254;
     m_cutoff_exp_amt = 0;
     set_cutoff(127);
     set_resonance(0);
@@ -85,7 +85,7 @@ public:
   }
 
   INLINE static void set_cutoff_exp_amt(uint8_t controller_value) {
-    m_cutoff_exp_amt = controller_value;
+    m_cutoff_exp_amt = controller_value << 1;
   }
 
   INLINE static void note_on(uint8_t cutoff_velocity) {

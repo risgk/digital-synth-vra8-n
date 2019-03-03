@@ -132,7 +132,11 @@ public:
   }
 
   INLINE static void set_expression(uint8_t controller_value) {
-    m_expression = high_byte((controller_value << 1) * (controller_value << 1));
+    if (controller_value < 18) {
+      m_expression = 5;
+    } else {
+      m_expression = high_byte((controller_value << 1) * (controller_value << 1));
+    }
   }
 
   INLINE static void set_volume_exp_amt(uint8_t controller_value) {
