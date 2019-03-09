@@ -23,7 +23,7 @@ public:
     // TODO
   }
 
-  INLINE static int8_t clock(int8_t audio_input, uint8_t gain_control) {
+  INLINE static int16_t clock(int16_t audio_input, uint8_t gain_control) {
     uint8_t gain;
     if (m_expression == 128) {
       gain = gain_control;
@@ -34,7 +34,7 @@ public:
     if (gain == 128) {
       return audio_input;
     }
-    return high_sbyte(audio_input * (gain << 1));
+    return high_sbyte(audio_input) * (gain << 1);
   }
 };
 
