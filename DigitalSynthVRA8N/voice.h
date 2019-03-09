@@ -43,6 +43,8 @@ public:
   }
 
   INLINE static void note_on(uint8_t note_number, uint8_t velocity) {
+    (void)velocity;
+
     if (m_legato_portamento) {
       if (m_last_note_number != NOTE_NUMBER_INVALID) {
         IOsc<0>::set_portamento(m_portamento);
@@ -290,8 +292,8 @@ public:
     case CO_EXP_AMT:
       IFilter<0>::set_cutoff_exp_amt(controller_value);
       break;
-    case VOL_EXP_AMT:
-      IEnvGen<1>::set_volume_exp_amt(controller_value);
+    case AMP_EXP_AMT:
+      IEnvGen<1>::set_amp_exp_amt(controller_value);
       break;
 
     case ALL_NOTES_OFF:
@@ -347,7 +349,7 @@ public:
     control_change(PB_RANGE     , preset_table_PB_RANGE     [program_number]);
     control_change(CC86         , preset_table_CC86         [program_number]);
     control_change(CO_EXP_AMT   , preset_table_CO_EXP_AMT   [program_number]);
-    control_change(VOL_EXP_AMT  , preset_table_VOL_EXP_AMT  [program_number]);
+    control_change(AMP_EXP_AMT  , preset_table_AMP_EXP_AMT  [program_number]);
 
     control_change(PORTAMENTO   , preset_table_PORTAMENTO   [program_number]);
     control_change(LEGATO       , preset_table_LEGATO       [program_number]);
