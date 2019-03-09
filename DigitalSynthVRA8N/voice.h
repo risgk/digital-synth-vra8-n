@@ -159,7 +159,7 @@ public:
     switch (controller_number) {
     case EXPRESSION:
       IFilter<0>::set_expression(controller_value);
-      IAmp<0>::set_expression(controller_value);
+      IEnvGen<1>::set_expression(controller_value);
       break;
     case MODULATION:
       IOsc<0>::set_lfo_depth<1>(controller_value);
@@ -301,7 +301,7 @@ public:
       IFilter<0>::set_cutoff_exp_amt(controller_value);
       break;
     case VOL_EXP_AMT:
-      IAmp<0>::set_volume_exp_amt(controller_value);
+      IEnvGen<1>::set_volume_exp_amt(controller_value);
       break;
 
     case ALL_NOTES_OFF:

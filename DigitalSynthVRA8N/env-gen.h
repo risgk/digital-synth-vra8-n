@@ -16,6 +16,7 @@ class EnvGen {
   static uint8_t  m_release_update_coef;
   static uint16_t m_sustain;
   static uint8_t  m_rest;
+  static uint8_t  m_expression;
 
 public:
   INLINE static void initialize() {
@@ -25,6 +26,7 @@ public:
     set_decay(0);
     set_sustain(127);
     set_release(0);
+    m_expression = 254;
   }
 
   INLINE static void set_attack(uint8_t controller_value) {
@@ -47,6 +49,14 @@ public:
     } else {
       m_sustain = controller_value << 8;
     }
+  }
+
+  INLINE static void set_expression(uint8_t controller_value) {
+    m_expression = high_byte(((controller_value + 1) << 1) * ((controller_value + 1) << 1));
+  }
+
+  INLINE static void set_volume_exp_amt(uint8_t controller_value) {
+    // TODO
   }
 
   INLINE static void note_on() {
@@ -103,6 +113,10 @@ public:
       }
     }
 
+    if (T == 1) {
+      return high_byte(high_byte(m_level) * m_expression);
+    }
+
     return high_byte(m_level);
   }
 };
@@ -114,3 +128,4 @@ template <uint8_t T> uint8_t  EnvGen<T>::m_decay_update_coef;
 template <uint8_t T> uint8_t  EnvGen<T>::m_release_update_coef;
 template <uint8_t T> uint16_t EnvGen<T>::m_sustain;
 template <uint8_t T> uint8_t  EnvGen<T>::m_rest;
+template <uint8_t T> uint8_t  EnvGen<T>::m_expression;
