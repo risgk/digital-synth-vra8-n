@@ -30,7 +30,7 @@ public:
 
   INLINE static void write(int8_t level) {
 #if defined(DEBUG)
-    // Output Elapsed Time as Channel Pressure
+    // Output Elapsed Time as Channel Pressure (of Channel 16)
     m_count++;
     if (m_count == 0x7F) {
       UDR0 = 0xDF;

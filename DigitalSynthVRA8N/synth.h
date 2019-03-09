@@ -24,7 +24,7 @@ class Synth {
 public:
   INLINE static void initialize() {
     ISynthCore<0>::initialize();
-    ISynthCore<0>::program_change(0);
+    ISynthCore<0>::program_change(PROGRAM_NUMBER_DEFAULT);
   }
 
   INLINE static void receive_midi_byte(uint8_t b) {

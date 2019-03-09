@@ -312,49 +312,49 @@ public:
   }
 
   static void program_change(uint8_t program_number) {
-    if (program_number > 7) {
+    if (PROGRAM_NUMBER_MAX < program_number) {
       return;
     }
 
-    control_change(OSC_WAVE     , preset_table_OSC_WAVE     [program_number]);
-    control_change(OSC2_MIX     , preset_table_OSC2_MIX     [program_number]);
-    control_change(OSC2_COARSE  , preset_table_OSC2_COARSE  [program_number]);
-    control_change(OSC2_FINE    , preset_table_OSC2_FINE    [program_number]);
+    control_change(OSC_WAVE     , g_preset_table_OSC_WAVE     [program_number]);
+    control_change(OSC2_MIX     , g_preset_table_OSC2_MIX     [program_number]);
+    control_change(OSC2_COARSE  , g_preset_table_OSC2_COARSE  [program_number]);
+    control_change(OSC2_FINE    , g_preset_table_OSC2_FINE    [program_number]);
 
-    control_change(SUB_OSC_WAVE , preset_table_SUB_OSC_WAVE [program_number]);
-    control_change(SUB_OSC_LEVEL, preset_table_SUB_OSC_LEVEL[program_number]);
-    control_change(PITCH_EG_AMT , preset_table_PITCH_EG_AMT [program_number]);
-    control_change(PITCH_EG_TGT , preset_table_PITCH_EG_TGT [program_number]);
+    control_change(SUB_OSC_WAVE , g_preset_table_SUB_OSC_WAVE [program_number]);
+    control_change(SUB_OSC_LEVEL, g_preset_table_SUB_OSC_LEVEL[program_number]);
+    control_change(PITCH_EG_AMT , g_preset_table_PITCH_EG_AMT [program_number]);
+    control_change(PITCH_EG_TGT , g_preset_table_PITCH_EG_TGT [program_number]);
 
-    control_change(FILTER_CUTOFF, preset_table_FILTER_CUTOFF[program_number]);
-    control_change(FILTER_RESO  , preset_table_FILTER_RESO  [program_number]);
-    control_change(CUTOFF_EG_AMT, preset_table_CUTOFF_EG_AMT[program_number]);
-    control_change(AMP_EG_ON    , preset_table_AMP_EG_ON    [program_number]);
+    control_change(FILTER_CUTOFF, g_preset_table_FILTER_CUTOFF[program_number]);
+    control_change(FILTER_RESO  , g_preset_table_FILTER_RESO  [program_number]);
+    control_change(CUTOFF_EG_AMT, g_preset_table_CUTOFF_EG_AMT[program_number]);
+    control_change(AMP_EG_ON    , g_preset_table_AMP_EG_ON    [program_number]);
 
-    control_change(EG_ATTACK    , preset_table_EG_ATTACK    [program_number]);
-    control_change(EG_DECAY     , preset_table_EG_DECAY     [program_number]);
-    control_change(EG_SUSTAIN   , preset_table_EG_SUSTAIN   [program_number]);
-    control_change(EG_RELEASE   , preset_table_EG_RELEASE   [program_number]);
+    control_change(EG_ATTACK    , g_preset_table_EG_ATTACK    [program_number]);
+    control_change(EG_DECAY     , g_preset_table_EG_DECAY     [program_number]);
+    control_change(EG_SUSTAIN   , g_preset_table_EG_SUSTAIN   [program_number]);
+    control_change(EG_RELEASE   , g_preset_table_EG_RELEASE   [program_number]);
 
-    control_change(LFO_WAVE     , preset_table_LFO_WAVE     [program_number]);
-    control_change(LFO_RATE     , preset_table_LFO_RATE     [program_number]);
-    control_change(PITCH_LFO_AMT, preset_table_PITCH_LFO_AMT[program_number]);
-    control_change(CO_LFO_AMT   , preset_table_CO_LFO_AMT   [program_number]);
+    control_change(LFO_WAVE     , g_preset_table_LFO_WAVE     [program_number]);
+    control_change(LFO_RATE     , g_preset_table_LFO_RATE     [program_number]);
+    control_change(PITCH_LFO_AMT, g_preset_table_PITCH_LFO_AMT[program_number]);
+    control_change(CO_LFO_AMT   , g_preset_table_CO_LFO_AMT   [program_number]);
 
-    control_change(LFO_DEPTH    , preset_table_LFO_DEPTH    [program_number]);
-    control_change(LFO_RT_EG_AMT, preset_table_LFO_RT_EG_AMT[program_number]);
-    control_change(PITCH_LFO_TGT, preset_table_PITCH_LFO_TGT[program_number]);
-    control_change(CC15         , preset_table_CC15         [program_number]);
+    control_change(LFO_DEPTH    , g_preset_table_LFO_DEPTH    [program_number]);
+    control_change(LFO_RT_EG_AMT, g_preset_table_LFO_RT_EG_AMT[program_number]);
+    control_change(PITCH_LFO_TGT, g_preset_table_PITCH_LFO_TGT[program_number]);
+    control_change(CC15         , g_preset_table_CC15         [program_number]);
 
-    control_change(PB_RANGE     , preset_table_PB_RANGE     [program_number]);
-    control_change(CC86         , preset_table_CC86         [program_number]);
-    control_change(CO_EXP_AMT   , preset_table_CO_EXP_AMT   [program_number]);
-    control_change(AMP_EXP_AMT  , preset_table_AMP_EXP_AMT  [program_number]);
+    control_change(PB_RANGE     , g_preset_table_PB_RANGE     [program_number]);
+    control_change(CC86         , g_preset_table_CC86         [program_number]);
+    control_change(CO_EXP_AMT   , g_preset_table_CO_EXP_AMT   [program_number]);
+    control_change(AMP_EXP_AMT  , g_preset_table_AMP_EXP_AMT  [program_number]);
 
-    control_change(PORTAMENTO   , preset_table_PORTAMENTO   [program_number]);
-    control_change(LEGATO       , preset_table_LEGATO       [program_number]);
-    control_change(KEY_ASSIGN   , preset_table_KEY_ASSIGN   [program_number]);
-    control_change(CC89         , preset_table_CC89         [program_number]);
+    control_change(PORTAMENTO   , g_preset_table_PORTAMENTO   [program_number]);
+    control_change(LEGATO       , g_preset_table_LEGATO       [program_number]);
+    control_change(KEY_ASSIGN   , g_preset_table_KEY_ASSIGN   [program_number]);
+    control_change(CC89         , g_preset_table_CC89         [program_number]);
   }
 
   INLINE static int8_t clock() {
