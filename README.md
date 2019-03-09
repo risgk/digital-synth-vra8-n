@@ -11,7 +11,7 @@
 
 - vX.X.X
     - Change "OSC (SAW/SQ)" to "OSC1/2 (SAW/SQ)"
-    - Add "EXPRESSION", "EXP > CUTOFF", and "EXP > VOLUME"
+    - Add "EXPRESSION", "EXP > CUTOFF", and "EXP > AMP LEVEL"
 - v1.2.1
     - Improve sound quality
     - Improve VRA8-N CTRL compatibility between versions
@@ -157,7 +157,7 @@
     |                            85 | x             | o             | P. BEND RANGE         |
     |                            86 | x             | x             | (RESERVED)            |
     |                           106 | x             | o             | EXP > CUTOFF          |
-    |                           107 | x             | o             | EXP > VOLUME          |
+    |                           107 | x             | o             | EXP > AMP LEVEL       |
     |                               |               |               |                       |
     |                            22 | x             | o             | PORTAMENTO            |
     |                            30 | x             | o             | LEGATO (OFF/ON)       |

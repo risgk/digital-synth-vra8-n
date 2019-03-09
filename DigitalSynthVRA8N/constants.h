@@ -86,7 +86,7 @@ const uint8_t   CC15          = 15;
 const uint8_t   PB_RANGE      = 85;
 const uint8_t   CC86          = 86;
 const uint8_t   CO_EXP_AMT    = 106;
-const uint8_t   VOL_EXP_AMT   = 107;
+const uint8_t   AMP_EXP_AMT   = 107;
 
 const uint8_t   PORTAMENTO    = 22;
 const uint8_t   LEGATO        = 30;

@@ -17,6 +17,8 @@ class EnvGen {
   static uint16_t m_sustain;
   static uint8_t  m_rest;
   static uint8_t  m_expression;
+  static uint8_t  m_amp_exp_amt;
+  static uint8_t  m_expression_coef;
 
 public:
   INLINE static void initialize() {
@@ -26,7 +28,8 @@ public:
     set_decay(0);
     set_sustain(127);
     set_release(0);
-    m_expression = 254;
+    set_expression(127);
+    set_amp_exp_amt(127);
   }
 
   INLINE static void set_attack(uint8_t controller_value) {
@@ -51,12 +54,15 @@ public:
     }
   }
 
+  // EXPRESSION is processed here (not in Amp) for performance reasons
   INLINE static void set_expression(uint8_t controller_value) {
-    m_expression = high_byte(((controller_value + 1) << 1) * ((controller_value + 1) << 1));
+    m_expression = (controller_value << 1) + 1;
+    update_expression_coef();
   }
 
-  INLINE static void set_volume_exp_amt(uint8_t controller_value) {
-    // TODO
+  INLINE static void set_amp_exp_amt(uint8_t controller_value) {
+    m_amp_exp_amt = (controller_value << 1) + 1;
+    update_expression_coef();
   }
 
   INLINE static void note_on() {
@@ -114,10 +120,16 @@ public:
     }
 
     if (T == 1) {
-      return high_byte(high_byte(m_level) * m_expression);
+      return high_byte(high_byte(m_level) * m_expression_coef);
     }
 
     return high_byte(m_level);
+  }
+
+private:
+  INLINE static void update_expression_coef() {
+    uint8_t expression = 255 - high_byte((255 - m_expression) * m_amp_exp_amt);
+    m_expression_coef = high_byte(expression * expression);
   }
 };
 
@@ -129,3 +141,5 @@ template <uint8_t T> uint8_t  EnvGen<T>::m_release_update_coef;
 template <uint8_t T> uint16_t EnvGen<T>::m_sustain;
 template <uint8_t T> uint8_t  EnvGen<T>::m_rest;
 template <uint8_t T> uint8_t  EnvGen<T>::m_expression;
+template <uint8_t T> uint8_t  EnvGen<T>::m_amp_exp_amt;
+template <uint8_t T> uint8_t  EnvGen<T>::m_expression_coef;
