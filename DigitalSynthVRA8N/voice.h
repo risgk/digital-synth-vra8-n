@@ -12,7 +12,6 @@ class Voice {
   static uint8_t m_portamento;
   static boolean m_legato_portamento;
   static uint8_t m_key_assign;
-  static int8_t m_cutoff_velocity_amt;
   static uint8_t m_attack;
   static uint8_t m_decay;
   static uint8_t m_sustain;
@@ -44,21 +43,12 @@ public:
   }
 
   INLINE static void note_on(uint8_t note_number, uint8_t velocity) {
-    uint8_t cutoff_v = 64;
-    if (m_cutoff_velocity_amt >= 0) {
-      cutoff_v = high_sbyte((static_cast<int8_t>(velocity - 64) << 1) *
-                            m_cutoff_velocity_amt) + 64;
-    } else {
-      cutoff_v = high_sbyte((static_cast<int8_t>(IOsc<0>::get_white_noise_7() - 64) << 1) *
-                            m_cutoff_velocity_amt) + 64;
-    }
-
     if (m_legato_portamento) {
       if (m_last_note_number != NOTE_NUMBER_INVALID) {
         IOsc<0>::set_portamento(m_portamento);
       } else {
         IOsc<0>::set_portamento(0);
-        IFilter<0>::note_on(cutoff_v);
+        IFilter<0>::note_on();
         IOsc<0>::reset_lfo_phase_unless_async();
         IEnvGen<0>::note_on();
         IEnvGen<1>::note_on();
@@ -66,7 +56,7 @@ public:
     } else {
       IOsc<0>::set_portamento(m_portamento);
       if ((m_key_assign == KEY_ASSIGN_LAST) || (m_last_note_number == NOTE_NUMBER_INVALID)) {
-        IFilter<0>::note_on(cutoff_v);
+        IFilter<0>::note_on();
         IOsc<0>::reset_lfo_phase_unless_async();
         IEnvGen<0>::note_on();
         IEnvGen<1>::note_on();
@@ -512,7 +502,6 @@ template <uint8_t T> uint8_t Voice<T>::m_output_error[2];
 template <uint8_t T> uint8_t Voice<T>::m_portamento;
 template <uint8_t T> boolean Voice<T>::m_legato_portamento;
 template <uint8_t T> uint8_t Voice<T>::m_key_assign;
-template <uint8_t T> int8_t Voice<T>::m_cutoff_velocity_amt;
 template <uint8_t T> uint8_t Voice<T>::m_attack;
 template <uint8_t T> uint8_t Voice<T>::m_decay;
 template <uint8_t T> uint8_t Voice<T>::m_sustain;

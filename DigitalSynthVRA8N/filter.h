@@ -20,10 +20,9 @@ class Filter {
   static uint8_t        m_cutoff_current;
   static int16_t        m_cutoff_candidate;
   static uint8_t        m_cutoff;
-  static uint8_t        m_cutoff_velocity;
-  static uint8_t        m_cutoff_env_gen_amt;
-  static uint8_t        m_cutoff_lfo_amt;
-  static uint8_t        m_cutoff_expression;
+  static int8_t         m_cutoff_env_gen_amt;
+  static int8_t         m_cutoff_lfo_amt;
+  static uint8_t        m_cutoff_expression_decrease;
   static uint8_t        m_cutoff_exp_amt;
 
   static const uint8_t AUDIO_FRACTION_BITS = 14;
@@ -36,13 +35,12 @@ public:
     m_y_1 = 0;
     m_y_2 = 0;
     m_cutoff_current = 127;
-    m_cutoff_velocity = 64;
-    m_cutoff_expression = 254;
-    m_cutoff_exp_amt = 0;
     set_cutoff(127);
     set_resonance(0);
     set_cutoff_env_amt(64);
     set_cutoff_lfo_amt(64);
+    set_cutoff_exp_amt(0);
+    set_expression(127);
     update_coefs_1st(0, 0);
     update_coefs_2nd();
     update_coefs_3rd();
@@ -61,35 +59,41 @@ public:
   }
 
   INLINE static void set_cutoff_env_amt(uint8_t controller_value) {
-    if (controller_value < 4) {
-      m_cutoff_env_gen_amt = 4;
-    } else if (controller_value <= 124) {
-      m_cutoff_env_gen_amt = controller_value;
-    } else {
-      m_cutoff_env_gen_amt = 124;
+    uint8_t value = controller_value;
+    if (value < 4) {
+      value = 4;
+    } else if (124 < value) {
+      value = 124;
     }
+
+    m_cutoff_env_gen_amt = (value - 64) << 1;
   }
 
   INLINE static void set_cutoff_lfo_amt(uint8_t controller_value) {
-    if (controller_value < 4) {
-      m_cutoff_lfo_amt = 4;
-    } else if (controller_value <= 124) {
-      m_cutoff_lfo_amt = controller_value;
-    } else {
-      m_cutoff_lfo_amt = 124;
+    uint8_t value = controller_value;
+    if (value < 4) {
+      value = 4;
+    } else if (124 < value) {
+      value = 124;
     }
-  }
 
-  INLINE static void set_expression(uint8_t controller_value) {
-    m_cutoff_expression = controller_value << 1;
+    m_cutoff_lfo_amt = (value - 64) << 1;
   }
 
   INLINE static void set_cutoff_exp_amt(uint8_t controller_value) {
-    m_cutoff_exp_amt = controller_value << 1;
+    uint8_t value = controller_value;
+    if (120 < value) {
+      value = 120;
+    }
+
+    m_cutoff_exp_amt = value << 1;
   }
 
-  INLINE static void note_on(uint8_t cutoff_velocity) {
-    m_cutoff_velocity = cutoff_velocity;
+  INLINE static void set_expression(uint8_t controller_value) {
+    m_cutoff_expression_decrease = 254 - (controller_value << 1);
+  }
+
+  INLINE static void note_on() {
   }
 
   INLINE static int16_t clock(uint8_t count, int16_t audio_input, uint8_t env_gen_input, int16_t lfo_input) {
@@ -137,9 +141,9 @@ public:
 private:
   INLINE static void update_coefs_1st(uint8_t env_gen_input, int16_t lfo_input) {
     m_cutoff_candidate = m_cutoff;
-    m_cutoff_candidate -= high_byte(m_cutoff_exp_amt * static_cast<uint8_t>(254 - m_cutoff_expression));
-    m_cutoff_candidate += static_cast<int8_t>(high_sbyte(((m_cutoff_env_gen_amt - 64) << 1) * env_gen_input) << 1);
-    int8_t lfo_mod_half = high_sbyte(mul_q15_q7(lfo_input, ((m_cutoff_lfo_amt - 64) << 1)) << 1);
+    m_cutoff_candidate -= high_byte(m_cutoff_exp_amt * m_cutoff_expression_decrease);
+    m_cutoff_candidate += high_sbyte((m_cutoff_env_gen_amt * env_gen_input) << 1);
+    int8_t lfo_mod_half = high_sbyte(mul_q15_q7(lfo_input, m_cutoff_lfo_amt) << 1);
     m_cutoff_candidate -= lfo_mod_half;
     m_cutoff_candidate -= lfo_mod_half;
   }
@@ -185,8 +189,7 @@ template <uint8_t T> int16_t        Filter<T>::m_y_2;
 template <uint8_t T> uint8_t        Filter<T>::m_cutoff_current;
 template <uint8_t T> int16_t        Filter<T>::m_cutoff_candidate;
 template <uint8_t T> uint8_t        Filter<T>::m_cutoff;
-template <uint8_t T> uint8_t        Filter<T>::m_cutoff_velocity;
-template <uint8_t T> uint8_t        Filter<T>::m_cutoff_env_gen_amt;
-template <uint8_t T> uint8_t        Filter<T>::m_cutoff_lfo_amt;
-template <uint8_t T> uint8_t        Filter<T>::m_cutoff_expression;
+template <uint8_t T> int8_t         Filter<T>::m_cutoff_env_gen_amt;
+template <uint8_t T> int8_t         Filter<T>::m_cutoff_lfo_amt;
+template <uint8_t T> uint8_t        Filter<T>::m_cutoff_expression_decrease;
 template <uint8_t T> uint8_t        Filter<T>::m_cutoff_exp_amt;
