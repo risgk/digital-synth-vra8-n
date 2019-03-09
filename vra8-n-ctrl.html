@@ -101,6 +101,9 @@ const SP_PROG_CHG_5 = 117;
 const SP_PROG_CHG_6 = 118;
 const SP_PROG_CHG_7 = 119;
 
+// Special Random Control (only for VRA8-N CTRL)
+const SP_RAND_CTRL  = 90;
+
 const ALL_NOTES_OFF = 123;
 
 var controllersInLocalStorage = [
@@ -270,6 +273,7 @@ var midiOutputs = null;
 var midiOutput  = null;
 
 var specialProgramChangeCCValues = [0, 0, 0, 0, 0, 0, 0, 0];
+var specialRandomControlCCValue = 0;
 
 function onMIDIMessage(event) {
   console.log(event.data);
@@ -291,6 +295,14 @@ function onMIDIMessage(event) {
       specialProgramChangeCCValues[programIndex] = value;
       if (oldValue <= 63 && value >= 64) {
         loadControllers(programIndex + 8);
+        return;
+      }
+    } else if (number == SP_RAND_CTRL) {
+      // Special Random Control (only for VRA8-N CTRL)
+      var oldValue = specialRandomControlCCValue;
+      specialRandomControlCCValue = value;
+      if (oldValue <= 63 && value >= 64) {
+        setRandom();
         return;
       }
     }
@@ -315,6 +327,10 @@ function onMIDIMessage(event) {
       return;
     } else if (number >= 8 && number <= 15) {
       loadControllers(number);
+      return;
+    } else if (number == 127) {
+      // Program #127: Special Random Control (only for VRA8-N CTRL)
+      setRandom();
       return;
     }
   }
