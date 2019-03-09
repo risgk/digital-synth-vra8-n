@@ -41,7 +41,7 @@ public:
       if ((cnt < 64) && (cnt > s_maxCnt)) {
         s_maxCnt = cnt;
       }
-      cnt = s_maxCnt;
+      cnt = s_maxCnt + 1;
 #elif 1
       if (cnt >= 64) {
         cnt = 99;   // Not Over
@@ -53,11 +53,11 @@ public:
 #endif
     if (TIFR1 & _BV(TOV1)) {
       // CPU BUSY
-      PORTB |= _BV(5);
+      PORTB = _BV(5);
     } else {
-      PORTB &= ~_BV(5);
+      PORTB = 0x00;
+      while ((TIFR1 & _BV(TOV1)) == 0);
     }
-    while ((TIFR1 & _BV(TOV1)) == 0);
     TIFR1 = _BV(TOV1);
     OCR0A = 0x7F - level;
   }
