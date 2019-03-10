@@ -65,7 +65,7 @@
 
 ## Details of Controllers
 
-- "OSC1/2 (SAW/SQ)": OSC1/2 Wave
+- "OSC1/2 (SAW/SQ)": OSC1 Wave / OSC2 Wave
     - Values 0-15: OSC1 SAW / OSC2 SAW
     - Values 16-63: OSC1 SAW / OSC2 SQUARE
     - Values 64-111: OSC1 SQUARE / OSC2 SAW
@@ -80,11 +80,14 @@
     - Values 48-79: SAW Down (Key Trigger: On)
     - Values 80-111: RANDOM (Key Trigger: On)
     - Values 112-127: SQUARE Up (Key Trigger: On)
-- "K. ASN (L/L/P/H/LST)": Key ASsigN
-    - Values 0-47: Lowest Note
-    - Values 48-79: Paraphonic (Lowest and Highest Notes)
-    - Values 80-111: Highest Note
-    - Values 112-127: LAST One Note
+- "LEGATO (OFF/ON)": LEGATO Portamento
+    - When LEGATO Portamento is ON, Single Trigger is forced
+- "K. ASN (L/L/P/H/LST)": Key ASSIGN / Trigger Mode
+    - Values 0-47: Lowest Note / Single Trigger
+    - Values 48-79: Paraphonic (Lowest and Highest Notes) / Single Trigger
+    - Values 80-111: Highest Note / Single Trigger
+    - Values 112-127: LAST One Note / Multi Trigger
+- "EXP BY VEL (OFF/ON)": EXPRESSION Control By (Note ON) VELOCITY
 
 ## A Sample Setting of a Physical Controller (8-Knob)
 
