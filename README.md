@@ -1,6 +1,6 @@
-# Digital Synth VRA8-N vX.X.X
+# Digital Synth VRA8-N v2.0.0
 
-- 2019-XX-XX ISGK Instruments
+- 2019-03-10 ISGK Instruments
 - <https://github.com/risgk/digital-synth-vra8-n>
 
 ## Concept
@@ -9,7 +9,7 @@
 
 ## Change History
 
-- vX.X.X
+- v2.0.0
     - Change "OSC (SAW/SQ)" to "OSC1/2 (SAW/SQ)"
     - Add "EXPRESSION", "EXP > CUTOFF", "EXP > AMP LEVEL", and "EXP BY VEL (OFF/ON)"
 - v1.2.1
@@ -101,8 +101,8 @@
 
 ## MIDI Implementation Chart
 
-      [Monophonic Synthesizer]                                        Date: 2019-XX-XX       
-      Model: Digital Synth VRA8-N     MIDI Implementation Chart       Version: X.X.X         
+      [Monophonic Synthesizer]                                        Date: 2019-03-10       
+      Model: Digital Synth VRA8-N     MIDI Implementation Chart       Version: 2.0.0         
     +-------------------------------+---------------+---------------+-----------------------+
     | Function...                   | Transmitted   | Recognized    | Remarks               |
     +-------------------------------+---------------+---------------+-----------------------+
