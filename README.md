@@ -66,25 +66,25 @@
 ## Details of Controllers
 
 - "OSC1/2 (SAW/SQ)": OSC1/2 Wave
-    - Values 0-15: OSC1 SAw, OSC2 SAw
-    - Values 16-63: OSC1 SAw, OSC2 SQuare
-    - Values 64-111: OSC1 SQuare, OSC2 SAw
-    - Values 112-127: OSC1 SQuare, OSC2 SQuare
+    - Values 0-15: OSC1 SAW & OSC2 SAW
+    - Values 16-63: OSC1 SAW & OSC2 SQUARE
+    - Values 64-111: OSC1 SQUARE & OSC2 SAW
+    - Values 112-127: OSC1 SQUARE & OSC2 SQUARE
 - "SUB (SIN/NOISE/SQ)": SUB Osc Wave
-    - Values 0-31: SIn
+    - Values 0-31: SIN
     - Values 32-95: NOISE
-    - Values 96-127: SQuare
+    - Values 96-127: SQUARE
 - "LFO (T/2/SA/S&H/SQ)": LFO Wave
     - Values 0-15: Triangle (Key Trigger: Off)
     - Values 16-47: Triangle 2 (Key Trigger: On)
-    - Values 48-79: SAw Down (Key Trigger: On)
-    - Values 80-111: RaNDom (Key Trigger: On)
-    - Values 112-127: SQuare Up (Key Trigger: On)
+    - Values 48-79: SAW Down (Key Trigger: On)
+    - Values 80-111: RANDOM (Key Trigger: On)
+    - Values 112-127: SQUARE Up (Key Trigger: On)
 - "K. ASN (L/L/P/H/LST)": Key ASsigN
     - Values 0-47: Lowest Note
     - Values 48-79: Paraphonic (Lowest and Highest Notes)
     - Values 80-111: Highest Note
-    - Values 112-127: LaST One Note
+    - Values 112-127: LAST One Note
 
 ## A Sample Setting of a Physical Controller (8-Knob)
 
@@ -113,7 +113,7 @@
     | Note                          | x             | 0-127         |                       |
     | Number       : True Voice     | ************* | 0-120         |                       |
     +-------------------------------+---------------+---------------+-----------------------+
-    | Velocity     Note ON          | x             | x             |                       |
+    | Velocity     Note ON          | x             | o (V=1-127)   | When EXP BY VEL is ON |
     |              Note OFF         | x             | x             |                       |
     +-------------------------------+---------------+---------------+-----------------------+
     | After        Key's            | x             | x             |                       |
@@ -124,7 +124,7 @@
     | Control                     1 | x             | o             | MODULATION DEPTH      |
     | Change                     11 | x             | o             | EXPRESSION            |
     |                               |               |               |                       |
-    |                            24 | x             | o             | OSC (SAW/SQ)          |
+    |                            24 | x             | o             | OSC1/2 (SAW/SQ)       |
     |                            25 | x             | o             | OSC MIX (1/2)         |
     |                            20 | x             | o             | OSC2 COARSE (-/+)     |
     |                            21 | x             | o             | OSC2 FINE (-/+)       |
