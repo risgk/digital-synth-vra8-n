@@ -41,4 +41,4 @@ const uint8_t g_preset_table_AMP_EXP_AMT  [] = {127, 127, 127, 127, 127, 127, 12
 const uint8_t g_preset_table_PORTAMENTO   [] = {0  , 32 , 32 , 0  , 0  , 32 , 0  , 0  };
 const uint8_t g_preset_table_LEGATO       [] = {0  , 127, 127, 0  , 0  , 127, 0  , 0  };
 const uint8_t g_preset_table_KEY_ASSIGN   [] = {0  , 64 , 0  , 127, 0  , 127, 0  , 0  };
-const uint8_t g_preset_table_CC89         [] = {0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  };
+const uint8_t g_preset_table_EXP_BY_VEL   [] = {0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  };

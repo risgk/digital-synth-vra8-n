@@ -93,7 +93,7 @@ const uint8_t   AMP_EXP_AMT   = 107;
 const uint8_t   PORTAMENTO    = 22;
 const uint8_t   LEGATO        = 30;
 const uint8_t   KEY_ASSIGN    = 87;
-const uint8_t   CC89          = 89;
+const uint8_t   EXP_BY_VEL    = 89;
 
 const uint8_t   ALL_NOTES_OFF = 123;
 const uint8_t   OMNI_MODE_OFF = 124;

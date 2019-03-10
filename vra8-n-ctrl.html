@@ -88,7 +88,7 @@ const AMP_EXP_AMT   = 107;
 const PORTAMENTO    = 22;
 const LEGATO        = 30;
 const KEY_ASSIGN    = 87;
-const CC89          = 89;
+const EXP_BY_VEL    = 89;
 
 // Special Program Change (only for VRA8-N CTRL)
 const SP_PROG_CHG_0 = 112;
@@ -145,7 +145,7 @@ var controllersInLocalStorage = [
   PORTAMENTO   ,
   LEGATO       ,
   KEY_ASSIGN   ,
-//CC89         ,
+  EXP_BY_VEL   ,
 ];
 
 var presetControllers = {};
@@ -189,7 +189,7 @@ presetControllers[AMP_EXP_AMT  ] = [127, 127, 127, 127, 127, 127, 127, 127];
 presetControllers[PORTAMENTO   ] = [0  , 32 , 32 , 0  , 0  , 32 , 0  , 0  ];
 presetControllers[LEGATO       ] = [0  , 127, 127, 0  , 0  , 127, 0  , 0  ];
 presetControllers[KEY_ASSIGN   ] = [0  , 64 , 0  , 127, 0  , 127, 0  , 0  ];
-presetControllers[CC89         ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
+presetControllers[EXP_BY_VEL   ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
 
 const PRESET_NUMBER_NEUTRAL = 7;
 </script>
@@ -315,8 +315,11 @@ function onMIDIMessage(event) {
       document.getElementById("spanPB").innerHTML = value;
     }
   } else if (event.data[0] == (NOTE_ON | MIDI_CH)) {
-    var value = event.data[2];
-    document.getElementById("spanNoteOnVelocity").innerHTML = value;
+    // Expression by Velocity
+    if (document.getElementById("spanCC89").innerHTML >= 64) {
+      var value = event.data[2];
+      document.getElementById("spanCC11").innerHTML = value;
+    }
   }
 
   const PROGRAM_CHANGE = 0xC0;
@@ -520,11 +523,7 @@ function noteOff(noteNumber) {
     <td>&nbsp;</td>
     <td>MOD</td>
     <td>&nbsp;</td>
-    <td><span id="spanCC1">-</span></td>
-    <td style="display:none">&nbsp;</td>
-    <td style="display:none">VEL</td>
-    <td style="display:none">&nbsp;</td>
-    <td style="display:none"><span id="spanNoteOnVelocity">-</span></td></tr>
+    <td><span id="spanCC1">-</span></td></tr>
 <tr><td></td>
     <td></td>
     <td></td>
@@ -532,7 +531,7 @@ function noteOff(noteNumber) {
     <td></td>
     <td></td>
     <td>&nbsp;</td>
-    <td>EXP</td>
+    <td>EXP (VEL)</td>
     <td>&nbsp;</td>
     <td><span id="spanCC11">-</span></td></tr>
 </table>
@@ -689,15 +688,15 @@ function noteOff(noteNumber) {
 <tr><td>PORTAMENTO            </td><td></td>
     <td>LEGATO (OFF/ON)       </td><td></td>
     <td>K. ASN (L/L/P/H/LST)  </td><td></td>
-    <td>                      </td><td></td></tr>
+    <td>EXP BY VEL (OFF/ON)   </td><td></td></tr>
 <tr><td><input id="inputCC22" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(PORTAMENTO, value)"></td>
     <td><span   id="spanCC22">-1</span></td>
     <td><input id="inputCC30" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(LEGATO, value)"></td>
     <td><span   id="spanCC30">-1</span></td>
     <td><input id="inputCC87" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(KEY_ASSIGN, value)"></td>
     <td><span   id="spanCC87">-1</span></td>
-    <td><input id="inputCC89" style="visibility:hidden" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(CC89, value)"></td>
-    <td><span   id="spanCC89" style="visibility:hidden">-1</span></td></tr>
+    <td><input id="inputCC89" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(EXP_BY_VEL, value)"></td>
+    <td><span   id="spanCC89">-1</span></td></tr>
 <tr><td>&nbsp;</td></tr>
 </table>
 

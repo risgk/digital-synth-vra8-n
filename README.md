@@ -11,7 +11,7 @@
 
 - vX.X.X
     - Change "OSC (SAW/SQ)" to "OSC1/2 (SAW/SQ)"
-    - Add "EXPRESSION", "EXP > CUTOFF", and "EXP > AMP LEVEL"
+    - Add "EXPRESSION", "EXP > CUTOFF", "EXP > AMP LEVEL", and "EXP BY VEL (OFF/ON)"
 - v1.2.1
     - Improve sound quality
     - Improve VRA8-N CTRL compatibility between versions
@@ -162,7 +162,7 @@
     |                            22 | x             | o             | PORTAMENTO            |
     |                            30 | x             | o             | LEGATO (OFF/ON)       |
     |                            87 | x             | o             | K. ASN (L/L/P/H/LST)  |
-    |                            89 | x             | x             | (RESERVED)            |
+    |                            89 | x             | o             | EXP BY VEL (OFF/ON)   |
     +-------------------------------+---------------+---------------+-----------------------+
     | Program                       | x             | o             |                       |
     | Change       : True #         | ************* | 0-7           |                       |

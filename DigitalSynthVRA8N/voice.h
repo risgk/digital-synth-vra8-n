@@ -17,6 +17,7 @@ class Voice {
   static uint8_t m_sustain;
   static uint8_t m_release;
   static uint8_t m_amp_env_gen;
+  static uint8_t m_exp_by_vel;
 
 public:
   INLINE static void initialize() {
@@ -40,11 +41,10 @@ public:
     m_release = 0;
     m_amp_env_gen = 127;
     update_env_gen();
+    m_exp_by_vel = false;
   }
 
   INLINE static void note_on(uint8_t note_number, uint8_t velocity) {
-    (void)velocity;
-
     if (m_legato_portamento) {
       if (m_last_note_number != NOTE_NUMBER_INVALID) {
         IOsc<0>::set_portamento(m_portamento);
@@ -54,6 +54,10 @@ public:
         IOsc<0>::reset_lfo_phase_unless_async();
         IEnvGen<0>::note_on();
         IEnvGen<1>::note_on();
+        if (m_exp_by_vel) {
+          IFilter<0>::set_expression(velocity);
+          IEnvGen<1>::set_expression(velocity);
+        }
       }
     } else {
       IOsc<0>::set_portamento(m_portamento);
@@ -62,6 +66,10 @@ public:
         IOsc<0>::reset_lfo_phase_unless_async();
         IEnvGen<0>::note_on();
         IEnvGen<1>::note_on();
+        if (m_exp_by_vel) {
+          IFilter<0>::set_expression(velocity);
+          IEnvGen<1>::set_expression(velocity);
+        }
       }
     }
 
@@ -295,6 +303,13 @@ public:
     case AMP_EXP_AMT:
       IEnvGen<1>::set_amp_exp_amt(controller_value);
       break;
+    case EXP_BY_VEL:
+      if (controller_value < 64) {
+        m_exp_by_vel = false;
+      } else {
+        m_exp_by_vel = true;
+      }
+      break;
 
     case ALL_NOTES_OFF:
     case OMNI_MODE_OFF:
@@ -354,7 +369,7 @@ public:
     control_change(PORTAMENTO   , g_preset_table_PORTAMENTO   [program_number]);
     control_change(LEGATO       , g_preset_table_LEGATO       [program_number]);
     control_change(KEY_ASSIGN   , g_preset_table_KEY_ASSIGN   [program_number]);
-    control_change(CC89         , g_preset_table_CC89         [program_number]);
+    control_change(EXP_BY_VEL   , g_preset_table_EXP_BY_VEL   [program_number]);
   }
 
   INLINE static int8_t clock() {
@@ -509,3 +524,4 @@ template <uint8_t T> uint8_t Voice<T>::m_decay;
 template <uint8_t T> uint8_t Voice<T>::m_sustain;
 template <uint8_t T> uint8_t Voice<T>::m_release;
 template <uint8_t T> uint8_t Voice<T>::m_amp_env_gen;
+template <uint8_t T> uint8_t Voice<T>::m_exp_by_vel;
