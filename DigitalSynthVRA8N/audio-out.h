@@ -44,8 +44,9 @@ public:
       cnt = s_maxCnt + 1;
 #elif 1
       if (cnt >= 64) {
-        cnt = 99;   // Not Over
+        cnt = 255;   // Not Over
       }
+      cnt++;
 #endif
       UDR0 = cnt;
       m_count = 0;

@@ -128,7 +128,7 @@ public:
 
 private:
   INLINE static void update_expression_coef() {
-    uint8_t expression = 255 - high_byte((255 - m_expression) * m_amp_exp_amt);
+    uint8_t expression = 255 - high_byte(static_cast<uint8_t>(255 - m_expression) * m_amp_exp_amt);
     m_expression_coef = high_byte(expression * expression);
   }
 };
