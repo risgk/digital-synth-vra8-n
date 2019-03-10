@@ -41,14 +41,13 @@ public:
       if ((cnt < 64) && (cnt > s_maxCnt)) {
         s_maxCnt = cnt;
       }
-      cnt = s_maxCnt + 1;
+      cnt = s_maxCnt;
 #elif 1
       if (cnt >= 64) {
         cnt = 255;   // Not Over
       }
-      cnt++;
 #endif
-      UDR0 = cnt;
+      UDR0 = cnt++;
       m_count = 0;
     }
 #endif
