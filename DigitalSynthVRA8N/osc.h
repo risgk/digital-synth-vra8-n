@@ -280,8 +280,8 @@ public:
 
   INLINE static void set_pitch_bend_minus_range(uint8_t controller_value) {
     uint8_t range = controller_value;
-    if (range > 24) {
-      range = 24;
+    if (range > 30) {
+      range = 30;
     }
     m_pitch_bend_minus_range = range;
     update_pitch_bend();
@@ -289,8 +289,8 @@ public:
 
   INLINE static void set_pitch_bend_plus_range(uint8_t controller_value) {
     uint8_t range = controller_value;
-    if (range > 24) {
-      range = 24;
+    if (range > 30) {
+      range = 30;
     }
     m_pitch_bend_plus_range = range;
     update_pitch_bend();
