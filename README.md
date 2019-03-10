@@ -1,6 +1,6 @@
-# Digital Synth VRA8-N v1.2.1
+# Digital Synth VRA8-N v2.0.0
 
-- 2019-02-03 ISGK Instruments
+- 2019-03-10 ISGK Instruments
 - <https://github.com/risgk/digital-synth-vra8-n>
 
 ## Concept
@@ -9,6 +9,9 @@
 
 ## Change History
 
+- v2.0.0
+    - Change "OSC (SAW/SQ)" to "OSC1/2 (SAW/SQ)"
+    - Add "EXPRESSION", "EXP > CUTOFF", "EXP > AMP LEVEL", and "EXP BY VEL (OFF/ON)"
 - v1.2.1
     - Improve sound quality
     - Improve VRA8-N CTRL compatibility between versions
@@ -62,17 +65,29 @@
 
 ## Details of Controllers
 
+- "OSC1/2 (SAW/SQ)": OSC1 Wave / OSC2 Wave
+    - Values 0-15: OSC1 SAW / OSC2 SAW
+    - Values 16-63: OSC1 SAW / OSC2 SQUARE
+    - Values 64-111: OSC1 SQUARE / OSC2 SAW
+    - Values 112-127: OSC1 SQUARE / OSC2 SQUARE
+- "SUB (SIN/NOISE/SQ)": SUB Osc Wave
+    - Values 0-31: SIN
+    - Values 32-95: NOISE
+    - Values 96-127: SQUARE
 - "LFO (T/2/SA/S&H/SQ)": LFO Wave
     - Values 0-15: Triangle (Key Trigger: Off)
     - Values 16-47: Triangle 2 (Key Trigger: On)
-    - Values 48-79: SAw Down (Key Trigger: On)
-    - Values 80-111: RaNDom (Key Trigger: On)
-    - Values 112-127: SQuare Up (Key Trigger: On)
-- "K. ASN (L/L/P/H/LST)": Key ASsigN
-    - Values 0-47: Lowest Note
-    - Values 48-79: Paraphonic (Lowest and Highest Notes)
-    - Values 80-111: Highest Note
-    - Values 112-127: LaST One Note
+    - Values 48-79: SAW Down (Key Trigger: On)
+    - Values 80-111: RANDOM (Key Trigger: On)
+    - Values 112-127: SQUARE Up (Key Trigger: On)
+- "LEGATO (OFF/ON)": LEGATO Portamento
+    - When LEGATO Portamento is ON, Single Trigger is forced
+- "K. ASN (L/L/P/H/LST)": Key ASSIGN / Trigger Mode
+    - Values 0-47: Lowest Note / Single Trigger
+    - Values 48-79: Paraphonic (Lowest and Highest Notes) / Single Trigger
+    - Values 80-111: Highest Note / Single Trigger
+    - Values 112-127: LAST One Note / Multi Trigger
+- "EXP BY VEL (OFF/ON)": EXPRESSION Control By (Note ON) VELOCITY
 
 ## A Sample Setting of a Physical Controller (8-Knob)
 
@@ -86,8 +101,8 @@
 
 ## MIDI Implementation Chart
 
-      [Monophonic Synthesizer]                                        Date: 2019-02-03       
-      Model: Digital Synth VRA8-N     MIDI Implementation Chart       Version: 1.2.1         
+      [Monophonic Synthesizer]                                        Date: 2019-03-10       
+      Model: Digital Synth VRA8-N     MIDI Implementation Chart       Version: 2.0.0         
     +-------------------------------+---------------+---------------+-----------------------+
     | Function...                   | Transmitted   | Recognized    | Remarks               |
     +-------------------------------+---------------+---------------+-----------------------+
@@ -101,7 +116,7 @@
     | Note                          | x             | 0-127         |                       |
     | Number       : True Voice     | ************* | 0-120         |                       |
     +-------------------------------+---------------+---------------+-----------------------+
-    | Velocity     Note ON          | x             | x             |                       |
+    | Velocity     Note ON          | x             | o (V=1-127)   | When EXP BY VEL is ON |
     |              Note OFF         | x             | x             |                       |
     +-------------------------------+---------------+---------------+-----------------------+
     | After        Key's            | x             | x             |                       |
@@ -110,16 +125,17 @@
     | Pitch Bend                    | x             | o             |                       |
     +-------------------------------+---------------+---------------+-----------------------+
     | Control                     1 | x             | o             | MODULATION DEPTH      |
-    | Change                        |               |               |                       |
-    |                            24 | x             | o             | OSC (SAW/SQ)          |
+    | Change                     11 | x             | o             | EXPRESSION            |
+    |                               |               |               |                       |
+    |                            24 | x             | o             | OSC1/2 (SAW/SQ)       |
     |                            25 | x             | o             | OSC MIX (1/2)         |
     |                            20 | x             | o             | OSC2 COARSE (-/+)     |
     |                            21 | x             | o             | OSC2 FINE (-/+)       |
     |                               |               |               |                       |
     |                            29 | x             | o             | SUB (SIN/NOISE/SQ)    |
     |                            26 | x             | o             | SUB LEVEL             |
-    |                           104 | x             | x             | EG > PITCH(-/+)       |
-    |                           105 | x             | x             | EG > P. TGT (1&2/2)   |
+    |                           104 | x             | o             | EG > PITCH(-/+)       |
+    |                           105 | x             | o             | EG > P. TGT (1&2/2)   |
     |                               |               |               |                       |
     |                            16 | x             | o             | CUTOFF                |
     |                            17 | x             | o             | RESONANCE             |
@@ -129,7 +145,7 @@
     |                            23 | x             | o             | ATTACK                |
     |                            19 | x             | o             | DECAY                 |
     |                            27 | x             | o             | SUSTAIN (OFF/ON)      |
-    |                            28 | x             | x             | RELEASE (OFF/ON)      |
+    |                            28 | x             | o             | RELEASE (OFF/ON)      |
     |                               |               |               |                       |
     |                            14 | x             | o             | LFO (T/2/SA/RND/SQ)   |
     |                            80 | x             | o             | LFO RATE              |
@@ -137,19 +153,19 @@
     |                            83 | x             | o             | LFO > CUTOFF (-/+)    |
     |                               |               |               |                       |
     |                            81 | x             | o             | LFO DEPTH             |
-    |                             3 | x             | x             | EG > LFO RATE (-/+)   |
-    |                             9 | x             | x             | LFO > P. TGT (1&2/2)  |
+    |                             3 | x             | o             | EG > LFO RATE (-/+)   |
+    |                             9 | x             | o             | LFO > P. TGT (1&2/2)  |
     |                            15 | x             | x             | (RESERVED)            |
     |                               |               |               |                       |
     |                            85 | x             | o             | P. BEND RANGE         |
     |                            86 | x             | x             | (RESERVED)            |
-    |                           106 | x             | x             | (RESERVED)            |
-    |                           107 | x             | x             | (RESERVED)            |
+    |                           106 | x             | o             | EXP > CUTOFF (-/+)    |
+    |                           107 | x             | o             | EXP > AMP LEVEL       |
     |                               |               |               |                       |
     |                            22 | x             | o             | PORTAMENTO            |
     |                            30 | x             | o             | LEGATO (OFF/ON)       |
     |                            87 | x             | o             | K. ASN (L/L/P/H/LST)  |
-    |                            89 | x             | x             | (RESERVED)            |
+    |                            89 | x             | o             | EXP BY VEL (OFF/ON)   |
     +-------------------------------+---------------+---------------+-----------------------+
     | Program                       | x             | o             |                       |
     | Change       : True #         | ************* | 0-7           |                       |

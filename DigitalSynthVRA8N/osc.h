@@ -65,6 +65,9 @@ public:
       m_mix_table[i] = static_cast<uint8_t>(sqrtf(static_cast<float>(i) /
                                                   (OSC_MIX_TABLE_LENGTH - 1)) * 80);
     }
+    m_mix_0_current = 0;
+    m_mix_1_current = 0;
+    m_mix_sub_current = 0;
     set_osc_mix(0);
     set_sub_osc_level(0);
     m_level_sub = 0;
@@ -133,8 +136,24 @@ public:
     m_mix_1_target = m_mix_table[                             (controller_value >> 2)];
   }
 
+  INLINE static void set_osc_waveforms(uint8_t controller_value) {
+    if (controller_value < 16) {
+      set_osc_waveform<0>(OSC_WAVEFORM_SAW);
+      set_osc_waveform<1>(OSC_WAVEFORM_SAW);
+    } else if (controller_value < 64) {
+      set_osc_waveform<0>(OSC_WAVEFORM_SAW);
+      set_osc_waveform<1>(OSC_WAVEFORM_SQ);
+    } else if (controller_value < 112) {
+      set_osc_waveform<0>(OSC_WAVEFORM_SQ);
+      set_osc_waveform<1>(OSC_WAVEFORM_SAW);
+    } else {
+      set_osc_waveform<0>(OSC_WAVEFORM_SQ);
+      set_osc_waveform<1>(OSC_WAVEFORM_SQ);
+    }
+  }
+
   template <uint8_t N>
-  INLINE static void set_waveform(uint8_t controller_value) {
+  INLINE static void set_osc_waveform(uint8_t controller_value) {
     if (controller_value < 64) {
       m_waveform[N] = OSC_WAVEFORM_SAW;
     } else {
@@ -261,8 +280,8 @@ public:
 
   INLINE static void set_pitch_bend_minus_range(uint8_t controller_value) {
     uint8_t range = controller_value;
-    if (range > 24) {
-      range = 24;
+    if (range > 30) {
+      range = 30;
     }
     m_pitch_bend_minus_range = range;
     update_pitch_bend();
@@ -270,8 +289,8 @@ public:
 
   INLINE static void set_pitch_bend_plus_range(uint8_t controller_value) {
     uint8_t range = controller_value;
-    if (range > 24) {
-      range = 24;
+    if (range > 30) {
+      range = 30;
     }
     m_pitch_bend_plus_range = range;
     update_pitch_bend();

@@ -10,6 +10,8 @@ const uint8_t   NOTE_NUMBER_MIN     = 0;
 const uint8_t   NOTE_NUMBER_MAX     = 120;
 const uint8_t   NOTE_NUMBER_INVALID = 255;
 
+const uint8_t   PROGRAM_NUMBER_MAX  = 7;
+
 const uint8_t   OSC_CONTROL_INTERVAL_BITS    = 2;
 const uint8_t   OSC_CONTROL_INTERVAL         = 0x01 << OSC_CONTROL_INTERVAL_BITS;
 const uint8_t   OSC_PHASE_RESOLUTION_BITS    = 24;
@@ -51,6 +53,7 @@ const uint8_t   REAL_TIME_MESSAGE_MIN = 0xF8;
 const uint8_t   ACTIVE_SENSING        = 0xFE;
 
 const uint8_t   MODULATION    = 1;
+const uint8_t   EXPRESSION    = 11;
 
 const uint8_t   OSC_WAVE      = 24;
 const uint8_t   OSC2_MIX      = 25;
@@ -84,13 +87,13 @@ const uint8_t   CC15          = 15;
 
 const uint8_t   PB_RANGE      = 85;
 const uint8_t   CC86          = 86;
-const uint8_t   CC106         = 106;
-const uint8_t   CC107         = 107;
+const uint8_t   CO_EXP_AMT    = 106;
+const uint8_t   AMP_EXP_AMT   = 107;
 
 const uint8_t   PORTAMENTO    = 22;
 const uint8_t   LEGATO        = 30;
 const uint8_t   KEY_ASSIGN    = 87;
-const uint8_t   CC89          = 89;
+const uint8_t   EXP_BY_VEL    = 89;
 
 const uint8_t   ALL_NOTES_OFF = 123;
 const uint8_t   OMNI_MODE_OFF = 124;

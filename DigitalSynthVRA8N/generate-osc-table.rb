@@ -70,7 +70,7 @@ end
 $osc_harmonics_restriction_table = []
 
 (NOTE_NUMBER_MIN..NOTE_NUMBER_MAX).each do |note_number|
-  freq = freq_from_note_number((note_number / 3) * 3 + 3)
+  freq = freq_from_note_number(((note_number + 2) / 3) * 3 + 1)
   $osc_harmonics_restriction_table << freq
 end
 
@@ -78,7 +78,6 @@ def last_harmonic(freq, organ = false, organ_last)
   last = (freq != 0) ? ((FREQUENCY_MAX * (1 << OSC_PHASE_RESOLUTION_BITS)) /
                         ((freq + OSC_DETUNE_FREQ_MAX) * 2 * SAMPLING_RATE)) : 0
   last = organ_last if organ && last > organ_last
-  last = last - 1 if last.even?
   last = [last, 127].min
   last
 end
