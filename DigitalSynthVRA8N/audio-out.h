@@ -10,6 +10,9 @@ class AudioOut {
   static const int LED_PIN     = 13;  // PB5
 
   static uint8_t m_count;
+  static uint8_t m_maxTcnt;
+  static uint8_t m_busy;
+  static uint8_t m_busyCont;
 
 public:
   INLINE static void open() {
@@ -26,6 +29,9 @@ public:
     TCCR1B = 0x09;
 
     m_count = 0;
+    m_maxTcnt = 0;
+    m_busy = 0;
+    m_busyCont = 0;
   }
 
   INLINE static void write(int8_t level) {
@@ -35,28 +41,39 @@ public:
     if (m_count == 0x7F) {
       UDR0 = 0xDF;
     } else if (m_count == 0xFF) {
-      uint8_t cnt = TCNT1 >> 2;
 #if 0
-      static uint8_t s_maxCnt = 0;
-      if ((cnt < 64) && (cnt > s_maxCnt)) {
-        s_maxCnt = cnt;
+      uint8_t tcnt = TCNT1 >> 2;
+      if ((tcnt < 64) && (tcnt > m_maxTcnt)) {
+        m_maxTcnt = tcnt;
       }
-      cnt = s_maxCnt + 1;
+      tcnt = m_maxTcnt;
 #elif 1
-      if (cnt >= 64) {
-        cnt = 255;   // Not Over
+      uint8_t tcnt = m_busyCont;
+      tcnt &= 0x7F;
+#elif 1
+      uint8_t tcnt = TCNT1 >> 2;
+      if (tcnt >= 64) {
+        tcnt = 0;   // Not Over
       }
-      cnt++;
 #endif
-      UDR0 = cnt;
+      UDR0 = tcnt;
       m_count = 0;
     }
 #endif
     if (TIFR1 & _BV(TOV1)) {
       // CPU BUSY
       PORTB = _BV(5);
+#if defined(DEBUG)
+      if (m_busy) {
+        m_busyCont++;
+      }
+      m_busy = 1;
+#endif
     } else {
       PORTB = 0x00;
+#if defined(DEBUG)
+      m_busy = 0;
+#endif
       while ((TIFR1 & _BV(TOV1)) == 0);
     }
     TIFR1 = _BV(TOV1);
@@ -65,3 +82,6 @@ public:
 };
 
 template <uint8_t T> uint8_t AudioOut<T>::m_count;
+template <uint8_t T> uint8_t AudioOut<T>::m_maxTcnt;
+template <uint8_t T> uint8_t AudioOut<T>::m_busy;
+template <uint8_t T> uint8_t AudioOut<T>::m_busyCont;
