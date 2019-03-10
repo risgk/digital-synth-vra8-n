@@ -158,8 +158,10 @@ public:
   INLINE static void control_change(uint8_t controller_number, uint8_t controller_value) {
     switch (controller_number) {
     case EXPRESSION:
-      IFilter<0>::set_expression(controller_value);
-      IEnvGen<1>::set_expression(controller_value);
+      if (!m_exp_by_vel) {
+        IFilter<0>::set_expression(controller_value);
+        IEnvGen<1>::set_expression(controller_value);
+      }
       break;
     case MODULATION:
       IOsc<0>::set_lfo_depth<1>(controller_value);
