@@ -23,7 +23,7 @@ class Filter {
   static int8_t         m_cutoff_env_gen_amt;
   static int8_t         m_cutoff_lfo_amt;
   static uint8_t        m_cutoff_expression_decrease;
-  static uint8_t        m_cutoff_exp_amt;
+  static int8_t         m_cutoff_exp_amt;
 
   static const uint8_t AUDIO_FRACTION_BITS = 14;
   static const int16_t MAX_ABS_OUTPUT = 127 << (AUDIO_FRACTION_BITS - 8);
@@ -47,11 +47,14 @@ public:
   }
 
   INLINE static void set_cutoff(uint8_t controller_value) {
-    if (controller_value < 7) {
-      m_cutoff = 7;
-    } else {
-      m_cutoff = controller_value;
+    uint8_t value = controller_value;
+    if (value < 4) {
+      value = 4;
+    } else if (124 < value) {
+      value = 124;
     }
+
+    m_cutoff = value;
   }
 
   INLINE static void set_resonance(uint8_t controller_value) {
@@ -82,11 +85,13 @@ public:
 
   INLINE static void set_cutoff_exp_amt(uint8_t controller_value) {
     uint8_t value = controller_value;
-    if (120 < value) {
-      value = 120;
+    if (value < 4) {
+      value = 4;
+    } else if (124 < value) {
+      value = 124;
     }
 
-    m_cutoff_exp_amt = value << 1;
+    m_cutoff_exp_amt = (value - 64) << 1;
   }
 
   INLINE static void set_expression(uint8_t controller_value) {
@@ -141,7 +146,7 @@ public:
 private:
   INLINE static void update_coefs_1st(uint8_t env_gen_input, int16_t lfo_input) {
     m_cutoff_candidate = m_cutoff;
-    m_cutoff_candidate -= high_byte(m_cutoff_exp_amt * m_cutoff_expression_decrease);
+    m_cutoff_candidate -= high_sbyte(m_cutoff_exp_amt * m_cutoff_expression_decrease);
     m_cutoff_candidate += high_sbyte((m_cutoff_env_gen_amt * env_gen_input) << 1);
     int8_t lfo_mod_half = high_sbyte(mul_q15_q7(lfo_input, m_cutoff_lfo_amt) << 1);
     m_cutoff_candidate -= lfo_mod_half;
@@ -192,4 +197,4 @@ template <uint8_t T> uint8_t        Filter<T>::m_cutoff;
 template <uint8_t T> int8_t         Filter<T>::m_cutoff_env_gen_amt;
 template <uint8_t T> int8_t         Filter<T>::m_cutoff_lfo_amt;
 template <uint8_t T> uint8_t        Filter<T>::m_cutoff_expression_decrease;
-template <uint8_t T> uint8_t        Filter<T>::m_cutoff_exp_amt;
+template <uint8_t T> int8_t         Filter<T>::m_cutoff_exp_amt;

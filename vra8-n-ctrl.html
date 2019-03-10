@@ -183,7 +183,7 @@ presetControllers[CC15         ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
 
 presetControllers[PB_RANGE     ] = [2  , 2  , 2  , 2  , 12 , 2  , 2  , 2  ];
 presetControllers[CC86         ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
-presetControllers[CO_EXP_AMT   ] = [0  , 0  , 0  , 0  , 0  , 60 , 0  , 0  ];
+presetControllers[CO_EXP_AMT   ] = [64 , 64 , 64 , 64 , 64 , 94 , 64 , 64 ];
 presetControllers[AMP_EXP_AMT  ] = [127, 127, 127, 127, 127, 127, 127, 127];
 
 presetControllers[PORTAMENTO   ] = [0  , 32 , 32 , 0  , 0  , 32 , 0  , 0  ];
@@ -422,6 +422,7 @@ function updateDisplayOfControl(number, value) {
   case PITCH_LFO_AMT:
   case CO_LFO_AMT:
   case LFO_RT_EG_AMT:
+  case CO_EXP_AMT:
     if (value >= 64) {
       document.getElementById("spanCC" + String(number)).innerHTML = "+" + String(value - 64);
     } else {
@@ -678,7 +679,7 @@ function noteOff(noteNumber) {
 <tr><td>&nbsp;</td></tr>
 <tr><td>P. BEND RANGE         </td><td></td>
     <td>                      </td><td></td>
-    <td>EXP > CUTOFF          </td><td></td>
+    <td>EXP > CUTOFF (-/+)    </td><td></td>
     <td>EXP > AMP LEVEL       </td><td></td></tr>
 <tr><td><input id="inputCC85" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(PB_RANGE, value)"></td>
     <td><span   id="spanCC85">-1</span></td>

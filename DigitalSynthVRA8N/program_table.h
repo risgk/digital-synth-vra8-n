@@ -35,7 +35,7 @@ const uint8_t g_preset_table_CC15         [] = {0  , 0  , 0  , 0  , 0  , 0  , 0 
 
 const uint8_t g_preset_table_PB_RANGE     [] = {2  , 2  , 2  , 2  , 12 , 2  , 2  , 2  };
 const uint8_t g_preset_table_CC86         [] = {0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  };
-const uint8_t g_preset_table_CO_EXP_AMT   [] = {0  , 0  , 0  , 0  , 0  , 60 , 0  , 0  };
+const uint8_t g_preset_table_CO_EXP_AMT   [] = {64 , 64 , 64 , 64 , 64 , 94 , 64 , 64 };
 const uint8_t g_preset_table_AMP_EXP_AMT  [] = {127, 127, 127, 127, 127, 127, 127, 127};
 
 const uint8_t g_preset_table_PORTAMENTO   [] = {0  , 32 , 32 , 0  , 0  , 32 , 0  , 0  };

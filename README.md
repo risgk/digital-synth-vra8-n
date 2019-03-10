@@ -66,10 +66,10 @@
 ## Details of Controllers
 
 - "OSC1/2 (SAW/SQ)": OSC1/2 Wave
-    - Values 0-15: OSC1 SAW & OSC2 SAW
-    - Values 16-63: OSC1 SAW & OSC2 SQUARE
-    - Values 64-111: OSC1 SQUARE & OSC2 SAW
-    - Values 112-127: OSC1 SQUARE & OSC2 SQUARE
+    - Values 0-15: OSC1 SAW / OSC2 SAW
+    - Values 16-63: OSC1 SAW / OSC2 SQUARE
+    - Values 64-111: OSC1 SQUARE / OSC2 SAW
+    - Values 112-127: OSC1 SQUARE / OSC2 SQUARE
 - "SUB (SIN/NOISE/SQ)": SUB Osc Wave
     - Values 0-31: SIN
     - Values 32-95: NOISE
@@ -156,7 +156,7 @@
     |                               |               |               |                       |
     |                            85 | x             | o             | P. BEND RANGE         |
     |                            86 | x             | x             | (RESERVED)            |
-    |                           106 | x             | o             | EXP > CUTOFF          |
+    |                           106 | x             | o             | EXP > CUTOFF (-/+)    |
     |                           107 | x             | o             | EXP > AMP LEVEL       |
     |                               |               |               |                       |
     |                            22 | x             | o             | PORTAMENTO            |
