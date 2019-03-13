@@ -8,7 +8,7 @@ class Voice {
   static uint8_t m_eg1_decay_sustain;
   static uint8_t m_last_note_number;
   static uint8_t m_on_note[16];
-  static uint8_t m_output_error[2];
+  static uint8_t m_output_error;
   static uint8_t m_portamento;
   static boolean m_legato_portamento;
   static uint8_t m_key_assign;
@@ -25,8 +25,7 @@ public:
     for (uint8_t i = 0; i < 16; ++i) {
       m_on_note[i] = 0x00;
     }
-    m_output_error[0] = 0;
-    m_output_error[1] = 0;
+    m_output_error = 0;
     m_portamento = 0;
     m_legato_portamento = false;
     m_key_assign = KEY_ASSIGN_LOW;
@@ -381,19 +380,13 @@ public:
     int16_t osc_output = IOsc<0>::clock(m_count, env_gen_output_0);
     int16_t lfo_output = IOsc<0>::get_lfo_level();
     int16_t filter_output = IFilter<0>::clock(m_count, osc_output, env_gen_output_0, lfo_output);
-
-    // error diffusion 0
-    int16_t output_0 = filter_output + m_output_error[0];
-    m_output_error[0] = low_byte(output_0);
-
     uint8_t env_gen_output_1 = IEnvGen<1>::clock(m_count);
-    int16_t amp_output = IAmp<0>::clock(output_0, env_gen_output_1);
+    int16_t amp_output = IAmp<0>::clock(filter_output, env_gen_output_1);
 
-    // error diffusion 1
-    int16_t output_1 = amp_output + m_output_error[1];
-    m_output_error[1] = low_byte(output_1);
-
-    return high_sbyte(output_1);
+    // error diffusion
+    int16_t output = amp_output + m_output_error;
+    m_output_error = low_byte(output);
+    return high_sbyte(output);
   }
 
 private:
@@ -517,7 +510,7 @@ template <uint8_t T> uint8_t Voice<T>::m_eg0_decay_sustain;
 template <uint8_t T> uint8_t Voice<T>::m_eg1_decay_sustain;
 template <uint8_t T> uint8_t Voice<T>::m_last_note_number;
 template <uint8_t T> uint8_t Voice<T>::m_on_note[16];
-template <uint8_t T> uint8_t Voice<T>::m_output_error[2];
+template <uint8_t T> uint8_t Voice<T>::m_output_error;
 template <uint8_t T> uint8_t Voice<T>::m_portamento;
 template <uint8_t T> boolean Voice<T>::m_legato_portamento;
 template <uint8_t T> uint8_t Voice<T>::m_key_assign;
