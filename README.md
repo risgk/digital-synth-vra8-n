@@ -10,6 +10,7 @@
 ## Change History
 
 - vX.X.X
+    - Improve sound quality
     - Revert "SUSTAIN (OFF/ON)" to "SUSTAIN"
 - v2.0.0
     - Change "OSC (SAW/SQ)" to "OSC1/2 (SAW/SQ)"
