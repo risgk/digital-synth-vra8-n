@@ -9,10 +9,10 @@
 
 ## Change History
 
-- vX.X.X
+- vX.X.X (Major Changes)
     - Fix sound quality degradation in v2.0.0
     - Revert "SUSTAIN (OFF/ON)" to "SUSTAIN"
-- v2.0.0
+- v2.0.0 (Major Changes)
     - Change "OSC (SAW/SQ)" to "OSC1/2 (SAW/SQ)"
     - Add "EXPRESSION", "EXP > CUTOFF", "EXP > AMP LEVEL", and "EXP BY VEL (OFF/ON)"
 - v1.2.1
@@ -137,7 +137,7 @@
     |                               |               |               |                       |
     |                            29 | x             | o             | SUB (SIN/NOISE/SQ)    |
     |                            26 | x             | o             | SUB LEVEL             |
-    |                           104 | x             | o             | EG > PITCH(-/+)       |
+    |                           104 | x             | o             | EG > PITCH (-/+)      |
     |                           105 | x             | o             | EG > P. TGT (1&2/2)   |
     |                               |               |               |                       |
     |                            16 | x             | o             | CUTOFF                |
