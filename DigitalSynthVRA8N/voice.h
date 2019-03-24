@@ -376,7 +376,7 @@ public:
   }
 
   INLINE static int8_t clock() {
-    m_count++;
+    ++m_count;
 
 #if defined(EXPERIMENTAL_ENABLE_VOLTAGE_CONTROL)
     ICVIn<0>::clock(m_count);

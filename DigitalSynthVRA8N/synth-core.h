@@ -26,7 +26,7 @@ public:
       if (m_system_exclusive) {
         // do nothing
       } else if (m_system_data_remaining != 0) {
-        m_system_data_remaining--;
+        --m_system_data_remaining;
       } else if (m_running_status == (NOTE_ON | MIDI_CH)) {
         if (!is_data_byte(m_first_data)) {
           m_first_data = b;

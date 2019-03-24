@@ -37,7 +37,7 @@ public:
   INLINE static void write(int8_t level) {
 #if defined(DEBUG)
     // Output Elapsed Time as Channel Pressure (of Channel 16)
-    m_count++;
+    ++m_count;
     if (m_count == 0x7F) {
       UDR0 = 0xDF;
     } else if (m_count == 0xFF) {
@@ -67,7 +67,7 @@ public:
       PORTB = _BV(5);
 #if defined(DEBUG)
       if (m_busy) {
-        m_busyCont++;
+        ++m_busyCont;
       }
       m_busy = 1;
 #endif

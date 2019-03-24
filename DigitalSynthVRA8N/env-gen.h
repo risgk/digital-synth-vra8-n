@@ -81,7 +81,7 @@ public:
     if ((count & (ENV_GEN_CONTROL_INTERVAL - 1)) == ((T == 0) ? 2 : 2)) {
       switch (m_state) {
       case STATE_ATTACK:
-        m_rest--;
+        --m_rest;
         if (m_rest == 0) {
           m_rest = m_attack_update_coef;
           m_level = ENV_GEN_LEVEL_MAX_X_1_5 - mul_q16_q8(ENV_GEN_LEVEL_MAX_X_1_5 - m_level,
@@ -94,7 +94,7 @@ public:
         }
         break;
       case STATE_SUSTAIN:
-        m_rest--;
+        --m_rest;
         if (m_rest == 0) {
           m_rest = m_decay_update_coef;
           if (m_level > m_sustain) {
@@ -107,7 +107,7 @@ public:
         }
         break;
       case STATE_IDLE:
-        m_rest--;
+        --m_rest;
         if (m_rest == 0) {
           m_rest = m_release_update_coef;
           if (m_level > 0) {

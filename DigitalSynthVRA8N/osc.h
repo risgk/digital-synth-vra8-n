@@ -64,7 +64,7 @@ class Osc {
 
 public:
   INLINE static void initialize() {
-    for (uint8_t i = 0; i < OSC_MIX_TABLE_LENGTH; i++) {
+    for (uint8_t i = 0; i < OSC_MIX_TABLE_LENGTH; ++i) {
       m_mix_table[i] = static_cast<uint8_t>(sqrtf(static_cast<float>(i) /
                                                   (OSC_MIX_TABLE_LENGTH - 1)) * 80);
     }
@@ -372,7 +372,7 @@ public:
         break;
       case 0x5:
         update_rnd();
-        m_rnd_cnt++;
+        ++m_rnd_cnt;
         if ((m_rnd_cnt & 0x07) == 0x00) {
           m_red_noise = m_rnd_prev + m_rnd;
         }
@@ -606,7 +606,7 @@ private:
       m_lfo_rate_actual = ((lfo_rate >> 1) + 2) * 12;
     }
 
-    m_lfo_fade_cnt--;
+    --m_lfo_fade_cnt;
     if (m_lfo_fade_cnt == 0) {
       m_lfo_fade_cnt = m_lfo_fade_time;
       if (m_lfo_fade < 128) {
@@ -652,22 +652,22 @@ private:
   INLINE static void update_mix() {
 #if !defined(EXPERIMENTAL_ENABLE_VOLTAGE_CONTROL)
     if (m_mix_sub_current < m_mix_sub_target) {
-      m_mix_sub_current++;
+      ++m_mix_sub_current;
     } else if (m_mix_sub_current > m_mix_sub_target) {
-      m_mix_sub_current--;
+      --m_mix_sub_current;
     }
 #endif
 
     if (m_mix_0_current < m_mix_0_target) {
-      m_mix_0_current++;
+      ++m_mix_0_current;
     } else if (m_mix_0_current > m_mix_0_target) {
-      m_mix_0_current--;
+      --m_mix_0_current;
     }
 
     if (m_mix_1_current < m_mix_1_target) {
-      m_mix_1_current++;
+      ++m_mix_1_current;
     } else if (m_mix_1_current > m_mix_1_target) {
-      m_mix_1_current--;
+      --m_mix_1_current;
     }
   }
 };
