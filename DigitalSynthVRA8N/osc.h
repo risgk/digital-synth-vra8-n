@@ -32,8 +32,8 @@ class Osc {
   static int8_t         m_lfo_rate_eg_amt;
   static uint8_t        m_lfo_fade_time;
   static uint8_t        m_lfo_fade_cnt;
-  static uint8_t        m_lfo_depth_target[2];
-  static uint8_t        m_lfo_depth_current[2];
+  static uint8_t        m_lfo_fade;
+  static uint8_t        m_lfo_depth[2];
   static boolean        m_pitch_lfo_target_both;
   static int8_t         m_pitch_lfo_amt;
   static uint8_t        m_waveform[2];
@@ -88,10 +88,9 @@ public:
     m_lfo_rate_eg_amt = 0;
     m_lfo_fade_time = 1;
     m_lfo_fade_cnt = 1;
-    m_lfo_depth_target[0] = 0;
-    m_lfo_depth_target[1] = 0;
-    m_lfo_depth_current[0] = 0;
-    m_lfo_depth_current[1] = 0;
+    m_lfo_fade = 128;
+    m_lfo_depth[0] = 0;
+    m_lfo_depth[1] = 0;
     m_pitch_lfo_target_both = true;
     m_waveform[0] = OSC_WAVEFORM_SAW;
     m_waveform[1] = OSC_WAVEFORM_SAW;
@@ -231,21 +230,13 @@ public:
   }
 
   INLINE static void set_lfo_fade_time(uint8_t controller_value) {
-    m_lfo_fade_time = (high_byte((controller_value << 1) *
-                                 (controller_value << 1)) >> 3) + 1;
+    m_lfo_fade_time = (high_byte((controller_value + 30) *
+                                 (controller_value + 30)) >> 2) + 1;
   }
 
   template <uint8_t N>
   INLINE static void set_lfo_depth(uint8_t controller_value) {
-    if (N == 1) {
-      m_lfo_depth_current[1] = controller_value;
-    } else {
-      m_lfo_depth_target[0] = controller_value;
-
-      if (m_lfo_fade_time <= 1) {
-        m_lfo_depth_current[0] = m_lfo_depth_target[0];
-      }
-    }
+    m_lfo_depth[N] = controller_value;
   }
 
   INLINE static void set_lfo_target_both(boolean lfo_target_both) {
@@ -298,7 +289,7 @@ public:
     }
 
     if (m_lfo_fade_time > 1) {
-      m_lfo_depth_current[0] = 0;
+      m_lfo_fade = 0;
     }
   }
 
@@ -415,18 +406,6 @@ public:
         }
         break;
       case 0xE:
-        if ((m_rnd_cnt & 0x01) == 0x01) {
-          m_lfo_fade_cnt--;
-          if (m_lfo_fade_cnt == 0) {
-            m_lfo_fade_cnt = m_lfo_fade_time;
-
-            if (m_lfo_depth_current[0] < m_lfo_depth_target[0]) {
-              ++m_lfo_depth_current[0];
-            } else if (m_lfo_depth_current[0] > m_lfo_depth_target[0]) {
-              --m_lfo_depth_current[0];
-            }
-          }
-        }
         update_lfo_1st();
         break;
       case 0xF:
@@ -626,12 +605,20 @@ private:
     } else {
       m_lfo_rate_actual = ((lfo_rate >> 1) + 2) * 12;
     }
+
+    m_lfo_fade_cnt--;
+    if (m_lfo_fade_cnt == 0) {
+      m_lfo_fade_cnt = m_lfo_fade_time;
+      if (m_lfo_fade < 128) {
+        ++m_lfo_fade;
+      }
+    }
   }
 
   INLINE static void update_lfo_1st() {
     m_lfo_phase += m_lfo_rate_actual;
     m_lfo_wave_level = get_lfo_wave_level(m_lfo_phase);
-    uint8_t lfo_depth = m_lfo_depth_current[0] + m_lfo_depth_current[1];
+    uint8_t lfo_depth = high_byte((m_lfo_depth[0] << 1) * m_lfo_fade) + m_lfo_depth[1];
     if (lfo_depth > 127) {
       lfo_depth = 127;
     }
@@ -706,8 +693,8 @@ template <uint8_t T> uint8_t         Osc<T>::m_lfo_rate;
 template <uint8_t T> int8_t          Osc<T>::m_lfo_rate_eg_amt;
 template <uint8_t T> uint8_t         Osc<T>::m_lfo_fade_time;
 template <uint8_t T> uint8_t         Osc<T>::m_lfo_fade_cnt;
-template <uint8_t T> uint8_t         Osc<T>::m_lfo_depth_target[2];
-template <uint8_t T> uint8_t         Osc<T>::m_lfo_depth_current[2];
+template <uint8_t T> uint8_t         Osc<T>::m_lfo_fade;
+template <uint8_t T> uint8_t         Osc<T>::m_lfo_depth[2];
 template <uint8_t T> boolean         Osc<T>::m_pitch_lfo_target_both;
 template <uint8_t T> int8_t          Osc<T>::m_pitch_lfo_amt;
 template <uint8_t T> uint8_t         Osc<T>::m_waveform[2];
