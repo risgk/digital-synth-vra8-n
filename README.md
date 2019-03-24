@@ -1,6 +1,6 @@
-# Digital Synth VRA8-N v2.0.0
+# Digital Synth VRA8-N v2.0.1
 
-- 2019-03-10 ISGK Instruments
+- 2019-03-24 ISGK Instruments
 - <https://github.com/risgk/digital-synth-vra8-n>
 
 ## Concept
@@ -9,7 +9,10 @@
 
 ## Change History
 
-- v2.0.0
+- v2.0.1
+    - Fix sound quality degradation in v2.0.0
+    - Revert "SUSTAIN (OFF/ON)" to "SUSTAIN"
+- v2.0.0 (Major Changes)
     - Change "OSC (SAW/SQ)" to "OSC1/2 (SAW/SQ)"
     - Add "EXPRESSION", "EXP > CUTOFF", "EXP > AMP LEVEL", and "EXP BY VEL (OFF/ON)"
 - v1.2.1
@@ -101,8 +104,8 @@
 
 ## MIDI Implementation Chart
 
-      [Monophonic Synthesizer]                                        Date: 2019-03-10       
-      Model: Digital Synth VRA8-N     MIDI Implementation Chart       Version: 2.0.0         
+      [Monophonic Synthesizer]                                        Date: 2019-03-24       
+      Model: Digital Synth VRA8-N     MIDI Implementation Chart       Version: 2.0.1         
     +-------------------------------+---------------+---------------+-----------------------+
     | Function...                   | Transmitted   | Recognized    | Remarks               |
     +-------------------------------+---------------+---------------+-----------------------+
@@ -134,7 +137,7 @@
     |                               |               |               |                       |
     |                            29 | x             | o             | SUB (SIN/NOISE/SQ)    |
     |                            26 | x             | o             | SUB LEVEL             |
-    |                           104 | x             | o             | EG > PITCH(-/+)       |
+    |                           104 | x             | o             | EG > PITCH (-/+)      |
     |                           105 | x             | o             | EG > P. TGT (1&2/2)   |
     |                               |               |               |                       |
     |                            16 | x             | o             | CUTOFF                |
@@ -144,7 +147,7 @@
     |                               |               |               |                       |
     |                            23 | x             | o             | ATTACK                |
     |                            19 | x             | o             | DECAY                 |
-    |                            27 | x             | o             | SUSTAIN (OFF/ON)      |
+    |                            27 | x             | o             | SUSTAIN               |
     |                            28 | x             | o             | RELEASE (OFF/ON)      |
     |                               |               |               |                       |
     |                            14 | x             | o             | LFO (T/2/SA/RND/SQ)   |
