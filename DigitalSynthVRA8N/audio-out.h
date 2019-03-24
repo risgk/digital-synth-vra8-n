@@ -47,14 +47,16 @@ public:
         m_maxTcnt = tcnt;
       }
       tcnt = m_maxTcnt;
-#elif 1
+#elif 0
       uint8_t tcnt = m_busyCont;
       tcnt &= 0x7F;
-#elif 1
+#elif 0
       uint8_t tcnt = TCNT1 >> 2;
       if (tcnt >= 64) {
-        tcnt = 0;   // Not Over
+        tcnt = 99;   // Not Over
       }
+#else
+      uint8_t tcnt = TCNT1 >> 2;
 #endif
       UDR0 = tcnt;
       m_count = 0;
