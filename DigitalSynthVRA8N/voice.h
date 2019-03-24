@@ -53,7 +53,7 @@ public:
       } else {
         IOsc<0>::set_portamento(0);
         IFilter<0>::note_on();
-        IOsc<0>::reset_lfo_phase_unless_async();
+        IOsc<0>::trigger_lfo();
         IEnvGen<0>::note_on();
         IEnvGen<1>::note_on();
         if (m_exp_by_vel) {
@@ -65,7 +65,7 @@ public:
       IOsc<0>::set_portamento(m_portamento);
       if ((m_key_assign == KEY_ASSIGN_LAST) || (m_last_note_number == NOTE_NUMBER_INVALID)) {
         IFilter<0>::note_on();
-        IOsc<0>::reset_lfo_phase_unless_async();
+        IOsc<0>::trigger_lfo();
         IEnvGen<0>::note_on();
         IEnvGen<1>::note_on();
         if (m_exp_by_vel) {
@@ -120,14 +120,14 @@ public:
             IOsc<0>::set_portamento(m_portamento);
           } else {
             IOsc<0>::set_portamento(0);
-            IOsc<0>::reset_lfo_phase_unless_async();
+            IOsc<0>::trigger_lfo();
             IEnvGen<0>::note_on();
             IEnvGen<1>::note_on();
           }
         } else {
           IOsc<0>::set_portamento(m_portamento);
           if (m_last_note_number == NOTE_NUMBER_INVALID) {
-            IOsc<0>::reset_lfo_phase_unless_async();
+            IOsc<0>::trigger_lfo();
             IEnvGen<0>::note_on();
             IEnvGen<1>::note_on();
           }
@@ -297,6 +297,9 @@ public:
       IOsc<0>::set_lfo_rate_eg_amt(controller_value);
       break;
 
+    case LFO_FADE_TIME:
+      IOsc<0>::set_lfo_fade_time(controller_value);
+      break;
     case CO_EXP_AMT:
       IFilter<0>::set_cutoff_exp_amt(controller_value);
       break;
@@ -359,7 +362,7 @@ public:
     control_change(LFO_DEPTH    , g_preset_table_LFO_DEPTH    [program_number]);
     control_change(LFO_RT_EG_AMT, g_preset_table_LFO_RT_EG_AMT[program_number]);
     control_change(PITCH_LFO_TGT, g_preset_table_PITCH_LFO_TGT[program_number]);
-    control_change(CC15         , g_preset_table_CC15         [program_number]);
+    control_change(LFO_FADE_TIME, g_preset_table_LFO_FADE_TIME[program_number]);
 
     control_change(PB_RANGE     , g_preset_table_PB_RANGE     [program_number]);
     control_change(CC86         , g_preset_table_CC86         [program_number]);

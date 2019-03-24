@@ -1,6 +1,6 @@
-# Digital Synth VRA8-N v2.0.1
+# Digital Synth VRA8-N vX.X.X
 
-- 2019-03-24 ISGK Instruments
+- 2019-XX-XX ISGK Instruments
 - <https://github.com/risgk/digital-synth-vra8-n>
 
 ## Concept
@@ -9,6 +9,8 @@
 
 ## Change History
 
+- vX.X.X
+    - Add "LFO FADE TIME"
 - v2.0.1
     - Fix sound quality degradation in v2.0.0
     - Revert "SUSTAIN (OFF/ON)" to "SUSTAIN"
@@ -83,6 +85,7 @@
     - Values 48-79: SAW Down (Key Trigger: On)
     - Values 80-111: RANDOM (Key Trigger: On)
     - Values 112-127: SQUARE Up (Key Trigger: On)
+- "LFO FADE TIME": This affects "LFO DEPTH" but not "MODULATION DEPTH".
 - "LEGATO (OFF/ON)": LEGATO Portamento
     - When LEGATO Portamento is ON, Single Trigger is forced
 - "K. ASN (L/L/P/H/LST)": Key ASSIGN / Trigger Mode
@@ -104,8 +107,8 @@
 
 ## MIDI Implementation Chart
 
-      [Monophonic Synthesizer]                                        Date: 2019-03-24       
-      Model: Digital Synth VRA8-N     MIDI Implementation Chart       Version: 2.0.1         
+      [Monophonic Synthesizer]                                        Date: 2019-XX-XX       
+      Model: Digital Synth VRA8-N     MIDI Implementation Chart       Version: X.X.X         
     +-------------------------------+---------------+---------------+-----------------------+
     | Function...                   | Transmitted   | Recognized    | Remarks               |
     +-------------------------------+---------------+---------------+-----------------------+
@@ -158,7 +161,7 @@
     |                            81 | x             | o             | LFO DEPTH             |
     |                             3 | x             | o             | EG > LFO RATE (-/+)   |
     |                             9 | x             | o             | LFO > P. TGT (1&2/2)  |
-    |                            15 | x             | x             | (RESERVED)            |
+    |                            15 | x             | o             | LFO FADE TIME         |
     |                               |               |               |                       |
     |                            85 | x             | o             | P. BEND RANGE         |
     |                            86 | x             | x             | (RESERVED)            |

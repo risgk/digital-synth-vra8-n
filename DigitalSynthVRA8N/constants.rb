@@ -83,7 +83,7 @@ CO_LFO_AMT    = 83
 LFO_DEPTH     = 81
 LFO_RT_EG_AMT = 3
 PITCH_LFO_TGT = 9
-CC15          = 15
+LFO_FADE_TIME = 15
 
 PB_RANGE      = 85
 CC86          = 86
