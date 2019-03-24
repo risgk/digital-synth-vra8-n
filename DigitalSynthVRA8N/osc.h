@@ -30,7 +30,8 @@ class Osc {
   static uint16_t       m_lfo_rate_actual;
   static uint8_t        m_lfo_rate;
   static int8_t         m_lfo_rate_eg_amt;
-  static uint8_t        m_lfo_fade_rate;
+  static uint8_t        m_lfo_fade_time;
+  static uint8_t        m_lfo_fade_cnt;
   static uint8_t        m_lfo_depth_target[2];
   static uint8_t        m_lfo_depth_current[2];
   static boolean        m_pitch_lfo_target_both;
@@ -85,7 +86,8 @@ public:
     m_lfo_rate_actual = 0;
     m_lfo_rate = 0;
     m_lfo_rate_eg_amt = 0;
-    m_lfo_fade_rate = 254;
+    m_lfo_fade_time = 1;
+    m_lfo_fade_cnt = 1;
     m_lfo_depth_target[0] = 0;
     m_lfo_depth_target[1] = 0;
     m_lfo_depth_current[0] = 0;
@@ -229,9 +231,8 @@ public:
   }
 
   INLINE static void set_lfo_fade_time(uint8_t controller_value) {
-    uint8_t denominator = (high_byte((controller_value << 1) *
-                                     (controller_value << 1)) >> 1) + 1;
-    m_lfo_fade_rate = 254 / denominator;
+    m_lfo_fade_time = (high_byte((controller_value << 1) *
+                                 (controller_value << 1)) >> 3) + 1;
   }
 
   template <uint8_t N>
@@ -241,7 +242,7 @@ public:
     } else {
       m_lfo_depth_target[0] = controller_value;
 
-      if (m_lfo_fade_rate == 254) {
+      if (m_lfo_fade_time <= 1) {
         m_lfo_depth_current[0] = m_lfo_depth_target[0];
       }
     }
@@ -296,7 +297,7 @@ public:
       m_lfo_phase = 0xFFFF;
     }
 
-    if (m_lfo_fade_rate < 128) {
+    if (m_lfo_fade_time > 1) {
       m_lfo_depth_current[0] = 0;
     }
   }
@@ -414,13 +415,16 @@ public:
         }
         break;
       case 0xE:
-        if ((m_rnd_cnt & 0x0F) == 0x04) {
-          if (m_lfo_depth_current[0] + m_lfo_fade_rate < m_lfo_depth_target[0]) {
-            m_lfo_depth_current[0] += m_lfo_fade_rate;
-          } else if (m_lfo_depth_current[0] > m_lfo_depth_target[0] + m_lfo_fade_rate) {
-            m_lfo_depth_current[0] -= m_lfo_fade_rate;
-          } else {
-            m_lfo_depth_current[0] = m_lfo_depth_target[0];
+        if ((m_rnd_cnt & 0x01) == 0x01) {
+          m_lfo_fade_cnt--;
+          if (m_lfo_fade_cnt == 0) {
+            m_lfo_fade_cnt = m_lfo_fade_time;
+
+            if (m_lfo_depth_current[0] < m_lfo_depth_target[0]) {
+              ++m_lfo_depth_current[0];
+            } else if (m_lfo_depth_current[0] > m_lfo_depth_target[0]) {
+              --m_lfo_depth_current[0];
+            }
           }
         }
         update_lfo_1st();
@@ -700,7 +704,8 @@ template <uint8_t T> int16_t         Osc<T>::m_lfo_level;
 template <uint8_t T> uint16_t        Osc<T>::m_lfo_rate_actual;
 template <uint8_t T> uint8_t         Osc<T>::m_lfo_rate;
 template <uint8_t T> int8_t          Osc<T>::m_lfo_rate_eg_amt;
-template <uint8_t T> uint8_t         Osc<T>::m_lfo_fade_rate;
+template <uint8_t T> uint8_t         Osc<T>::m_lfo_fade_time;
+template <uint8_t T> uint8_t         Osc<T>::m_lfo_fade_cnt;
 template <uint8_t T> uint8_t         Osc<T>::m_lfo_depth_target[2];
 template <uint8_t T> uint8_t         Osc<T>::m_lfo_depth_current[2];
 template <uint8_t T> boolean         Osc<T>::m_pitch_lfo_target_both;
