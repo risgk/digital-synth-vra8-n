@@ -147,7 +147,7 @@
     |                               |               |               |                       |
     |                            23 | x             | o             | ATTACK                |
     |                            19 | x             | o             | DECAY                 |
-    |                            27 | x             | o             | SUSTAIN (OFF/ON)      |
+    |                            27 | x             | o             | SUSTAIN               |
     |                            28 | x             | o             | RELEASE (OFF/ON)      |
     |                               |               |               |                       |
     |                            14 | x             | o             | LFO (T/2/SA/RND/SQ)   |
