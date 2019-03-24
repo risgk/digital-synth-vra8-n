@@ -1,6 +1,6 @@
-# Digital Synth VRA8-N v2.0.0
+# Digital Synth VRA8-N v2.0.1
 
-- 2019-03-10 ISGK Instruments
+- 2019-03-24 ISGK Instruments
 - <https://github.com/risgk/digital-synth-vra8-n>
 
 ## Concept
@@ -9,7 +9,7 @@
 
 ## Change History
 
-- vX.X.X (Major Changes)
+- v2.0.1
     - Fix sound quality degradation in v2.0.0
     - Revert "SUSTAIN (OFF/ON)" to "SUSTAIN"
 - v2.0.0 (Major Changes)
@@ -104,8 +104,8 @@
 
 ## MIDI Implementation Chart
 
-      [Monophonic Synthesizer]                                        Date: 2019-03-10       
-      Model: Digital Synth VRA8-N     MIDI Implementation Chart       Version: 2.0.0         
+      [Monophonic Synthesizer]                                        Date: 2019-03-24       
+      Model: Digital Synth VRA8-N     MIDI Implementation Chart       Version: 2.0.1         
     +-------------------------------+---------------+---------------+-----------------------+
     | Function...                   | Transmitted   | Recognized    | Remarks               |
     +-------------------------------+---------------+---------------+-----------------------+
