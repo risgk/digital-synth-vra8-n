@@ -41,6 +41,9 @@ public:
     m_amp_env_gen = 127;
     update_env_gen();
     m_exp_by_vel = false;
+#if defined(EXPERIMENTAL_ENABLE_VOLTAGE_CONTROL)
+    ICVIn<0>::initialize();
+#endif
   }
 
   INLINE static void note_on(uint8_t note_number, uint8_t velocity) {
@@ -371,6 +374,10 @@ public:
 
   INLINE static int8_t clock() {
     m_count++;
+
+#if defined(EXPERIMENTAL_ENABLE_VOLTAGE_CONTROL)
+    ICVIn<0>::clock(m_count);
+#endif
 
     uint8_t env_gen_output_0 = IEnvGen<0>::clock(m_count);
     int16_t osc_output = IOsc<0>::clock(m_count, env_gen_output_0);
