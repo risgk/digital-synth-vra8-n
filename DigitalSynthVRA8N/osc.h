@@ -234,8 +234,7 @@ public:
   }
 
   INLINE static void set_lfo_fade_time(uint8_t controller_value) {
-    m_lfo_fade_coef = (high_byte((controller_value + 30) *
-                                 (controller_value + 30)) >> 2) + LFO_FADE_COEF_OFF;
+    m_lfo_fade_coef = high_byte(controller_value * controller_value) + LFO_FADE_COEF_OFF;
   }
 
   template <uint8_t N>
@@ -614,7 +613,7 @@ private:
     if (m_lfo_fade_cnt == 0) {
       m_lfo_fade_cnt = m_lfo_fade_coef;
       if (m_lfo_fade_level < LFO_FADE_LEVEL_MAX) {
-        ++m_lfo_fade_level;
+        m_lfo_fade_level += 2;
       }
     }
   }
