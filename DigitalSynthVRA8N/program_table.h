@@ -45,7 +45,13 @@ const uint8_t g_preset_table_LEGATO       [] = {0  , 127, 127, 0  , 0  , 127, 0 
 const uint8_t g_preset_table_KEY_ASSIGN   [] = {0  , 64 , 0  , 127, 0  , 127, 0  , 0  };
 const uint8_t g_preset_table_EXP_BY_VEL   [] = {0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  };
 
-#else
+
+
+
+
+
+
+#else  // defined(EXPERIMENTAL_ENABLE_VOLTAGE_CONTROL)
 
 // PRESET                                       #0   #1   #2   #3   #4   #5   #6   #7   
 const uint8_t g_preset_table_OSC_WAVE     [] = {0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  };

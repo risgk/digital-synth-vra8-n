@@ -17,6 +17,7 @@ public:
   }
 
   INLINE static void clock(uint8_t count) {
+#if defined(EXPERIMENTAL_ENABLE_VOLTAGE_CONTROL)
     if ((count & (CV_IN_CONTROL_INTERVAL - 1)) == 1) {
       uint8_t idx = (count >> CV_IN_CONTROL_INTERVAL_BITS) & 0x07;
 
@@ -67,6 +68,9 @@ public:
         break;
       }
     }
+#else // !defined(EXPERIMENTAL_ENABLE_VOLTAGE_CONTROL)
+    static_cast<void>(count);
+#endif
   }
 
 private:
