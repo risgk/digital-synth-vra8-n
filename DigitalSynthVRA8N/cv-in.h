@@ -22,6 +22,8 @@ class CVIn {
   static uint8_t m_input_level_d4;
   static uint8_t m_antichattering_rest_d4;
   static uint8_t m_note_number;
+  static uint8_t m_program_number;
+  static uint8_t m_scale_mode;
 
 public:
   INLINE static void initialize() {
@@ -32,6 +34,8 @@ public:
     m_antichattering_rest_d4 = 0;
     m_input_level_d4 = (DIGITAL_INPUT_ACTIVE == HIGH) ? LOW : HIGH;
     m_note_number = NOTE_NUMBER_INVALID;
+    m_program_number = PROGRAM_NUMBER_DEFAULT;
+    m_scale_mode = 0;
 
   #if defined(USE_INPUT_D2)
     pinMode(2, INPUT);
@@ -60,16 +64,17 @@ public:
   #if defined(USE_INPUT_A0)
         value = adc_read();    // Read A0
 
-#if 0
-        IOsc<0>::set_pitch_bend((value << 4) - 8192);
-        if (value < 32) {
-          IVoice<0>::note_off(54);
+        if (m_scale_mode == 0) {
+          value = (value + 1) * 15;
+          set_note_number(high_byte(value) + 24);
         } else {
-          IVoice<0>::note_on(54, 127);
+          IOsc<0>::set_pitch_bend((value << 4) - 8192);
+          if (value <= 16) {
+            set_note_number(24);
+          } else {
+            set_note_number(54);
+          }
         }
-#endif
-        value = (value + 1) * 15;
-        set_note_number(high_byte(value) + 24);
   #endif
   #if defined(USE_INPUT_A1)
         adc_start<1>();
@@ -96,7 +101,7 @@ public:
       case 0x10:
   #if defined(USE_INPUT_A3)
         value = adc_read();    // Read A3
-        IVoice<0>::control_change(FILTER_CUTOFF, value >> 3);
+        IVoice<0>::control_change(FILTER_RESO, value >> 3);
   #endif
         break;
       case 0x14:
@@ -109,7 +114,13 @@ public:
             m_input_level_d2 = value;
             m_antichattering_rest_d2 = 25;
             if (value == DIGITAL_INPUT_ACTIVE) {
-              IVoice<0>::program_change(PROGRAM_NUMBER_RANDOM_CONTROL);
+              if (m_program_number < PROGRAM_NUMBER_MAX) {
+                m_program_number++;
+              } else {
+                m_program_number = PROGRAM_NUMBER_RANDOM_CONTROL;
+              }
+
+              IVoice<0>::program_change(m_program_number);
             }
           }
         }
@@ -125,7 +136,12 @@ public:
             m_input_level_d4 = value;
             m_antichattering_rest_d4 = 25;
             if (value == DIGITAL_INPUT_ACTIVE) {
-              IVoice<0>::program_change(PROGRAM_NUMBER_RANDOM_CONTROL);
+              if (m_scale_mode == 0) {
+                m_scale_mode = 1;
+              } else {
+                m_scale_mode = 0;
+              }
+              set_scale_mode(m_scale_mode);
             }
           }
         }
@@ -154,7 +170,6 @@ private:
   }
 
   INLINE static void set_note_number(uint8_t note_number) {
-    // TODO
     uint8_t n = note_number;
     if (n <= 24) {
       n = NOTE_NUMBER_INVALID;
@@ -168,6 +183,16 @@ private:
       m_note_number = n;
     }
   }
+
+  INLINE static void set_scale_mode(uint8_t scale_mode) {
+    if (scale_mode == 0) {
+      set_note_number(54);
+      IOsc<0>::set_pitch_bend(0);
+    } else {
+      set_note_number(24);
+      IOsc<0>::set_pitch_bend(0);
+    }
+  }
 };
 
 template <uint8_t T> uint8_t CVIn<T>::m_count;
@@ -176,3 +201,5 @@ template <uint8_t T> uint8_t CVIn<T>::m_antichattering_rest_d2;
 template <uint8_t T> uint8_t CVIn<T>::m_input_level_d4;
 template <uint8_t T> uint8_t CVIn<T>::m_antichattering_rest_d4;
 template <uint8_t T> uint8_t CVIn<T>::m_note_number;
+template <uint8_t T> uint8_t CVIn<T>::m_program_number;
+template <uint8_t T> uint8_t CVIn<T>::m_scale_mode;
