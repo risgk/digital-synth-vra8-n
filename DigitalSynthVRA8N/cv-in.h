@@ -6,6 +6,7 @@
 #define USE_INPUT_A1
 #define USE_INPUT_A2
 #define USE_INPUT_A3
+#define ANALOG_INPUT_REVERSED (false)
 
 #define USE_INPUT_D2
 #define USE_INPUT_D4
@@ -16,19 +17,26 @@ class CVIn {
   static const uint8_t CV_IN_CONTROL_INTERVAL_BITS = 1;
   static const uint8_t CV_IN_CONTROL_INTERVAL      = 0x01 << CV_IN_CONTROL_INTERVAL_BITS;
 
-  static uint8_t m_count;
-  static uint8_t m_input_level_d2;
-  static uint8_t m_antichattering_rest_d2;
-  static uint8_t m_input_level_d4;
-  static uint8_t m_antichattering_rest_d4;
-  static uint8_t m_note_number;
-  static uint8_t m_program_number;
-  static uint8_t m_scale_mode;
+  static const uint8_t DIGITAL_INPUT_ANTICHATTERING_WAIT = 25;
+
+  static const uint8_t SCALE_MODE_0_NOTE_NUMBER_MIN = 48;
+  static const uint8_t SCALE_MODE_1_NOTE_NUMBER_MID = 54;
+
+  static uint8_t  m_count;
+  static uint16_t m_analog_value_0;
+  static uint8_t  m_input_level_d2;
+  static uint8_t  m_antichattering_rest_d2;
+  static uint8_t  m_input_level_d4;
+  static uint8_t  m_antichattering_rest_d4;
+  static uint8_t  m_note_number;
+  static uint8_t  m_program_number;
+  static uint8_t  m_scale_mode;
 
 public:
   INLINE static void initialize() {
 #if defined(EXPERIMENTAL_ENABLE_VOLTAGE_CONTROL)
     m_count = 0;
+    m_analog_value_0 = 0;
     m_antichattering_rest_d2 = 0;
     m_input_level_d2 = (DIGITAL_INPUT_ACTIVE == HIGH) ? LOW : HIGH;
     m_antichattering_rest_d4 = 0;
@@ -63,21 +71,32 @@ public:
       case 0x4:
   #if defined(USE_INPUT_A0)
         value = adc_read();    // Read A0
-
-        if (m_scale_mode == 0) {
-          value = (value + 1) * 15;
-          set_note_number(high_byte(value) + 24);
-        } else {
-          IOsc<0>::set_pitch_bend((value << 4) - 8192);
-          if (value <= 16) {
-            set_note_number(24);
-          } else {
-            set_note_number(54);
-          }
+        if (m_analog_value_0 + 1 == value) {
+          return;
         }
+        if (m_analog_value_0 - 1 == value) {
+          return;
+        }
+        m_analog_value_0 = value;
   #endif
   #if defined(USE_INPUT_A1)
         adc_start<1>();
+  #endif
+        break;
+      case 0x6:
+  #if defined(USE_INPUT_A0)
+        if (m_analog_value_0 <= 16) {
+          set_note_number(NOTE_NUMBER_INVALID);
+        } else {
+          if (m_scale_mode == 0) {
+            // Chromatic (2Oct / 5V)
+            set_note_number(high_byte((m_analog_value_0 + 1) * 6) + SCALE_MODE_0_NOTE_NUMBER_MIN);
+          } else {
+            // Linear (5Oct / 5V)
+            IOsc<0>::set_pitch_bend((m_analog_value_0 << 4) - 8192);
+            set_note_number(SCALE_MODE_1_NOTE_NUMBER_MID);
+          }
+        }
   #endif
         break;
       case 0x8:
@@ -112,7 +131,7 @@ public:
           value = digitalRead(2);    // Read D2
           if (m_input_level_d2 != value) {
             m_input_level_d2 = value;
-            m_antichattering_rest_d2 = 25;
+            m_antichattering_rest_d2 = DIGITAL_INPUT_ANTICHATTERING_WAIT;
             if (value == DIGITAL_INPUT_ACTIVE) {
               if (m_program_number < PROGRAM_NUMBER_MAX) {
                 m_program_number++;
@@ -134,14 +153,15 @@ public:
           value = digitalRead(4);    // Read D4
           if (m_input_level_d4 != value) {
             m_input_level_d4 = value;
-            m_antichattering_rest_d4 = 25;
+            m_antichattering_rest_d4 = DIGITAL_INPUT_ANTICHATTERING_WAIT;
             if (value == DIGITAL_INPUT_ACTIVE) {
               if (m_scale_mode == 0) {
                 m_scale_mode = 1;
               } else {
                 m_scale_mode = 0;
               }
-              set_scale_mode(m_scale_mode);
+              set_note_number(NOTE_NUMBER_INVALID);
+              IOsc<0>::set_pitch_bend(0);
             }
           }
         }
@@ -166,40 +186,31 @@ private:
   INLINE static uint16_t adc_read() {
     uint8_t adcLow  = ADCL;
     uint8_t adcHigh = ADCH;
-    return ((adcHigh << 8) | adcLow);
+    uint16_t adc = ((adcHigh << 8) | adcLow);
+
+    if (ANALOG_INPUT_REVERSED) {
+      return 1023 - adc;
+    }
+    return adc;
   }
 
   INLINE static void set_note_number(uint8_t note_number) {
-    uint8_t n = note_number;
-    if (n <= 24) {
-      n = NOTE_NUMBER_INVALID;
-    }
-
-    if (m_note_number != n) {
-      if (n != NOTE_NUMBER_INVALID) {
-        IVoice<0>::note_on(n, 127);
+    if (m_note_number != note_number) {
+      if (note_number != NOTE_NUMBER_INVALID) {
+        IVoice<0>::note_on(note_number, 127);
       }
       IVoice<0>::note_off(m_note_number);
-      m_note_number = n;
-    }
-  }
-
-  INLINE static void set_scale_mode(uint8_t scale_mode) {
-    if (scale_mode == 0) {
-      set_note_number(54);
-      IOsc<0>::set_pitch_bend(0);
-    } else {
-      set_note_number(24);
-      IOsc<0>::set_pitch_bend(0);
+      m_note_number = note_number;
     }
   }
 };
 
-template <uint8_t T> uint8_t CVIn<T>::m_count;
-template <uint8_t T> uint8_t CVIn<T>::m_input_level_d2;
-template <uint8_t T> uint8_t CVIn<T>::m_antichattering_rest_d2;
-template <uint8_t T> uint8_t CVIn<T>::m_input_level_d4;
-template <uint8_t T> uint8_t CVIn<T>::m_antichattering_rest_d4;
-template <uint8_t T> uint8_t CVIn<T>::m_note_number;
-template <uint8_t T> uint8_t CVIn<T>::m_program_number;
-template <uint8_t T> uint8_t CVIn<T>::m_scale_mode;
+template <uint8_t T> uint8_t  CVIn<T>::m_count;
+template <uint8_t T> uint16_t CVIn<T>::m_analog_value_0;
+template <uint8_t T> uint8_t  CVIn<T>::m_input_level_d2;
+template <uint8_t T> uint8_t  CVIn<T>::m_antichattering_rest_d2;
+template <uint8_t T> uint8_t  CVIn<T>::m_input_level_d4;
+template <uint8_t T> uint8_t  CVIn<T>::m_antichattering_rest_d4;
+template <uint8_t T> uint8_t  CVIn<T>::m_note_number;
+template <uint8_t T> uint8_t  CVIn<T>::m_program_number;
+template <uint8_t T> uint8_t  CVIn<T>::m_scale_mode;
