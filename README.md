@@ -11,9 +11,10 @@
 
 - vX.X.X
     - Narrow the CUTOFF frequency range from 5 oct (G3-G8) to 4 oct (G4-G8) for sound quality
-    - Add "LFO FADE TIME" Control
-    - Add LFO LED Out Option (Enabled by default)
-    - Add Pin D5 Audio Out Option (Disabled by default)
+    - Add "LFO FADE TIME" control
+    - Add LFO LED Out option (Enabled by default)
+    - Add Pin D5 Audio Out option (Disabled by default)
+    - Add the operation mode **VRA8-N mini** option (Voltage controlled, Sub Oscillator disabled)
 - v2.0.1
     - Fix sound quality degradation in v2.0.0
     - Revert "SUSTAIN (OFF/ON)" to "SUSTAIN"
@@ -42,7 +43,7 @@
 ## Features
 
 - Sampling Rate: 31.25 kHz, Bit Depth: 8 bit, LPF Attenuation Slope: -12 dB/oct
-- Serial MIDI In (38.4 kbps), PWM Audio Out (Pin D6), PWM LFO LED Out (Pin D5), PWM Rate: 62.5 kHz
+- Serial MIDI In (38.4 kbps), PWM Audio Out (Pin D6), Optional PWM LFO LED Out (Pin D5), PWM Rate: 62.5 kHz
     - We recommend adding a RC filter circuit to reduce PWM ripples
         - A cutoff frequency 15.9 kHz (R: 100 ohm, C: 100 nF) works well
     - **CAUTION**: The Arduino PWM audio output is a unipolar Line Out
@@ -50,7 +51,7 @@
     - **CAUTION**: Click sounds may occur when you connect the audio out to an amp or reset the board
 - We recommend [Hairless MIDI<->Serial Bridge](http://projectgus.github.io/hairless-midiserial/) to connect PC
     - A MIDI Shield (MIDI Breakout) and a power supply adapter are desirable to avoiding USB noise
-        - Edit `SERIAL_SPEED` in `DigitalSynthVRA8N.ino` to use MIDI Shield
+        - To use MIDI Shield, edit `SERIAL_SPEED`, `LFO_LED_OUT_ACTIVE`, and `SUBSTITUTE_PIN_D5_FOR_D6_AS_AUDIO_OUT` in `DigitalSynthVRA8N.ino`
 - Files
     - `DigitalSynthVRA8N.ino` is a sketch for Arduino (Genuino) Uno Rev3
     - `make-sample-wav-file.cc` is for Debugging on PC
@@ -107,6 +108,13 @@
     | CC #24            | CC #25        | CC #26        | CC #22        |
     | OSC (SAW/SQ)      | OSC MIX (1/2) | SUB LEVEL     | PORTAMENTO    |
     +-------------------+---------------+---------------+---------------+
+
+## **VRA8-N mini** (Operation Mode)
+
+- Voltage controlled, Sub Oscillator disabled
+- You need 4 potentiometers and 2 buttons
+- To make the sketch operate as **VRA8-N mini**, edit `ENABLE_VOLTAGE_CONTROL` in `DigitalSynthVRA8N.ino`
+- See "cv-in.h"
 
 ## MIDI Implementation Chart
 

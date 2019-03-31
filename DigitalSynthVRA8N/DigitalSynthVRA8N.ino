@@ -3,15 +3,15 @@
 #define SERIAL_SPEED (38400)    // For Serial MIDI
 //#define SERIAL_SPEED (31250)    // For MIDI Shield
 
-#define TRANSPOSE (0)    // Min: -24, Max: +24
+//#define SUBSTITUTE_PIN_D5_FOR_D6_AS_AUDIO_OUT    // For MIDI Shield
 
 #define ENABLE_LFO_LED_OUT           // D5 (or D6)
 #define LFO_LED_OUT_ACTIVE (HIGH)    // LOW for MIDI Shield
 
-//#define SUBSTITUTE_PIN_D5_FOR_D6_AS_AUDIO_OUT    // For MIDI Shield
+#define TRANSPOSE (0)    // Min: -24, Max: +24
 
-//#define ENABLE_VOLTAGE_CONTROL    // Make the sketch work as **VRA8-N mini**
-                                  // - SUB OSCillator disabled
+//#define ENABLE_VOLTAGE_CONTROL    // Make the sketch operate as **VRA8-N mini**
+                                  // - Sub Oscillator disabled
                                   // - See "cv-in.h"
 
 
