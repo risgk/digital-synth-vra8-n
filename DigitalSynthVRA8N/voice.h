@@ -21,6 +21,7 @@ class Voice {
 
 public:
   INLINE static void initialize() {
+    m_count = 0;
     m_last_note_number = NOTE_NUMBER_INVALID;
     for (uint8_t i = 0; i < 16; ++i) {
       m_on_note[i] = 0x00;
@@ -41,7 +42,6 @@ public:
     m_amp_env_gen = 127;
     update_env_gen();
     m_exp_by_vel = false;
-    ICVIn<0>::initialize();
   }
 
   INLINE static void note_on(uint8_t note_number, uint8_t velocity) {
@@ -50,7 +50,6 @@ public:
         IOsc<0>::set_portamento(m_portamento);
       } else {
         IOsc<0>::set_portamento(0);
-        IFilter<0>::note_on();
         IOsc<0>::trigger_lfo();
         IEnvGen<0>::note_on();
         IEnvGen<1>::note_on();
@@ -62,7 +61,6 @@ public:
     } else {
       IOsc<0>::set_portamento(m_portamento);
       if ((m_key_assign == KEY_ASSIGN_LAST) || (m_last_note_number == NOTE_NUMBER_INVALID)) {
-        IFilter<0>::note_on();
         IOsc<0>::trigger_lfo();
         IEnvGen<0>::note_on();
         IEnvGen<1>::note_on();
@@ -375,8 +373,6 @@ public:
 
   INLINE static int8_t clock() {
     ++m_count;
-
-    ICVIn<0>::clock(m_count);
 
     uint8_t env_gen_output_0 = IEnvGen<0>::clock(m_count);
     int16_t osc_output = IOsc<0>::clock(m_count, env_gen_output_0);

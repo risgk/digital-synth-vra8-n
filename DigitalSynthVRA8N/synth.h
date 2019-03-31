@@ -9,16 +9,16 @@
 #define IFilter     Filter
 #define IAmp        Amp
 #define IEnvGen     EnvGen
-#define ICVIn       CVIn
 #define IVoice      Voice
+#define ICVIn       CVIn
 #define ISynthCore  SynthCore
 
 #include "osc.h"
 #include "filter.h"
 #include "amp.h"
 #include "env-gen.h"
-#include "cv-in.h"
 #include "voice.h"
+#include "cv-in.h"
 #include "synth-core.h"
 
 template <uint8_t T>
