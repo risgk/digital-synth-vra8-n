@@ -103,16 +103,16 @@ public:
   INLINE static void setLFOLed(int8_t level) {
 #if defined(ENABLE_LFO_LED_OUT)
   #if !defined(SUBSTITUTE_PIN_D5_FOR_D6_AS_AUDIO_OUT)
-    #if !defined(LFO_LED_OUT_ACTIVE_LOW)
-      OCR0B = 0x80 + level;
-    #else
+    #if (LFO_LED_OUT_ACTIVE == LOW)
       OCR0B = 0x7F - level;
+    #else // (LFO_LED_OUT_ACTIVE == HIGH)
+      OCR0B = 0x80 + level;
     #endif
   #else
-    #if !defined(LFO_LED_OUT_ACTIVE_LOW)
-      OCR0A = 0x80 + level;
-    #else
+    #if (LFO_LED_OUT_ACTIVE == LOW)
       OCR0A = 0x7F - level;
+    #else // (LFO_LED_OUT_ACTIVE == HIGH)
+      OCR0A = 0x80 + level;
     #endif
   #endif
 #else // !defined(ENABLE_LFO_LED_OUT)

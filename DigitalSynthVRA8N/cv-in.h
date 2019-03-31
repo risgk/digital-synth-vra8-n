@@ -9,7 +9,7 @@
 
 #define USE_INPUT_D2
 #define USE_INPUT_D4
-//#define DIGITAL_INPUT_ACTIVE_LOW  // For MIDI Shield
+#define DIGITAL_INPUT_ACTIVE (HIGH) // LOW for MIDI Shield
 
 template <uint8_t T>
 class CVIn {
@@ -17,12 +17,16 @@ class CVIn {
   static const uint8_t CV_IN_CONTROL_INTERVAL      = 0x01 << CV_IN_CONTROL_INTERVAL_BITS;
 
   static uint8_t m_count;
+  static uint8_t m_antichattering_rest_d2;
+  static uint8_t m_antichattering_rest_d4;
   static uint8_t m_note_number;
 
 public:
   INLINE static void initialize() {
 #if defined(EXPERIMENTAL_ENABLE_VOLTAGE_CONTROL)
     m_count = 0;
+    m_antichattering_rest_d2 = 0;
+    m_antichattering_rest_d4 = 0;
     m_note_number = NOTE_NUMBER_INVALID;
 
   #if defined(USE_INPUT_D2)
@@ -53,17 +57,15 @@ public:
         value = adc_read();    // Read A0
 
 #if 0
-        if (value < 15) {
-          IOsc<0>::set_pitch_bend(0);
-          IVoice<0>::all_note_off();
-          m_note_number = NOTE_NUMBER_INVALID;
+        IOsc<0>::set_pitch_bend((value << 4) - 8192);
+        if (value < 32) {
+          IVoice<0>::note_off(54);
         } else {
-          IOsc<0>::set_pitch_bend((value << 4) - 8192);
           IVoice<0>::note_on(54, 127);
         }
 #endif
-        value = (value + 1) * 15;
-        set_note_number(high_byte(value) + 24);
+//        value = (value + 1) * 15;
+//        set_note_number(high_byte(value) + 24);
   #endif
   #if defined(USE_INPUT_A1)
         adc_start<1>();
@@ -95,15 +97,27 @@ public:
         break;
       case 0x14:
   #if defined(USE_INPUT_D2)
-        value = digitalRead(2);    // Read D2
-        if (value == HIGH) {
-          IVoice<0>::program_change(PROGRAM_NUMBER_RANDOM_CONTROL);
+        if (m_antichattering_rest_d2 > 0) {
+          --m_antichattering_rest_d2;
+        } else {
+          value = digitalRead(2);    // Read D2
+          if (value == DIGITAL_INPUT_ACTIVE) {
+            IVoice<0>::program_change(PROGRAM_NUMBER_RANDOM_CONTROL);
+            m_antichattering_rest_d2 = 25;
+          }
         }
   #endif
         break;
       case 0x18:
   #if defined(USE_INPUT_D4)
-        value = digitalRead(4);    // Read D4
+        if (m_antichattering_rest_d4 > 0) {
+          --m_antichattering_rest_d4;
+        } else {
+          value = digitalRead(4);    // Read D4
+          if (value == DIGITAL_INPUT_ACTIVE) {
+            m_antichattering_rest_d4 = 25;
+          }
+        }
   #endif
         break;
       case 0x1C:
@@ -146,4 +160,6 @@ private:
 };
 
 template <uint8_t T> uint8_t CVIn<T>::m_count;
+template <uint8_t T> uint8_t CVIn<T>::m_antichattering_rest_d2;
+template <uint8_t T> uint8_t CVIn<T>::m_antichattering_rest_d4;
 template <uint8_t T> uint8_t CVIn<T>::m_note_number;

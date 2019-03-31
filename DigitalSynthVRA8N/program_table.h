@@ -66,11 +66,11 @@ const uint8_t g_preset_table_PITCH_EG_TGT [] = {0  , 0  , 0  , 0  , 0  , 0  , 0 
 
 const uint8_t g_preset_table_FILTER_CUTOFF[] = {64 , 64 , 64 , 64 , 64 , 64 , 64 , 64 };
 const uint8_t g_preset_table_FILTER_RESO  [] = {64 , 64 , 64 , 64 , 64 , 64 , 64 , 64 };
-const uint8_t g_preset_table_CUTOFF_EG_AMT[] = {76 , 64 , 64 , 64 , 64 , 64 , 64 , 64 };
+const uint8_t g_preset_table_CUTOFF_EG_AMT[] = {64 , 64 , 64 , 64 , 64 , 64 , 64 , 64 };
 const uint8_t g_preset_table_AMP_EG_ON    [] = {127, 127, 127, 127, 127, 127, 127, 127};
 
 const uint8_t g_preset_table_EG_ATTACK    [] = {0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  };
-const uint8_t g_preset_table_EG_DECAY     [] = {65 , 0  , 0  , 0  , 0  , 0  , 0  , 0  };
+const uint8_t g_preset_table_EG_DECAY     [] = {64 , 0  , 0  , 0  , 0  , 0  , 0  , 0  };
 const uint8_t g_preset_table_EG_SUSTAIN   [] = {127, 127, 127, 127, 127, 127, 127, 127};
 const uint8_t g_preset_table_EG_RELEASE   [] = {127, 127, 127, 127, 127, 127, 127, 127};
 

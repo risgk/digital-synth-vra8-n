@@ -6,10 +6,11 @@
 #define TRANSPOSE (0)                           // Min: -24, Max: +24
 
 #define ENABLE_LFO_LED_OUT                      // D5 (or D6)
-//#define LFO_LED_OUT_ACTIVE_LOW                  // For MIDI Shield
+#define LFO_LED_OUT_ACTIVE (HIGH)               // LOW for MIDI Shield
 
 //#define SUBSTITUTE_PIN_D5_FOR_D6_AS_AUDIO_OUT   // For MIDI Shield
 
+//#define EXPERIMENTAL_ENABLE_VOLTAGE_CONTROL
 
 
 #include "common.h"
