@@ -641,21 +641,19 @@ private:
       m_lfo_mod_level[0] = 0;
     }
 
-    // Update LFO LED
+    // Update LFO LED Out
     {
       int8_t lfoLEDLevel = m_lfo_wave_level;
 
       if (m_lfo_waveform == LFO_WAVEFORM_SQ) {
         if (lfoLEDLevel == 0) {
-          lfoLEDLevel = 126;
+          lfoLEDLevel = 127;
         } else {
-          lfoLEDLevel = -126;
+          lfoLEDLevel = -128;
         }
       } else {
         if (lfoLEDLevel == 64) {
-          lfoLEDLevel = 126;
-        } else if (lfoLEDLevel == -64) {
-          lfoLEDLevel = -126;
+          lfoLEDLevel = 127;
         } else {
           lfoLEDLevel <<= 1;
         }

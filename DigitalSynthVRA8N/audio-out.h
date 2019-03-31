@@ -61,10 +61,10 @@ public:
         m_maxTcnt = tcnt;
       }
       tcnt = m_maxTcnt;
-#elif 1
+#elif 0
       uint8_t tcnt = m_busyCont;
       tcnt &= 0x7F;
-#elif 0
+#elif 1
       uint8_t tcnt = TCNT1 >> 2;
       if (tcnt >= 64) {
         tcnt = 99;   // Not Over
@@ -103,11 +103,19 @@ public:
   INLINE static void setLFOLed(int8_t level) {
 #if defined(ENABLE_LFO_LED_OUT)
   #if !defined(SUBSTITUTE_PIN_D5_FOR_D6_AS_AUDIO_OUT)
-    OCR0B = 0x80 + level;  // 0x80 - level;
+    #if !defined(LFO_LED_OUT_ACTIVE_LOW)
+      OCR0B = 0x80 + level;
+    #else
+      OCR0B = 0x7F - level;
+    #endif
   #else
-    OCR0A = 0x80 + level;  // 0x80 - level;
+    #if !defined(LFO_LED_OUT_ACTIVE_LOW)
+      OCR0A = 0x80 + level;
+    #else
+      OCR0A = 0x7F - level;
+    #endif
   #endif
-#else // !defined(ENABLE_LFO_VOLTAGE_OUT)
+#else // !defined(ENABLE_LFO_LED_OUT)
     static_cast<void>(level);
 #endif
   }
