@@ -335,7 +335,7 @@ function onMIDIMessage(event) {
       loadControllers(number);
       return;
     } else if (number == 127) {
-      // Program #127: Special Random Control (only for VRA8-N CTRL)
+      // Program #127: Random Control
       setRandom();
       return;
     }

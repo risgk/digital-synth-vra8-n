@@ -86,7 +86,7 @@ public:
   #if defined(USE_INPUT_D2)
         value = digitalRead(2);    // Read D2
         if (value == HIGH) {
-          IVoice<0>::program_change(PROGRAM_NUMBER_RANDOM);
+          IVoice<0>::program_change(PROGRAM_NUMBER_RANDOM_CONTROL);
         }
   #endif
         break;
@@ -99,8 +99,6 @@ public:
         break;
       }
     }
-#else // !defined(EXPERIMENTAL_ENABLE_VOLTAGE_CONTROL)
-    static_cast<void>(count);
 #endif
   }
 
