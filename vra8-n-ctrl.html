@@ -51,7 +51,7 @@ const MODULATION    = 1;
 const EXPRESSION    = 11;
 
 const OSC_WAVE      = 24;
-const OSC2_MIX      = 25;
+const OSC_MIX       = 25;
 const OSC2_COARSE   = 20;
 const OSC2_FINE     = 21;
 
@@ -108,7 +108,7 @@ const ALL_NOTES_OFF = 123;
 
 var controllersInLocalStorage = [
   OSC_WAVE     ,
-  OSC2_MIX     ,
+  OSC_MIX      ,
   OSC2_COARSE  ,
   OSC2_FINE    ,
 
@@ -152,7 +152,7 @@ var presetControllers = {};
 
 // PRESET                           #0   #1   #2   #3   #4   #5   #6   #7   
 presetControllers[OSC_WAVE     ] = [0  , 0  , 0  , 127, 0  , 0  , 0  , 0  ];
-presetControllers[OSC2_MIX     ] = [64 , 64 , 64 , 64 , 0  , 64 , 0  , 0  ];
+presetControllers[OSC_MIX      ] = [64 , 64 , 64 , 64 , 0  , 64 , 0  , 0  ];
 presetControllers[OSC2_COARSE  ] = [71 , 64 , 64 , 64 , 64 , 64 , 64 , 64 ];
 presetControllers[OSC2_FINE    ] = [68 , 72 , 66 , 72 , 68 , 56 , 64 , 64 ];
 
@@ -608,7 +608,7 @@ function noteOff(noteNumber) {
     <td>OSC2 FINE (-/+)       </td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
 <tr><td><input id="inputCC24" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(OSC_WAVE, value)"></td>
     <td><span   id="spanCC24">-1</span></td>
-    <td><input id="inputCC25" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(OSC2_MIX, value)"></td>
+    <td><input id="inputCC25" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(OSC_MIX, value)"></td>
     <td><span   id="spanCC25">-1</span></td>
     <td><input id="inputCC20" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(OSC2_COARSE, value)"></td>
     <td><span   id="spanCC20">-1</span></td>

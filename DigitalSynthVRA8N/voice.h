@@ -29,7 +29,7 @@ public:
     m_output_error = 0;
     m_portamento = 0;
     m_legato_portamento = false;
-    m_key_assign = KEY_ASSIGN_LOW;
+    m_key_assign = KEY_ASSIGN_LAST;
     IOsc<0>::initialize();
     IFilter<0>::initialize();
     IAmp<0>::initialize();
@@ -201,7 +201,7 @@ public:
     case OSC_WAVE :
       IOsc<0>::set_osc_waveforms(controller_value);
       break;
-    case OSC2_MIX:
+    case OSC_MIX:
       IOsc<0>::set_osc_mix(controller_value);
       break;
     case SUB_OSC_LEVEL:
@@ -227,6 +227,7 @@ public:
     case SUB_OSC_WAVE:
       IOsc<0>::set_sub_waveform(controller_value);
       break;
+#if !defined(EXPERIMENTAL_ENABLE_VOLTAGE_CONTROL)
     case LEGATO:
       if (controller_value < 64) {
         m_legato_portamento = false;
@@ -234,6 +235,7 @@ public:
         m_legato_portamento = true;
       }
       break;
+#endif
     case AMP_EG_ON:
       m_amp_env_gen = controller_value;
       update_env_gen();
@@ -256,6 +258,7 @@ public:
       IOsc<0>::set_pitch_bend_minus_range(controller_value);
       IOsc<0>::set_pitch_bend_plus_range(controller_value);
       break;
+#if !defined(EXPERIMENTAL_ENABLE_VOLTAGE_CONTROL)
     case KEY_ASSIGN:
       if        (controller_value < 48) {
         m_key_assign = KEY_ASSIGN_LOW;
@@ -267,6 +270,7 @@ public:
         m_key_assign = KEY_ASSIGN_LAST;
       }
       break;
+#endif
 
     case EG_RELEASE:
       m_release = controller_value;
@@ -331,7 +335,7 @@ public:
     }
 
     control_change(OSC_WAVE     , g_preset_table_OSC_WAVE     [program_number]);
-    control_change(OSC2_MIX     , g_preset_table_OSC2_MIX     [program_number]);
+    control_change(OSC_MIX      , g_preset_table_OSC_MIX      [program_number]);
     control_change(OSC2_COARSE  , g_preset_table_OSC2_COARSE  [program_number]);
     control_change(OSC2_FINE    , g_preset_table_OSC2_FINE    [program_number]);
 

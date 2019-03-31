@@ -56,7 +56,7 @@ MODULATION    = 1
 EXPRESSION    = 11
 
 OSC_WAVE      = 24
-OSC2_MIX      = 25
+OSC_MIX       = 25
 OSC2_COARSE   = 20
 OSC2_FINE     = 21
 

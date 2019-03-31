@@ -40,7 +40,8 @@ public:
       case 0x4:
   #if defined(USE_INPUT_A0)
         value = adc_read();    // Read A0
-        set_note_number((value >> 4) + 24);
+        value = (value + 1) * 15;
+        set_note_number(high_byte(value) + 24);
   #endif
   #if defined(USE_INPUT_A1)
         adc_start<1>();
@@ -49,7 +50,7 @@ public:
       case 0x8:
   #if defined(USE_INPUT_A1)
         value = adc_read();    // Read A1
-        IOsc<0>::set_osc_mix(value >> 3);
+        IVoice<0>::control_change(OSC_MIX, value >> 3);
   #endif
   #if defined(USE_INPUT_A2)
         adc_start<2>();
@@ -58,7 +59,7 @@ public:
       case 0xC:
   #if defined(USE_INPUT_A2)
         value = adc_read();    // Read A2
-        IFilter<0>::set_cutoff(value >> 3);
+        IVoice<0>::control_change(FILTER_CUTOFF, value >> 3);
   #endif
   #if defined(USE_INPUT_A3)
         adc_start<3>();
@@ -67,7 +68,7 @@ public:
       case 0x10:
   #if defined(USE_INPUT_A3)
         value = adc_read();    // Read A3
-        IFilter<0>::set_resonance(value >> 3);
+        IVoice<0>::control_change(FILTER_RESO, value >> 3);
   #endif
         break;
       case 0x14:

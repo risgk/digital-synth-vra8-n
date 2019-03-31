@@ -6,7 +6,7 @@ const uint8_t PROGRAM_NUMBER_DEFAULT = 0;
 
 // PRESET                                       #0   #1   #2   #3   #4   #5   #6   #7   
 const uint8_t g_preset_table_OSC_WAVE     [] = {0  , 0  , 0  , 127, 0  , 0  , 0  , 0  };
-const uint8_t g_preset_table_OSC2_MIX     [] = {64 , 64 , 64 , 64 , 0  , 64 , 0  , 0  };
+const uint8_t g_preset_table_OSC_MIX      [] = {64 , 64 , 64 , 64 , 0  , 64 , 0  , 0  };
 const uint8_t g_preset_table_OSC2_COARSE  [] = {71 , 64 , 64 , 64 , 64 , 64 , 64 , 64 };
 const uint8_t g_preset_table_OSC2_FINE    [] = {68 , 72 , 66 , 72 , 68 , 56 , 64 , 64 };
 
@@ -55,7 +55,7 @@ const uint8_t g_preset_table_EXP_BY_VEL   [] = {0  , 0  , 0  , 0  , 0  , 0  , 0 
 
 // PRESET                                       #0   #1   #2   #3   #4   #5   #6   #7   
 const uint8_t g_preset_table_OSC_WAVE     [] = {0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  };
-const uint8_t g_preset_table_OSC2_MIX     [] = {64 , 0  , 0  , 0  , 0  , 0  , 0  , 0  };
+const uint8_t g_preset_table_OSC_MIX      [] = {64 , 64 , 64 , 64 , 64 , 64 , 64 , 64 };
 const uint8_t g_preset_table_OSC2_COARSE  [] = {71 , 64 , 64 , 64 , 64 , 64 , 64 , 64 };
 const uint8_t g_preset_table_OSC2_FINE    [] = {68 , 64 , 64 , 64 , 64 , 64 , 64 , 64 };
 
@@ -64,8 +64,8 @@ const uint8_t g_preset_table_SUB_OSC_LEVEL[] = {0  , 0  , 0  , 0  , 0  , 0  , 0 
 const uint8_t g_preset_table_PITCH_EG_AMT [] = {64 , 64 , 64 , 64 , 64 , 64 , 64 , 64 };
 const uint8_t g_preset_table_PITCH_EG_TGT [] = {0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  };
 
-const uint8_t g_preset_table_FILTER_CUTOFF[] = {64 , 127, 127, 127, 127, 127, 127, 127};
-const uint8_t g_preset_table_FILTER_RESO  [] = {64 , 0  , 0  , 0  , 0  , 0  , 0  , 0  };
+const uint8_t g_preset_table_FILTER_CUTOFF[] = {64 , 64 , 64 , 64 , 64 , 64 , 64 , 64 };
+const uint8_t g_preset_table_FILTER_RESO  [] = {64 , 64 , 64 , 64 , 64 , 64 , 64 , 64 };
 const uint8_t g_preset_table_CUTOFF_EG_AMT[] = {64 , 64 , 64 , 64 , 64 , 64 , 64 , 64 };
 const uint8_t g_preset_table_AMP_EG_ON    [] = {127, 127, 127, 127, 127, 127, 127, 127};
 
@@ -90,8 +90,8 @@ const uint8_t g_preset_table_CO_EXP_AMT   [] = {64 , 64 , 64 , 64 , 64 , 64 , 64
 const uint8_t g_preset_table_AMP_EXP_AMT  [] = {127, 127, 127, 127, 127, 127, 127, 127};
 
 const uint8_t g_preset_table_PORTAMENTO   [] = {32 , 0  , 0  , 0  , 0  , 0  , 0  , 0  };
-const uint8_t g_preset_table_LEGATO       [] = {127, 0  , 0  , 0  , 0  , 0  , 0  , 0  };
-const uint8_t g_preset_table_KEY_ASSIGN   [] = {127, 0  , 0  , 0  , 0  , 0  , 0  , 0  };
+const uint8_t g_preset_table_LEGATO       [] = {0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  };
+const uint8_t g_preset_table_KEY_ASSIGN   [] = {127, 127, 127, 127, 127, 127, 127, 127};
 const uint8_t g_preset_table_EXP_BY_VEL   [] = {0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  };
 
 #endif

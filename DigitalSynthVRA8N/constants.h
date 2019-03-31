@@ -56,7 +56,7 @@ const uint8_t   MODULATION    = 1;
 const uint8_t   EXPRESSION    = 11;
 
 const uint8_t   OSC_WAVE      = 24;
-const uint8_t   OSC2_MIX      = 25;
+const uint8_t   OSC_MIX       = 25;
 const uint8_t   OSC2_COARSE   = 20;
 const uint8_t   OSC2_FINE     = 21;
 
