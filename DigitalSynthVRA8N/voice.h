@@ -256,11 +256,11 @@ public:
       IFilter<0>::set_cutoff_lfo_amt(controller_value);
       break;
 
+#if !defined(EXPERIMENTAL_ENABLE_VOLTAGE_CONTROL)
     case PB_RANGE:
       IOsc<0>::set_pitch_bend_minus_range(controller_value);
       IOsc<0>::set_pitch_bend_plus_range(controller_value);
       break;
-#if !defined(EXPERIMENTAL_ENABLE_VOLTAGE_CONTROL)
     case KEY_ASSIGN:
       if        (controller_value < 48) {
         m_key_assign = KEY_ASSIGN_LOW;
@@ -332,7 +332,7 @@ public:
   }
 
   static void program_change(uint8_t program_number) {
-    if (program_number == PROGRAM_NUMBER_RANDOM) {
+    if (program_number == PROGRAM_NUMBER_RANDOM_CONTROL) {
       control_change(OSC_WAVE     , get_rnd_7());
       control_change(OSC_MIX      , get_rnd_7());
       control_change(OSC2_COARSE  , get_rnd_7());

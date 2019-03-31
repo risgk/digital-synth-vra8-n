@@ -51,6 +51,17 @@ public:
       case 0x4:
   #if defined(USE_INPUT_A0)
         value = adc_read();    // Read A0
+
+#if 0
+        if (value < 15) {
+          IOsc<0>::set_pitch_bend(0);
+          IVoice<0>::all_note_off();
+          m_note_number = NOTE_NUMBER_INVALID;
+        } else {
+          IOsc<0>::set_pitch_bend((value << 4) - 8192);
+          IVoice<0>::note_on(54, 127);
+        }
+#endif
         value = (value + 1) * 15;
         set_note_number(high_byte(value) + 24);
   #endif
@@ -61,7 +72,7 @@ public:
       case 0x8:
   #if defined(USE_INPUT_A1)
         value = adc_read();    // Read A1
-        IVoice<0>::control_change(OSC_MIX, value >> 3);
+        IOsc<0>::set_osc_mix(value >> 3);
   #endif
   #if defined(USE_INPUT_A2)
         adc_start<2>();
@@ -70,7 +81,7 @@ public:
       case 0xC:
   #if defined(USE_INPUT_A2)
         value = adc_read();    // Read A2
-        IVoice<0>::control_change(FILTER_CUTOFF, value >> 3);
+        IFilter<0>::set_cutoff(value >> 3);
   #endif
   #if defined(USE_INPUT_A3)
         adc_start<3>();
@@ -79,7 +90,7 @@ public:
       case 0x10:
   #if defined(USE_INPUT_A3)
         value = adc_read();    // Read A3
-        IVoice<0>::control_change(FILTER_RESO, value >> 3);
+        IFilter<0>::set_resonance(value >> 3);
   #endif
         break;
       case 0x14:
@@ -120,7 +131,7 @@ private:
   INLINE static void set_note_number(uint8_t note_number) {
     // TODO
     uint8_t n = note_number;
-    if (n == 24) {
+    if (n <= 24) {
       n = NOTE_NUMBER_INVALID;
     }
 

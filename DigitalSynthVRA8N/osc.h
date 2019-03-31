@@ -129,8 +129,8 @@ public:
     m_pitch_eg_target_both = true;
     m_pitch_eg_amt = 0;
     m_lfsr = 0x0001u;
-    set_pitch_bend_minus_range(2);
-    set_pitch_bend_plus_range(2);
+    set_pitch_bend_minus_range(30);
+    set_pitch_bend_plus_range(30);
   }
 
   INLINE static void set_osc_mix(uint8_t controller_value) {
