@@ -333,7 +333,7 @@ public:
 
   INLINE static int16_t clock(uint8_t count, uint8_t eg_level) {
     if ((count & 0x01) == 1) {
-#if !defined(EXPERIMENTAL_ENABLE_VOLTAGE_CONTROL)
+#if !defined(ENABLE_VOLTAGE_CONTROL)
       int8_t wave_0_sub = 0;
       if (m_sub_waveform == SUB_WAVEFORM_NOISE) {
         uint8_t lsb = m_lfsr & 0x000001u;
@@ -426,7 +426,7 @@ public:
     // amp and mix
     int16_t level_main   = wave_0_main   * m_mix_0_current;
     int16_t level_detune = wave_0_detune * m_mix_1_current;
-#if !defined(EXPERIMENTAL_ENABLE_VOLTAGE_CONTROL)
+#if !defined(ENABLE_VOLTAGE_CONTROL)
     int16_t result       = level_main + level_detune + m_level_sub;
 #else
     int16_t result       = level_main + level_detune;
@@ -575,7 +575,7 @@ private:
   }
 
   INLINE static void update_sub_waveform() {
-#if !defined(EXPERIMENTAL_ENABLE_VOLTAGE_CONTROL)
+#if !defined(ENABLE_VOLTAGE_CONTROL)
     if (m_sub_waveform == SUB_WAVEFORM_SQ) {
       uint8_t coarse = high_byte(m_pitch_real[0]);
       m_wave_table[2] = get_wave_table(OSC_WAVEFORM_SQ, coarse);
@@ -674,7 +674,7 @@ private:
   }
 
   INLINE static void update_mix() {
-#if !defined(EXPERIMENTAL_ENABLE_VOLTAGE_CONTROL)
+#if !defined(ENABLE_VOLTAGE_CONTROL)
     if (m_mix_sub_current < m_mix_sub_target) {
       ++m_mix_sub_current;
     } else if (m_mix_sub_current > m_mix_sub_target) {
