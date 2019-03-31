@@ -74,7 +74,7 @@ public:
 
   INLINE static void note_off() {
     m_state = STATE_IDLE;
-    m_rest = m_decay_update_coef;
+    m_rest = m_release_update_coef;
   }
 
   INLINE static uint8_t clock(uint8_t count) {
