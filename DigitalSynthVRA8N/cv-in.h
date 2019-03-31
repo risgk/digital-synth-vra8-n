@@ -7,10 +7,6 @@
 #define USE_INPUT_A2
 #define USE_INPUT_A3
 
-#define USE_INPUT_D2
-#define USE_INPUT_D4
-//#define DIGITAL_INPUT_ACTIVE_LOW  // For MIDI Shield
-
 template <uint8_t T>
 class CVIn {
   static const uint8_t CV_IN_CONTROL_INTERVAL_BITS = 1;
@@ -24,13 +20,6 @@ public:
 #if defined(EXPERIMENTAL_ENABLE_VOLTAGE_CONTROL)
     m_count = 0;
     m_note_number = NOTE_NUMBER_INVALID;
-
-  #if defined(USE_INPUT_D2)
-    pinMode(2, INPUT);
-  #endif
-  #if defined(USE_INPUT_D4)
-    pinMode(4, INPUT);
-  #endif
 #endif
   }
 
@@ -83,17 +72,8 @@ public:
   #endif
         break;
       case 0x14:
-  #if defined(USE_INPUT_D2)
-        value = digitalRead(2);    // Read D2
-        if (value == HIGH) {
-          IVoice<0>::program_change(PROGRAM_NUMBER_RANDOM);
-        }
-  #endif
         break;
       case 0x18:
-  #if defined(USE_INPUT_D4)
-        value = digitalRead(4);    // Read D4
-  #endif
         break;
       case 0x1C:
         break;
