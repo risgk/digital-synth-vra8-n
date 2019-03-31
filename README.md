@@ -10,6 +10,7 @@
 ## Change History
 
 - vX.X.X
+    - Narrow the CUTOFF frequency range from 5 oct (G3-G8) to 4 oct (G4-G8) for sound quality
     - Add "LFO FADE TIME" Control
     - Add LFO LED Out Option (Enabled by default)
     - Add Pin D5 Audio Out Option (Disabled by default)
