@@ -71,13 +71,10 @@ public:
       case 0x4:
   #if defined(USE_INPUT_A0)
         value = adc_read();    // Read A0
-        if (m_analog_value_0 + 1 == value) {
-          return;
+        if (((m_analog_value_0 + 1) != value) &&
+            ((m_analog_value_0 - 1) != value)) {
+          m_analog_value_0 = value;
         }
-        if (m_analog_value_0 - 1 == value) {
-          return;
-        }
-        m_analog_value_0 = value;
   #endif
   #if defined(USE_INPUT_A1)
         adc_start<1>();
