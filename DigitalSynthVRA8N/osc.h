@@ -640,6 +640,29 @@ private:
     } else {
       m_lfo_mod_level[0] = 0;
     }
+
+    // Update LFO LED
+    {
+      int8_t lfoLEDLevel = m_lfo_wave_level;
+
+      if (m_lfo_waveform == LFO_WAVEFORM_SQ) {
+        if (lfoLEDLevel == 0) {
+          lfoLEDLevel = 126;
+        } else {
+          lfoLEDLevel = -126;
+        }
+      } else {
+        if (lfoLEDLevel == 64) {
+          lfoLEDLevel = 126;
+        } else if (lfoLEDLevel == -64) {
+          lfoLEDLevel = -126;
+        } else {
+          lfoLEDLevel <<= 1;
+        }
+      }
+
+      AudioOut<0>::setLFOLed(lfoLEDLevel);
+    }
   }
 
   INLINE static void update_pitch_bend() {

@@ -10,7 +10,9 @@
 ## Change History
 
 - vX.X.X
-    - Add "LFO FADE TIME"
+    - Add "LFO FADE TIME" Control
+    - Add LFO LED Out Option (Enabled by default)
+    - Add Pin D5 Audio Out Option (Disabled by default)
 - v2.0.1
     - Fix sound quality degradation in v2.0.0
     - Revert "SUSTAIN (OFF/ON)" to "SUSTAIN"
@@ -39,7 +41,7 @@
 ## Features
 
 - Sampling Rate: 31.25 kHz, Bit Depth: 8 bit, LPF Attenuation Slope: -12 dB/oct
-- Serial MIDI In (38.4 kbps), PWM Audio Out (Pin 6), PWM Rate: 62.5 kHz
+- Serial MIDI In (38.4 kbps), PWM Audio Out (Pin D6), PWM LFO LED Out (Pin D5), PWM Rate: 62.5 kHz
     - We recommend adding a RC filter circuit to reduce PWM ripples
         - A cutoff frequency 15.9 kHz (R: 100 ohm, C: 100 nF) works well
     - **CAUTION**: The Arduino PWM audio output is a unipolar Line Out

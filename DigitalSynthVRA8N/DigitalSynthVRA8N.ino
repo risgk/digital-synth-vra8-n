@@ -5,16 +5,22 @@
 
 #define TRANSPOSE (0)    // Min: -24, Max: +24
 
+#define ENABLE_LFO_LED_OUT    // D5 (or D6)
+
+//#define SUBSTITUTE_PIN_D5_FOR_D6_AS_AUDIO_OUT    // for MIDI Shield
+
+
+
 #include "common.h"
+#include "audio-out.h"
 #include "synth.h"
 #include "serial-in.h"
-#include "audio-out.h"
 
 void setup() {
   noInterrupts();
   Synth<0>::initialize();
   SerialIn<0>::open(SERIAL_SPEED);
-  AudioOut<0>::open();
+  AudioOut<0>::open();    // D6 (or D5)
 }
 
 void loop() {

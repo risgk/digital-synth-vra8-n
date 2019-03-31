@@ -24,41 +24,41 @@ public:
       uint16_t value;
       switch (idx) {
       case 0x0:
-#if defined(USE_INPUT_A0)
+  #if defined(USE_INPUT_A0)
         adcStart<0>();
-#endif
+  #endif
         break;
       case 0x1:
-#if defined(USE_INPUT_A0)
+  #if defined(USE_INPUT_A0)
         value = adcRead();  // Read A0
-#endif
-#if defined(USE_INPUT_A1)
+  #endif
+  #if defined(USE_INPUT_A1)
         adcStart<1>();
-#endif
+  #endif
         break;
       case 0x2:
-#if defined(USE_INPUT_A1)
+  #if defined(USE_INPUT_A1)
         value = adcRead();  // Read A1
         IOsc<0>::set_osc_mix(value >> 3);
-#endif
-#if defined(USE_INPUT_A2)
+  #endif
+  #if defined(USE_INPUT_A2)
         adcStart<2>();
-#endif
+  #endif
         break;
       case 0x3:
-#if defined(USE_INPUT_A2)
+  #if defined(USE_INPUT_A2)
         value = adcRead();  // Read A2
         IFilter<0>::set_cutoff(value >> 3);
-#endif
-#if defined(USE_INPUT_A3)
+  #endif
+  #if defined(USE_INPUT_A3)
         adcStart<3>();
-#endif
+  #endif
         break;
       case 0x4:
-#if defined(USE_INPUT_A3)
+  #if defined(USE_INPUT_A3)
         value = adcRead();  // Read A3
         IFilter<0>::set_resonance(value >> 3);
-#endif
+  #endif
         break;
       case 0x5:
         break;
