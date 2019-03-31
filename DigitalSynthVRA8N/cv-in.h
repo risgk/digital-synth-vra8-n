@@ -9,7 +9,7 @@
 
 template <uint8_t T>
 class CVIn {
-  static const uint8_t CV_IN_CONTROL_INTERVAL_BITS = 3;
+  static const uint8_t CV_IN_CONTROL_INTERVAL_BITS = 1;
   static const uint8_t CV_IN_CONTROL_INTERVAL      = 0x01 << CV_IN_CONTROL_INTERVAL_BITS;
 
   static uint8_t m_count;
@@ -28,7 +28,7 @@ public:
     ++m_count;
 
     if ((m_count & (CV_IN_CONTROL_INTERVAL - 1)) == 1) {
-      uint8_t idx = (m_count >> CV_IN_CONTROL_INTERVAL_BITS) & 0x07;
+      uint8_t idx = (m_count >> CV_IN_CONTROL_INTERVAL_BITS) & 0x1F;
 
       uint16_t value;
       switch (idx) {
@@ -37,7 +37,7 @@ public:
         adc_start<0>();
   #endif
         break;
-      case 0x1:
+      case 0x4:
   #if defined(USE_INPUT_A0)
         value = adc_read();    // Read A0
         set_note_number((value >> 4) + 24);
@@ -46,7 +46,7 @@ public:
         adc_start<1>();
   #endif
         break;
-      case 0x2:
+      case 0x8:
   #if defined(USE_INPUT_A1)
         value = adc_read();    // Read A1
         IOsc<0>::set_osc_mix(value >> 3);
@@ -55,7 +55,7 @@ public:
         adc_start<2>();
   #endif
         break;
-      case 0x3:
+      case 0xC:
   #if defined(USE_INPUT_A2)
         value = adc_read();    // Read A2
         IFilter<0>::set_cutoff(value >> 3);
@@ -64,17 +64,17 @@ public:
         adc_start<3>();
   #endif
         break;
-      case 0x4:
+      case 0x10:
   #if defined(USE_INPUT_A3)
         value = adc_read();    // Read A3
         IFilter<0>::set_resonance(value >> 3);
   #endif
         break;
-      case 0x5:
+      case 0x14:
         break;
-      case 0x6:
+      case 0x18:
         break;
-      case 0x7:
+      case 0x1C:
         break;
       }
     }
