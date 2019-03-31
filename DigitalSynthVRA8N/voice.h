@@ -46,7 +46,10 @@ public:
     m_rnd = 1;
   }
 
-  INLINE static void note_on(uint8_t note_number, uint8_t velocity) {
+#if !defined(EXPERIMENTAL_ENABLE_VOLTAGE_CONTROL)
+  INLINE
+#endif
+  static void note_on(uint8_t note_number, uint8_t velocity) {
     if (m_legato_portamento) {
       if (m_last_note_number != NOTE_NUMBER_INVALID) {
         IOsc<0>::set_portamento(m_portamento);
@@ -96,7 +99,10 @@ public:
     }
   }
 
-  INLINE static void note_off(uint8_t note_number) {
+#if !defined(EXPERIMENTAL_ENABLE_VOLTAGE_CONTROL)
+  INLINE
+#endif
+  static void note_off(uint8_t note_number) {
     clear_on_note(note_number);
     if (m_key_assign == KEY_ASSIGN_LAST) {
       if (m_last_note_number == note_number) {
@@ -144,7 +150,10 @@ public:
     }
   }
 
-  INLINE static void all_note_off() {
+#if !defined(EXPERIMENTAL_ENABLE_VOLTAGE_CONTROL)
+  INLINE
+#endif
+  static void all_note_off() {
     for (uint8_t i = 0; i < 16; ++i) {
       m_on_note[i] = 0x00;
     }

@@ -17,7 +17,9 @@ class CVIn {
   static const uint8_t CV_IN_CONTROL_INTERVAL      = 0x01 << CV_IN_CONTROL_INTERVAL_BITS;
 
   static uint8_t m_count;
+  static uint8_t m_input_level_d2;
   static uint8_t m_antichattering_rest_d2;
+  static uint8_t m_input_level_d4;
   static uint8_t m_antichattering_rest_d4;
   static uint8_t m_note_number;
 
@@ -26,7 +28,9 @@ public:
 #if defined(EXPERIMENTAL_ENABLE_VOLTAGE_CONTROL)
     m_count = 0;
     m_antichattering_rest_d2 = 0;
+    m_input_level_d2 = (DIGITAL_INPUT_ACTIVE == HIGH) ? LOW : HIGH;
     m_antichattering_rest_d4 = 0;
+    m_input_level_d4 = (DIGITAL_INPUT_ACTIVE == HIGH) ? LOW : HIGH;
     m_note_number = NOTE_NUMBER_INVALID;
 
   #if defined(USE_INPUT_D2)
@@ -64,8 +68,8 @@ public:
           IVoice<0>::note_on(54, 127);
         }
 #endif
-//        value = (value + 1) * 15;
-//        set_note_number(high_byte(value) + 24);
+        value = (value + 1) * 15;
+        set_note_number(high_byte(value) + 24);
   #endif
   #if defined(USE_INPUT_A1)
         adc_start<1>();
@@ -74,7 +78,7 @@ public:
       case 0x8:
   #if defined(USE_INPUT_A1)
         value = adc_read();    // Read A1
-        IOsc<0>::set_osc_mix(value >> 3);
+        IVoice<0>::control_change(OSC_MIX, value >> 3);
   #endif
   #if defined(USE_INPUT_A2)
         adc_start<2>();
@@ -83,7 +87,7 @@ public:
       case 0xC:
   #if defined(USE_INPUT_A2)
         value = adc_read();    // Read A2
-        IFilter<0>::set_cutoff(value >> 3);
+        IVoice<0>::control_change(FILTER_CUTOFF, value >> 3);
   #endif
   #if defined(USE_INPUT_A3)
         adc_start<3>();
@@ -92,7 +96,7 @@ public:
       case 0x10:
   #if defined(USE_INPUT_A3)
         value = adc_read();    // Read A3
-        IFilter<0>::set_resonance(value >> 3);
+        IVoice<0>::control_change(FILTER_CUTOFF, value >> 3);
   #endif
         break;
       case 0x14:
@@ -101,9 +105,12 @@ public:
           --m_antichattering_rest_d2;
         } else {
           value = digitalRead(2);    // Read D2
-          if (value == DIGITAL_INPUT_ACTIVE) {
-            IVoice<0>::program_change(PROGRAM_NUMBER_RANDOM_CONTROL);
+          if (m_input_level_d2 != value) {
+            m_input_level_d2 = value;
             m_antichattering_rest_d2 = 25;
+            if (value == DIGITAL_INPUT_ACTIVE) {
+              IVoice<0>::program_change(PROGRAM_NUMBER_RANDOM_CONTROL);
+            }
           }
         }
   #endif
@@ -114,8 +121,12 @@ public:
           --m_antichattering_rest_d4;
         } else {
           value = digitalRead(4);    // Read D4
-          if (value == DIGITAL_INPUT_ACTIVE) {
+          if (m_input_level_d4 != value) {
+            m_input_level_d4 = value;
             m_antichattering_rest_d4 = 25;
+            if (value == DIGITAL_INPUT_ACTIVE) {
+              IVoice<0>::program_change(PROGRAM_NUMBER_RANDOM_CONTROL);
+            }
           }
         }
   #endif
@@ -160,6 +171,8 @@ private:
 };
 
 template <uint8_t T> uint8_t CVIn<T>::m_count;
+template <uint8_t T> uint8_t CVIn<T>::m_input_level_d2;
 template <uint8_t T> uint8_t CVIn<T>::m_antichattering_rest_d2;
+template <uint8_t T> uint8_t CVIn<T>::m_input_level_d4;
 template <uint8_t T> uint8_t CVIn<T>::m_antichattering_rest_d4;
 template <uint8_t T> uint8_t CVIn<T>::m_note_number;
