@@ -82,12 +82,12 @@ public:
         break;
       case 0x6:
   #if defined(USE_INPUT_A0)
-        if (m_analog_value_0 <= 16) {
+        if (m_analog_value_0 < 3) {
           set_note_number(NOTE_NUMBER_INVALID);
         } else {
           if (m_scale_mode == 0) {
             // Chromatic (2Oct / 5V)
-            set_note_number(high_byte((m_analog_value_0 + 1) * 6) + SCALE_MODE_0_NOTE_NUMBER_MIN);
+            set_note_number(high_byte((m_analog_value_0 * 6) + 128) + SCALE_MODE_0_NOTE_NUMBER_MIN);
           } else {
             // Linear (5Oct / 5V)
             IOsc<0>::set_pitch_bend((m_analog_value_0 << 4) - 8192);
