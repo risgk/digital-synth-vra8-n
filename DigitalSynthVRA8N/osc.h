@@ -350,7 +350,7 @@ public:
         wave_0_sub = get_wave_level(m_wave_table[2], m_phase[0] >> 8);
       }
 
-      int8_t mix_sub = m_mix_sub_current;
+      int8_t mix_sub = m_mix_sub;
       if (m_sub_waveform == SUB_WAVEFORM_SQ) {
         mix_sub = mix_sub >> 1;
       }
@@ -383,7 +383,6 @@ public:
         }
         break;
       case 0x6:
-        update_sub_waveform();
         update_mix();
         break;
       case 0x7:
@@ -408,6 +407,8 @@ public:
         update_rnd();
         if ((m_rnd_cnt & 0x07) == 0x00) {
           m_red_noise = m_rnd_prev + m_rnd;
+        } else if ((m_rnd_cnt & 0x01) == 0x01) {
+          update_sub_waveform();
         }
         break;
       case 0xE:
@@ -424,7 +425,7 @@ public:
 
     int8_t wave_0_main   = get_wave_level(m_wave_table[0], static_cast<uint16_t>(m_phase[0] >> 8) << 1);
     int8_t wave_0_detune;
-    if (m_waveform[0] == OSC_WAVEFORM_SQ) {
+    if (m_waveform[1] == OSC_WAVEFORM_SQ) {
       wave_0_detune = noise();
     } else {
       wave_0_detune = get_wave_level(m_wave_table[1], static_cast<uint16_t>(m_phase[1] >> 8) << 1);
@@ -601,6 +602,16 @@ private:
       m_wave_table[2] = g_osc_sin_wave_table_h1;
     }
 #endif
+
+#if !defined(ENABLE_VOLTAGE_CONTROL)
+    if (m_mix_sub_current < m_mix_sub_target) {
+      ++m_mix_sub_current;
+    } else if (m_mix_sub_current > m_mix_sub_target) {
+      --m_mix_sub_current;
+    }
+
+    m_mix_sub = m_mix_table[m_mix_sub_current];
+#endif
   }
 
   INLINE static void update_rnd() {
@@ -694,15 +705,6 @@ private:
   }
 
   INLINE static void update_mix() {
-#if !defined(ENABLE_VOLTAGE_CONTROL)
-    if (m_mix_sub_current < m_mix_sub_target) {
-      ++m_mix_sub_current;
-    } else if (m_mix_sub_current > m_mix_sub_target) {
-      --m_mix_sub_current;
-    }
-
-    m_mix_sub = m_mix_table[m_mix_sub_current];
-#endif
     if (m_mix_current < m_mix_target) {
       ++m_mix_current;
     } else if (m_mix_current > m_mix_target) {
