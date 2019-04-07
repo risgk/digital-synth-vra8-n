@@ -83,6 +83,7 @@ public:
       case 0x6:
   #if defined(USE_INPUT_A0)
         if (m_analog_value_0 < 3) {
+          // 0V: Note OFF
           set_note_number(NOTE_NUMBER_INVALID);
         } else {
           if (m_scale_mode == 0) {

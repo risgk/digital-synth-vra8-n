@@ -47,13 +47,15 @@
     - We recommend adding a RC filter circuit to reduce PWM ripples
         - A cutoff frequency 15.9 kHz (R: 100 ohm, C: 100 nF) works well
     - **CAUTION**: The Arduino PWM audio output is a unipolar Line Out
-        - Please connect this to a power amp/a headphone amp (not to a speaker/a headphone directly)
+        - Please connect the output to a active speaker/a power amp/a headphone amp
+        - Do not connect the output to a passive speaker/a headphone directly
     - **CAUTION**: Click sounds may occur when you connect the audio out to an amp or reset the board
 - We recommend [Hairless MIDI<->Serial Bridge](http://projectgus.github.io/hairless-midiserial/) to connect PC
-    - A MIDI Shield (MIDI Breakout) and a power supply adapter are desirable to avoiding USB noise
+    - **NOTE**: A combination of **MIDI Shield** (MIDI Breakout) and a power supply adapter is **more desirable** to avoiding USB noise
         - To use MIDI Shield, edit `SERIAL_SPEED`, `LFO_LED_OUT_ACTIVE`, and `SUBSTITUTE_PIN_D5_FOR_D6_AS_AUDIO_OUT` in `DigitalSynthVRA8N.ino`
 - Files
-    - `DigitalSynthVRA8N.ino` is a sketch for Arduino (Genuino) Uno Rev3
+    - `DigitalSynthVRA8N.ino` is a sketch for Arduino/Genuino Uno Rev3 (ATmega328P)
+        - Arduino/Genuino Nano 3.x (ATmega328P) can also be used
     - `make-sample-wav-file.cc` is for Debugging on PC
         - Requiring GCC (g++) or other
         - `make-sample-wav-file-cc.bat` makes a sample WAV file (working on Windows)
@@ -61,6 +63,8 @@
         - Requiring a Ruby execution environment
 - **CAUTION**: We *strongly recommend* **Arduino IDE 1.8.5**
     - `DigitalSynthVRA8N.ino` *does not work well* with Arduino IDE 1.8.6 or later
+    - There is no restriction on a version of Arduino AVR Core
+        - You can install the Arduino AVR Core 1.16.21 or later (in the Board Manager) for new Arduino Nano bootloader
 
 ## VRA8-N CTRL
 
@@ -111,7 +115,7 @@
 
 ## **VRA8-N mini** (Operation Mode)
 
-- Voltage controlled, Sub Oscillator disabled
+- Voltage controlled (0-5V), Sub Oscillator disabled
 - You need 4 potentiometers and 2 buttons
 - To make the sketch operate as **VRA8-N mini**, edit `ENABLE_VOLTAGE_CONTROL` in `DigitalSynthVRA8N.ino`
 - See "cv-in.h"
