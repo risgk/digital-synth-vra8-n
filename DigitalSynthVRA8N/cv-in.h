@@ -176,12 +176,15 @@ private:
   // Start the conversion.
   template <uint8_t N>
   INLINE static void adc_start() {
+#if defined(ENABLE_VOLTAGE_CONTROL)
     ADMUX = _BV(REFS0) | N;  // analogReference(DEFAULT)
     ADCSRA = _BV(ADEN) | _BV(ADSC) | 0b111;
+#endif
   }
 
   // CAUTION: Call after the conversion is finishd.
   INLINE static uint16_t adc_read() {
+#if defined(ENABLE_VOLTAGE_CONTROL)
     uint8_t adcLow  = ADCL;
     uint8_t adcHigh = ADCH;
     uint16_t adc = ((adcHigh << 8) | adcLow);
@@ -189,10 +192,14 @@ private:
     if (ANALOG_INPUT_REVERSED) {
       return 1023 - adc;
     }
+#else
+    uint16_t adc = 0;
+#endif
     return adc;
   }
 
   INLINE static void set_note_number(uint8_t note_number) {
+#if defined(ENABLE_VOLTAGE_CONTROL)
     if (m_note_number != note_number) {
       if (note_number != NOTE_NUMBER_INVALID) {
         IVoice<0>::note_on(note_number, 127);
@@ -200,6 +207,7 @@ private:
       IVoice<0>::note_off(m_note_number);
       m_note_number = note_number;
     }
+#endif
   }
 };
 
