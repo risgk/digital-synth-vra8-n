@@ -376,10 +376,12 @@ public:
         update_freq_4th<0>();
         break;
       case 0x5:
-        update_rnd();
         ++m_rnd_cnt;
         if ((m_rnd_cnt & 0x07) == 0x00) {
+          update_rnd();
           m_red_noise = m_rnd_prev + m_rnd;
+        } else if ((m_rnd_cnt & 0x01) == 0x01) {
+          update_sub_mix();
         }
         break;
       case 0x6:
@@ -404,10 +406,10 @@ public:
         update_freq_4th<1>();
         break;
       case 0xD:
-        update_rnd();
         if ((m_rnd_cnt & 0x07) == 0x00) {
+          update_rnd();
           m_red_noise = m_rnd_prev + m_rnd;
-        } else if ((m_rnd_cnt & 0x01) == 0x01) {
+        } else if ((m_rnd_cnt & 0x07) == 0x01) {
           update_sub_waveform();
         }
         break;
@@ -602,16 +604,6 @@ private:
       m_wave_table[2] = g_osc_sin_wave_table_h1;
     }
 #endif
-
-#if !defined(ENABLE_VOLTAGE_CONTROL)
-    if (m_mix_sub_current < m_mix_sub_target) {
-      ++m_mix_sub_current;
-    } else if (m_mix_sub_current > m_mix_sub_target) {
-      --m_mix_sub_current;
-    }
-
-    m_mix_sub = m_mix_table[m_mix_sub_current];
-#endif
   }
 
   INLINE static void update_rnd() {
@@ -713,6 +705,18 @@ private:
 
     m_mix_0 = m_mix_table[(OSC_MIX_TABLE_LENGTH - 1) - m_mix_current];
     m_mix_1 = m_mix_table[                             m_mix_current];
+  }
+
+  INLINE static void update_sub_mix() {
+#if !defined(ENABLE_VOLTAGE_CONTROL)
+    if (m_mix_sub_current < m_mix_sub_target) {
+      ++m_mix_sub_current;
+    } else if (m_mix_sub_current > m_mix_sub_target) {
+      --m_mix_sub_current;
+    }
+
+    m_mix_sub = m_mix_table[m_mix_sub_current];
+#endif
   }
 };
 
