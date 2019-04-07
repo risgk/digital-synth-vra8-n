@@ -65,7 +65,8 @@ class Osc {
   static boolean        m_note_on[2];
   static boolean        m_pitch_eg_target_both;
   static int16_t        m_pitch_eg_amt;
-  static __uint24       m_lfsr;
+  static __uint24       m_lfsr_0;
+  static __uint24       m_lfsr_1;
 
 public:
   INLINE static void initialize() {
@@ -129,7 +130,8 @@ public:
     m_note_on[1] = false;
     m_pitch_eg_target_both = true;
     m_pitch_eg_amt = 0;
-    m_lfsr = 0x0001u;
+    m_lfsr_0 = 0x0001u;
+    m_lfsr_1 = 0x0001u;
     set_pitch_bend_minus_range(30);
     set_pitch_bend_plus_range(30);
   }
@@ -336,15 +338,13 @@ public:
   INLINE static int16_t clock(uint8_t count, uint8_t eg_level) {
     if ((count & 0x01) == 1) {
 #if !defined(ENABLE_VOLTAGE_CONTROL)
-      int8_t wave_0_sub = 0;
+      int8_t wave_0_sub = -(OSC_WAVE_TABLE_AMPLITUDE >> 2);
       if (m_sub_waveform == SUB_WAVEFORM_NOISE) {
-        uint8_t lsb = m_lfsr & 0x000001u;
-        m_lfsr >>= 1;
-        m_lfsr ^= (-lsb) & 0xE10000u;
+        uint8_t lsb = m_lfsr_1 & 0x000001u;
+        m_lfsr_1 >>= 1;
+        m_lfsr_1 ^= (-lsb) & 0xE10000u;
         if (lsb) {
           wave_0_sub = +(OSC_WAVE_TABLE_AMPLITUDE >> 2);
-        } else {
-          wave_0_sub = -(OSC_WAVE_TABLE_AMPLITUDE >> 2);
         }
       } else {
         wave_0_sub = get_wave_level(m_wave_table[2], m_phase[0] >> 8);
@@ -423,7 +423,12 @@ public:
     m_phase[1] += m_freq[1];
 
     int8_t wave_0_main   = get_wave_level(m_wave_table[0], static_cast<uint16_t>(m_phase[0] >> 8) << 1);
-    int8_t wave_0_detune = get_wave_level(m_wave_table[1], static_cast<uint16_t>(m_phase[1] >> 8) << 1);
+    int8_t wave_0_detune;
+    if (m_waveform[0] == OSC_WAVEFORM_SQ) {
+      wave_0_detune = noise();
+    } else {
+      wave_0_detune = get_wave_level(m_wave_table[1], static_cast<uint16_t>(m_phase[1] >> 8) << 1);
+    }
 
     // amp and mix
     int16_t level_main   = wave_0_main   * m_mix_0;
@@ -463,6 +468,17 @@ private:
       result = curr_data - high_byte(static_cast<uint8_t>(curr_data - next_data) * next_weight);
     }
 
+    return result;
+  }
+
+  INLINE static int8_t noise() {
+    int8_t result = -(OSC_WAVE_TABLE_AMPLITUDE >> 1);
+    uint8_t lsb = m_lfsr_0 & 0x000001u;
+    m_lfsr_0 >>= 1;
+    m_lfsr_0 ^= (-lsb) & 0xE10000u;
+    if (lsb) {
+      result = +(OSC_WAVE_TABLE_AMPLITUDE >> 1);
+    }
     return result;
   }
 
@@ -748,4 +764,5 @@ template <uint8_t T> uint8_t         Osc<T>::m_red_noise;
 template <uint8_t T> boolean         Osc<T>::m_note_on[2];
 template <uint8_t T> boolean         Osc<T>::m_pitch_eg_target_both;
 template <uint8_t T> int16_t         Osc<T>::m_pitch_eg_amt;
-template <uint8_t T> __uint24        Osc<T>::m_lfsr;
+template <uint8_t T> __uint24        Osc<T>::m_lfsr_0;
+template <uint8_t T> __uint24        Osc<T>::m_lfsr_1;
