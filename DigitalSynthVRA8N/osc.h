@@ -353,7 +353,7 @@ public:
       }
 
       int8_t mix_sub = m_mix_sub;
-      if (m_sub_waveform == SUB_WAVEFORM_SQ) {
+      if (m_sub_waveform != SUB_WAVEFORM_SIN) {
         mix_sub = mix_sub >> 1;
       }
       m_level_sub = wave_0_sub * mix_sub;
