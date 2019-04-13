@@ -23,7 +23,7 @@ class CVIn {
   static const uint8_t SCALE_MODE_1_NOTE_NUMBER_MID = 54;
 
   static uint8_t  m_count;
-  static uint16_t m_analog_value_0;
+  static uint16_t m_analog_value[4];
   static uint8_t  m_input_level_d2;
   static uint8_t  m_antichattering_rest_d2;
   static uint8_t  m_input_level_d4;
@@ -36,7 +36,10 @@ public:
   INLINE static void initialize() {
 #if defined(ENABLE_VOLTAGE_CONTROL)
     m_count = 0;
-    m_analog_value_0 = 0;
+    m_analog_value[0] = 0;
+    m_analog_value[1] = 0;
+    m_analog_value[2] = 0;
+    m_analog_value[3] = 0;
     m_antichattering_rest_d2 = 0;
     m_input_level_d2 = (DIGITAL_INPUT_ACTIVE == HIGH) ? LOW : HIGH;
     m_antichattering_rest_d4 = 0;
@@ -71,9 +74,9 @@ public:
       case 0x4:
   #if defined(USE_INPUT_A0)
         value = adc_read();    // Read A0
-        if (((m_analog_value_0 + 1) != value) &&
-            ((m_analog_value_0 - 1) != value)) {
-          m_analog_value_0 = value;
+        if (((m_analog_value[0] + 1) != value) &&
+            ((m_analog_value[0] - 1) != value)) {
+          m_analog_value[0] = value;
         }
   #endif
   #if defined(USE_INPUT_A1)
@@ -82,16 +85,16 @@ public:
         break;
       case 0x6:
   #if defined(USE_INPUT_A0)
-        if (m_analog_value_0 < 3) {
+        if (m_analog_value[0] < 3) {
           // 0V: Note OFF
           set_note_number(NOTE_NUMBER_INVALID);
         } else {
           if (m_scale_mode == 0) {
             // Chromatic (2Oct / 5V)
-            set_note_number(high_byte((m_analog_value_0 * 6) + 128) + SCALE_MODE_0_NOTE_NUMBER_MIN);
+            set_note_number(high_byte((m_analog_value[0] * 6) + 128) + SCALE_MODE_0_NOTE_NUMBER_MIN);
           } else {
             // Linear (5Oct / 5V)
-            IOsc<0>::set_pitch_bend((m_analog_value_0 << 4) - 8192);
+            IOsc<0>::set_pitch_bend((m_analog_value[0] << 4) - 8192);
             set_note_number(SCALE_MODE_1_NOTE_NUMBER_MID);
           }
         }
@@ -100,7 +103,18 @@ public:
       case 0x8:
   #if defined(USE_INPUT_A1)
         value = adc_read();    // Read A1
-        IVoice<0>::control_change(FILTER_CUTOFF, value >> 3);
+        if (((m_analog_value[1] + 1) != value) &&
+            ((m_analog_value[1] - 1) != value)) {
+          m_analog_value[1] = value;
+        }
+  #endif
+  #if defined(USE_INPUT_A2)
+        adc_start<2>();
+  #endif
+        break;
+      case 0xA:
+  #if defined(USE_INPUT_A1)
+        IVoice<0>::control_change(FILTER_CUTOFF, m_analog_value[1] >> 3);
   #endif
   #if defined(USE_INPUT_A2)
         adc_start<2>();
@@ -109,7 +123,18 @@ public:
       case 0xC:
   #if defined(USE_INPUT_A2)
         value = adc_read();    // Read A2
-        IVoice<0>::control_change(FILTER_RESO, value >> 3);
+        if (((m_analog_value[2] + 1) != value) &&
+            ((m_analog_value[2] - 1) != value)) {
+          m_analog_value[2] = value;
+        }
+  #endif
+  #if defined(USE_INPUT_A3)
+        adc_start<3>();
+  #endif
+        break;
+      case 0xE:
+  #if defined(USE_INPUT_A2)
+        IVoice<0>::control_change(FILTER_RESO, m_analog_value[2] >> 3);
   #endif
   #if defined(USE_INPUT_A3)
         adc_start<3>();
@@ -118,7 +143,15 @@ public:
       case 0x10:
   #if defined(USE_INPUT_A3)
         value = adc_read();    // Read A3
-        IVoice<0>::control_change(OSC_MIX, value >> 3);
+        if (((m_analog_value[3] + 1) != value) &&
+            ((m_analog_value[3] - 1) != value)) {
+          m_analog_value[3] = value;
+        }
+  #endif
+        break;
+      case 0x12:
+  #if defined(USE_INPUT_A3)
+        IVoice<0>::control_change(OSC_MIX, m_analog_value[3] >> 3);
   #endif
         break;
       case 0x14:
@@ -212,7 +245,7 @@ private:
 };
 
 template <uint8_t T> uint8_t  CVIn<T>::m_count;
-template <uint8_t T> uint16_t CVIn<T>::m_analog_value_0;
+template <uint8_t T> uint16_t CVIn<T>::m_analog_value[4];
 template <uint8_t T> uint8_t  CVIn<T>::m_input_level_d2;
 template <uint8_t T> uint8_t  CVIn<T>::m_antichattering_rest_d2;
 template <uint8_t T> uint8_t  CVIn<T>::m_input_level_d4;
