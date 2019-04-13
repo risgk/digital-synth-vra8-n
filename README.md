@@ -11,6 +11,7 @@
 
 - vX.X.X
     - Narrow the CUTOFF frequency range from 5 oct (G3-G8) to 4 oct (G4-G8) for sound quality
+    - Add OSC2 NOISE; Change "OSC1/2 (SAW/SQ)" to "OSC1/2 (SAW/N/SQ)"
     - Add "LFO FADE TIME" control
     - Add LFO LED Out option (Enabled by default)
     - Add Pin D5 Audio Out option (Disabled by default)
@@ -79,10 +80,12 @@
 
 ## Details of Controllers
 
-- "OSC1/2 (SAW/SQ)": OSC1 Wave / OSC2 Wave
+- "OSC1/2 (SAW/N/SQ)": OSC1 Wave / OSC2 Wave
     - Values 0-15: OSC1 SAW / OSC2 SAW
     - Values 16-63: OSC1 SAW / OSC2 SQUARE
-    - Values 64-111: OSC1 SQUARE / OSC2 SAW
+    - Values 40-63: OSC1 SAW / OSC2 NOISE
+    - Values 64-87: OSC1 SQUARE / OSC2 NOISE
+    - Values 88-111: OSC1 SQUARE / OSC2 SAW
     - Values 112-127: OSC1 SQUARE / OSC2 SQUARE
 - "SUB (SIN/NOISE/SQ)": SUB Osc Wave
     - Values 0-31: SIN

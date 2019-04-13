@@ -65,8 +65,7 @@ class Osc {
   static boolean        m_note_on[2];
   static boolean        m_pitch_eg_target_both;
   static int16_t        m_pitch_eg_amt;
-  static __uint24       m_lfsr_0;
-  static __uint24       m_lfsr_1;
+  static __uint24       m_lfsr[2];
 
 public:
   INLINE static void initialize() {
@@ -130,8 +129,8 @@ public:
     m_note_on[1] = false;
     m_pitch_eg_target_both = true;
     m_pitch_eg_amt = 0;
-    m_lfsr_0 = 0x0001u;
-    m_lfsr_1 = 0x0001u;
+    m_lfsr[0] = 0x0001u;
+    m_lfsr[1] = 0x0001u;
     set_pitch_bend_minus_range(30);
     set_pitch_bend_plus_range(30);
   }
@@ -154,9 +153,15 @@ public:
     if (controller_value < 16) {
       set_osc_waveform<0>(OSC_WAVEFORM_SAW);
       set_osc_waveform<1>(OSC_WAVEFORM_SAW);
-    } else if (controller_value < 64) {
+    } else if (controller_value < 40) {
       set_osc_waveform<0>(OSC_WAVEFORM_SAW);
       set_osc_waveform<1>(OSC_WAVEFORM_SQ);
+    } else if (controller_value < 64) {
+      set_osc_waveform<0>(OSC_WAVEFORM_SAW);
+      set_osc_waveform<1>(OSC_WAVEFORM_NOISE);
+    } else if (controller_value < 88) {
+      set_osc_waveform<0>(OSC_WAVEFORM_SQ);
+      set_osc_waveform<1>(OSC_WAVEFORM_NOISE);
     } else if (controller_value < 112) {
       set_osc_waveform<0>(OSC_WAVEFORM_SQ);
       set_osc_waveform<1>(OSC_WAVEFORM_SAW);
@@ -168,8 +173,10 @@ public:
 
   template <uint8_t N>
   INLINE static void set_osc_waveform(uint8_t controller_value) {
-    if (controller_value < 64) {
+    if (controller_value < 32) {
       m_waveform[N] = OSC_WAVEFORM_SAW;
+    } else if (controller_value < 96) {
+      m_waveform[N] = OSC_WAVEFORM_NOISE;
     } else {
       m_waveform[N] = OSC_WAVEFORM_SQ;
     }
@@ -338,14 +345,9 @@ public:
   INLINE static int16_t clock(uint8_t count, uint8_t eg_level) {
     if ((count & 0x01) == 1) {
 #if !defined(ENABLE_VOLTAGE_CONTROL)
-      int8_t wave_0_sub = -(OSC_WAVE_TABLE_AMPLITUDE >> 2);
+      int8_t wave_0_sub;
       if (m_sub_waveform == SUB_WAVEFORM_NOISE) {
-        uint8_t lsb = m_lfsr_1 & 0x000001u;
-        m_lfsr_1 >>= 1;
-        m_lfsr_1 ^= (-lsb) & 0xE10000u;
-        if (lsb) {
-          wave_0_sub = +(OSC_WAVE_TABLE_AMPLITUDE >> 2);
-        }
+        wave_0_sub = lfsr_noise<1>();
       } else {
         wave_0_sub = get_wave_level(m_wave_table[2], m_phase[0] >> 8);
       }
@@ -427,8 +429,8 @@ public:
 
     int8_t wave_0_main   = get_wave_level(m_wave_table[0], static_cast<uint16_t>(m_phase[0] >> 8) << 1);
     int8_t wave_0_detune;
-    if (m_waveform[1] == OSC_WAVEFORM_SQ) {
-      wave_0_detune = noise();
+    if (m_waveform[1] == OSC_WAVEFORM_NOISE) {
+      wave_0_detune = lfsr_noise<0>();
     } else {
       wave_0_detune = get_wave_level(m_wave_table[1], static_cast<uint16_t>(m_phase[1] >> 8) << 1);
     }
@@ -450,7 +452,7 @@ private:
     const uint8_t* result;
     if (waveform == OSC_WAVEFORM_SAW) {
       result = g_osc_saw_wave_tables[note_number - NOTE_NUMBER_MIN];
-    } else {     // OSC_WAVEFORM_SQ
+    } else {     // OSC_WAVEFORM_SQ (OSC_WAVEFORM_NOISE)
       result = g_osc_sq_wave_tables[note_number - NOTE_NUMBER_MIN];
     }
     return result;
@@ -474,11 +476,12 @@ private:
     return result;
   }
 
-  INLINE static int8_t noise() {
+  template <uint8_t N>
+  INLINE static int8_t lfsr_noise() {
     int8_t result = -(OSC_WAVE_TABLE_AMPLITUDE >> 1);
-    uint8_t lsb = m_lfsr_0 & 0x000001u;
-    m_lfsr_0 >>= 1;
-    m_lfsr_0 ^= (-lsb) & 0xE10000u;
+    uint8_t lsb = m_lfsr[N] & 0x000001u;
+    m_lfsr[N] >>= 1;
+    m_lfsr[N] ^= (-lsb) & 0xE10000u;
     if (lsb) {
       result = +(OSC_WAVE_TABLE_AMPLITUDE >> 1);
     }
@@ -770,5 +773,4 @@ template <uint8_t T> uint8_t         Osc<T>::m_red_noise;
 template <uint8_t T> boolean         Osc<T>::m_note_on[2];
 template <uint8_t T> boolean         Osc<T>::m_pitch_eg_target_both;
 template <uint8_t T> int16_t         Osc<T>::m_pitch_eg_amt;
-template <uint8_t T> __uint24        Osc<T>::m_lfsr_0;
-template <uint8_t T> __uint24        Osc<T>::m_lfsr_1;
+template <uint8_t T> __uint24        Osc<T>::m_lfsr[2];
