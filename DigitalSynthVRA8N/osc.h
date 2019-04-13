@@ -409,7 +409,7 @@ public:
         if ((m_rnd_cnt & 0x07) == 0x00) {
           update_rnd();
           m_red_noise = m_rnd_prev + m_rnd;
-        } else if ((m_rnd_cnt & 0x07) == 0x01) {
+        } else if ((m_rnd_cnt & 0x01) == 0x01) {
           update_sub_waveform();
         }
         break;
