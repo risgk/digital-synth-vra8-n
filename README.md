@@ -15,6 +15,7 @@
     - Add LFO LED Out option (Enabled by default)
     - Add Pin D5 Audio Out option (Disabled by default)
     - Add the operation mode **VRA8-N mini** option (Voltage controlled, Sub Oscillator disabled)
+    - Improve stability by modifying EG
 - v2.0.1
     - Fix sound quality degradation in v2.0.0
     - Revert "SUSTAIN (OFF/ON)" to "SUSTAIN"
