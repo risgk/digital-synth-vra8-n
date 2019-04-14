@@ -10,7 +10,8 @@ const uint8_t   NOTE_NUMBER_MIN     = 0;
 const uint8_t   NOTE_NUMBER_MAX     = 120;
 const uint8_t   NOTE_NUMBER_INVALID = 255;
 
-const uint8_t   PROGRAM_NUMBER_MAX  = 7;
+const uint8_t   PROGRAM_NUMBER_MAX            = 7;
+const uint8_t   PROGRAM_NUMBER_RANDOM_CONTROL = 127;
 
 const uint8_t   OSC_CONTROL_INTERVAL_BITS    = 2;
 const uint8_t   OSC_CONTROL_INTERVAL         = 0x01 << OSC_CONTROL_INTERVAL_BITS;
@@ -26,7 +27,7 @@ const uint8_t   FILTER_CONTROL_INTERVAL_BITS = 3;
 const uint8_t   FILTER_CONTROL_INTERVAL      = 0x01 << FILTER_CONTROL_INTERVAL_BITS;
 const uint8_t   FILTER_CUTOFF_THROUGH_RATE   = 24;
 const uint8_t   FILTER_TABLE_FRACTION_BITS   = 14;
-const uint8_t   ENV_GEN_CONTROL_INTERVAL     = 0x08;
+const uint8_t   ENV_GEN_CONTROL_INTERVAL     = 0x10;
 const uint16_t  ENV_GEN_LEVEL_MAX            = 0x8000;
 const uint16_t  ENV_GEN_LEVEL_MAX_X_1_5      = ENV_GEN_LEVEL_MAX + (ENV_GEN_LEVEL_MAX >> 1);
 const uint16_t  ENV_GEN_LEVEL_RELEASE_STEP   = 0x1600;
@@ -56,7 +57,7 @@ const uint8_t   MODULATION    = 1;
 const uint8_t   EXPRESSION    = 11;
 
 const uint8_t   OSC_WAVE      = 24;
-const uint8_t   OSC2_MIX      = 25;
+const uint8_t   OSC_MIX       = 25;
 const uint8_t   OSC2_COARSE   = 20;
 const uint8_t   OSC2_FINE     = 21;
 
@@ -83,7 +84,7 @@ const uint8_t   CO_LFO_AMT    = 83;
 const uint8_t   LFO_DEPTH     = 81;
 const uint8_t   LFO_RT_EG_AMT = 3;
 const uint8_t   PITCH_LFO_TGT = 9;
-const uint8_t   CC15          = 15;
+const uint8_t   LFO_FADE_TIME = 15;
 
 const uint8_t   PB_RANGE      = 85;
 const uint8_t   CC86          = 86;
@@ -101,8 +102,9 @@ const uint8_t   OMNI_MODE_ON  = 125;
 const uint8_t   MONO_MODE_ON  = 126;
 const uint8_t   POLY_MODE_ON  = 127;
 
-const uint8_t   OSC_WAVEFORM_SAW = 0;
-const uint8_t   OSC_WAVEFORM_SQ  = 127;
+const uint8_t   OSC_WAVEFORM_SAW   = 0;
+const uint8_t   OSC_WAVEFORM_NOISE = 64;
+const uint8_t   OSC_WAVEFORM_SQ    = 127;
 
 const uint8_t   SUB_WAVEFORM_SIN   = 0;
 const uint8_t   SUB_WAVEFORM_NOISE = 64;

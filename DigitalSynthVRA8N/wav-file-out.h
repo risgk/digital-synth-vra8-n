@@ -34,7 +34,7 @@ public:
     if (m_data_size < m_max_size) {
       uint8_t a[1] = {level + 0x80};
       fwrite(a, 1, 1, m_file);
-      m_data_size++;
+      ++m_data_size;
     } else {
       close();
       m_closed = true;

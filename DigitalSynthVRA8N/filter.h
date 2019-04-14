@@ -98,9 +98,6 @@ public:
     m_cutoff_expression_decrease = 254 - (controller_value << 1);
   }
 
-  INLINE static void note_on() {
-  }
-
   INLINE static int16_t clock(uint8_t count, int16_t audio_input, uint8_t env_gen_input, int16_t lfo_input) {
     if ((count & (FILTER_CONTROL_INTERVAL - 1)) == 6) {
       uint8_t idx = (count >> FILTER_CONTROL_INTERVAL_BITS) & 0x03;

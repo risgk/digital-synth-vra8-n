@@ -51,7 +51,7 @@ const MODULATION    = 1;
 const EXPRESSION    = 11;
 
 const OSC_WAVE      = 24;
-const OSC2_MIX      = 25;
+const OSC_MIX       = 25;
 const OSC2_COARSE   = 20;
 const OSC2_FINE     = 21;
 
@@ -78,7 +78,7 @@ const CO_LFO_AMT    = 83;
 const LFO_DEPTH     = 81;
 const LFO_RT_EG_AMT = 3;
 const PITCH_LFO_TGT = 9;
-const CC15          = 15;
+const LFO_FADE_TIME = 15;
 
 const PB_RANGE      = 85;
 const CC86          = 86;
@@ -108,7 +108,7 @@ const ALL_NOTES_OFF = 123;
 
 var controllersInLocalStorage = [
   OSC_WAVE     ,
-  OSC2_MIX     ,
+  OSC_MIX      ,
   OSC2_COARSE  ,
   OSC2_FINE    ,
 
@@ -135,7 +135,7 @@ var controllersInLocalStorage = [
   LFO_DEPTH    ,
   LFO_RT_EG_AMT,
   PITCH_LFO_TGT,
-//CC15         ,
+  LFO_FADE_TIME,
 
   PB_RANGE     ,
 //CC86         ,
@@ -152,7 +152,7 @@ var presetControllers = {};
 
 // PRESET                           #0   #1   #2   #3   #4   #5   #6   #7   
 presetControllers[OSC_WAVE     ] = [0  , 0  , 0  , 127, 0  , 0  , 0  , 0  ];
-presetControllers[OSC2_MIX     ] = [64 , 64 , 64 , 64 , 0  , 64 , 0  , 0  ];
+presetControllers[OSC_MIX      ] = [64 , 64 , 64 , 64 , 0  , 64 , 0  , 0  ];
 presetControllers[OSC2_COARSE  ] = [71 , 64 , 64 , 64 , 64 , 64 , 64 , 64 ];
 presetControllers[OSC2_FINE    ] = [68 , 72 , 66 , 72 , 68 , 56 , 64 , 64 ];
 
@@ -179,7 +179,7 @@ presetControllers[CO_LFO_AMT   ] = [64 , 64 , 52 , 64 , 64 , 64 , 64 , 64 ];
 presetControllers[LFO_DEPTH    ] = [16 , 16 , 0  , 0  , 0  , 16 , 0  , 0  ];
 presetControllers[LFO_RT_EG_AMT] = [64 , 64 , 64 , 72 , 64 , 64 , 64 , 64 ];
 presetControllers[PITCH_LFO_TGT] = [127, 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
-presetControllers[CC15         ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
+presetControllers[LFO_FADE_TIME] = [64 , 64 , 0  , 0  , 0  , 64 , 0  , 0  ];
 
 presetControllers[PB_RANGE     ] = [2  , 2  , 2  , 2  , 12 , 2  , 2  , 2  ];
 presetControllers[CC86         ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
@@ -335,7 +335,7 @@ function onMIDIMessage(event) {
       loadControllers(number);
       return;
     } else if (number == 127) {
-      // Program #127: Special Random Control (only for VRA8-N CTRL)
+      // Program #127: Random Control
       setRandom();
       return;
     }
@@ -502,7 +502,7 @@ function noteOff(noteNumber) {
 <body>
 
 <table>
-<tr><td><strong>VRA8-N CTRL v2.0.1</strong>&nbsp;&nbsp;Digital Synth VRA8-N Controller (<a href="https://github.com/risgk/digital-synth-vra8-n">View on GitHub</a>), We recommend Google Chrome</td></tr>
+<tr><td><strong>VRA8-N CTRL v2.1.0</strong>&nbsp;&nbsp;Digital Synth VRA8-N Controller (<a href="https://github.com/risgk/digital-synth-vra8-n">View on GitHub</a>), We recommend Google Chrome</td></tr>
 <tr><td>&nbsp;</td></tr>
 </table>
 
@@ -602,13 +602,13 @@ function noteOff(noteNumber) {
 </table>
 
 <table>
-<tr><td>OSC1/2 (SAW/SQ)       </td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+<tr><td>OSC1/2 (SAW/N/SQ)     </td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
     <td>OSC MIX (1/2)         </td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
     <td>OSC2 COARSE (-/+)     </td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
     <td>OSC2 FINE (-/+)       </td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
 <tr><td><input id="inputCC24" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(OSC_WAVE, value)"></td>
     <td><span   id="spanCC24">-1</span></td>
-    <td><input id="inputCC25" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(OSC2_MIX, value)"></td>
+    <td><input id="inputCC25" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(OSC_MIX, value)"></td>
     <td><span   id="spanCC25">-1</span></td>
     <td><input id="inputCC20" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(OSC2_COARSE, value)"></td>
     <td><span   id="spanCC20">-1</span></td>
@@ -667,15 +667,15 @@ function noteOff(noteNumber) {
 <tr><td>LFO DEPTH             </td><td></td>
     <td>EG > LFO RATE (-/+)   </td><td></td>
     <td>LFO > P. TGT (1&2/2)  </td><td></td>
-    <td>                      </td><td></td></tr>
+    <td>LFO FADE TIME         </td><td></td></tr>
 <tr><td><input id="inputCC81" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(LFO_DEPTH, value)"></td>
     <td><span   id="spanCC81">-1</span></td>
     <td><input id="inputCC3"  type="range" min="0" max="127" step="1" oninput="onChangeControlChange(LFO_RT_EG_AMT, value)"></td>
     <td><span   id="spanCC3" >-1</span></td>
     <td><input id="inputCC9"  type="range" min="0" max="127" step="1" oninput="onChangeControlChange(PITCH_LFO_TGT, value)"></td>
     <td><span   id="spanCC9" >-1</span></td>
-    <td><input id="inputCC15" style="visibility:hidden" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(CC15, value)"></td>
-    <td><span   id="spanCC15" style="visibility:hidden">-1</span></td></tr>
+    <td><input id="inputCC15" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(LFO_FADE_TIME, value)"></td>
+    <td><span   id="spanCC15">-1</span></td></tr>
 <tr><td>&nbsp;</td></tr>
 <tr><td>P. BEND RANGE         </td><td></td>
     <td>                      </td><td></td>

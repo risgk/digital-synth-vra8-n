@@ -1,6 +1,6 @@
-# Digital Synth VRA8-N v2.0.1
+# Digital Synth VRA8-N v2.1.0
 
-- 2019-03-24 ISGK Instruments
+- 2019-04-14 ISGK Instruments
 - <https://github.com/risgk/digital-synth-vra8-n>
 
 ## Concept
@@ -9,6 +9,14 @@
 
 ## Change History
 
+- v2.1.0 (Major Changes)
+    - Narrow the CUTOFF frequency range from 5 oct (G3-G8) to 4 oct (G4-G8) for sound quality
+    - Add OSC2 NOISE; Change "OSC1/2 (SAW/SQ)" to "OSC1/2 (SAW/N/SQ)"
+    - Add "LFO FADE TIME" control
+    - Add LFO LED Out option (Enabled by default, Pin D5)
+    - Add Pin D5 Audio Out option for MIDI Shield (Disabled by default)
+    - Add the operation mode **VRA8-N mini** option (Voltage controlled, Sub Oscillator disabled)
+    - Improve stability
 - v2.0.1
     - Fix sound quality degradation in v2.0.0
     - Revert "SUSTAIN (OFF/ON)" to "SUSTAIN"
@@ -37,17 +45,19 @@
 ## Features
 
 - Sampling Rate: 31.25 kHz, Bit Depth: 8 bit, LPF Attenuation Slope: -12 dB/oct
-- Serial MIDI In (38.4 kbps), PWM Audio Out (Pin 6), PWM Rate: 62.5 kHz
+- Serial MIDI In (38.4 kbps), PWM Audio Out (Pin D6), Optional PWM LFO LED Out (Pin D5), PWM Rate: 62.5 kHz
     - We recommend adding a RC filter circuit to reduce PWM ripples
         - A cutoff frequency 15.9 kHz (R: 100 ohm, C: 100 nF) works well
     - **CAUTION**: The Arduino PWM audio output is a unipolar Line Out
-        - Please connect this to a power amp/a headphone amp (not to a speaker/a headphone directly)
+        - Please connect the output to a active speaker/a power amp/a headphone amp
+        - Do not connect the output to a passive speaker/a headphone directly
     - **CAUTION**: Click sounds may occur when you connect the audio out to an amp or reset the board
 - We recommend [Hairless MIDI<->Serial Bridge](http://projectgus.github.io/hairless-midiserial/) to connect PC
-    - A MIDI Shield (MIDI Breakout) and a power supply adapter are desirable to avoiding USB noise
-        - Edit `SERIAL_SPEED` in `DigitalSynthVRA8N.ino` to use MIDI Shield
+    - **NOTE**: A combination of **MIDI Shield** (MIDI Breakout) and a power supply adapter is **more desirable** to avoiding USB noise
+        - To use MIDI Shield, edit `SERIAL_SPEED`, `LFO_LED_OUT_ACTIVE`, and `SUBSTITUTE_PIN_D5_FOR_D6_AS_AUDIO_OUT` in `DigitalSynthVRA8N.ino`
 - Files
-    - `DigitalSynthVRA8N.ino` is a sketch for Arduino (Genuino) Uno Rev3
+    - `DigitalSynthVRA8N.ino` is a sketch for Arduino/Genuino Uno Rev3 (ATmega328P)
+        - Arduino/Genuino Nano 3.x (ATmega328P) can also be used
     - `make-sample-wav-file.cc` is for Debugging on PC
         - Requiring GCC (g++) or other
         - `make-sample-wav-file-cc.bat` makes a sample WAV file (working on Windows)
@@ -55,6 +65,8 @@
         - Requiring a Ruby execution environment
 - **CAUTION**: We *strongly recommend* **Arduino IDE 1.8.5**
     - `DigitalSynthVRA8N.ino` *does not work well* with Arduino IDE 1.8.6 or later
+    - There is no restriction on a version of Arduino AVR Core
+        - You can install the Arduino AVR Core 1.16.21 or later (in the Board Manager) for new Arduino Nano bootloader
 
 ## VRA8-N CTRL
 
@@ -68,10 +80,12 @@
 
 ## Details of Controllers
 
-- "OSC1/2 (SAW/SQ)": OSC1 Wave / OSC2 Wave
+- "OSC1/2 (SAW/N/SQ)": OSC1 Wave / OSC2 Wave
     - Values 0-15: OSC1 SAW / OSC2 SAW
     - Values 16-63: OSC1 SAW / OSC2 SQUARE
-    - Values 64-111: OSC1 SQUARE / OSC2 SAW
+    - Values 40-63: OSC1 SAW / OSC2 NOISE
+    - Values 64-87: OSC1 SQUARE / OSC2 NOISE
+    - Values 88-111: OSC1 SQUARE / OSC2 SAW
     - Values 112-127: OSC1 SQUARE / OSC2 SQUARE
 - "SUB (SIN/NOISE/SQ)": SUB Osc Wave
     - Values 0-31: SIN
@@ -83,6 +97,7 @@
     - Values 48-79: SAW Down (Key Trigger: On)
     - Values 80-111: RANDOM (Key Trigger: On)
     - Values 112-127: SQUARE Up (Key Trigger: On)
+- "LFO FADE TIME": This affects "LFO DEPTH" but not "MODULATION DEPTH".
 - "LEGATO (OFF/ON)": LEGATO Portamento
     - When LEGATO Portamento is ON, Single Trigger is forced
 - "K. ASN (L/L/P/H/LST)": Key ASSIGN / Trigger Mode
@@ -102,10 +117,17 @@
     | OSC (SAW/SQ)      | OSC MIX (1/2) | SUB LEVEL     | PORTAMENTO    |
     +-------------------+---------------+---------------+---------------+
 
+## **VRA8-N mini** (Operation Mode)
+
+- Voltage controlled (0-5V), Sub Oscillator disabled
+- You need 4 potentiometers and 2 buttons
+- To make the sketch operate as **VRA8-N mini**, edit `ENABLE_VOLTAGE_CONTROL` in `DigitalSynthVRA8N.ino`
+- See "cv-in.h"
+
 ## MIDI Implementation Chart
 
-      [Monophonic Synthesizer]                                        Date: 2019-03-24       
-      Model: Digital Synth VRA8-N     MIDI Implementation Chart       Version: 2.0.1         
+      [Monophonic Synthesizer]                                        Date: 2019-04-14       
+      Model: Digital Synth VRA8-N     MIDI Implementation Chart       Version: 2.1.0         
     +-------------------------------+---------------+---------------+-----------------------+
     | Function...                   | Transmitted   | Recognized    | Remarks               |
     +-------------------------------+---------------+---------------+-----------------------+
@@ -158,7 +180,7 @@
     |                            81 | x             | o             | LFO DEPTH             |
     |                             3 | x             | o             | EG > LFO RATE (-/+)   |
     |                             9 | x             | o             | LFO > P. TGT (1&2/2)  |
-    |                            15 | x             | x             | (RESERVED)            |
+    |                            15 | x             | o             | LFO FADE TIME         |
     |                               |               |               |                       |
     |                            85 | x             | o             | P. BEND RANGE         |
     |                            86 | x             | x             | (RESERVED)            |
@@ -169,6 +191,8 @@
     |                            30 | x             | o             | LEGATO (OFF/ON)       |
     |                            87 | x             | o             | K. ASN (L/L/P/H/LST)  |
     |                            89 | x             | o             | EXP BY VEL (OFF/ON)   |
+    |                               |               |               |                       |
+    |                   112-119, 90 | x             | x             | (RESERVED)            |
     +-------------------------------+---------------+---------------+-----------------------+
     | Program                       | x             | o             |                       |
     | Change       : True #         | ************* | 0-7           |                       |

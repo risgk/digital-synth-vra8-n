@@ -35,15 +35,15 @@ public:
   }
 
   INLINE static void set_attack(uint8_t controller_value) {
-    m_attack_update_coef = ((controller_value >> 1) << 1) + 2;
+    m_attack_update_coef = (controller_value >> 1) + 1;
   }
 
   INLINE static void set_decay(uint8_t controller_value) {
-    m_decay_update_coef = ((controller_value >> 1) << 1) + 2;
+    m_decay_update_coef = (controller_value >> 1) + 1;
   }
 
   INLINE static void set_release(uint8_t controller_value) {
-    m_release_update_coef = ((controller_value >> 1) << 1) + 2;
+    m_release_update_coef = (controller_value >> 1) + 1;
   }
 
   INLINE static void set_sustain(uint8_t controller_value) {
@@ -74,18 +74,18 @@ public:
 
   INLINE static void note_off() {
     m_state = STATE_IDLE;
-    m_rest = m_decay_update_coef;
+    m_rest = m_release_update_coef;
   }
 
   INLINE static uint8_t clock(uint8_t count) {
-    if ((count & (ENV_GEN_CONTROL_INTERVAL - 1)) == ((T == 0) ? 2 : 2)) {
+    if ((count & (ENV_GEN_CONTROL_INTERVAL - 1)) == ((T == 0) ? 2 : 10)) {
       switch (m_state) {
       case STATE_ATTACK:
-        m_rest--;
+        --m_rest;
         if (m_rest == 0) {
           m_rest = m_attack_update_coef;
           m_level = ENV_GEN_LEVEL_MAX_X_1_5 - mul_q16_q8(ENV_GEN_LEVEL_MAX_X_1_5 - m_level,
-                                                         188 + (m_attack_update_coef >> 1));
+                                                         188 + m_attack_update_coef);
           if (m_level >= ENV_GEN_LEVEL_MAX) {
             m_level = ENV_GEN_LEVEL_MAX;
             m_state = STATE_SUSTAIN;
@@ -94,12 +94,12 @@ public:
         }
         break;
       case STATE_SUSTAIN:
-        m_rest--;
+        --m_rest;
         if (m_rest == 0) {
           m_rest = m_decay_update_coef;
           if (m_level > m_sustain) {
             m_level = m_sustain + mul_q16_q8(m_level - m_sustain,
-                                             188 + (m_decay_update_coef >> 1));
+                                             188 + m_decay_update_coef);
             if (m_level < m_sustain) {
               m_level = m_sustain;
             }
@@ -107,11 +107,11 @@ public:
         }
         break;
       case STATE_IDLE:
-        m_rest--;
+        --m_rest;
         if (m_rest == 0) {
           m_rest = m_release_update_coef;
           if (m_level > 0) {
-            m_level = mul_q16_q8(m_level, 188 + (m_release_update_coef >> 1));
+            m_level = mul_q16_q8(m_level, 188 + m_release_update_coef);
             if (m_level < ((T == 0) ? 0x0100 : 0x0400 /* gate for amp */)) {
               m_level = 0;
             }

@@ -9,20 +9,16 @@
 #define IFilter     Filter
 #define IAmp        Amp
 #define IEnvGen     EnvGen
-#if defined(EXPERIMENTAL_ENABLE_VOLTAGE_CONTROL)
-#define ICVIn       CVIn
-#endif
 #define IVoice      Voice
+#define ICVIn       CVIn
 #define ISynthCore  SynthCore
 
 #include "osc.h"
 #include "filter.h"
 #include "amp.h"
 #include "env-gen.h"
-#if defined(EXPERIMENTAL_ENABLE_VOLTAGE_CONTROL)
-#include "cv-in.h"
-#endif
 #include "voice.h"
+#include "cv-in.h"
 #include "synth-core.h"
 
 template <uint8_t T>
