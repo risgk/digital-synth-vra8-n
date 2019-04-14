@@ -1,6 +1,6 @@
-# Digital Synth VRA8-N vX.X.X
+# Digital Synth VRA8-N v2.1.0
 
-- 2019-XX-XX ISGK Instruments
+- 2019-04-14 ISGK Instruments
 - <https://github.com/risgk/digital-synth-vra8-n>
 
 ## Concept
@@ -9,7 +9,7 @@
 
 ## Change History
 
-- vX.X.X
+- v2.1.0 (Major Changes)
     - Narrow the CUTOFF frequency range from 5 oct (G3-G8) to 4 oct (G4-G8) for sound quality
     - Add OSC2 NOISE; Change "OSC1/2 (SAW/SQ)" to "OSC1/2 (SAW/N/SQ)"
     - Add "LFO FADE TIME" control
@@ -126,8 +126,8 @@
 
 ## MIDI Implementation Chart
 
-      [Monophonic Synthesizer]                                        Date: 2019-XX-XX       
-      Model: Digital Synth VRA8-N     MIDI Implementation Chart       Version: X.X.X         
+      [Monophonic Synthesizer]                                        Date: 2019-04-14       
+      Model: Digital Synth VRA8-N     MIDI Implementation Chart       Version: 2.1.0         
     +-------------------------------+---------------+---------------+-----------------------+
     | Function...                   | Transmitted   | Recognized    | Remarks               |
     +-------------------------------+---------------+---------------+-----------------------+
