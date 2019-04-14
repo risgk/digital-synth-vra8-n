@@ -2,15 +2,15 @@
 
 #include "common.h"
 
-#define USE_INPUT_A0    // PITCH     (Connect a potentiometer or a CV input)
-#define USE_INPUT_A1    // CUTOFF    (Connect a potentiometer or a CV input)
-#define USE_INPUT_A2    // RESONANCE (Connect a potentiometer or a CV input)
-#define USE_INPUT_A3    // OSC MIX   (Connect a potentiometer or a CV input)
+#define USE_INPUT_A0    // CUTOFF    (Connect a potentiometer or a CV input)
+#define USE_INPUT_A1    // RESONANCE (Connect a potentiometer or a CV input)
+#define USE_INPUT_A2    // OSC MIX   (Connect a potentiometer or a CV input)  // For MIDI Shield, comment out this line
+#define USE_INPUT_A3    // PITCH     (Connect a potentiometer or a CV input)  // For MIDI Shield, comment out this line
 #define ANALOG_INPUT_REVERSED (false)
 
 #define USE_INPUT_D2    // Change the PROGRAM    (Connect a button)
 #define USE_INPUT_D4    // Change the SCALE MODE (Connect a button)
-#define DIGITAL_INPUT_ACTIVE (HIGH) // LOW for MIDI Shield
+#define DIGITAL_INPUT_ACTIVE (HIGH)                                           // LOW for MIDI Shield
 
 template <uint8_t T>
 class CVIn {
@@ -85,19 +85,7 @@ public:
         break;
       case 0x6:
   #if defined(USE_INPUT_A0)
-        if (m_analog_value[0] < 3) {
-          // 0V: Note OFF
-          set_note_number(NOTE_NUMBER_INVALID);
-        } else {
-          if (m_scale_mode == 0) {
-            // Chromatic (2Oct / 5V)
-            set_note_number(high_byte((m_analog_value[0] * 6) + 128) + SCALE_MODE_0_NOTE_NUMBER_MIN);
-          } else {
-            // Linear (5Oct / 5V)
-            IOsc<0>::set_pitch_bend((m_analog_value[0] << 4) - 8192);
-            set_note_number(SCALE_MODE_1_NOTE_NUMBER_MID);
-          }
-        }
+        IVoice<0>::control_change(FILTER_CUTOFF, m_analog_value[0] >> 3);
   #endif
         break;
       case 0x8:
@@ -114,7 +102,7 @@ public:
         break;
       case 0xA:
   #if defined(USE_INPUT_A1)
-        IVoice<0>::control_change(FILTER_CUTOFF, m_analog_value[1] >> 3);
+        IVoice<0>::control_change(FILTER_RESO, m_analog_value[1] >> 3);
   #endif
   #if defined(USE_INPUT_A2)
         adc_start<2>();
@@ -134,7 +122,7 @@ public:
         break;
       case 0xE:
   #if defined(USE_INPUT_A2)
-        IVoice<0>::control_change(FILTER_RESO, m_analog_value[2] >> 3);
+        IVoice<0>::control_change(OSC_MIX, m_analog_value[2] >> 3);
   #endif
   #if defined(USE_INPUT_A3)
         adc_start<3>();
@@ -151,7 +139,19 @@ public:
         break;
       case 0x12:
   #if defined(USE_INPUT_A3)
-        IVoice<0>::control_change(OSC_MIX, m_analog_value[3] >> 3);
+        if (m_analog_value[3] < 3) {
+          // 0V: Note OFF
+          set_note_number(NOTE_NUMBER_INVALID);
+        } else {
+          if (m_scale_mode == 0) {
+            // Chromatic (2Oct / 5V)
+            set_note_number(high_byte((m_analog_value[3] * 6) + 128) + SCALE_MODE_0_NOTE_NUMBER_MIN);
+          } else {
+            // Linear (5Oct / 5V)
+            IOsc<0>::set_pitch_bend((m_analog_value[3] << 4) - 8192);
+            set_note_number(SCALE_MODE_1_NOTE_NUMBER_MID);
+          }
+        }
   #endif
         break;
       case 0x14:

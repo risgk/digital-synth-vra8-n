@@ -1,4 +1,4 @@
-# Digital Synth VRA8-N v2.1.0
+# Digital Synth VRA8-N v2.1.1
 
 - 2019-04-14 ISGK Instruments
 - <https://github.com/risgk/digital-synth-vra8-n>
@@ -9,6 +9,8 @@
 
 ## Change History
 
+- v2.1.1
+    - Change the assignment of the potentiometers for **VRA8-N mini**
 - v2.1.0 (Major Changes)
     - Narrow the CUTOFF frequency range from 5 oct (G3-G8) to 4 oct (G4-G8) for sound quality
     - Add OSC2 NOISE; Change "OSC1/2 (SAW/SQ)" to "OSC1/2 (SAW/N/SQ)"
@@ -127,7 +129,7 @@
 ## MIDI Implementation Chart
 
       [Monophonic Synthesizer]                                        Date: 2019-04-14       
-      Model: Digital Synth VRA8-N     MIDI Implementation Chart       Version: 2.1.0         
+      Model: Digital Synth VRA8-N     MIDI Implementation Chart       Version: 2.1.1         
     +-------------------------------+---------------+---------------+-----------------------+
     | Function...                   | Transmitted   | Recognized    | Remarks               |
     +-------------------------------+---------------+---------------+-----------------------+
