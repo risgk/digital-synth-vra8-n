@@ -46,7 +46,7 @@ public:
     m_rnd = 1;
   }
 
-#if !defined(ENABLE_VOLTAGE_CONTROL)
+#if !defined(ENABLE_VOLTAGE_CONTROL) || !defined(USE_PITCH_CV_IN)
   INLINE
 #endif
   static void note_on(uint8_t note_number, uint8_t velocity) {
@@ -99,7 +99,7 @@ public:
     }
   }
 
-#if !defined(ENABLE_VOLTAGE_CONTROL)
+#if !defined(ENABLE_VOLTAGE_CONTROL) || !defined(USE_PITCH_CV_IN)
   INLINE
 #endif
   static void note_off(uint8_t note_number) {
@@ -150,7 +150,7 @@ public:
     }
   }
 
-#if !defined(ENABLE_VOLTAGE_CONTROL)
+#if !defined(ENABLE_VOLTAGE_CONTROL) || !defined(USE_PITCH_CV_IN)
   INLINE
 #endif
   static void all_note_off() {
@@ -238,7 +238,7 @@ public:
     case SUB_OSC_WAVE:
       IOsc<0>::set_sub_waveform(controller_value);
       break;
-#if !defined(ENABLE_VOLTAGE_CONTROL)
+#if !defined(ENABLE_VOLTAGE_CONTROL) || !defined(USE_PITCH_CV_IN)
     case LEGATO:
       if (controller_value < 64) {
         m_legato_portamento = false;
@@ -265,7 +265,7 @@ public:
       IFilter<0>::set_cutoff_lfo_amt(controller_value);
       break;
 
-#if !defined(ENABLE_VOLTAGE_CONTROL)
+#if !defined(ENABLE_VOLTAGE_CONTROL) || !defined(USE_PITCH_CV_IN)
     case PB_RANGE:
       IOsc<0>::set_pitch_bend_minus_range(controller_value);
       IOsc<0>::set_pitch_bend_plus_range(controller_value);

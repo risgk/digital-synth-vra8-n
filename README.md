@@ -1,4 +1,4 @@
-# Digital Synth VRA8-N v2.1.1
+# Digital Synth VRA8-N v2.1.2
 
 - 2019-04-14 ISGK Instruments
 - <https://github.com/risgk/digital-synth-vra8-n>
@@ -9,6 +9,8 @@
 
 ## Change History
 
+- v2.1.2
+    - Add USE_PITCH_CV_IN option for **VRA8-N mini** (Undef it, if you use a MIDI keyboard)
 - v2.1.1
     - Change the assignment of the potentiometers for **VRA8-N mini**
 - v2.1.0 (Major Changes)
@@ -129,7 +131,7 @@
 ## MIDI Implementation Chart
 
       [Monophonic Synthesizer]                                        Date: 2019-04-14       
-      Model: Digital Synth VRA8-N     MIDI Implementation Chart       Version: 2.1.1         
+      Model: Digital Synth VRA8-N     MIDI Implementation Chart       Version: 2.1.2         
     +-------------------------------+---------------+---------------+-----------------------+
     | Function...                   | Transmitted   | Recognized    | Remarks               |
     +-------------------------------+---------------+---------------+-----------------------+

@@ -2,7 +2,7 @@
 
 const uint8_t PROGRAM_NUMBER_DEFAULT = 0;
 
-#if !defined(ENABLE_VOLTAGE_CONTROL)
+#if !defined(ENABLE_VOLTAGE_CONTROL) || !defined(USE_PITCH_CV_IN)
 
 // PRESET                                       #0   #1   #2   #3   #4   #5   #6   #7   
 const uint8_t g_preset_table_OSC_WAVE     [] = {0  , 0  , 0  , 127, 0  , 0  , 0  , 0  };
@@ -51,7 +51,7 @@ const uint8_t g_preset_table_EXP_BY_VEL   [] = {0  , 0  , 0  , 0  , 0  , 0  , 0 
 
 
 
-#else  // defined(ENABLE_VOLTAGE_CONTROL)
+#else  // defined(ENABLE_VOLTAGE_CONTROL) && defined(USE_PITCH_CV_IN)
 
 // PRESET                                       #0   #1   #2   #3   #4   #5   #6   #7   
 const uint8_t g_preset_table_OSC_WAVE     [] = {0  , 0  , 0  , 0  , 127, 0  , 0  , 0  };

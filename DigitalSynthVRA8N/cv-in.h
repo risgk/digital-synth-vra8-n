@@ -139,6 +139,7 @@ public:
         break;
       case 0x12:
   #if defined(USE_INPUT_A3)
+    #if defined(USE_PITCH_CV_IN)
         if (m_analog_value[3] < 3) {
           // 0V: Note OFF
           set_note_number(NOTE_NUMBER_INVALID);
@@ -152,6 +153,7 @@ public:
             set_note_number(SCALE_MODE_1_NOTE_NUMBER_MID);
           }
         }
+    #endif
   #endif
         break;
       case 0x14:
