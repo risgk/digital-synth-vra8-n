@@ -113,6 +113,9 @@ public:
       case 0x2:
         update_coefs_3rd();
         break;
+      case 0x3:
+        update_coefs_4th();
+        break;
       }
     }
 
@@ -171,6 +174,9 @@ private:
     uint32_t two_data = pgm_read_dword(p);
     m_b_2_over_a_0 = (two_data >>  0) & 0xFFFF;
     m_a_1_over_a_0 = (two_data >> 16) & 0xFFFF;
+  }
+
+  INLINE static void update_coefs_4th() {
     m_a_2_over_a_0 = (m_b_2_over_a_0 << 2) - m_a_1_over_a_0 -
                      (1 << FILTER_TABLE_FRACTION_BITS);
   }
