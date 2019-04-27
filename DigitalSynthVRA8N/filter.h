@@ -25,7 +25,7 @@ class Filter {
   static int8_t         m_cutoff_exp_amt;
 
   static const uint8_t AUDIO_FRACTION_BITS = 14;
-  static const int16_t MAX_ABS_OUTPUT = ((124 << (AUDIO_FRACTION_BITS - 8)) >> 8) << 8;
+  static const int16_t MAX_ABS_OUTPUT = 127 << (AUDIO_FRACTION_BITS - 8);
 
 public:
   INLINE static void initialize() {
@@ -122,10 +122,10 @@ public:
     tmp         -= mul_q15_q15(m_y_2,                      m_a_2_over_a_0);
     int16_t y_0  = tmp << (16 - FILTER_TABLE_FRACTION_BITS);
 
-    if (high_sbyte(y_0) > high_sbyte(MAX_ABS_OUTPUT)) {
+    if (y_0 > MAX_ABS_OUTPUT) {
       y_0 = MAX_ABS_OUTPUT;
     }
-    if (high_sbyte(y_0) < high_sbyte(-MAX_ABS_OUTPUT)) {
+    if (y_0 < -MAX_ABS_OUTPUT) {
       y_0 = -MAX_ABS_OUTPUT;
     }
 
