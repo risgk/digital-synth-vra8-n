@@ -466,7 +466,12 @@ private:
     uint8_t next_data = high_byte(two_data);
 
     // lerp
-    int8_t result = curr_data + high_sbyte(static_cast<int8_t>(next_data - curr_data) * next_weight);
+    int8_t result;
+    if (static_cast<int8_t>(curr_data) < static_cast<int8_t>(next_data)) {
+      result = curr_data + high_byte(static_cast<uint8_t>(next_data - curr_data) * next_weight);
+    } else {
+      result = curr_data - high_byte(static_cast<uint8_t>(curr_data - next_data) * next_weight);
+    }
 
     return result;
   }
