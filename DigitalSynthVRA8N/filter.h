@@ -179,9 +179,9 @@ private:
 
   INLINE static void update_coefs_3rd() {
     const uint8_t* p = m_lpf_table + (m_cutoff_current << 2);
-    uint16_t m_b_2_over_a_0 = pgm_read_word(p);
+    m_b_2_over_a_0 = pgm_read_word(p);
     p += 2;
-    uint16_t m_a_1_over_a_0 = pgm_read_word(p);
+    m_a_1_over_a_0 = pgm_read_word(p);
   }
 
   INLINE static void update_coefs_4th() {
