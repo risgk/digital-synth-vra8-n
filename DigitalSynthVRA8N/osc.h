@@ -387,10 +387,11 @@ public:
         }
         break;
       case (0x6 << OSC_CONTROL_INTERVAL_BITS):
-        update_mix();
+        update_lfo_1st(eg_level);
         break;
       case (0x7 << OSC_CONTROL_INTERVAL_BITS):
-        update_lfo_0th(eg_level);
+        update_lfo_2nd();
+        update_mix();
         break;
       case (0x8 << OSC_CONTROL_INTERVAL_BITS):
         update_freq_0th<1>();
@@ -416,10 +417,10 @@ public:
         }
         break;
       case (0xE << OSC_CONTROL_INTERVAL_BITS):
-        update_lfo_1st();
+        update_lfo_3rd();
         break;
       case (0xF << OSC_CONTROL_INTERVAL_BITS):
-        update_lfo_2nd();
+        update_lfo_4th();
         break;
       }
     }
@@ -612,7 +613,7 @@ private:
     m_rnd = low_byte(m_rnd_temp) >> 1;
   }
 
-  INLINE static void update_lfo_0th(uint8_t eg_level) {
+  INLINE static void update_lfo_1st(uint8_t eg_level) {
     int8_t lfo_rate_mod = high_sbyte(m_lfo_rate_eg_amt * eg_level);
     int16_t lfo_rate = m_lfo_rate + lfo_rate_mod + lfo_rate_mod;
     if (lfo_rate > 127) {
@@ -637,9 +638,12 @@ private:
     }
   }
 
-  INLINE static void update_lfo_1st() {
+  INLINE static void update_lfo_2nd() {
     m_lfo_phase += m_lfo_rate_actual;
     m_lfo_wave_level = get_lfo_wave_level(m_lfo_phase);
+  }
+
+  INLINE static void update_lfo_3rd() {
     uint8_t lfo_depth = high_byte((m_lfo_depth[0] << 1) * m_lfo_fade_level) + m_lfo_depth[1];
     if (lfo_depth > 127) {
       lfo_depth = 127;
@@ -652,7 +656,7 @@ private:
     m_lfo_level = (lfo_depth * m_lfo_wave_level) << 1;
   }
 
-  INLINE static void update_lfo_2nd() {
+  INLINE static void update_lfo_4th() {
     m_lfo_mod_level[1] = -mul_q15_q7(m_lfo_level, m_pitch_lfo_amt);
     if (m_pitch_lfo_target_both) {
       m_lfo_mod_level[0] = m_lfo_mod_level[1];
