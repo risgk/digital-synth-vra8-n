@@ -157,10 +157,15 @@ public:
         break;
       case (0x11 << CV_IN_CONTROL_INTERVAL_BITS):
         #if defined(USE_INPUT_A3)
-          m_temp_value[3] = (m_analog_value[3] << 4) - 8192;
+          m_temp_value[3] = (m_analog_value[3] << 2);
         #endif
         break;
       case (0x12 << CV_IN_CONTROL_INTERVAL_BITS):
+        #if defined(USE_INPUT_A3)
+          m_temp_value[3] = (m_temp_value[3] << 2) - 8192;
+        #endif
+        break;
+      case (0x13 << CV_IN_CONTROL_INTERVAL_BITS):
         #if defined(USE_INPUT_A3) && defined(USE_PITCH_CV_IN)
           if (m_analog_value[3] < 3) {
             // 0V: Note OFF
@@ -172,12 +177,24 @@ public:
             } else {
               // Linear (5Oct / 5V)
               IOsc<0>::set_pitch_bend(m_temp_value[3]);
-              set_note_number(SCALE_MODE_1_NOTE_NUMBER_MID);
             }
           }
         #endif
         break;
       case (0x14 << CV_IN_CONTROL_INTERVAL_BITS):
+        #if defined(USE_INPUT_A3) && defined(USE_PITCH_CV_IN)
+          if (m_analog_value[3] < 3) {
+            // Do nothing
+          } else {
+            if (m_scale_mode == 0) {
+              // Do nothing
+            } else {
+              set_note_number(SCALE_MODE_1_NOTE_NUMBER_MID);
+            }
+          }
+        #endif
+        break;
+      case (0x18 << CV_IN_CONTROL_INTERVAL_BITS):
         #if defined(USE_INPUT_D2)
           if (m_antichattering_rest_d2 > 0) {
             --m_antichattering_rest_d2;
@@ -199,7 +216,7 @@ public:
           }
         #endif
         break;
-      case (0x18 << CV_IN_CONTROL_INTERVAL_BITS):
+      case (0x1C << CV_IN_CONTROL_INTERVAL_BITS):
         #if defined(USE_INPUT_D4)
           if (m_antichattering_rest_d4 > 0) {
             --m_antichattering_rest_d4;
@@ -220,8 +237,6 @@ public:
             }
           }
         #endif
-        break;
-      case (0x1C << CV_IN_CONTROL_INTERVAL_BITS):
         break;
       }
     }
