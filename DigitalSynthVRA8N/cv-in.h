@@ -29,6 +29,7 @@ class CVIn {
 
   static uint8_t  m_count;
   static uint16_t m_analog_value[4];
+  static uint16_t m_temp_value[4];
   static uint8_t  m_input_level_d2;
   static uint8_t  m_antichattering_rest_d2;
   static uint8_t  m_input_level_d4;
@@ -45,6 +46,10 @@ public:
     m_analog_value[1] = 0;
     m_analog_value[2] = 0;
     m_analog_value[3] = 0;
+    m_temp_value[0] = 0;
+    m_temp_value[1] = 0;
+    m_temp_value[2] = 0;
+    m_temp_value[3] = 0;
     m_antichattering_rest_d2 = 0;
     m_input_level_d2 = INPUT_D2_INACTIVE;
     m_antichattering_rest_d4 = 0;
@@ -87,9 +92,14 @@ public:
         adc_start<1>();
   #endif
         break;
+      case (0x5 << CV_IN_CONTROL_INTERVAL_BITS):
+  #if defined(USE_INPUT_A0)
+        m_temp_value[0] = static_cast<uint8_t>(m_analog_value[0] >> 3);
+  #endif
+        break;
       case (0x6 << CV_IN_CONTROL_INTERVAL_BITS):
   #if defined(USE_INPUT_A0)
-        IVoice<0>::control_change(FILTER_CUTOFF, m_analog_value[0] >> 3);
+        IVoice<0>::control_change(FILTER_CUTOFF, static_cast<uint8_t>(m_temp_value[0]));
   #endif
         break;
       case (0x8 << CV_IN_CONTROL_INTERVAL_BITS):
@@ -104,12 +114,14 @@ public:
         adc_start<2>();
   #endif
         break;
+      case (0x9 << CV_IN_CONTROL_INTERVAL_BITS):
+  #if defined(USE_INPUT_A1)
+        m_temp_value[1] = static_cast<uint8_t>(m_analog_value[1]);
+  #endif
+        break;
       case (0xA << CV_IN_CONTROL_INTERVAL_BITS):
   #if defined(USE_INPUT_A1)
-        IVoice<0>::control_change(FILTER_RESO, m_analog_value[1] >> 3);
-  #endif
-  #if defined(USE_INPUT_A2)
-        adc_start<2>();
+        IVoice<0>::control_change(FILTER_RESO, static_cast<uint8_t>(m_temp_value[1]));
   #endif
         break;
       case (0xC << CV_IN_CONTROL_INTERVAL_BITS):
@@ -124,12 +136,14 @@ public:
         adc_start<3>();
   #endif
         break;
+      case (0xD << CV_IN_CONTROL_INTERVAL_BITS):
+  #if defined(USE_INPUT_A2)
+        m_temp_value[2] = static_cast<uint8_t>(m_analog_value[2] >> 3);
+  #endif
+        break;
       case (0xE << CV_IN_CONTROL_INTERVAL_BITS):
   #if defined(USE_INPUT_A2)
-        IVoice<0>::control_change(OSC_MIX, m_analog_value[2] >> 3);
-  #endif
-  #if defined(USE_INPUT_A3)
-        adc_start<3>();
+        IVoice<0>::control_change(OSC_MIX, static_cast<uint8_t>(m_temp_value[2]));
   #endif
         break;
       case (0x10 << CV_IN_CONTROL_INTERVAL_BITS):
@@ -252,6 +266,7 @@ private:
 
 template <uint8_t T> uint8_t  CVIn<T>::m_count;
 template <uint8_t T> uint16_t CVIn<T>::m_analog_value[4];
+template <uint8_t T> uint16_t CVIn<T>::m_temp_value[4];
 template <uint8_t T> uint8_t  CVIn<T>::m_input_level_d2;
 template <uint8_t T> uint8_t  CVIn<T>::m_antichattering_rest_d2;
 template <uint8_t T> uint8_t  CVIn<T>::m_input_level_d4;
