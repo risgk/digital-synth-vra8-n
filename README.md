@@ -123,7 +123,7 @@
 
 ## **VRA8-N mini** (Operation Mode)
 
-- Voltage controlled (0-5V), Sub Oscillator disabled
+- Voltage controlled (0-5V)
 - You need 4 potentiometers and 2 buttons
 - To make the sketch operate as **VRA8-N mini**, edit `ENABLE_VOLTAGE_CONTROL` in `DigitalSynthVRA8N.ino`
 - See "cv-in.h"
