@@ -358,7 +358,9 @@ public:
       m_level_sub = wave_0_sub * mix_sub;
     }
     else if ((count & (OSC_CONTROL_INTERVAL - 1)) == 0) {
-      static_assert(OSC_CONTROL_INTERVAL_BITS == 2, "OSC_CONTROL_INTERVAL_BITS must be 2");
+      #if defined(__cpp_static_assert)
+        static_assert(OSC_CONTROL_INTERVAL_BITS == 2, "OSC_CONTROL_INTERVAL_BITS must be 2");
+      #endif
       switch (count & (0x0F << OSC_CONTROL_INTERVAL_BITS)) {
       case (0x0 << OSC_CONTROL_INTERVAL_BITS):
         update_freq_0th<0>();

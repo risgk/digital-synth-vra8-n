@@ -73,7 +73,9 @@ public:
 
     if ((m_count & (CV_IN_CONTROL_INTERVAL - 1)) == 1) {
       uint16_t value;
-      static_assert(CV_IN_CONTROL_INTERVAL_BITS == 1, "CV_IN_CONTROL_INTERVAL_BITS must be 1");
+      #if defined(__cpp_static_assert)
+        static_assert(CV_IN_CONTROL_INTERVAL_BITS == 1, "CV_IN_CONTROL_INTERVAL_BITS must be 1");
+      #endif
       switch (m_count & (0x1F << CV_IN_CONTROL_INTERVAL_BITS)) {
       case (0x0 << CV_IN_CONTROL_INTERVAL_BITS):
         #if defined(USE_INPUT_A0)
