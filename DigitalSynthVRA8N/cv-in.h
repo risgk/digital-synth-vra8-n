@@ -62,16 +62,15 @@ public:
     ++m_count;
 
     if ((m_count & (CV_IN_CONTROL_INTERVAL - 1)) == 1) {
-      uint8_t idx = (m_count >> CV_IN_CONTROL_INTERVAL_BITS) & 0x1F;
-
       uint16_t value;
-      switch (idx) {
-      case 0x0:
+      static_assert(CV_IN_CONTROL_INTERVAL_BITS == 1, "CV_IN_CONTROL_INTERVAL_BITS must be 1");
+      switch (m_count & (0x1F << CV_IN_CONTROL_INTERVAL_BITS)) {
+      case (0x0 << CV_IN_CONTROL_INTERVAL_BITS):
   #if defined(USE_INPUT_A0)
         adc_start<0>();
   #endif
         break;
-      case 0x4:
+      case (0x4 << CV_IN_CONTROL_INTERVAL_BITS):
   #if defined(USE_INPUT_A0)
         value = adc_read();    // Read A0
         if (((m_analog_value[0] + 1) != value) &&
@@ -83,12 +82,12 @@ public:
         adc_start<1>();
   #endif
         break;
-      case 0x6:
+      case (0x6 << CV_IN_CONTROL_INTERVAL_BITS):
   #if defined(USE_INPUT_A0)
         IVoice<0>::control_change(FILTER_CUTOFF, m_analog_value[0] >> 3);
   #endif
         break;
-      case 0x8:
+      case (0x8 << CV_IN_CONTROL_INTERVAL_BITS):
   #if defined(USE_INPUT_A1)
         value = adc_read();    // Read A1
         if (((m_analog_value[1] + 1) != value) &&
@@ -100,7 +99,7 @@ public:
         adc_start<2>();
   #endif
         break;
-      case 0xA:
+      case (0xA << CV_IN_CONTROL_INTERVAL_BITS):
   #if defined(USE_INPUT_A1)
         IVoice<0>::control_change(FILTER_RESO, m_analog_value[1] >> 3);
   #endif
@@ -108,7 +107,7 @@ public:
         adc_start<2>();
   #endif
         break;
-      case 0xC:
+      case (0xC << CV_IN_CONTROL_INTERVAL_BITS):
   #if defined(USE_INPUT_A2)
         value = adc_read();    // Read A2
         if (((m_analog_value[2] + 1) != value) &&
@@ -120,7 +119,7 @@ public:
         adc_start<3>();
   #endif
         break;
-      case 0xE:
+      case (0xE << CV_IN_CONTROL_INTERVAL_BITS):
   #if defined(USE_INPUT_A2)
         IVoice<0>::control_change(OSC_MIX, m_analog_value[2] >> 3);
   #endif
@@ -128,7 +127,7 @@ public:
         adc_start<3>();
   #endif
         break;
-      case 0x10:
+      case (0x10 << CV_IN_CONTROL_INTERVAL_BITS):
   #if defined(USE_INPUT_A3)
         value = adc_read();    // Read A3
         if (((m_analog_value[3] + 1) != value) &&
@@ -137,7 +136,7 @@ public:
         }
   #endif
         break;
-      case 0x12:
+      case (0x12 << CV_IN_CONTROL_INTERVAL_BITS):
   #if defined(USE_INPUT_A3)
     #if defined(USE_PITCH_CV_IN)
         if (m_analog_value[3] < 3) {
@@ -156,7 +155,7 @@ public:
     #endif
   #endif
         break;
-      case 0x14:
+      case (0x14 << CV_IN_CONTROL_INTERVAL_BITS):
   #if defined(USE_INPUT_D2)
         if (m_antichattering_rest_d2 > 0) {
           --m_antichattering_rest_d2;
@@ -178,7 +177,7 @@ public:
         }
   #endif
         break;
-      case 0x18:
+      case (0x18 << CV_IN_CONTROL_INTERVAL_BITS):
   #if defined(USE_INPUT_D4)
         if (m_antichattering_rest_d4 > 0) {
           --m_antichattering_rest_d4;
@@ -200,7 +199,7 @@ public:
         }
   #endif
         break;
-      case 0x1C:
+      case (0x1C << CV_IN_CONTROL_INTERVAL_BITS):
         break;
       }
     }
