@@ -12,6 +12,11 @@
 #define USE_INPUT_D4    // Change the SCALE MODE (Connect a button)
 #define DIGITAL_INPUT_ACTIVE (HIGH)                                           // LOW for MIDI Shield
 
+#define INPUT_D2_ACTIVE      ((DIGITAL_INPUT_ACTIVE == HIGH) ? _BV(2) : 0)
+#define INPUT_D2_INACTIVE    ((DIGITAL_INPUT_ACTIVE == HIGH) ? 0 : _BV(2))
+#define INPUT_D4_ACTIVE      ((DIGITAL_INPUT_ACTIVE == HIGH) ? _BV(4) : 0)
+#define INPUT_D4_INACTIVE    ((DIGITAL_INPUT_ACTIVE == HIGH) ? 0 : _BV(4))
+
 template <uint8_t T>
 class CVIn {
   static const uint8_t CV_IN_CONTROL_INTERVAL_BITS = 1;
@@ -41,9 +46,9 @@ public:
     m_analog_value[2] = 0;
     m_analog_value[3] = 0;
     m_antichattering_rest_d2 = 0;
-    m_input_level_d2 = (DIGITAL_INPUT_ACTIVE == HIGH) ? LOW : HIGH;
+    m_input_level_d2 = INPUT_D2_INACTIVE;
     m_antichattering_rest_d4 = 0;
-    m_input_level_d4 = (DIGITAL_INPUT_ACTIVE == HIGH) ? LOW : HIGH;
+    m_input_level_d4 = INPUT_D4_INACTIVE;
     m_note_number = NOTE_NUMBER_INVALID;
     m_program_number = PROGRAM_NUMBER_DEFAULT;
     m_scale_mode = 0;
@@ -160,11 +165,11 @@ public:
         if (m_antichattering_rest_d2 > 0) {
           --m_antichattering_rest_d2;
         } else {
-          value = digitalRead(2);    // Read D2
+          value = PIND & _BV(2);    // Read D2
           if (m_input_level_d2 != value) {
             m_input_level_d2 = value;
             m_antichattering_rest_d2 = DIGITAL_INPUT_ANTICHATTERING_WAIT;
-            if (value == DIGITAL_INPUT_ACTIVE) {
+            if (value == INPUT_D2_ACTIVE) {
               if (m_program_number < PROGRAM_NUMBER_MAX) {
                 m_program_number++;
               } else {
@@ -182,11 +187,11 @@ public:
         if (m_antichattering_rest_d4 > 0) {
           --m_antichattering_rest_d4;
         } else {
-          value = digitalRead(4);    // Read D4
+          value = PIND & _BV(4);    // Read D4
           if (m_input_level_d4 != value) {
             m_input_level_d4 = value;
             m_antichattering_rest_d4 = DIGITAL_INPUT_ANTICHATTERING_WAIT;
-            if (value == DIGITAL_INPUT_ACTIVE) {
+            if (value == INPUT_D4_ACTIVE) {
               if (m_scale_mode == 0) {
                 m_scale_mode = 1;
               } else {
