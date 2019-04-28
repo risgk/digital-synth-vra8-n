@@ -360,24 +360,24 @@ public:
 #endif
     }
     else if ((count & (OSC_CONTROL_INTERVAL - 1)) == 0) {
-      uint8_t idx = (count >> OSC_CONTROL_INTERVAL_BITS) & 0x0F;
-      switch (idx) {
-      case 0x0:
+      static_assert(OSC_CONTROL_INTERVAL_BITS == 2, "OSC_CONTROL_INTERVAL_BITS must be 2");
+      switch (count & (0x0F << OSC_CONTROL_INTERVAL_BITS)) {
+      case (0x0 << OSC_CONTROL_INTERVAL_BITS):
         update_freq_0th<0>();
         break;
-      case 0x1:
+      case (0x1 << OSC_CONTROL_INTERVAL_BITS):
         update_freq_1st<0>(eg_level);
         break;
-      case 0x2:
+      case (0x2 << OSC_CONTROL_INTERVAL_BITS):
         update_freq_2nd<0>();
         break;
-      case 0x3:
+      case (0x3 << OSC_CONTROL_INTERVAL_BITS):
         update_freq_3rd<0>();
         break;
-      case 0x4:
+      case (0x4 << OSC_CONTROL_INTERVAL_BITS):
         update_freq_4th<0>();
         break;
-      case 0x5:
+      case (0x5 << OSC_CONTROL_INTERVAL_BITS):
         ++m_rnd_cnt;
         if ((m_rnd_cnt & 0x07) == 0x00) {
           update_rnd();
@@ -386,28 +386,28 @@ public:
           update_sub_mix();
         }
         break;
-      case 0x6:
+      case (0x6 << OSC_CONTROL_INTERVAL_BITS):
         update_mix();
         break;
-      case 0x7:
+      case (0x7 << OSC_CONTROL_INTERVAL_BITS):
         update_lfo_0th(eg_level);
         break;
-      case 0x8:
+      case (0x8 << OSC_CONTROL_INTERVAL_BITS):
         update_freq_0th<1>();
         break;
-      case 0x9:
+      case (0x9 << OSC_CONTROL_INTERVAL_BITS):
         update_freq_1st<1>(eg_level);
         break;
-      case 0xA:
+      case (0xA << OSC_CONTROL_INTERVAL_BITS):
         update_freq_2nd<1>();
         break;
-      case 0xB:
+      case (0xB << OSC_CONTROL_INTERVAL_BITS):
         update_freq_3rd<1>();
         break;
-      case 0xC:
+      case (0xC << OSC_CONTROL_INTERVAL_BITS):
         update_freq_4th<1>();
         break;
-      case 0xD:
+      case (0xD << OSC_CONTROL_INTERVAL_BITS):
         if ((m_rnd_cnt & 0x07) == 0x00) {
           update_rnd();
           m_red_noise = m_rnd_prev + m_rnd;
@@ -415,10 +415,10 @@ public:
           update_sub_waveform();
         }
         break;
-      case 0xE:
+      case (0xE << OSC_CONTROL_INTERVAL_BITS):
         update_lfo_1st();
         break;
-      case 0xF:
+      case (0xF << OSC_CONTROL_INTERVAL_BITS):
         update_lfo_2nd();
         break;
       }
