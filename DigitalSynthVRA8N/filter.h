@@ -49,8 +49,6 @@ public:
     update_coefs_1st(0);
     update_coefs_2nd();
     update_coefs_3rd();
-    update_coefs_4th();
-    update_coefs_0th(0);
   }
 
   INLINE static void set_cutoff(uint8_t controller_value) {
@@ -113,16 +111,15 @@ public:
       #endif
       if (count & 0x10) {
         if (count & 0x08) {
-          update_coefs_4th();
-          update_coefs_0th(env_gen_input);
-        } else {
           update_coefs_3rd();
+        } else {
+          update_coefs_2nd();
         }
       } else {
         if (count & 0x08) {
-          update_coefs_2nd();
-        } else {
           update_coefs_1st(lfo_input);
+        } else {
+          update_coefs_0th(env_gen_input);
         }
       }
     }
@@ -185,9 +182,6 @@ private:
     m_b_2_over_a_0 = pgm_read_word(p);
     p++;
     m_a_1_over_a_0 = pgm_read_word(p);
-  }
-
-  INLINE static void update_coefs_4th() {
     m_a_2_over_a_0 = (m_b_2_over_a_0 << 2) - m_a_1_over_a_0 -
                      (1 << FILTER_TABLE_FRACTION_BITS);
   }
