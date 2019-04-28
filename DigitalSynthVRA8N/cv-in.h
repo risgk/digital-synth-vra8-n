@@ -116,7 +116,7 @@ public:
         break;
       case (0x9 << CV_IN_CONTROL_INTERVAL_BITS):
   #if defined(USE_INPUT_A1)
-        m_temp_value[1] = static_cast<uint8_t>(m_analog_value[1]);
+        m_temp_value[1] = static_cast<uint8_t>(m_analog_value[1] >> 3);
   #endif
         break;
       case (0xA << CV_IN_CONTROL_INTERVAL_BITS):
@@ -155,6 +155,11 @@ public:
         }
   #endif
         break;
+      case (0x11 << CV_IN_CONTROL_INTERVAL_BITS):
+  #if defined(USE_INPUT_A3)
+        m_temp_value[3] = (m_analog_value[3] << 4) - 8192;
+  #endif
+        break;
       case (0x12 << CV_IN_CONTROL_INTERVAL_BITS):
   #if defined(USE_INPUT_A3)
     #if defined(USE_PITCH_CV_IN)
@@ -167,7 +172,7 @@ public:
             set_note_number(high_byte((m_analog_value[3] * 6) + 128) + SCALE_MODE_0_NOTE_NUMBER_MIN);
           } else {
             // Linear (5Oct / 5V)
-            IOsc<0>::set_pitch_bend((m_analog_value[3] << 4) - 8192);
+            IOsc<0>::set_pitch_bend(m_temp_value[3]);
             set_note_number(SCALE_MODE_1_NOTE_NUMBER_MID);
           }
         }
