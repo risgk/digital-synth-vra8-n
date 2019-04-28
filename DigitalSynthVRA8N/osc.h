@@ -383,8 +383,9 @@ public:
           update_rnd_1st();
         } else if ((m_rnd_cnt & 0x07) == 0x04) {
           update_rnd_2nd();
-        } else if ((m_rnd_cnt & 0x01) == 0x01) {
+        } else if ((m_rnd_cnt & 0x03) == 0x01) {
           update_mix();
+        } else if ((m_rnd_cnt & 0x03) == 0x03) {
           update_sub_mix();
         }
         break;
@@ -610,10 +611,10 @@ private:
   INLINE static void update_rnd_1st() {
     m_rnd_temp = m_rnd_temp ^ (m_rnd_temp << 5);
     m_rnd_temp = m_rnd_temp ^ (m_rnd_temp >> 9);
-    m_rnd_temp = m_rnd_temp ^ (m_rnd_temp << 8);
   }
 
   INLINE static void update_rnd_2nd() {
+    m_rnd_temp = m_rnd_temp ^ (m_rnd_temp << 8);
     m_rnd_prev = m_rnd;
     m_rnd = low_byte(m_rnd_temp) >> 1;
     m_red_noise = m_rnd_prev + m_rnd;
