@@ -8,21 +8,21 @@
 
 template <uint8_t T>
 class Filter {
-  static const uint8_t* m_lpf_table;
-  static int16_t        m_b_2_over_a_0;
-  static int16_t        m_a_1_over_a_0;
-  static int16_t        m_a_2_over_a_0;
-  static int16_t        m_x_1;
-  static int16_t        m_x_2;
-  static int16_t        m_y_1;
-  static int16_t        m_y_2;
-  static uint8_t        m_cutoff_current;
-  static int16_t        m_cutoff_candidate;
-  static uint8_t        m_cutoff;
-  static int8_t         m_cutoff_env_gen_amt;
-  static int8_t         m_cutoff_lfo_amt;
-  static uint8_t        m_cutoff_expression_decrease;
-  static int8_t         m_cutoff_exp_amt;
+  static const uint16_t* m_lpf_table;
+  static int16_t         m_b_2_over_a_0;
+  static int16_t         m_a_1_over_a_0;
+  static int16_t         m_a_2_over_a_0;
+  static int16_t         m_x_1;
+  static int16_t         m_x_2;
+  static int16_t         m_y_1;
+  static int16_t         m_y_2;
+  static uint8_t         m_cutoff_current;
+  static int16_t         m_cutoff_candidate;
+  static uint8_t         m_cutoff;
+  static int8_t          m_cutoff_env_gen_amt;
+  static int8_t          m_cutoff_lfo_amt;
+  static uint8_t         m_cutoff_expression_decrease;
+  static int8_t          m_cutoff_exp_amt;
 
   static const uint8_t AUDIO_FRACTION_BITS = 14;
   static const int16_t MAX_ABS_OUTPUT = ((124 << (AUDIO_FRACTION_BITS - 8)) >> 8) << 8;
@@ -65,7 +65,8 @@ public:
   }
 
   INLINE static void set_resonance(uint8_t controller_value) {
-    m_lpf_table = g_filter_lpf_tables[(controller_value + 4) >> 4];
+    uint8_t index = (controller_value + 4) >> 4;
+    m_lpf_table = g_filter_lpf_tables[index];
   }
 
   INLINE static void set_cutoff_env_amt(uint8_t controller_value) {
@@ -178,9 +179,9 @@ private:
   }
 
   INLINE static void update_coefs_3rd() {
-    const uint8_t* p = m_lpf_table + (m_cutoff_current << 2);
+    const uint16_t* p = m_lpf_table + static_cast<uint8_t>(m_cutoff_current << 1);
     m_b_2_over_a_0 = pgm_read_word(p);
-    p += 2;
+    p++;
     m_a_1_over_a_0 = pgm_read_word(p);
   }
 
@@ -190,18 +191,18 @@ private:
   }
 };
 
-template <uint8_t T> const uint8_t* Filter<T>::m_lpf_table;
-template <uint8_t T> int16_t        Filter<T>::m_b_2_over_a_0;
-template <uint8_t T> int16_t        Filter<T>::m_a_1_over_a_0;
-template <uint8_t T> int16_t        Filter<T>::m_a_2_over_a_0;
-template <uint8_t T> int16_t        Filter<T>::m_x_1;
-template <uint8_t T> int16_t        Filter<T>::m_x_2;
-template <uint8_t T> int16_t        Filter<T>::m_y_1;
-template <uint8_t T> int16_t        Filter<T>::m_y_2;
-template <uint8_t T> uint8_t        Filter<T>::m_cutoff_current;
-template <uint8_t T> int16_t        Filter<T>::m_cutoff_candidate;
-template <uint8_t T> uint8_t        Filter<T>::m_cutoff;
-template <uint8_t T> int8_t         Filter<T>::m_cutoff_env_gen_amt;
-template <uint8_t T> int8_t         Filter<T>::m_cutoff_lfo_amt;
-template <uint8_t T> uint8_t        Filter<T>::m_cutoff_expression_decrease;
-template <uint8_t T> int8_t         Filter<T>::m_cutoff_exp_amt;
+template <uint8_t T> const uint16_t* Filter<T>::m_lpf_table;
+template <uint8_t T> int16_t         Filter<T>::m_b_2_over_a_0;
+template <uint8_t T> int16_t         Filter<T>::m_a_1_over_a_0;
+template <uint8_t T> int16_t         Filter<T>::m_a_2_over_a_0;
+template <uint8_t T> int16_t         Filter<T>::m_x_1;
+template <uint8_t T> int16_t         Filter<T>::m_x_2;
+template <uint8_t T> int16_t         Filter<T>::m_y_1;
+template <uint8_t T> int16_t         Filter<T>::m_y_2;
+template <uint8_t T> uint8_t         Filter<T>::m_cutoff_current;
+template <uint8_t T> int16_t         Filter<T>::m_cutoff_candidate;
+template <uint8_t T> uint8_t         Filter<T>::m_cutoff;
+template <uint8_t T> int8_t          Filter<T>::m_cutoff_env_gen_amt;
+template <uint8_t T> int8_t          Filter<T>::m_cutoff_lfo_amt;
+template <uint8_t T> uint8_t         Filter<T>::m_cutoff_expression_decrease;
+template <uint8_t T> int8_t          Filter<T>::m_cutoff_exp_amt;
