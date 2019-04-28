@@ -76,152 +76,150 @@ public:
       static_assert(CV_IN_CONTROL_INTERVAL_BITS == 1, "CV_IN_CONTROL_INTERVAL_BITS must be 1");
       switch (m_count & (0x1F << CV_IN_CONTROL_INTERVAL_BITS)) {
       case (0x0 << CV_IN_CONTROL_INTERVAL_BITS):
-  #if defined(USE_INPUT_A0)
-        adc_start<0>();
-  #endif
+        #if defined(USE_INPUT_A0)
+          adc_start<0>();
+        #endif
         break;
       case (0x4 << CV_IN_CONTROL_INTERVAL_BITS):
-  #if defined(USE_INPUT_A0)
-        value = adc_read();    // Read A0
-        if (((m_analog_value[0] + 1) != value) &&
-            ((m_analog_value[0] - 1) != value)) {
-          m_analog_value[0] = value;
-        }
-  #endif
-  #if defined(USE_INPUT_A1)
-        adc_start<1>();
-  #endif
+        #if defined(USE_INPUT_A1)
+          adc_start<1>();
+        #endif
+        #if defined(USE_INPUT_A0)
+          value = adc_read();    // Read A0
+          if (((m_analog_value[0] + 1) != value) &&
+              ((m_analog_value[0] - 1) != value)) {
+            m_analog_value[0] = value;
+          }
+        #endif
         break;
       case (0x5 << CV_IN_CONTROL_INTERVAL_BITS):
-  #if defined(USE_INPUT_A0)
-        m_temp_value[0] = static_cast<uint8_t>(m_analog_value[0] >> 3);
-  #endif
+        #if defined(USE_INPUT_A0)
+          m_temp_value[0] = static_cast<uint8_t>(m_analog_value[0] >> 3);
+        #endif
         break;
       case (0x6 << CV_IN_CONTROL_INTERVAL_BITS):
-  #if defined(USE_INPUT_A0)
-        IVoice<0>::control_change(FILTER_CUTOFF, static_cast<uint8_t>(m_temp_value[0]));
-  #endif
+        #if defined(USE_INPUT_A0)
+          IVoice<0>::control_change(FILTER_CUTOFF, static_cast<uint8_t>(m_temp_value[0]));
+        #endif
         break;
       case (0x8 << CV_IN_CONTROL_INTERVAL_BITS):
-  #if defined(USE_INPUT_A1)
-        value = adc_read();    // Read A1
-        if (((m_analog_value[1] + 1) != value) &&
-            ((m_analog_value[1] - 1) != value)) {
-          m_analog_value[1] = value;
-        }
-  #endif
-  #if defined(USE_INPUT_A2)
-        adc_start<2>();
-  #endif
+        #if defined(USE_INPUT_A2)
+          adc_start<2>();
+        #endif
+        #if defined(USE_INPUT_A1)
+          value = adc_read();    // Read A1
+          if (((m_analog_value[1] + 1) != value) &&
+              ((m_analog_value[1] - 1) != value)) {
+            m_analog_value[1] = value;
+          }
+        #endif
         break;
       case (0x9 << CV_IN_CONTROL_INTERVAL_BITS):
-  #if defined(USE_INPUT_A1)
-        m_temp_value[1] = static_cast<uint8_t>(m_analog_value[1] >> 3);
-  #endif
+        #if defined(USE_INPUT_A1)
+          m_temp_value[1] = static_cast<uint8_t>(m_analog_value[1] >> 3);
+        #endif
         break;
       case (0xA << CV_IN_CONTROL_INTERVAL_BITS):
-  #if defined(USE_INPUT_A1)
-        IVoice<0>::control_change(FILTER_RESO, static_cast<uint8_t>(m_temp_value[1]));
-  #endif
+        #if defined(USE_INPUT_A1)
+          IVoice<0>::control_change(FILTER_RESO, static_cast<uint8_t>(m_temp_value[1]));
+        #endif
         break;
       case (0xC << CV_IN_CONTROL_INTERVAL_BITS):
-  #if defined(USE_INPUT_A2)
-        value = adc_read();    // Read A2
-        if (((m_analog_value[2] + 1) != value) &&
-            ((m_analog_value[2] - 1) != value)) {
-          m_analog_value[2] = value;
-        }
-  #endif
-  #if defined(USE_INPUT_A3)
-        adc_start<3>();
-  #endif
+        #if defined(USE_INPUT_A3)
+          adc_start<3>();
+        #endif
+        #if defined(USE_INPUT_A2)
+          value = adc_read();    // Read A2
+          if (((m_analog_value[2] + 1) != value) &&
+              ((m_analog_value[2] - 1) != value)) {
+            m_analog_value[2] = value;
+          }
+        #endif
         break;
       case (0xD << CV_IN_CONTROL_INTERVAL_BITS):
-  #if defined(USE_INPUT_A2)
-        m_temp_value[2] = static_cast<uint8_t>(m_analog_value[2] >> 3);
-  #endif
+        #if defined(USE_INPUT_A2)
+          m_temp_value[2] = static_cast<uint8_t>(m_analog_value[2] >> 3);
+        #endif
         break;
       case (0xE << CV_IN_CONTROL_INTERVAL_BITS):
-  #if defined(USE_INPUT_A2)
-        IVoice<0>::control_change(OSC_MIX, static_cast<uint8_t>(m_temp_value[2]));
-  #endif
+        #if defined(USE_INPUT_A2)
+          IVoice<0>::control_change(OSC_MIX, static_cast<uint8_t>(m_temp_value[2]));
+        #endif
         break;
       case (0x10 << CV_IN_CONTROL_INTERVAL_BITS):
-  #if defined(USE_INPUT_A3)
-        value = adc_read();    // Read A3
-        if (((m_analog_value[3] + 1) != value) &&
-            ((m_analog_value[3] - 1) != value)) {
-          m_analog_value[3] = value;
-        }
-  #endif
+        #if defined(USE_INPUT_A3)
+          value = adc_read();    // Read A3
+          if (((m_analog_value[3] + 1) != value) &&
+              ((m_analog_value[3] - 1) != value)) {
+            m_analog_value[3] = value;
+          }
+        #endif
         break;
       case (0x11 << CV_IN_CONTROL_INTERVAL_BITS):
-  #if defined(USE_INPUT_A3)
-        m_temp_value[3] = (m_analog_value[3] << 4) - 8192;
-  #endif
+        #if defined(USE_INPUT_A3)
+          m_temp_value[3] = (m_analog_value[3] << 4) - 8192;
+        #endif
         break;
       case (0x12 << CV_IN_CONTROL_INTERVAL_BITS):
-  #if defined(USE_INPUT_A3)
-    #if defined(USE_PITCH_CV_IN)
-        if (m_analog_value[3] < 3) {
-          // 0V: Note OFF
-          set_note_number(NOTE_NUMBER_INVALID);
-        } else {
-          if (m_scale_mode == 0) {
-            // Chromatic (2Oct / 5V)
-            set_note_number(high_byte((m_analog_value[3] * 6) + 128) + SCALE_MODE_0_NOTE_NUMBER_MIN);
+        #if defined(USE_INPUT_A3) && defined(USE_PITCH_CV_IN)
+          if (m_analog_value[3] < 3) {
+            // 0V: Note OFF
+            set_note_number(NOTE_NUMBER_INVALID);
           } else {
-            // Linear (5Oct / 5V)
-            IOsc<0>::set_pitch_bend(m_temp_value[3]);
-            set_note_number(SCALE_MODE_1_NOTE_NUMBER_MID);
+            if (m_scale_mode == 0) {
+              // Chromatic (2Oct / 5V)
+              set_note_number(high_byte((m_analog_value[3] * 6) + 128) + SCALE_MODE_0_NOTE_NUMBER_MIN);
+            } else {
+              // Linear (5Oct / 5V)
+              IOsc<0>::set_pitch_bend(m_temp_value[3]);
+              set_note_number(SCALE_MODE_1_NOTE_NUMBER_MID);
+            }
           }
-        }
-    #endif
-  #endif
+        #endif
         break;
       case (0x14 << CV_IN_CONTROL_INTERVAL_BITS):
-  #if defined(USE_INPUT_D2)
-        if (m_antichattering_rest_d2 > 0) {
-          --m_antichattering_rest_d2;
-        } else {
-          value = PIND & _BV(2);    // Read D2
-          if (m_input_level_d2 != value) {
-            m_input_level_d2 = value;
-            m_antichattering_rest_d2 = DIGITAL_INPUT_ANTICHATTERING_WAIT;
-            if (value == INPUT_D2_ACTIVE) {
-              if (m_program_number < PROGRAM_NUMBER_MAX) {
-                m_program_number++;
-              } else {
-                m_program_number = PROGRAM_NUMBER_RANDOM_CONTROL;
-              }
+        #if defined(USE_INPUT_D2)
+          if (m_antichattering_rest_d2 > 0) {
+            --m_antichattering_rest_d2;
+          } else {
+            value = PIND & _BV(2);    // Read D2
+            if (m_input_level_d2 != value) {
+              m_input_level_d2 = value;
+              m_antichattering_rest_d2 = DIGITAL_INPUT_ANTICHATTERING_WAIT;
+              if (value == INPUT_D2_ACTIVE) {
+                if (m_program_number < PROGRAM_NUMBER_MAX) {
+                  m_program_number++;
+                } else {
+                  m_program_number = PROGRAM_NUMBER_RANDOM_CONTROL;
+                }
 
-              IVoice<0>::program_change(m_program_number);
+                IVoice<0>::program_change(m_program_number);
+              }
             }
           }
-        }
-  #endif
+        #endif
         break;
       case (0x18 << CV_IN_CONTROL_INTERVAL_BITS):
-  #if defined(USE_INPUT_D4)
-        if (m_antichattering_rest_d4 > 0) {
-          --m_antichattering_rest_d4;
-        } else {
-          value = PIND & _BV(4);    // Read D4
-          if (m_input_level_d4 != value) {
-            m_input_level_d4 = value;
-            m_antichattering_rest_d4 = DIGITAL_INPUT_ANTICHATTERING_WAIT;
-            if (value == INPUT_D4_ACTIVE) {
-              if (m_scale_mode == 0) {
-                m_scale_mode = 1;
-              } else {
-                m_scale_mode = 0;
+        #if defined(USE_INPUT_D4)
+          if (m_antichattering_rest_d4 > 0) {
+            --m_antichattering_rest_d4;
+          } else {
+            value = PIND & _BV(4);    // Read D4
+            if (m_input_level_d4 != value) {
+              m_input_level_d4 = value;
+              m_antichattering_rest_d4 = DIGITAL_INPUT_ANTICHATTERING_WAIT;
+              if (value == INPUT_D4_ACTIVE) {
+                if (m_scale_mode == 0) {
+                  m_scale_mode = 1;
+                } else {
+                  m_scale_mode = 0;
+                }
+                set_note_number(NOTE_NUMBER_INVALID);
+                IOsc<0>::set_pitch_bend(0);
               }
-              set_note_number(NOTE_NUMBER_INVALID);
-              IOsc<0>::set_pitch_bend(0);
             }
           }
-        }
-  #endif
+        #endif
         break;
       case (0x1C << CV_IN_CONTROL_INTERVAL_BITS):
         break;
