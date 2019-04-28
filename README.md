@@ -9,6 +9,7 @@
 
 ## Change History
 
+    - Enable Sub Oscillator in **VRA8-N mini** mode
 - v2.1.2
     - Add USE_PITCH_CV_IN option for **VRA8-N mini** (Undef it, if you use a MIDI keyboard)
 - v2.1.1
