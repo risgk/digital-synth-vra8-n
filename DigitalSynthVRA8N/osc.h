@@ -384,6 +384,7 @@ public:
         } else if ((m_rnd_cnt & 0x07) == 0x04) {
           update_rnd_2nd();
         } else if ((m_rnd_cnt & 0x01) == 0x01) {
+          update_mix();
           update_sub_mix();
         }
         break;
@@ -392,7 +393,6 @@ public:
         break;
       case (0x7 << OSC_CONTROL_INTERVAL_BITS):
         update_lfo_2nd();
-        update_mix();
         break;
       case (0x8 << OSC_CONTROL_INTERVAL_BITS):
         update_freq_0th<1>();
@@ -634,7 +634,9 @@ private:
     } else {
       m_lfo_rate_actual = ((lfo_rate >> 1) + 2) * 12;
     }
+  }
 
+  INLINE static void update_lfo_2nd() {
     --m_lfo_fade_cnt;
     if (m_lfo_fade_cnt == 0) {
       m_lfo_fade_cnt = m_lfo_fade_coef;
@@ -642,9 +644,7 @@ private:
         m_lfo_fade_level += 2;
       }
     }
-  }
 
-  INLINE static void update_lfo_2nd() {
     m_lfo_phase += m_lfo_rate_actual;
     m_lfo_wave_level = get_lfo_wave_level(m_lfo_phase);
   }
