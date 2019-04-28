@@ -9,7 +9,10 @@
 
 ## Change History
 
+- v2.2.0
     - Enable Sub Oscillator in **VRA8-N mini** mode
+    - Slow down the change speed of OSC MIX and SUB LEVEL
+    - Improve stability: Reduce distortion of audio output when processing MIDI data
 - v2.1.2
     - Add USE_PITCH_CV_IN option for **VRA8-N mini** (Undef it, if you use a MIDI keyboard)
 - v2.1.1
