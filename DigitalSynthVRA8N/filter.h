@@ -37,15 +37,20 @@ public:
     m_y_1 = 0;
     m_y_2 = 0;
     m_cutoff_current = 127;
+
     set_cutoff(127);
     set_resonance(0);
     set_cutoff_env_amt(64);
     set_cutoff_lfo_amt(64);
     set_cutoff_exp_amt(0);
     set_expression(127);
-    update_coefs_1st(0, 0);
+
+    update_coefs_0th(0);
+    update_coefs_1st(0);
     update_coefs_2nd();
     update_coefs_3rd();
+    update_coefs_4th();
+    update_coefs_0th(0);
   }
 
   INLINE static void set_cutoff(uint8_t controller_value) {
@@ -105,7 +110,7 @@ public:
       uint8_t idx = (count >> FILTER_CONTROL_INTERVAL_BITS) & 0x03;
       switch (idx) {
       case 0x0:
-        update_coefs_1st(env_gen_input, lfo_input);
+        update_coefs_1st(lfo_input);
         break;
       case 0x1:
         update_coefs_2nd();
@@ -115,6 +120,7 @@ public:
         break;
       case 0x3:
         update_coefs_4th();
+        update_coefs_0th(env_gen_input);
         break;
       }
     }
@@ -141,10 +147,13 @@ public:
   }
 
 private:
-  INLINE static void update_coefs_1st(uint8_t env_gen_input, int16_t lfo_input) {
+  INLINE static void update_coefs_0th(uint8_t env_gen_input) {
     m_cutoff_candidate = m_cutoff;
     m_cutoff_candidate -= high_sbyte(m_cutoff_exp_amt * m_cutoff_expression_decrease);
     m_cutoff_candidate += high_sbyte((m_cutoff_env_gen_amt * env_gen_input) << 1);
+  }
+
+  INLINE static void update_coefs_1st(int16_t lfo_input) {
     int8_t lfo_mod_half = high_sbyte(mul_q15_q7(lfo_input, m_cutoff_lfo_amt) << 1);
     m_cutoff_candidate -= lfo_mod_half;
     m_cutoff_candidate -= lfo_mod_half;
