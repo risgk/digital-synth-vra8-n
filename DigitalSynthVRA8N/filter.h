@@ -107,21 +107,20 @@ public:
 
   INLINE static int16_t clock(uint8_t count, int16_t audio_input, uint8_t env_gen_input, int16_t lfo_input) {
     if ((count & (FILTER_CONTROL_INTERVAL - 1)) == 6) {
-      uint8_t idx = (count >> FILTER_CONTROL_INTERVAL_BITS) & 0x03;
-      switch (idx) {
-      case 0x0:
-        update_coefs_1st(lfo_input);
-        break;
-      case 0x1:
-        update_coefs_2nd();
-        break;
-      case 0x2:
-        update_coefs_3rd();
-        break;
-      case 0x3:
-        update_coefs_4th();
-        update_coefs_0th(env_gen_input);
-        break;
+      static_assert(FILTER_CONTROL_INTERVAL_BITS == 3, "FILTER_CONTROL_INTERVAL_BITS must be 3");
+      if (count & 0x10) {
+        if (count & 0x08) {
+          update_coefs_4th();
+          update_coefs_0th(env_gen_input);
+        } else {
+          update_coefs_3rd();
+        }
+      } else {
+        if (count & 0x08) {
+          update_coefs_2nd();
+        } else {
+          update_coefs_1st(lfo_input);
+        }
       }
     }
 
