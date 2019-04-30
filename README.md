@@ -64,8 +64,9 @@
         - Do not connect the output to a passive speaker/a headphone directly
     - **CAUTION**: Click sounds may occur when you connect the audio out to an amp or reset the board
 - We recommend [Hairless MIDI<->Serial Bridge](http://projectgus.github.io/hairless-midiserial/) to connect PC
-    - **NOTE**: A combination of **MIDI Shield** (MIDI Breakout) and a power supply adapter is *recommended* to avoiding USB noise
+    - **NOTE**: A combination of a **MIDI Shield** (MIDI Breakout) and a **power supply adapter** is *recommended* to avoiding USB noise
         - To use MIDI Shield, edit `SERIAL_SPEED`, `LFO_LED_OUT_ACTIVE`, and `SUBSTITUTE_PIN_D5_FOR_D6_AS_AUDIO_OUT` in `DigitalSynthVRA8N.ino`
+        - Even using only the **power supply adapter** *significantly* reduces USB noise
 - Files
     - `DigitalSynthVRA8N.ino` is a sketch for Arduino/Genuino Uno Rev3 (ATmega328P)
         - Arduino/Genuino Nano 3.x (ATmega328P) can also be used
@@ -75,7 +76,8 @@
     - `generate-*.rb` generates source files
         - Requiring a Ruby execution environment
 - **CAUTION**: We *strongly recommend* **Arduino IDE 1.8.5**
-    - `DigitalSynthVRA8N.ino` *does not work well* with Arduino IDE 1.8.6 or later
+    - In **VRA8-N mini** mode, `DigitalSynthVRA8N.ino` *does not work well* with Arduino IDE 1.8.6 or later
+        - *Not* in **VRA8-N mini** mode, `DigitalSynthVRA8N.ino` works well with even Arduino IDE 1.8.9
     - There is no restriction on a version of Arduino AVR Core
         - You can install the Arduino AVR Core 1.16.21 or later (in the Board Manager) for new Arduino Nano bootloader
 
@@ -138,8 +140,8 @@
 - You need 4 potentiometers and 2 buttons
 - To make the sketch operate as **VRA8-N mini**, edit `ENABLE_VOLTAGE_CONTROL` in `DigitalSynthVRA8N.ino`
     - If you use a MIDI keyboard, comment out the line `#define USE_PITCH_CV_IN`
-- See "cv-in.h"
-- **NOTE**: A power supply adapter is *recommended* to avoiding the swings of voltage values
+- See `cv-in.h`
+- **NOTE**: A **power supply adapter** is *recommended* to avoiding the swings of voltage values
 
 
 ## MIDI Implementation Chart
