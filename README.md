@@ -1,6 +1,6 @@
-# Digital Synth VRA8-N v2.2.0
+# Digital Synth VRA8-N v2.2.x
 
-- 2019-04-30 ISGK Instruments
+- 2019-xx-xx ISGK Instruments
 - <https://github.com/risgk/digital-synth-vra8-n>
 
 
@@ -11,7 +11,9 @@
 
 ## Change History
 
-- v2.2.0
+- v2.3.0 (Major Changes)
+    - Halve the send level of LFO > CUTOFF for smoothness
+- v2.2.0 (Major Changes)
     - Enable Sub Oscillator in **VRA8-N mini** mode
     - Slow down the change speed of OSC MIX and SUB LEVEL
     - Improve stability: Reduce distortion of audio output when processing MIDI data
@@ -146,8 +148,8 @@
 
 ## MIDI Implementation Chart
 
-      [Monophonic Synthesizer]                                        Date: 2019-04-30       
-      Model: Digital Synth VRA8-N     MIDI Implementation Chart       Version: 2.2.0         
+      [Monophonic Synthesizer]                                        Date: 2019-xx-xx       
+      Model: Digital Synth VRA8-N     MIDI Implementation Chart       Version: 2.2.x         
     +-------------------------------+---------------+---------------+-----------------------+
     | Function...                   | Transmitted   | Recognized    | Remarks               |
     +-------------------------------+---------------+---------------+-----------------------+
