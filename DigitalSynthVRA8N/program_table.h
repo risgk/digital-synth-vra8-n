@@ -15,8 +15,8 @@ const uint8_t g_preset_table_SUB_OSC_LEVEL[] = {127, 127, 127, 0  , 0  , 0  , 0 
 const uint8_t g_preset_table_PITCH_EG_AMT [] = {64 , 62 , 64 , 64 , 64 , 72 , 64 , 64 };
 const uint8_t g_preset_table_PITCH_EG_TGT [] = {0  , 127, 0  , 0  , 0  , 127, 0  , 0  };
 
-const uint8_t g_preset_table_FILTER_CUTOFF[] = {76 , 28 , 0  , 127, 127, 118, 127, 127};
-const uint8_t g_preset_table_FILTER_RESO  [] = {80 , 64 , 127, 0  , 0  , 32 , 0  , 0  };
+const uint8_t g_preset_table_FILTER_CUTOFF[] = {64 , 16 , 16 , 112, 112, 106, 127, 127};
+const uint8_t g_preset_table_FILTER_RESO  [] = {96 , 80 , 127, 0  , 0  , 48 , 0  , 0  };
 const uint8_t g_preset_table_CUTOFF_EG_AMT[] = {82 , 112, 94,  64 , 64 , 60 , 64 , 64 };
 const uint8_t g_preset_table_AMP_EG_ON    [] = {127, 0  , 127, 0  , 127, 127, 127, 127};
 
@@ -64,8 +64,8 @@ const uint8_t g_preset_table_SUB_OSC_LEVEL[] = {127, 127, 127, 127, 0  , 0  , 0 
 const uint8_t g_preset_table_PITCH_EG_AMT [] = {64 , 64 , 62 , 64 , 64 , 64 , 72 , 64 };
 const uint8_t g_preset_table_PITCH_EG_TGT [] = {0  , 0  , 127, 0  , 0  , 0  , 127, 0  };
 
-const uint8_t g_preset_table_FILTER_CUTOFF[] = {64 , 76 , 28 , 0  , 127, 127, 118, 127};
-const uint8_t g_preset_table_FILTER_RESO  [] = {64 , 80 , 64 , 127, 0  , 0  , 32 , 0  };
+const uint8_t g_preset_table_FILTER_CUTOFF[] = {64 , 64 , 16 , 16 , 112, 112, 106, 127};
+const uint8_t g_preset_table_FILTER_RESO  [] = {64 , 96 , 80 , 127, 0  , 0  , 48 , 0  };
 const uint8_t g_preset_table_CUTOFF_EG_AMT[] = {64 , 82 , 112, 94,  64 , 64 , 60 , 64 };
 const uint8_t g_preset_table_AMP_EG_ON    [] = {127, 127, 0  , 127, 0  , 127, 127, 127};
 

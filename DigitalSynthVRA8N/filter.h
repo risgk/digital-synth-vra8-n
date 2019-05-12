@@ -53,10 +53,10 @@ public:
 
   INLINE static void set_cutoff(uint8_t controller_value) {
     uint8_t value = controller_value;
-    if (value < 4) {
-      value = 4;
-    } else if (124 < value) {
-      value = 124;
+    if (value < 16) {
+      value = 16;
+    } else if (112 < value) {
+      value = 112;
     }
 
     m_cutoff = value;
@@ -69,10 +69,10 @@ public:
 
   INLINE static void set_cutoff_env_amt(uint8_t controller_value) {
     uint8_t value = controller_value;
-    if (value < 4) {
-      value = 4;
-    } else if (124 < value) {
-      value = 124;
+    if (value < 16) {
+      value = 16;
+    } else if (112 < value) {
+      value = 112;
     }
 
     m_cutoff_env_gen_amt = (value - 64) << 1;
@@ -80,10 +80,10 @@ public:
 
   INLINE static void set_cutoff_lfo_amt(uint8_t controller_value) {
     uint8_t value = controller_value;
-    if (value < 4) {
-      value = 4;
-    } else if (124 < value) {
-      value = 124;
+    if (value < 16) {
+      value = 16;
+    } else if (112 < value) {
+      value = 112;
     }
 
     m_cutoff_lfo_amt = (value - 64) << 1;
@@ -91,10 +91,10 @@ public:
 
   INLINE static void set_cutoff_exp_amt(uint8_t controller_value) {
     uint8_t value = controller_value;
-    if (value < 4) {
-      value = 4;
-    } else if (124 < value) {
-      value = 124;
+    if (value < 16) {
+      value = 16;
+    } else if (112 < value) {
+      value = 112;
     }
 
     m_cutoff_exp_amt = (value - 64) << 1;
