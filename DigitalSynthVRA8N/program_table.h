@@ -25,12 +25,12 @@ const uint8_t g_preset_table_EG_DECAY     [] = {64 , 96 , 96 , 96 , 0  , 32 , 0 
 const uint8_t g_preset_table_EG_SUSTAIN   [] = {127, 0  , 0  , 0  , 127, 96 , 127, 127};
 const uint8_t g_preset_table_EG_RELEASE   [] = {127, 127, 127, 127, 127, 0  , 127, 127};
 
-const uint8_t g_preset_table_LFO_WAVE     [] = {0  , 0  , 0  , 127, 0  , 32 , 0  , 0  };
+const uint8_t g_preset_table_LFO_WAVE     [] = {0  , 0  , 32 , 127, 0  , 32 , 0  , 0  };
 const uint8_t g_preset_table_LFO_RATE     [] = {64 , 64 , 64 , 80 , 64 , 64 , 64 , 64 };
-const uint8_t g_preset_table_PITCH_LFO_AMT[] = {65 , 65 , 64 , 88 , 65 , 65 , 64 , 64 };
+const uint8_t g_preset_table_PITCH_LFO_AMT[] = {66 , 66 , 64 , 88 , 66 , 66 , 64 , 64 };
 const uint8_t g_preset_table_CO_LFO_AMT   [] = {64 , 64 , 40 , 64 , 64 , 64 , 64 , 64 };
 
-const uint8_t g_preset_table_LFO_DEPTH    [] = {16 , 16 , 0  , 0  , 0  , 16 , 0  , 0  };
+const uint8_t g_preset_table_LFO_DEPTH    [] = {8  , 8  , 0  , 0  , 0  , 8  , 0  , 0  };
 const uint8_t g_preset_table_LFO_RT_EG_AMT[] = {64 , 64 , 64 , 72 , 64 , 64 , 64 , 64 };
 const uint8_t g_preset_table_PITCH_LFO_TGT[] = {127, 0  , 0  , 0  , 0  , 0  , 0  , 0  };
 const uint8_t g_preset_table_LFO_FADE_TIME[] = {64 , 64 , 0  , 0  , 0  , 64 , 0  , 0  };
@@ -38,7 +38,7 @@ const uint8_t g_preset_table_LFO_FADE_TIME[] = {64 , 64 , 0  , 0  , 0  , 64 , 0 
 const uint8_t g_preset_table_PB_RANGE     [] = {2  , 2  , 2  , 2  , 12 , 2  , 2  , 2  };
 const uint8_t g_preset_table_CC86         [] = {0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  };
 const uint8_t g_preset_table_CO_EXP_AMT   [] = {64 , 64 , 64 , 64 , 64 , 94 , 64 , 64 };
-const uint8_t g_preset_table_AMP_EXP_AMT  [] = {127, 127, 127, 127, 127, 127, 127, 127};
+const uint8_t g_preset_table_AMP_EXP_AMT  [] = {0  , 0  , 0  , 0  , 0  , 127, 0  , 0  };
 
 const uint8_t g_preset_table_PORTAMENTO   [] = {0  , 32 , 32 , 0  , 0  , 32 , 0  , 0  };
 const uint8_t g_preset_table_LEGATO       [] = {0  , 127, 127, 0  , 0  , 127, 0  , 0  };
@@ -74,12 +74,12 @@ const uint8_t g_preset_table_EG_DECAY     [] = {64 , 64 , 96 , 96 , 96 , 0  , 32
 const uint8_t g_preset_table_EG_SUSTAIN   [] = {127, 127, 0  , 0  , 0  , 127, 96 , 127};
 const uint8_t g_preset_table_EG_RELEASE   [] = {127, 127, 127, 127, 127, 127, 0  , 127};
 
-const uint8_t g_preset_table_LFO_WAVE     [] = {0  , 0  , 0  , 0  , 127, 0  , 32 , 0  };
+const uint8_t g_preset_table_LFO_WAVE     [] = {0  , 0  , 0  , 32 , 127, 0  , 32 , 0  };
 const uint8_t g_preset_table_LFO_RATE     [] = {64 , 64 , 64 , 64 , 80 , 64 , 64 , 64 };
-const uint8_t g_preset_table_PITCH_LFO_AMT[] = {65 , 65 , 65 , 64 , 88 , 65 , 65 , 64 };
+const uint8_t g_preset_table_PITCH_LFO_AMT[] = {65 , 66 , 66 , 64 , 88 , 66 , 66 , 64 };
 const uint8_t g_preset_table_CO_LFO_AMT   [] = {64 , 64 , 64 , 40 , 64 , 64 , 64 , 64 };
 
-const uint8_t g_preset_table_LFO_DEPTH    [] = {16 , 16 , 16 , 0  , 0  , 0  , 16 , 0  };
+const uint8_t g_preset_table_LFO_DEPTH    [] = {16 , 8  , 8  , 0  , 0  , 0  , 8  , 0  };
 const uint8_t g_preset_table_LFO_RT_EG_AMT[] = {64 , 64 , 64 , 64 , 72 , 64 , 64 , 64 };
 const uint8_t g_preset_table_PITCH_LFO_TGT[] = {0  , 127, 0  , 0  , 0  , 0  , 0  , 0  };
 const uint8_t g_preset_table_LFO_FADE_TIME[] = {0  , 64 , 64 , 0  , 0  , 0  , 64 , 0  };
@@ -87,7 +87,7 @@ const uint8_t g_preset_table_LFO_FADE_TIME[] = {0  , 64 , 64 , 0  , 0  , 0  , 64
 const uint8_t g_preset_table_PB_RANGE     [] = {30 , 2  , 2  , 2  , 2  , 12 , 2  , 2  };
 const uint8_t g_preset_table_CC86         [] = {0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  };
 const uint8_t g_preset_table_CO_EXP_AMT   [] = {64 , 64 , 64 , 64 , 64 , 64 , 94 , 64 };
-const uint8_t g_preset_table_AMP_EXP_AMT  [] = {127, 127, 127, 127, 127, 127, 127, 127};
+const uint8_t g_preset_table_AMP_EXP_AMT  [] = {0  , 0  , 0  , 0  , 0  , 0  , 127, 0  };
 
 const uint8_t g_preset_table_PORTAMENTO   [] = {0  , 0  , 32 , 32 , 0  , 0  , 32 , 0  };
 const uint8_t g_preset_table_LEGATO       [] = {0  , 0  , 127, 127, 0  , 0  , 127, 0  };
