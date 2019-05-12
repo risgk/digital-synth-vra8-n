@@ -15,6 +15,7 @@
     - Halve the send level of LFO > CUTOFF for smoothness
     - Change the change range of CUTOFF frequency from 28-124 to 16-112 (64: the center)
     - Change the Q of RESONANCE 64 from 2.8 to 2.0 (No change in the range of Q from 0.7 to 8.0)
+    - Reset Expression at Random Control
     - Rename **VRA8-N mini** to **VRA8-N mode-VC**
 - v2.2.0 (Major Changes)
     - Enable Sub Oscillator in **VRA8-N mini** mode
