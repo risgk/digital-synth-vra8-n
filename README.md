@@ -13,6 +13,7 @@
 
 - v2.3.0 (Major Changes)
     - Halve the send level of LFO > CUTOFF for smoothness
+    - Rename **VRA8-N mini** to **VRA8-N mode-VC**
 - v2.2.0 (Major Changes)
     - Enable Sub Oscillator in **VRA8-N mini** mode
     - Slow down the change speed of OSC MIX and SUB LEVEL
@@ -78,8 +79,8 @@
     - `generate-*.rb` generates source files
         - Requiring a Ruby execution environment
 - **CAUTION**: We *strongly recommend* **Arduino IDE 1.8.5**
-    - In **VRA8-N mini** mode, `DigitalSynthVRA8N.ino` *does not work well* with Arduino IDE 1.8.6 or later
-        - *Not* in **VRA8-N mini** mode, `DigitalSynthVRA8N.ino` works well with even Arduino IDE 1.8.9
+    - In **VRA8-N mode-VC**, `DigitalSynthVRA8N.ino` *does not work well* with Arduino IDE 1.8.6 or later
+        - *Not* in **VRA8-N mode-VC**, `DigitalSynthVRA8N.ino` works well with even Arduino IDE 1.8.9
     - There is no restriction on a version of Arduino AVR Core
         - You can install the Arduino AVR Core 1.16.21 or later (in the Board Manager) for new Arduino Nano bootloader
 
@@ -136,11 +137,11 @@
     +-------------------+---------------+---------------+---------------+
 
 
-## **VRA8-N mini** (Operation Mode)
+## **VRA8-N mode-VC** (Operation Mode)
 
 - Voltage controlled (0-5V)
 - You need 4 potentiometers and 2 buttons
-- To make the sketch operate as **VRA8-N mini**, edit `ENABLE_VOLTAGE_CONTROL` in `DigitalSynthVRA8N.ino`
+- To make the sketch operate as **VRA8-N mode-VC**, edit `ENABLE_VOLTAGE_CONTROL` in `DigitalSynthVRA8N.ino`
     - If you use a MIDI keyboard, comment out the line `#define USE_PITCH_CV_IN`
 - See `cv-in.h`
 - **NOTE**: A **power supply adapter** is *recommended* to avoiding the swings of voltage values
