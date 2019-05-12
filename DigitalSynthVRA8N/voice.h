@@ -1,5 +1,5 @@
 #include "common.h"
-#include "program_table.h"
+#include "program-table.h"
 
 template <uint8_t T>
 class Voice {
