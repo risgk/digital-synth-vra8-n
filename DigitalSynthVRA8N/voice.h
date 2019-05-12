@@ -381,6 +381,8 @@ public:
       control_change(LEGATO       , get_rnd_7());
       control_change(KEY_ASSIGN   , get_rnd_7());
       control_change(EXP_BY_VEL   , get_rnd_7());
+
+      control_change(EXPRESSION   , 127);
     } else {
       if (program_number > PROGRAM_NUMBER_MAX) {
         return;

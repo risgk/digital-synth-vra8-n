@@ -455,6 +455,13 @@ function setRandom() {
   controllersInLocalStorage.forEach(function(i) {
     onChangeControlChange(i, rand(128));
   });
+
+  // Reset EXPRESSION
+  document.getElementById("spanCC11").innerHTML = "-";
+  if (midiOutput) {
+    midiOutput.send([(CONTROL_CHANGE | MIDI_CH), EXPRESSION, 127]);
+    sleep(2);
+  }
 }
 
 function rand(n) {
