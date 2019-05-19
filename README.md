@@ -17,7 +17,7 @@
     - Halve the send level of LFO > CUTOFF for smoothness
     - Change the change range of CUTOFF frequency from 28-124 to 16-112 (64: the center)
     - Change the Q of RESONANCE 64 from 2.8 to 2.0 (No change in the range of Q from 0.7 to 8.0)
-    - Add "OSC LEVEL", "RESONANCE LIMIT", "AMP LEVEL", and "DAMP ATK (OFF/ON)" controls
+    - Add "OSC LEVEL", "RESONANCE LIMIT", "AMP LEVEL", and "DAMP AND ATTACK" controls
     - Reset EXPRESSION at Random Control
 - v2.2.0 (Major Changes)
     - Enable Sub Oscillator in **VRA8-N mini** mode
@@ -127,7 +127,7 @@
     - Values 80-111: Highest Note / Single Trigger
     - Values 112-127: LAST One Note / Multi Trigger
 - "EXP BY VEL (OFF/ON)": EXPRESSION Control By (Note ON) VELOCITY
-- "DAMP ATK (OFF/ON)": DAMP the EG level to zero before ATTACK
+- "DAMP AND ATTACK": DAMP the EG level to zero before ATTACK (0-63: Off, 64: Slowest, 127: Fastest)
 
 
 ## A Sample Setting of a Physical Controller (8-Knob)
@@ -222,7 +222,7 @@
     |                           108 | x             | o             | OSC LEVEL             |
     |                           109 | x             | o             | RESONANCE LIMIT       |
     |                           110 | x             | o             | AMP LEVEL             |
-    |                           111 | x             | o             | DAMP ATK (OFF/ON)     |
+    |                           111 | x             | o             | DAMP AND ATTACK       |
     |                               |               |               |                       |
     |                   90, 112-119 | x             | x             | (RESERVED)            |
     +-------------------------------+---------------+---------------+-----------------------+

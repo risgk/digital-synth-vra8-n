@@ -204,7 +204,7 @@ presetControllers[EXP_BY_VEL   ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
 presetControllers[OSC_LEVEL    ] = [80 , 80 , 80 , 80 , 80 , 120, 80 , 80 ];
 presetControllers[RESO_LIMIT   ] = [127, 127, 127, 127, 127, 96 , 127, 127];
 presetControllers[AMP_LEVEL    ] = [127, 127, 127, 127, 127, 114, 127, 127];
-presetControllers[DAMP_ATK     ] = [0  , 0  , 0  , 0  , 0  , 127, 0  , 0  ];
+presetControllers[DAMP_ATK     ] = [0  , 0  , 0  , 0  , 0  , 64 , 0  , 0  ];
 
 const PRESET_NUMBER_NEUTRAL = 7;
 </script>
@@ -732,7 +732,7 @@ function noteOff(noteNumber) {
 <tr><td>OSC LEVEL             </td><td></td>
     <td>RESONANCE LIMIT       </td><td></td>
     <td>AMP LEVEL             </td><td></td>
-    <td>DAMP ATK (OFF/ON)     </td><td></td></tr>
+    <td>DAMP AND ATTACK       </td><td></td></tr>
 <tr><td><input id="inputCC108" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(OSC_LEVEL, value)"></td>
     <td><span   id="spanCC108">-1</span></td>
     <td><input id="inputCC109" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(RESO_LIMIT, value)"></td>
