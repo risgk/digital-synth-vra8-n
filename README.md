@@ -12,6 +12,7 @@
 ## Change History
 
 - v2.3.0 (Major Changes)
+    - Fix the issue that RANDOM of LFO and the fluctuation of OSCs do not work
     - Rename **VRA8-N mini** to **VRA8-N mode-VC**
     - Does not support Arduino Nano 3.x (because the sketch uses more than 30720 bytes of program storage space)
     - Halve the send level of LFO > CUTOFF for smoothness

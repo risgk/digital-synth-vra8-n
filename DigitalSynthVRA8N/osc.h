@@ -395,8 +395,8 @@ public:
         ++m_rnd_cnt;
         if ((m_rnd_cnt & 0x07) == 0x00) {
           update_rnd_1st();
-        } else if ((m_rnd_cnt & 0x07) == 0x04) {
           update_rnd_2nd();
+        } else if ((m_rnd_cnt & 0x07) == 0x04) {
         } else if ((m_rnd_cnt & 0x03) == 0x01) {
           update_mix_1st();
         } else if ((m_rnd_cnt & 0x03) == 0x03) {
@@ -427,8 +427,8 @@ public:
       case (0xD << OSC_CONTROL_INTERVAL_BITS):
         if ((m_rnd_cnt & 0x07) == 0x00) {
           update_rnd_1st();
-        } else if ((m_rnd_cnt & 0x07) == 0x04) {
           update_rnd_2nd();
+        } else if ((m_rnd_cnt & 0x07) == 0x04) {
         } else if ((m_rnd_cnt & 0x01) == 0x01) {
           update_sub_waveform();
         }
