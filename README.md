@@ -218,7 +218,12 @@
     |                            87 | x             | o             | K. ASN (L/L/P/H/LST)  |
     |                            89 | x             | o             | EXP BY VEL (OFF/ON)   |
     |                               |               |               |                       |
-    |                   112-119, 90 | x             | x             | (RESERVED)            |
+    |                           108 | x             | o             | OSC LEVEL             |
+    |                           109 | x             | o             | RESONANCE LIMIT       |
+    |                           110 | x             | o             | AMP LEVEL             |
+    |                           111 | x             | o             | DAMP ATK (OFF/ON)     |
+    |                               |               |               |                       |
+    |                   90, 112-119 | x             | x             | (RESERVED)            |
     +-------------------------------+---------------+---------------+-----------------------+
     | Program                       | x             | o             |                       |
     | Change       : True #         | ************* | 0-7           |                       |

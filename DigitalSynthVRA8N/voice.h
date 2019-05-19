@@ -325,6 +325,19 @@ public:
       }
       break;
 
+    case OSC_LEVEL:
+      // TODO
+      break;
+    case RESO_LIMIT:
+      // TODO
+      break;
+    case AMP_LEVEL:
+      // TODO
+      break;
+    case DAMP_ATK:
+      // TODO
+      break;
+
     case ALL_NOTES_OFF:
     case OMNI_MODE_OFF:
     case OMNI_MODE_ON:
@@ -427,6 +440,11 @@ public:
       control_change(LEGATO       , g_preset_table_LEGATO       [program_number]);
       control_change(KEY_ASSIGN   , g_preset_table_KEY_ASSIGN   [program_number]);
       control_change(EXP_BY_VEL   , g_preset_table_EXP_BY_VEL   [program_number]);
+
+      control_change(OSC_LEVEL    , g_preset_table_OSC_LEVEL    [program_number]);
+      control_change(RESO_LIMIT   , g_preset_table_RESO_LIMIT   [program_number]);
+      control_change(AMP_LEVEL    , g_preset_table_AMP_LEVEL    [program_number]);
+      control_change(DAMP_ATK     , g_preset_table_DAMP_ATK     [program_number]);
     }
   }
 
