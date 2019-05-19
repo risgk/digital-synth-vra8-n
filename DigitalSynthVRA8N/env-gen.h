@@ -18,9 +18,10 @@ class EnvGen {
   static uint8_t  m_release_update_coef;
   static uint16_t m_sustain;
   static uint8_t  m_rest;
+  static uint8_t  m_gain;
   static uint8_t  m_expression;
   static uint8_t  m_amp_exp_amt;
-  static uint8_t  m_expression_coef;
+  static uint8_t  m_gain_coef;
   static boolean  m_damp_atk;
 
 public:
@@ -32,6 +33,7 @@ public:
     set_decay(0);
     set_sustain(127);
     set_release(0);
+    set_gain(127);
     set_expression(127);
     set_amp_exp_amt(127);
     m_damp_atk = false;
@@ -59,15 +61,20 @@ public:
     }
   }
 
+  INLINE static void set_gain(uint8_t controller_value) {
+    m_gain = (controller_value << 1) + 1;
+    update_gain_coef();
+  }
+
   // EXPRESSION is processed here (not in Amp) for performance reasons
   INLINE static void set_expression(uint8_t controller_value) {
     m_expression = (controller_value << 1) + 1;
-    update_expression_coef();
+    update_gain_coef();
   }
 
   INLINE static void set_amp_exp_amt(uint8_t controller_value) {
     m_amp_exp_amt = (controller_value << 1) + 1;
-    update_expression_coef();
+    update_gain_coef();
   }
 
   INLINE static void set_damp_atk(uint8_t controller_value) {
@@ -154,7 +161,7 @@ public:
       }
 
       if (T == 1) {
-        m_levelOut = high_byte(high_byte(m_level) * m_expression_coef) << 1;
+        m_levelOut = high_byte(high_byte(m_level) * m_gain_coef) << 1;
         if (m_levelOut < 4) {
           m_levelOut = 0;
         }
@@ -167,9 +174,9 @@ public:
   }
 
 private:
-  INLINE static void update_expression_coef() {
+  INLINE static void update_gain_coef() {
     uint8_t expression = 255 - high_byte(static_cast<uint8_t>(255 - m_expression) * m_amp_exp_amt);
-    m_expression_coef = high_byte(expression * expression);
+    m_gain_coef = high_byte((high_byte(expression * expression) + 1) * m_gain);
   }
 };
 
@@ -181,7 +188,8 @@ template <uint8_t T> uint8_t  EnvGen<T>::m_decay_update_coef;
 template <uint8_t T> uint8_t  EnvGen<T>::m_release_update_coef;
 template <uint8_t T> uint16_t EnvGen<T>::m_sustain;
 template <uint8_t T> uint8_t  EnvGen<T>::m_rest;
+template <uint8_t T> uint8_t  EnvGen<T>::m_gain;
 template <uint8_t T> uint8_t  EnvGen<T>::m_expression;
 template <uint8_t T> uint8_t  EnvGen<T>::m_amp_exp_amt;
-template <uint8_t T> uint8_t  EnvGen<T>::m_expression_coef;
+template <uint8_t T> uint8_t  EnvGen<T>::m_gain_coef;
 template <uint8_t T> boolean  EnvGen<T>::m_damp_atk;

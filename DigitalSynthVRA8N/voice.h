@@ -332,7 +332,7 @@ public:
       IFilter<0>::set_resonance_limit(controller_value);
       break;
     case AMP_LEVEL:
-      // TODO
+      IEnvGen<1>::set_gain(controller_value);
       break;
     case DAMP_ATK:
       IEnvGen<0>::set_damp_atk(controller_value);
