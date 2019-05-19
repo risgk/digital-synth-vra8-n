@@ -1,5 +1,5 @@
 #include "common.h"
-#include "program_table.h"
+#include "program-table.h"
 
 template <uint8_t T>
 class Voice {
@@ -325,6 +325,20 @@ public:
       }
       break;
 
+    case OSC_LEVEL:
+      IOsc<0>::set_osc_level(controller_value);
+      break;
+    case RESO_LIMIT:
+      IFilter<0>::set_resonance_limit(controller_value);
+      break;
+    case AMP_LEVEL:
+      IEnvGen<1>::set_gain(controller_value);
+      break;
+    case DAMP_ATK:
+      IEnvGen<0>::set_damp_atk(controller_value);
+      IEnvGen<1>::set_damp_atk(controller_value);
+      break;
+
     case ALL_NOTES_OFF:
     case OMNI_MODE_OFF:
     case OMNI_MODE_ON:
@@ -381,6 +395,8 @@ public:
       control_change(LEGATO       , get_rnd_7());
       control_change(KEY_ASSIGN   , get_rnd_7());
       control_change(EXP_BY_VEL   , get_rnd_7());
+
+      control_change(EXPRESSION   , 127);
     } else {
       if (program_number > PROGRAM_NUMBER_MAX) {
         return;
@@ -425,6 +441,11 @@ public:
       control_change(LEGATO       , g_preset_table_LEGATO       [program_number]);
       control_change(KEY_ASSIGN   , g_preset_table_KEY_ASSIGN   [program_number]);
       control_change(EXP_BY_VEL   , g_preset_table_EXP_BY_VEL   [program_number]);
+
+      control_change(OSC_LEVEL    , g_preset_table_OSC_LEVEL    [program_number]);
+      control_change(RESO_LIMIT   , g_preset_table_RESO_LIMIT   [program_number]);
+      control_change(AMP_LEVEL    , g_preset_table_AMP_LEVEL    [program_number]);
+      control_change(DAMP_ATK     , g_preset_table_DAMP_ATK     [program_number]);
     }
   }
 

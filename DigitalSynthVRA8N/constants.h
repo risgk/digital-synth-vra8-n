@@ -96,6 +96,11 @@ const uint8_t   LEGATO        = 30;
 const uint8_t   KEY_ASSIGN    = 87;
 const uint8_t   EXP_BY_VEL    = 89;
 
+const uint8_t   OSC_LEVEL     = 108;
+const uint8_t   RESO_LIMIT    = 109;
+const uint8_t   AMP_LEVEL     = 110;
+const uint8_t   DAMP_ATK      = 111;
+
 const uint8_t   ALL_NOTES_OFF = 123;
 const uint8_t   OMNI_MODE_OFF = 124;
 const uint8_t   OMNI_MODE_ON  = 125;

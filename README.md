@@ -1,6 +1,6 @@
-# Digital Synth VRA8-N v2.2.1
+# Digital Synth VRA8-N v2.2.x
 
-- 2019-05-19 ISGK Instruments
+- 2019-xx-xx ISGK Instruments
 - <https://github.com/risgk/digital-synth-vra8-n>
 
 
@@ -11,6 +11,14 @@
 
 ## Change History
 
+- v2.3.0 (Major Changes)
+    - Rename **VRA8-N mini** to **VRA8-N mode-VC**
+    - Does not support Arduino Nano 3.x (because the sketch uses more than 30720 bytes of program storage space)
+    - Halve the send level of LFO > CUTOFF for smoothness
+    - Change the change range of CUTOFF frequency from 28-124 to 16-112 (64: the center)
+    - Change the Q of RESONANCE 64 from 2.8 to 2.0 (No change in the range of Q from 0.7 to 8.0)
+    - Add "OSC LEVEL", "RESONANCE LIMIT", "AMP LEVEL", and "DAMP AND ATTACK" controls
+    - Reset EXPRESSION at Random Control
 - v2.2.1
     - Fix the issue that RANDOM of LFO and the fluctuation of OSCs do not work
 - v2.2.0 (Major Changes)
@@ -71,17 +79,15 @@
         - Even using only the **power supply adapter** *significantly* reduces USB noise
 - Files
     - `DigitalSynthVRA8N.ino` is a sketch for Arduino/Genuino Uno Rev3 (ATmega328P)
-        - Arduino/Genuino Nano 3.x (ATmega328P) can also be used
     - `make-sample-wav-file.cc` is for Debugging on PC
         - Requiring GCC (g++) or other
         - `make-sample-wav-file-cc.bat` makes a sample WAV file (working on Windows)
     - `generate-*.rb` generates source files
         - Requiring a Ruby execution environment
 - **CAUTION**: We *strongly recommend* **Arduino IDE 1.8.5**
-    - In **VRA8-N mini** mode, `DigitalSynthVRA8N.ino` *does not work well* with Arduino IDE 1.8.6 or later
-        - *Not* in **VRA8-N mini** mode, `DigitalSynthVRA8N.ino` works well with even Arduino IDE 1.8.9
+    - In **VRA8-N mode-VC**, `DigitalSynthVRA8N.ino` *does not work well* with Arduino IDE 1.8.6 or later
+        - *Not* in **VRA8-N mode-VC**, `DigitalSynthVRA8N.ino` works well with even Arduino IDE 1.8.9
     - There is no restriction on a version of Arduino AVR Core
-        - You can install the Arduino AVR Core 1.16.21 or later (in the Board Manager) for new Arduino Nano bootloader
 
 
 ## VRA8-N CTRL
@@ -123,6 +129,7 @@
     - Values 80-111: Highest Note / Single Trigger
     - Values 112-127: LAST One Note / Multi Trigger
 - "EXP BY VEL (OFF/ON)": EXPRESSION Control By (Note ON) VELOCITY
+- "DAMP AND ATTACK": DAMP the EG level to zero before ATTACK (0-63: Off, 64: Slowest, 127: Fastest)
 
 
 ## A Sample Setting of a Physical Controller (8-Knob)
@@ -136,11 +143,11 @@
     +-------------------+---------------+---------------+---------------+
 
 
-## **VRA8-N mini** (Operation Mode)
+## **VRA8-N mode-VC** (Operation Mode)
 
 - Voltage controlled (0-5V)
 - You need 4 potentiometers and 2 buttons
-- To make the sketch operate as **VRA8-N mini**, edit `ENABLE_VOLTAGE_CONTROL` in `DigitalSynthVRA8N.ino`
+- To make the sketch operate as **VRA8-N mode-VC**, edit `ENABLE_VOLTAGE_CONTROL` in `DigitalSynthVRA8N.ino`
     - If you use a MIDI keyboard, comment out the line `#define USE_PITCH_CV_IN`
 - See `cv-in.h`
 - **NOTE**: A **power supply adapter** is *recommended* to avoiding the swings of voltage values
@@ -148,8 +155,8 @@
 
 ## MIDI Implementation Chart
 
-      [Monophonic Synthesizer]                                        Date: 2019-05-19       
-      Model: Digital Synth VRA8-N     MIDI Implementation Chart       Version: 2.2.1         
+      [Monophonic Synthesizer]                                        Date: 2019-xx-xx       
+      Model: Digital Synth VRA8-N     MIDI Implementation Chart       Version: 2.2.x         
     +-------------------------------+---------------+---------------+-----------------------+
     | Function...                   | Transmitted   | Recognized    | Remarks               |
     +-------------------------------+---------------+---------------+-----------------------+
@@ -214,7 +221,12 @@
     |                            87 | x             | o             | K. ASN (L/L/P/H/LST)  |
     |                            89 | x             | o             | EXP BY VEL (OFF/ON)   |
     |                               |               |               |                       |
-    |                   112-119, 90 | x             | x             | (RESERVED)            |
+    |                           108 | x             | o             | OSC LEVEL             |
+    |                           109 | x             | o             | RESONANCE LIMIT       |
+    |                           110 | x             | o             | AMP LEVEL             |
+    |                           111 | x             | o             | DAMP AND ATTACK       |
+    |                               |               |               |                       |
+    |                   90, 112-119 | x             | x             | (RESERVED)            |
     +-------------------------------+---------------+---------------+-----------------------+
     | Program                       | x             | o             |                       |
     | Change       : True #         | ************* | 0-7           |                       |
