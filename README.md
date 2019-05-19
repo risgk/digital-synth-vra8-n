@@ -127,6 +127,7 @@
     - Values 80-111: Highest Note / Single Trigger
     - Values 112-127: LAST One Note / Multi Trigger
 - "EXP BY VEL (OFF/ON)": EXPRESSION Control By (Note ON) VELOCITY
+- "DAMP ATK (OFF/ON)": DAMP the EG level to zero before ATTACK
 
 
 ## A Sample Setting of a Physical Controller (8-Knob)

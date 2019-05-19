@@ -335,7 +335,8 @@ public:
       // TODO
       break;
     case DAMP_ATK:
-      // TODO
+      IEnvGen<0>::set_damp_atk(controller_value);
+      IEnvGen<1>::set_damp_atk(controller_value);
       break;
 
     case ALL_NOTES_OFF:

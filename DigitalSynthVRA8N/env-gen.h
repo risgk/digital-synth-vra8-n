@@ -5,9 +5,10 @@
 
 template <uint8_t T>
 class EnvGen {
-  static const uint8_t STATE_ATTACK  = 0;
-  static const uint8_t STATE_SUSTAIN = 1;
-  static const uint8_t STATE_IDLE    = 2;
+  static const uint8_t STATE_ATTACK             = 0;
+  static const uint8_t STATE_SUSTAIN            = 1;
+  static const uint8_t STATE_IDLE               = 2;
+  static const uint8_t STATE_DAMP_BEFORE_ATTACK = 3;
 
   static uint8_t  m_state;
   static uint16_t m_level;
@@ -20,6 +21,7 @@ class EnvGen {
   static uint8_t  m_expression;
   static uint8_t  m_amp_exp_amt;
   static uint8_t  m_expression_coef;
+  static boolean  m_damp_atk;
 
 public:
   INLINE static void initialize() {
@@ -32,6 +34,7 @@ public:
     set_release(0);
     set_expression(127);
     set_amp_exp_amt(127);
+    m_damp_atk = false;
   }
 
   INLINE static void set_attack(uint8_t controller_value) {
@@ -67,9 +70,22 @@ public:
     update_expression_coef();
   }
 
+  INLINE static void set_damp_atk(uint8_t controller_value) {
+    if (controller_value < 64) {
+      m_damp_atk = false;
+    } else {
+      m_damp_atk = true;
+    }
+  }
+
   INLINE static void note_on() {
-    m_state = STATE_ATTACK;
-    m_rest = m_attack_update_coef;
+    if (m_damp_atk && (m_level > 0)) {
+      m_state = STATE_DAMP_BEFORE_ATTACK;
+      m_rest = 1;
+    } else {
+      m_state = STATE_ATTACK;
+      m_rest = m_attack_update_coef;
+    }
   }
 
   INLINE static void note_off() {
@@ -93,6 +109,7 @@ public:
           }
         }
         break;
+
       case STATE_SUSTAIN:
         --m_rest;
         if (m_rest == 0) {
@@ -106,6 +123,7 @@ public:
           }
         }
         break;
+
       case STATE_IDLE:
         --m_rest;
         if (m_rest == 0) {
@@ -114,6 +132,21 @@ public:
             m_level = mul_q16_q8(m_level, 188 + m_release_update_coef);
             if (m_level < 0x0100) {
               m_level = 0;
+            }
+          }
+        }
+        break;
+
+      case STATE_DAMP_BEFORE_ATTACK:
+        --m_rest;
+        if (m_rest == 0) {
+          m_rest = 1;
+          if (m_level > 0) {
+            m_level = mul_q16_q8(m_level, 128);
+            if (m_level < 0x0100) {
+              m_level = 0;
+              m_state = STATE_ATTACK;
+              m_rest = m_attack_update_coef;
             }
           }
         }
@@ -151,3 +184,4 @@ template <uint8_t T> uint8_t  EnvGen<T>::m_rest;
 template <uint8_t T> uint8_t  EnvGen<T>::m_expression;
 template <uint8_t T> uint8_t  EnvGen<T>::m_amp_exp_amt;
 template <uint8_t T> uint8_t  EnvGen<T>::m_expression_coef;
+template <uint8_t T> boolean  EnvGen<T>::m_damp_atk;
