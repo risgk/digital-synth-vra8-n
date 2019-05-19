@@ -12,7 +12,7 @@ class EnvGen {
 
   static uint8_t  m_state;
   static uint16_t m_level;
-  static uint8_t  m_levelOut;
+  static uint8_t  m_level_out;
   static uint8_t  m_attack_update_coef;
   static uint8_t  m_decay_update_coef;
   static uint8_t  m_release_update_coef;
@@ -28,7 +28,7 @@ public:
   INLINE static void initialize() {
     m_state = STATE_IDLE;
     m_level = 0;
-    m_levelOut = 0;
+    m_level_out = 0;
     set_attack(0);
     set_decay(0);
     set_sustain(127);
@@ -157,16 +157,16 @@ public:
       }
 
       if (T == 1) {
-        m_levelOut = high_byte(high_byte(m_level) * m_gain_coef) << 1;
-        if (m_levelOut < 4) {
-          m_levelOut = 0;
+        m_level_out = high_byte(high_byte(m_level) * m_gain_coef) << 1;
+        if (m_level_out < 4) {
+          m_level_out = 0;
         }
       } else {
-        m_levelOut = high_byte(m_level);
+        m_level_out = high_byte(m_level);
       }
     }
 
-    return m_levelOut;
+    return m_level_out;
   }
 
 private:
@@ -178,7 +178,7 @@ private:
 
 template <uint8_t T> uint8_t  EnvGen<T>::m_state;
 template <uint8_t T> uint16_t EnvGen<T>::m_level;
-template <uint8_t T> uint8_t  EnvGen<T>::m_levelOut;
+template <uint8_t T> uint8_t  EnvGen<T>::m_level_out;
 template <uint8_t T> uint8_t  EnvGen<T>::m_attack_update_coef;
 template <uint8_t T> uint8_t  EnvGen<T>::m_decay_update_coef;
 template <uint8_t T> uint8_t  EnvGen<T>::m_release_update_coef;
