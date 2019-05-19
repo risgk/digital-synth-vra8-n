@@ -12,7 +12,6 @@
 ## Change History
 
 - v2.3.0 (Major Changes)
-    - Fix the issue that RANDOM of LFO and the fluctuation of OSCs do not work
     - Rename **VRA8-N mini** to **VRA8-N mode-VC**
     - Does not support Arduino Nano 3.x (because the sketch uses more than 30720 bytes of program storage space)
     - Halve the send level of LFO > CUTOFF for smoothness
@@ -20,6 +19,8 @@
     - Change the Q of RESONANCE 64 from 2.8 to 2.0 (No change in the range of Q from 0.7 to 8.0)
     - Add "OSC LEVEL", "RESONANCE LIMIT", "AMP LEVEL", and "DAMP AND ATTACK" controls
     - Reset EXPRESSION at Random Control
+- v2.2.1
+    - Fix the issue that RANDOM of LFO and the fluctuation of OSCs do not work
 - v2.2.0 (Major Changes)
     - Enable Sub Oscillator in **VRA8-N mini** mode
     - Slow down the change speed of OSC MIX and SUB LEVEL
