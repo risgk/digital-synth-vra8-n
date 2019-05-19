@@ -326,7 +326,7 @@ public:
       break;
 
     case OSC_LEVEL:
-      // TODO
+      IOsc<0>::set_osc_level(controller_value);
       break;
     case RESO_LIMIT:
       IFilter<0>::set_resonance_limit(controller_value);
