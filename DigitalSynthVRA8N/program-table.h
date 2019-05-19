@@ -48,7 +48,7 @@ const uint8_t g_preset_table_EXP_BY_VEL   [] = {0  , 0  , 0  , 0  , 0  , 0  , 0 
 const uint8_t g_preset_table_OSC_LEVEL    [] = {64 , 64 , 64 , 64 , 64 , 64 , 64 , 64 };
 const uint8_t g_preset_table_RESO_LIMIT   [] = {127, 127, 127, 127, 127, 127, 127, 127};
 const uint8_t g_preset_table_AMP_LEVEL    [] = {127, 127, 127, 127, 127, 127, 127, 127};
-const uint8_t g_preset_table_DAMP_ATK     [] = {0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  };
+const uint8_t g_preset_table_DAMP_ATK     [] = {0  , 0  , 0  , 0  , 0  , 127, 0  , 0  };
 
 
 
@@ -102,6 +102,6 @@ const uint8_t g_preset_table_EXP_BY_VEL   [] = {0  , 0  , 0  , 0  , 0  , 0  , 0 
 const uint8_t g_preset_table_OSC_LEVEL    [] = {64 , 64 , 64 , 64 , 64 , 64 , 64 , 64 };
 const uint8_t g_preset_table_RESO_LIMIT   [] = {127, 127, 127, 127, 127, 127, 127, 127};
 const uint8_t g_preset_table_AMP_LEVEL    [] = {127, 127, 127, 127, 127, 127, 127, 127};
-const uint8_t g_preset_table_DAMP_ATK     [] = {0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  };
+const uint8_t g_preset_table_DAMP_ATK     [] = {0  , 0  , 0  , 0  , 0  , 0  , 127, 0  };
 
 #endif
