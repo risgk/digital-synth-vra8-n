@@ -112,7 +112,7 @@ public:
           m_rest = m_release_update_coef;
           if (m_level > 0) {
             m_level = mul_q16_q8(m_level, 188 + m_release_update_coef);
-            if (m_level < ((T == 0) ? 0x0100 : 0x0400 /* gate for amp */)) {
+            if (m_level < 0x0100) {
               m_level = 0;
             }
           }
@@ -122,6 +122,9 @@ public:
 
       if (T == 1) {
         m_levelOut = high_byte(high_byte(m_level) * m_expression_coef) << 1;
+        if (m_levelOut < 4) {
+          m_levelOut = 0;
+        }
       } else {
         m_levelOut = high_byte(m_level);
       }
@@ -134,9 +137,6 @@ private:
   INLINE static void update_expression_coef() {
     uint8_t expression = 255 - high_byte(static_cast<uint8_t>(255 - m_expression) * m_amp_exp_amt);
     m_expression_coef = high_byte(expression * expression);
-    if (m_expression_coef < 6) {
-      m_expression_coef = 0;
-    }
   }
 };
 
