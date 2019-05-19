@@ -11,7 +11,9 @@
 
 ## Change History
 
-- v2.2.0
+- v2.2.1
+    - Fix the issue that RANDOM of LFO and the fluctuation of OSCs do not work
+- v2.2.0 (Major Changes)
     - Enable Sub Oscillator in **VRA8-N mini** mode
     - Slow down the change speed of OSC MIX and SUB LEVEL
     - Improve stability: Reduce distortion of audio output when processing MIDI data
