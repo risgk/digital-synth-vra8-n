@@ -12,11 +12,13 @@
 ## Change History
 
 - v2.3.0 (Major Changes)
+    - Rename **VRA8-N mini** to **VRA8-N mode-VC**
+    - Does not support Arduino Nano 3.x (because the sketch uses more than 30720 bytes of program storage space)
     - Halve the send level of LFO > CUTOFF for smoothness
     - Change the change range of CUTOFF frequency from 28-124 to 16-112 (64: the center)
     - Change the Q of RESONANCE 64 from 2.8 to 2.0 (No change in the range of Q from 0.7 to 8.0)
-    - Reset Expression at Random Control
-    - Rename **VRA8-N mini** to **VRA8-N mode-VC**
+    - Add "OSC LEVEL", "RESONANCE LIMIT", "AMP LEVEL", and "DAMP ATK (OFF/ON)" controls
+    - Reset EXPRESSION at Random Control
 - v2.2.0 (Major Changes)
     - Enable Sub Oscillator in **VRA8-N mini** mode
     - Slow down the change speed of OSC MIX and SUB LEVEL
@@ -75,7 +77,6 @@
         - Even using only the **power supply adapter** *significantly* reduces USB noise
 - Files
     - `DigitalSynthVRA8N.ino` is a sketch for Arduino/Genuino Uno Rev3 (ATmega328P)
-        - Arduino/Genuino Nano 3.x (ATmega328P) can also be used
     - `make-sample-wav-file.cc` is for Debugging on PC
         - Requiring GCC (g++) or other
         - `make-sample-wav-file-cc.bat` makes a sample WAV file (working on Windows)
@@ -85,7 +86,6 @@
     - In **VRA8-N mode-VC**, `DigitalSynthVRA8N.ino` *does not work well* with Arduino IDE 1.8.6 or later
         - *Not* in **VRA8-N mode-VC**, `DigitalSynthVRA8N.ino` works well with even Arduino IDE 1.8.9
     - There is no restriction on a version of Arduino AVR Core
-        - You can install the Arduino AVR Core 1.16.21 or later (in the Board Manager) for new Arduino Nano bootloader
 
 
 ## VRA8-N CTRL
