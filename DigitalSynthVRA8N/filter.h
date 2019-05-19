@@ -23,6 +23,8 @@ class Filter {
   static int8_t          m_cutoff_lfo_amt;
   static uint8_t         m_cutoff_expression_decrease;
   static int8_t          m_cutoff_exp_amt;
+  static uint8_t         m_resonance;
+  static uint8_t         m_resonance_limit;
 
   static const uint8_t AUDIO_FRACTION_BITS = 14;
   static const int16_t MAX_ABS_OUTPUT = ((124 << (AUDIO_FRACTION_BITS - 8)) >> 8) << 8;
@@ -39,6 +41,7 @@ public:
     m_cutoff_current = 127;
 
     set_cutoff(127);
+    set_resonance_limit(127);
     set_resonance(0);
     set_cutoff_env_amt(64);
     set_cutoff_lfo_amt(64);
@@ -63,8 +66,13 @@ public:
   }
 
   INLINE static void set_resonance(uint8_t controller_value) {
-    uint8_t index = (controller_value + 4) >> 4;
-    m_lpf_table = g_filter_lpf_tables[index];
+    m_resonance = controller_value;
+    update_resonance();
+  }
+
+  INLINE static void set_resonance_limit(uint8_t controller_value) {
+    m_resonance_limit = controller_value;
+    update_resonance();
   }
 
   INLINE static void set_cutoff_env_amt(uint8_t controller_value) {
@@ -184,6 +192,16 @@ private:
     m_a_2_over_a_0 = (m_b_2_over_a_0 << 2) - m_a_1_over_a_0 -
                      (1 << FILTER_TABLE_FRACTION_BITS);
   }
+
+  INLINE static void update_resonance() {
+    uint8_t controller_value = m_resonance;
+    if (controller_value > m_resonance_limit) {
+      controller_value = m_resonance_limit;
+    }
+
+    uint8_t index = (controller_value + 4) >> 4;
+    m_lpf_table = g_filter_lpf_tables[index];
+  }
 };
 
 template <uint8_t T> const uint16_t* Filter<T>::m_lpf_table;
@@ -201,3 +219,5 @@ template <uint8_t T> int8_t          Filter<T>::m_cutoff_env_gen_amt;
 template <uint8_t T> int8_t          Filter<T>::m_cutoff_lfo_amt;
 template <uint8_t T> uint8_t         Filter<T>::m_cutoff_expression_decrease;
 template <uint8_t T> int8_t          Filter<T>::m_cutoff_exp_amt;
+template <uint8_t T> uint8_t         Filter<T>::m_resonance;
+template <uint8_t T> uint8_t         Filter<T>::m_resonance_limit;

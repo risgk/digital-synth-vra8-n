@@ -329,7 +329,7 @@ public:
       // TODO
       break;
     case RESO_LIMIT:
-      // TODO
+      IFilter<0>::set_resonance_limit(controller_value);
       break;
     case AMP_LEVEL:
       // TODO
