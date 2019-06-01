@@ -7,16 +7,16 @@
 #define USE_CV_0      // CUTOFF       (Connect a potentiometer or a CV input)
 #define USE_CV_1      // RESONANCE    (Connect a potentiometer or a CV input)
 #define USE_CV_2      // OSC MIX      (Connect a potentiometer or a CV input)  // For MIDI Shield, comment out this line
-#define USE_CV_3      // Pitch CV In  (Connect a potentiometer or a CV input)  // For MIDI Shield, comment out this line
+#define USE_CV_3      // Pitch CV     (Connect a potentiometer or a CV input)  // For MIDI Shield, comment out this line
 //#define USE_CV_4      // OSC WAVE     (Connect a potentiometer or a CV input)  // For MIDI Shield, comment out this line
-//#define USE_CV_5      // GATE In      (Connect a potentiometer or a CV input)  // For MIDI Shield, comment out this line
+//#define USE_CV_5      // GATE Signal  (Connect a potentiometer or a CV input)  // For MIDI Shield, comment out this line
 
-#define CV_0_ADC_NO  (0)
-#define CV_1_ADC_NO  (1)
-#define CV_2_ADC_NO  (2)
-#define CV_3_ADC_NO  (3)
-#define CV_4_ADC_NO  (4)
-#define CV_5_ADC_NO  (5)
+#define CV_0_ADC_NO (0)
+#define CV_1_ADC_NO (1)
+#define CV_2_ADC_NO (2)
+#define CV_3_ADC_NO (3) // (4)
+#define CV_4_ADC_NO (4) // (3)
+#define CV_5_ADC_NO (5)
 
 #define ANALOG_INPUT_REVERSED (false)
 

@@ -143,14 +143,21 @@
     +-------------------+---------------+---------------+---------------+
 
 
-## **VRA8-N mode-VC** (Operation Mode)
+## **VRA8-N mode-VC** (Alternative Operation Mode)
 
-- Voltage controlled (0-5V)
-- You need 4 potentiometers and 2 buttons
+- VRA8-N is **Voltage Controlled** by 0-5V signals
+- By default, you need 4 potentiometers and 2 buttons
+    - A0: CUTOFF
+    - A1: RESONANCE
+    - A2: OSC MIX
+    - A3: Pitch CV In (0V: Note OFF)
+    - D2: Change the PROGRAM (#0, ..., #7, Random Control)
+    - D4: Change the SCALE MODE
 - To make the sketch operate as **VRA8-N mode-VC**, edit `ENABLE_VOLTAGE_CONTROL` in `DigitalSynthVRA8N.ino`
     - If you use a MIDI keyboard, comment out the line `#define USE_PITCH_CV_IN`
 - See `cv-in.h`
-- **NOTE**: A **power supply adapter** is *recommended* to avoiding the swings of voltage values
+    - If you use a GATE Signal (A5), cancel comment out of the line `//#define USE_GATE_IN`
+- **NOTE**: A **power supply adapter** is *strongly recommended* to avoiding the swings of voltage values
 
 
 ## MIDI Implementation Chart
@@ -229,7 +236,7 @@
     |                   90, 112-119 | x             | x             | (RESERVED)            |
     +-------------------------------+---------------+---------------+-----------------------+
     | Program                       | x             | o             |                       |
-    | Change       : True #         | ************* | 0-7           |                       |
+    | Change       : True #         | ************* | 0-7, 127      | 127: Random Control   |
     +-------------------------------+---------------+---------------+-----------------------+
     | System Exclusive              | x             | x             |                       |
     +-------------------------------+---------------+---------------+-----------------------+
