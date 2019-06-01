@@ -36,8 +36,8 @@ class CVIn {
 
   static const uint8_t DIGITAL_INPUT_ANTICHATTERING_WAIT = 25;
 
-  static const uint8_t SCALE_MODE_0_NOTE_NUMBER_MIN = 48;
-  static const uint8_t SCALE_MODE_1_NOTE_NUMBER_MID = 54;
+  static const uint8_t SCALE_MODE_0_1_NOTE_NUMBER_MIN = 48;
+  static const uint8_t SCALE_MODE_2_NOTE_NUMBER_MID   = 54;
 
   static uint8_t  m_count;
   static uint16_t m_analog_value[6];
@@ -46,6 +46,7 @@ class CVIn {
   static uint8_t  m_antichattering_rest_d2;
   static uint8_t  m_input_level_d4;
   static uint8_t  m_antichattering_rest_d4;
+  static uint8_t  m_new_note_number;
   static uint8_t  m_note_number;
   static uint8_t  m_program_number;
   static uint8_t  m_scale_mode;
@@ -65,6 +66,7 @@ public:
     m_input_level_d2 = INPUT_D2_INACTIVE;
     m_antichattering_rest_d4 = 0;
     m_input_level_d4 = INPUT_D4_INACTIVE;
+    m_new_note_number = NOTE_NUMBER_INVALID;
     m_note_number = NOTE_NUMBER_INVALID;
     m_program_number = PROGRAM_NUMBER_DEFAULT;
     m_scale_mode = 0;
@@ -130,6 +132,8 @@ public:
               if (value == INPUT_D4_ACTIVE) {
                 if (m_scale_mode == 0) {
                   m_scale_mode = 1;
+                } else if (m_scale_mode == 1) {
+                  m_scale_mode = 2;
                 } else {
                   m_scale_mode = 0;
                 }
@@ -232,32 +236,42 @@ public:
       #if defined(USE_CV_3) && defined(USE_PITCH_CV_IN)
         case (0x15 << CV_IN_CONTROL_INTERVAL_BITS):
           #if defined(USE_GATE_IN)
-            // SCALE MODE 1: Linear (5Oct / 5V)
             IOsc<0>::set_pitch_bend(m_temp_value);
           #else
-            if (m_analog_value[CV_3_ADC_NO] < 3) {
-              // 0V: Note OFF
-              set_note_number(NOTE_NUMBER_INVALID);
+            if ((m_scale_mode == 0) || (m_scale_mode == 1)) {
+              m_new_note_number = high_byte((m_analog_value[CV_3_ADC_NO] * 6) + 128) + SCALE_MODE_0_1_NOTE_NUMBER_MIN;
             } else {
-              if (m_scale_mode == 0) {
-                // SCALE MODE 0: Chromatic (2Oct / 5V)
-                set_note_number(high_byte((m_analog_value[CV_3_ADC_NO] * 6) + 128) + SCALE_MODE_0_NOTE_NUMBER_MIN);
-              } else {
-                // SCALE MODE 1: Linear (5Oct / 5V)
-                IOsc<0>::set_pitch_bend(m_temp_value);
-              }
+              IOsc<0>::set_pitch_bend(m_temp_value);
             }
           #endif
           break;
         case (0x16 << CV_IN_CONTROL_INTERVAL_BITS):
           #if !defined(USE_GATE_IN)
+            if (m_scale_mode == 0) {
+              static const uint8_t map[] = {
+                 0,  0,  2,  2,  4,  5,  5,  7,  7,  9,  9, 11,
+                12, 12, 14, 14, 16, 17, 17, 19, 19, 21, 21, 23,
+                24,
+              };
+              m_new_note_number = map[m_new_note_number - SCALE_MODE_0_1_NOTE_NUMBER_MIN] + SCALE_MODE_0_1_NOTE_NUMBER_MIN;
+            }
+          #endif
+          break;
+        case (0x17 << CV_IN_CONTROL_INTERVAL_BITS):
+          #if !defined(USE_GATE_IN)
             if (m_analog_value[CV_3_ADC_NO] < 3) {
-              // Do nothing
+              // 0V: Note OFF
+              set_note_number(NOTE_NUMBER_INVALID);
             } else {
               if (m_scale_mode == 0) {
-                // Do nothing
+                // SCALE MODE 0: C Major (2Oct / 5V)
+                set_note_number(m_new_note_number);
+              } else if (m_scale_mode == 1) {
+                // SCALE MODE 1: Chromatic (2Oct / 5V)
+                set_note_number(m_new_note_number);
               } else {
-                set_note_number(SCALE_MODE_1_NOTE_NUMBER_MID);
+                // SCALE MODE 2: Linear (5Oct / 5V)
+                set_note_number(SCALE_MODE_2_NOTE_NUMBER_MID);
               }
             }
           #endif
@@ -302,7 +316,7 @@ public:
           if (m_analog_value[CV_5_ADC_NO] < 512) {
             set_note_number(NOTE_NUMBER_INVALID);
           } else {
-            set_note_number(SCALE_MODE_1_NOTE_NUMBER_MID);
+            set_note_number(SCALE_MODE_2_NOTE_NUMBER_MID);
           }
           break;
       #endif
@@ -358,6 +372,7 @@ template <uint8_t T> uint8_t  CVIn<T>::m_input_level_d2;
 template <uint8_t T> uint8_t  CVIn<T>::m_antichattering_rest_d2;
 template <uint8_t T> uint8_t  CVIn<T>::m_input_level_d4;
 template <uint8_t T> uint8_t  CVIn<T>::m_antichattering_rest_d4;
+template <uint8_t T> uint8_t  CVIn<T>::m_new_note_number;
 template <uint8_t T> uint8_t  CVIn<T>::m_note_number;
 template <uint8_t T> uint8_t  CVIn<T>::m_program_number;
 template <uint8_t T> uint8_t  CVIn<T>::m_scale_mode;
