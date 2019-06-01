@@ -12,8 +12,9 @@
 ## Change History
 
 - v2.3.0 (Major Changes)
-    - Rename **VRA8-N mini** to **VRA8-N mode-VC**
     - Do not support Arduino Nano 3.x (because the sketch uses more than 30720 bytes of program storage space)
+    - Rename **VRA8-N mini** to **VRA8-N mode-VC**
+    - Improve **VRA8-N mode-VC**: Add the SCALE MODE "C Major" and the GATE Signal support
     - Halve the send level of LFO > CUTOFF for smoothness
     - Change the change range of CUTOFF frequency from 28-124 to 16-112 (64: the center)
     - Change the Q of RESONANCE 64 from 2.8 to 2.0 (No change in the range of Q from 0.7 to 8.0)
@@ -153,6 +154,9 @@
     - A3: Pitch CV In (0V: Note OFF)
     - D2: Change the PROGRAM (#0, ..., #7, Random Control)
     - D4: Change the SCALE MODE
+        - SCALE MODE 0: "C Major" (2Oct / 5V)
+        - SCALE MODE 1: "Chromatic" (2Oct / 5V)
+        - SCALE MODE 2: "Linear" (5Oct / 5V)
 - To make the sketch operate as **VRA8-N mode-VC**, edit `ENABLE_VOLTAGE_CONTROL` in `DigitalSynthVRA8N.ino`
     - If you use a MIDI keyboard, comment out the line `#define USE_PITCH_CV_IN`
 - See `cv-in.h`

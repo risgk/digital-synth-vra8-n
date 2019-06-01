@@ -66,7 +66,7 @@ public:
     m_input_level_d2 = INPUT_D2_INACTIVE;
     m_antichattering_rest_d4 = 0;
     m_input_level_d4 = INPUT_D4_INACTIVE;
-    m_new_note_number = NOTE_NUMBER_INVALID;
+    m_new_note_number = SCALE_MODE_0_1_NOTE_NUMBER_MIN;
     m_note_number = NOTE_NUMBER_INVALID;
     m_program_number = PROGRAM_NUMBER_DEFAULT;
     m_scale_mode = 0;
@@ -264,13 +264,13 @@ public:
               set_note_number(NOTE_NUMBER_INVALID);
             } else {
               if (m_scale_mode == 0) {
-                // SCALE MODE 0: C Major (2Oct / 5V)
+                // SCALE MODE 0: "C Major" (2Oct / 5V)
                 set_note_number(m_new_note_number);
               } else if (m_scale_mode == 1) {
-                // SCALE MODE 1: Chromatic (2Oct / 5V)
+                // SCALE MODE 1: "Chromatic" (2Oct / 5V)
                 set_note_number(m_new_note_number);
               } else {
-                // SCALE MODE 2: Linear (5Oct / 5V)
+                // SCALE MODE 2: "Linear" (5Oct / 5V)
                 set_note_number(SCALE_MODE_2_NOTE_NUMBER_MID);
               }
             }
