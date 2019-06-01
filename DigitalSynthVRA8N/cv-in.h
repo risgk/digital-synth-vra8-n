@@ -2,19 +2,21 @@
 
 #include "common.h"
 
-#define USE_CV_0    // CUTOFF    (Connect a potentiometer or a CV input)
-#define USE_CV_1    // RESONANCE (Connect a potentiometer or a CV input)
-#define USE_CV_2    // OSC MIX   (Connect a potentiometer or a CV input)  // For MIDI Shield, comment out this line
-#define USE_CV_3    // PITCH     (Connect a potentiometer or a CV input)  // For MIDI Shield, comment out this line
-//#define USE_CV_4    // OSC_WAVE  (Connect a potentiometer or a CV input)  // For MIDI Shield, comment out this line
-//#define USE_CV_5    // RESERVED  (Connect a potentiometer or a CV input)  // For MIDI Shield, comment out this line
+//#define USE_GATE_IN   // Use GATE Signal Input: Active High (V-Trigger, 5V), SCALE MODE is fixed to Linear (5Oct / 5V)
 
-#define CV_0_ACD_NO  (0)
-#define CV_1_ACD_NO  (1)
-#define CV_2_ACD_NO  (2)
-#define CV_3_ACD_NO  (3)
-#define CV_4_ACD_NO  (4)
-#define CV_5_ACD_NO  (5)
+#define USE_CV_0      // CUTOFF       (Connect a potentiometer or a CV input)
+#define USE_CV_1      // RESONANCE    (Connect a potentiometer or a CV input)
+#define USE_CV_2      // OSC MIX      (Connect a potentiometer or a CV input)  // For MIDI Shield, comment out this line
+#define USE_CV_3      // Pitch CV In  (Connect a potentiometer or a CV input)  // For MIDI Shield, comment out this line
+//#define USE_CV_4      // OSC WAVE     (Connect a potentiometer or a CV input)  // For MIDI Shield, comment out this line
+//#define USE_CV_5      // GATE In      (Connect a potentiometer or a CV input)  // For MIDI Shield, comment out this line
+
+#define CV_0_ADC_NO  (0)
+#define CV_1_ADC_NO  (1)
+#define CV_2_ADC_NO  (2)
+#define CV_3_ADC_NO  (3)
+#define CV_4_ADC_NO  (4)
+#define CV_5_ADC_NO  (5)
 
 #define ANALOG_INPUT_REVERSED (false)
 
@@ -52,12 +54,12 @@ public:
   INLINE static void initialize() {
 #if defined(ENABLE_VOLTAGE_CONTROL)
     m_count = 0;
-    m_analog_value[CV_0_ACD_NO] = 0;
-    m_analog_value[CV_1_ACD_NO] = 0;
-    m_analog_value[CV_2_ACD_NO] = 0;
-    m_analog_value[CV_3_ACD_NO] = 0;
-    m_analog_value[CV_4_ACD_NO] = 0;
-    m_analog_value[CV_5_ACD_NO] = 0;
+    m_analog_value[CV_0_ADC_NO] = 0;
+    m_analog_value[CV_1_ADC_NO] = 0;
+    m_analog_value[CV_2_ADC_NO] = 0;
+    m_analog_value[CV_3_ADC_NO] = 0;
+    m_analog_value[CV_4_ADC_NO] = 0;
+    m_analog_value[CV_5_ADC_NO] = 0;
     m_temp_value = 0;
     m_antichattering_rest_d2 = 0;
     m_input_level_d2 = INPUT_D2_INACTIVE;
@@ -89,7 +91,7 @@ public:
 
       #if defined(USE_CV_0)
         case (0x00 << CV_IN_CONTROL_INTERVAL_BITS):
-          adc_start<CV_0_ACD_NO>();
+          adc_start<CV_0_ADC_NO>();
           break;
       #endif
 
@@ -141,20 +143,20 @@ public:
 
       #if defined(USE_CV_1)
         case (0x04 << CV_IN_CONTROL_INTERVAL_BITS):
-          adc_start<CV_1_ACD_NO>();
+          adc_start<CV_1_ADC_NO>();
           break;
       #endif
 
       #if defined(USE_CV_0)
         case (0x05 << CV_IN_CONTROL_INTERVAL_BITS):
           value = adc_read();
-          if (((m_analog_value[CV_0_ACD_NO] + 1) != value) &&
-              ((m_analog_value[CV_0_ACD_NO] - 1) != value)) {
-            m_analog_value[CV_0_ACD_NO] = value;
+          if (((m_analog_value[CV_0_ADC_NO] + 1) != value) &&
+              ((m_analog_value[CV_0_ADC_NO] - 1) != value)) {
+            m_analog_value[CV_0_ADC_NO] = value;
           }
           break;
         case (0x06 << CV_IN_CONTROL_INTERVAL_BITS):
-          m_temp_value = static_cast<uint8_t>(m_analog_value[CV_0_ACD_NO] >> 3);
+          m_temp_value = static_cast<uint8_t>(m_analog_value[CV_0_ADC_NO] >> 3);
           break;
         case (0x07 << CV_IN_CONTROL_INTERVAL_BITS):
           IVoice<0>::control_change(FILTER_CUTOFF, static_cast<uint8_t>(m_temp_value));
@@ -163,58 +165,58 @@ public:
 
       #if defined(USE_CV_2)
         case (0x08 << CV_IN_CONTROL_INTERVAL_BITS):
-          adc_start<CV_2_ACD_NO>();
+          adc_start<CV_2_ADC_NO>();
           break;
       #endif
 
       #if defined(USE_CV_1)
         case (0x09 << CV_IN_CONTROL_INTERVAL_BITS):
           value = adc_read();
-          if (((m_analog_value[CV_1_ACD_NO] + 1) != value) &&
-              ((m_analog_value[CV_1_ACD_NO] - 1) != value)) {
-            m_analog_value[CV_1_ACD_NO] = value;
+          if (((m_analog_value[CV_1_ADC_NO] + 1) != value) &&
+              ((m_analog_value[CV_1_ADC_NO] - 1) != value)) {
+            m_analog_value[CV_1_ADC_NO] = value;
           }
           break;
         case (0x0A << CV_IN_CONTROL_INTERVAL_BITS):
-          m_temp_value = static_cast<uint8_t>(m_analog_value[CV_1_ACD_NO] >> 3);
+          m_temp_value = static_cast<uint8_t>(m_analog_value[CV_1_ADC_NO] >> 3);
           break;
         case (0x0B << CV_IN_CONTROL_INTERVAL_BITS):
           IVoice<0>::control_change(FILTER_RESO, static_cast<uint8_t>(m_temp_value));
           break;
       #endif
 
-      #if defined(USE_CV_3)
+      #if defined(USE_CV_3) && defined(USE_PITCH_CV_IN)
         case (0x0C << CV_IN_CONTROL_INTERVAL_BITS):
-          adc_start<CV_3_ACD_NO>();
+          adc_start<CV_3_ADC_NO>();
           break;
       #endif
 
       #if defined(USE_CV_2)
         case (0x0D << CV_IN_CONTROL_INTERVAL_BITS):
           value = adc_read();
-          if (((m_analog_value[CV_2_ACD_NO] + 1) != value) &&
-              ((m_analog_value[CV_2_ACD_NO] - 1) != value)) {
-            m_analog_value[CV_2_ACD_NO] = value;
+          if (((m_analog_value[CV_2_ADC_NO] + 1) != value) &&
+              ((m_analog_value[CV_2_ADC_NO] - 1) != value)) {
+            m_analog_value[CV_2_ADC_NO] = value;
           }
           break;
         case (0x0E << CV_IN_CONTROL_INTERVAL_BITS):
-          m_temp_value = static_cast<uint8_t>(m_analog_value[CV_2_ACD_NO] >> 3);
+          m_temp_value = static_cast<uint8_t>(m_analog_value[CV_2_ADC_NO] >> 3);
           break;
         case (0x0F << CV_IN_CONTROL_INTERVAL_BITS):
           IVoice<0>::control_change(OSC_MIX, static_cast<uint8_t>(m_temp_value));
           break;
       #endif
 
-      #if defined(USE_CV_3)
+      #if defined(USE_CV_3) && defined(USE_PITCH_CV_IN)
         case (0x10 << CV_IN_CONTROL_INTERVAL_BITS):
           value = adc_read();
-          if (((m_analog_value[CV_3_ACD_NO] + 1) != value) &&
-              ((m_analog_value[CV_3_ACD_NO] - 1) != value)) {
-            m_analog_value[CV_3_ACD_NO] = value;
+          if (((m_analog_value[CV_3_ADC_NO] + 1) != value) &&
+              ((m_analog_value[CV_3_ADC_NO] - 1) != value)) {
+            m_analog_value[CV_3_ADC_NO] = value;
           }
           break;
         case (0x12 << CV_IN_CONTROL_INTERVAL_BITS):
-          m_temp_value = (m_analog_value[CV_3_ACD_NO] << 2);
+          m_temp_value = (m_analog_value[CV_3_ADC_NO] << 2);
           break;
         case (0x13 << CV_IN_CONTROL_INTERVAL_BITS):
           m_temp_value = (m_temp_value << 2) - 8192;
@@ -223,72 +225,85 @@ public:
 
       #if defined(USE_CV_4)
         case (0x14 << CV_IN_CONTROL_INTERVAL_BITS):
-          adc_start<CV_4_ACD_NO>();
+          adc_start<CV_4_ADC_NO>();
           break;
       #endif
 
       #if defined(USE_CV_3) && defined(USE_PITCH_CV_IN)
         case (0x15 << CV_IN_CONTROL_INTERVAL_BITS):
-          if (m_analog_value[CV_3_ACD_NO] < 3) {
-            // 0V: Note OFF
-            set_note_number(NOTE_NUMBER_INVALID);
-          } else {
-            if (m_scale_mode == 0) {
-              // Chromatic (2Oct / 5V)
-              set_note_number(high_byte((m_analog_value[CV_3_ACD_NO] * 6) + 128) + SCALE_MODE_0_NOTE_NUMBER_MIN);
+          #if defined(USE_GATE_IN)
+            // SCALE MODE 1: Linear (5Oct / 5V)
+            IOsc<0>::set_pitch_bend(m_temp_value);
+          #else
+            if (m_analog_value[CV_3_ADC_NO] < 3) {
+              // 0V: Note OFF
+              set_note_number(NOTE_NUMBER_INVALID);
             } else {
-              // Linear (5Oct / 5V)
-              IOsc<0>::set_pitch_bend(m_temp_value);
+              if (m_scale_mode == 0) {
+                // SCALE MODE 0: Chromatic (2Oct / 5V)
+                set_note_number(high_byte((m_analog_value[CV_3_ADC_NO] * 6) + 128) + SCALE_MODE_0_NOTE_NUMBER_MIN);
+              } else {
+                // SCALE MODE 1: Linear (5Oct / 5V)
+                IOsc<0>::set_pitch_bend(m_temp_value);
+              }
             }
-          }
+          #endif
           break;
         case (0x16 << CV_IN_CONTROL_INTERVAL_BITS):
-          if (m_analog_value[CV_3_ACD_NO] < 3) {
-            // Do nothing
-          } else {
-            if (m_scale_mode == 0) {
+          #if !defined(USE_GATE_IN)
+            if (m_analog_value[CV_3_ADC_NO] < 3) {
               // Do nothing
             } else {
-              set_note_number(SCALE_MODE_1_NOTE_NUMBER_MID);
+              if (m_scale_mode == 0) {
+                // Do nothing
+              } else {
+                set_note_number(SCALE_MODE_1_NOTE_NUMBER_MID);
+              }
             }
-          }
+          #endif
           break;
       #endif
 
-      #if defined(USE_CV_5)
+      #if defined(USE_CV_5) && defined(USE_PITCH_CV_IN) && defined(USE_GATE_IN)
         case (0x18 << CV_IN_CONTROL_INTERVAL_BITS):
-          adc_start<CV_5_ACD_NO>();
+          adc_start<CV_5_ADC_NO>();
           break;
       #endif
 
       #if defined(USE_CV_4)
         case (0x19 << CV_IN_CONTROL_INTERVAL_BITS):
           value = adc_read();
-          if (((m_analog_value[CV_4_ACD_NO] + 1) != value) &&
-              ((m_analog_value[CV_4_ACD_NO] - 1) != value)) {
-            m_analog_value[CV_4_ACD_NO] = value;
+          if (((m_analog_value[CV_4_ADC_NO] + 1) != value) &&
+              ((m_analog_value[CV_4_ADC_NO] - 1) != value)) {
+            m_analog_value[CV_4_ADC_NO] = value;
           }
           break;
         case (0x1A << CV_IN_CONTROL_INTERVAL_BITS):
-          m_temp_value = static_cast<uint8_t>(m_analog_value[CV_4_ACD_NO] >> 3);
+          m_temp_value = static_cast<uint8_t>(m_analog_value[CV_4_ADC_NO] >> 3);
           break;
         case (0x1B << CV_IN_CONTROL_INTERVAL_BITS):
           IVoice<0>::control_change(OSC_WAVE, static_cast<uint8_t>(m_temp_value));
           break;
       #endif
 
-      #if defined(USE_CV_5)
+      #if defined(USE_CV_5) && defined(USE_PITCH_CV_IN) && defined(USE_GATE_IN)
         case (0x1D << CV_IN_CONTROL_INTERVAL_BITS):
           value = adc_read();
-          if (((m_analog_value[CV_5_ACD_NO] + 1) != value) &&
-              ((m_analog_value[CV_5_ACD_NO] - 1) != value)) {
-            m_analog_value[CV_5_ACD_NO] = value;
+          if (((m_analog_value[CV_5_ADC_NO] + 1) != value) &&
+              ((m_analog_value[CV_5_ADC_NO] - 1) != value)) {
+            m_analog_value[CV_5_ADC_NO] = value;
           }
           break;
         case (0x1E << CV_IN_CONTROL_INTERVAL_BITS):
-          m_temp_value = static_cast<uint8_t>(m_analog_value[CV_5_ACD_NO] >> 3);
+          m_temp_value = static_cast<uint8_t>(m_analog_value[CV_5_ADC_NO] >> 3);
           break;
         case (0x1F << CV_IN_CONTROL_INTERVAL_BITS):
+          // GATE Signal Input: Active High (V-Trigger, 5V)
+          if (m_analog_value[CV_5_ADC_NO] < 512) {
+            set_note_number(NOTE_NUMBER_INVALID);
+          } else {
+            set_note_number(SCALE_MODE_1_NOTE_NUMBER_MID);
+          }
           break;
       #endif
 
@@ -299,10 +314,10 @@ public:
 
 private:
   // Start the conversion.
-  template <uint8_t ACD_NO>
+  template <uint8_t ADC_NO>
   INLINE static void adc_start() {
 #if defined(ENABLE_VOLTAGE_CONTROL)
-    ADMUX = _BV(REFS0) | ACD_NO;  // analogReference(DEFAULT)
+    ADMUX = _BV(REFS0) | ADC_NO;  // analogReference(DEFAULT)
     ADCSRA = _BV(ADEN) | _BV(ADSC) | 0b111;
 #endif
   }
