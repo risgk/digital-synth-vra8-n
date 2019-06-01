@@ -13,7 +13,7 @@
 
 - v2.3.0 (Major Changes)
     - Rename **VRA8-N mini** to **VRA8-N mode-VC**
-    - Does not support Arduino Nano 3.x (because the sketch uses more than 30720 bytes of program storage space)
+    - Do not support Arduino Nano 3.x (because the sketch uses more than 30720 bytes of program storage space)
     - Halve the send level of LFO > CUTOFF for smoothness
     - Change the change range of CUTOFF frequency from 28-124 to 16-112 (64: the center)
     - Change the Q of RESONANCE 64 from 2.8 to 2.0 (No change in the range of Q from 0.7 to 8.0)
@@ -30,7 +30,7 @@
 - v2.1.1
     - Change the assignment of the potentiometers for **VRA8-N mini**
 - v2.1.0 (Major Changes)
-    - Narrow the CUTOFF frequency range from 5 oct (G3-G8) to 4 oct (G4-G8) for sound quality
+    - Narrow the CUTOFF frequency range from 5 oct (G4-G9) to 4 oct (G5-G9) for sound quality
     - Add OSC2 NOISE; Change "OSC1/2 (SAW/SQ)" to "OSC1/2 (SAW/N/SQ)"
     - Add "LFO FADE TIME" control
     - Add LFO LED Out option (Enabled by default, Pin D5)
