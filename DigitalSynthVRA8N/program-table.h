@@ -58,7 +58,7 @@ const uint8_t g_preset_table_DAMP_ATK     [] = {0  , 0  , 0  , 0  , 0  , 64 , 0 
 
 #else  // defined(ENABLE_VOLTAGE_CONTROL) && defined(USE_PITCH_CV_IN)
 
-// PRESET                                       #0   #1   #2   #3   #4   #5   #6   #7   
+// PRESET for VRA8-N mode-VC                    #0   #1   #2   #3   #4   #5   #6   #7   
 const uint8_t g_preset_table_OSC_WAVE     [] = {0  , 0  , 0  , 0  , 127, 0  , 0  , 0  };
 const uint8_t g_preset_table_OSC_MIX      [] = {64 , 64 , 64 , 64 , 64 , 0  , 64 , 0  };
 const uint8_t g_preset_table_OSC2_COARSE  [] = {64 , 71 , 64 , 64 , 64 , 64 , 64 , 64 };

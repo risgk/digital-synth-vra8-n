@@ -1,3 +1,5 @@
+// Digital Synth VRA8-N (We strongly recommend Arduino IDE 1.8.5)
+
 //#define DEBUG
 
 #define SERIAL_SPEED (38400)    // For Serial MIDI

@@ -126,7 +126,7 @@
     - When LEGATO Portamento is ON, Single Trigger is forced
 - "K. ASN (L/L/P/H/LST)": Key ASSIGN / Trigger Mode
     - Values 0-47: Lowest Note / Single Trigger
-    - Values 48-79: Paraphonic (Lowest and Highest Notes) / Single Trigger
+    - Values 48-79: Paraphonic (Lowest and Highest Notes, Duophonic) / Single Trigger
     - Values 80-111: Highest Note / Single Trigger
     - Values 112-127: LAST One Note / Multi Trigger
 - "EXP BY VEL (OFF/ON)": EXPRESSION Control By (Note ON) VELOCITY
