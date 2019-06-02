@@ -81,7 +81,7 @@ const PITCH_LFO_TGT = 9;
 const LFO_FADE_TIME = 15;
 
 const PB_RANGE      = 85;
-const CC86          = 86;
+const CO_PITCH_AMT  = 86;
 const CO_EXP_AMT    = 106;
 const AMP_EXP_AMT   = 107;
 
@@ -143,7 +143,7 @@ var controllersInLocalStorage = [
   LFO_FADE_TIME,
 
   PB_RANGE     ,
-//CC86         ,
+  CO_PITCH_AMT ,
   CO_EXP_AMT   ,
   AMP_EXP_AMT  ,
 
@@ -192,7 +192,7 @@ presetControllers[PITCH_LFO_TGT] = [127, 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
 presetControllers[LFO_FADE_TIME] = [64 , 64 , 0  , 0  , 0  , 64 , 0  , 0  ];
 
 presetControllers[PB_RANGE     ] = [2  , 2  , 2  , 2  , 12 , 2  , 2  , 2  ];
-presetControllers[CC86         ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
+presetControllers[CO_PITCH_AMT ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
 presetControllers[CO_EXP_AMT   ] = [64 , 64 , 64 , 64 , 64 , 106, 64 , 64 ];
 presetControllers[AMP_EXP_AMT  ] = [0  , 0  , 0  , 0  , 0  , 127, 0  , 0  ];
 
@@ -705,13 +705,13 @@ function noteOff(noteNumber) {
     <td><span   id="spanCC15">-1</span></td></tr>
 <tr><td>&nbsp;</td></tr>
 <tr><td>P. BEND RANGE         </td><td></td>
-    <td>                      </td><td></td>
+    <td>PITCH > CUTOFF        </td><td></td>
     <td>EXP > CUTOFF (-/+)    </td><td></td>
     <td>EXP > AMP LEVEL       </td><td></td></tr>
 <tr><td><input id="inputCC85" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(PB_RANGE, value)"></td>
     <td><span   id="spanCC85">-1</span></td>
-    <td><input id="inputCC86" style="visibility:hidden" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(CC86, value)"></td>
-    <td><span   id="spanCC86" style="visibility:hidden">-1</span></td>
+    <td><input id="inputCC86" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(CO_PITCH_AMT, value)"></td>
+    <td><span   id="spanCC86">-1</span></td>
     <td><input id="inputCC106" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(CO_EXP_AMT, value)"></td>
     <td><span   id="spanCC106">-1</span></td>
     <td><input id="inputCC107" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(AMP_EXP_AMT, value)"></td>

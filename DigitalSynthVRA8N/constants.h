@@ -87,7 +87,7 @@ const uint8_t   PITCH_LFO_TGT = 9;
 const uint8_t   LFO_FADE_TIME = 15;
 
 const uint8_t   PB_RANGE      = 85;
-const uint8_t   CC86          = 86;
+const uint8_t   CO_PITCH_AMT  = 86;
 const uint8_t   CO_EXP_AMT    = 106;
 const uint8_t   AMP_EXP_AMT   = 107;
 

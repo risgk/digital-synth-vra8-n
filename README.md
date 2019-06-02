@@ -18,7 +18,7 @@
     - Halve the send level of LFO > CUTOFF for smoothness
     - Change the change range of CUTOFF frequency from 28-124 to 16-112 (64: the center)
     - Change the Q of RESONANCE 64 from 2.8 to 2.0 (No change in the range of Q from 0.7 to 8.0)
-    - Add "OSC LEVEL", "RESONANCE LIMIT", "AMP LEVEL", and "DAMP AND ATTACK" controls
+    - Add "PITCH > CUTOFF", "OSC LEVEL", "RESONANCE LIMIT", "AMP LEVEL", and "DAMP AND ATTACK" controls
     - Reset EXPRESSION at Random Control
 - v2.2.1
     - Fix the issue that RANDOM of LFO and the fluctuation of OSCs do not work
@@ -121,7 +121,8 @@
     - Values 48-79: SAW Down (Key Trigger: On)
     - Values 80-111: RANDOM (Key Trigger: On)
     - Values 112-127: SQUARE Up (Key Trigger: On)
-- "LFO FADE TIME": This affects "LFO DEPTH" but not "MODULATION DEPTH".
+- "LFO FADE TIME": This affects "LFO DEPTH" but not "MODULATION DEPTH"
+- "PITCH > CUTOFF": In other words, Filter CUTOFF Keyboard Tracking (Off/Half/Full)
 - "LEGATO (OFF/ON)": LEGATO Portamento
     - When LEGATO Portamento is ON, Single Trigger is forced
 - "K. ASN (L/L/P/H/LST)": Key ASSIGN / Trigger Mode
@@ -223,7 +224,7 @@
     |                            15 | x             | o             | LFO FADE TIME         |
     |                               |               |               |                       |
     |                            85 | x             | o             | P. BEND RANGE         |
-    |                            86 | x             | x             | (RESERVED)            |
+    |                            86 | x             | o             | PITCH > CUTOFF        |
     |                           106 | x             | o             | EXP > CUTOFF (-/+)    |
     |                           107 | x             | o             | EXP > AMP LEVEL       |
     |                               |               |               |                       |

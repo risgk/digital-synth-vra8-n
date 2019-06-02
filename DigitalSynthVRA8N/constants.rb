@@ -87,7 +87,7 @@ PITCH_LFO_TGT = 9
 LFO_FADE_TIME = 15
 
 PB_RANGE      = 85
-CC86          = 86
+CO_PITCH_AMT  = 86
 CO_EXP_AMT    = 106
 AMP_EXP_AMT   = 107
 

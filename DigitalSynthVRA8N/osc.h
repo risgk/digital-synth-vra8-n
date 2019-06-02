@@ -52,6 +52,7 @@ class Osc {
   static uint16_t       m_pitch_target[2];
   static uint16_t       m_pitch_current[2];
   static uint16_t       m_pitch_real[2];
+  static uint16_t       m_real_pitch;
   static const uint8_t* m_wave_table[3];
   static const uint8_t* m_wave_table_temp[2];
   static __uint24       m_freq[2];
@@ -111,6 +112,7 @@ public:
     m_pitch_current[1] = m_pitch_target[1];
     m_pitch_real[0] = m_pitch_current[0];
     m_pitch_real[1] = m_pitch_current[1];
+    m_real_pitch = m_pitch_real[0];
     m_wave_table[0] = g_osc_saw_wave_tables[0];
     m_wave_table[1] = g_osc_saw_wave_tables[0];
     m_wave_table[2] = g_osc_sin_wave_table_h1;
@@ -356,6 +358,10 @@ public:
     return m_lfo_level;
   }
 
+  INLINE static uint16_t get_osc_pitch() {
+    return m_real_pitch;
+  }
+
   INLINE static int16_t clock(uint8_t count, uint8_t eg_level) {
     if ((count & 0x01) == 1) {
       int8_t wave_0_sub;
@@ -587,6 +593,11 @@ private:
       m_pitch_real[N] -= (64 << 8);
     }
 
+    if (N == 0) {
+      /* For OSC 1 */
+      m_real_pitch = m_pitch_real[N];
+    }
+
     m_pitch_real[N] += 128;  // For g_osc_tune_table[]
   }
 
@@ -772,6 +783,7 @@ template <uint8_t T> int16_t         Osc<T>::m_pitch_bend_normalized;
 template <uint8_t T> uint16_t        Osc<T>::m_pitch_target[2];
 template <uint8_t T> uint16_t        Osc<T>::m_pitch_current[2];
 template <uint8_t T> uint16_t        Osc<T>::m_pitch_real[2];
+template <uint8_t T> uint16_t        Osc<T>::m_real_pitch;
 template <uint8_t T> const uint8_t*  Osc<T>::m_wave_table[3];
 template <uint8_t T> const uint8_t*  Osc<T>::m_wave_table_temp[2];
 template <uint8_t T> __uint24        Osc<T>::m_freq[2];

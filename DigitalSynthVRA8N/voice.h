@@ -270,6 +270,9 @@ public:
       IOsc<0>::set_pitch_bend_minus_range(controller_value);
       IOsc<0>::set_pitch_bend_plus_range(controller_value);
       break;
+    case CO_PITCH_AMT:
+      IFilter<0>::set_cutoff_pitch_amt(controller_value);
+      break;
     case KEY_ASSIGN:
       if        (controller_value < 48) {
         m_key_assign = KEY_ASSIGN_LOW;
@@ -387,7 +390,7 @@ public:
       control_change(LFO_FADE_TIME, get_rnd_7());
 
       control_change(PB_RANGE     , get_rnd_7());
-      control_change(CC86         , get_rnd_7());
+      control_change(CO_PITCH_AMT , get_rnd_7());
       control_change(CO_EXP_AMT   , get_rnd_7());
       control_change(AMP_EXP_AMT  , get_rnd_7());
 
@@ -433,7 +436,7 @@ public:
       control_change(LFO_FADE_TIME, g_preset_table_LFO_FADE_TIME[program_number]);
 
       control_change(PB_RANGE     , g_preset_table_PB_RANGE     [program_number]);
-      control_change(CC86         , g_preset_table_CC86         [program_number]);
+      control_change(CO_PITCH_AMT , g_preset_table_CO_PITCH_AMT [program_number]);
       control_change(CO_EXP_AMT   , g_preset_table_CO_EXP_AMT   [program_number]);
       control_change(AMP_EXP_AMT  , g_preset_table_AMP_EXP_AMT  [program_number]);
 

@@ -21,6 +21,7 @@ class Filter {
   static uint8_t         m_cutoff;
   static int8_t          m_cutoff_env_gen_amt;
   static int8_t          m_cutoff_lfo_amt;
+  static int8_t          m_cutoff_pitch_amt;
   static uint8_t         m_cutoff_expression_decrease;
   static int8_t          m_cutoff_exp_amt;
   static uint8_t         m_resonance;
@@ -97,6 +98,16 @@ public:
     m_cutoff_lfo_amt = (value - 64) << 1;
   }
 
+  INLINE static void set_cutoff_pitch_amt(uint8_t controller_value) {
+    if (controller_value < 32) {
+      m_cutoff_pitch_amt = 0;
+    } else if (controller_value < 96) {
+      m_cutoff_pitch_amt = 1;
+    } else {
+      m_cutoff_pitch_amt = 2;
+    }
+  }
+
   INLINE static void set_cutoff_exp_amt(uint8_t controller_value) {
     uint8_t value = controller_value;
     if (value < 16) {
@@ -158,6 +169,14 @@ private:
     m_cutoff_candidate = m_cutoff;
     m_cutoff_candidate -= high_sbyte(m_cutoff_exp_amt * m_cutoff_expression_decrease);
     m_cutoff_candidate += high_sbyte((m_cutoff_env_gen_amt * env_gen_input) << 1);
+
+    // OSC Pitch is processed here (not in Voice) for performance reasons
+    uint16_t osc_pitch = IOsc<0>::get_osc_pitch();
+    if (m_cutoff_pitch_amt == 1) {
+      m_cutoff_candidate += high_byte(osc_pitch + 128) - 60;
+    } else if (m_cutoff_pitch_amt == 2) {
+      m_cutoff_candidate += high_byte(osc_pitch + osc_pitch + 128) - 120;
+    }
   }
 
   INLINE static void update_coefs_1st(int16_t lfo_input) {
@@ -217,6 +236,7 @@ template <uint8_t T> int16_t         Filter<T>::m_cutoff_candidate;
 template <uint8_t T> uint8_t         Filter<T>::m_cutoff;
 template <uint8_t T> int8_t          Filter<T>::m_cutoff_env_gen_amt;
 template <uint8_t T> int8_t          Filter<T>::m_cutoff_lfo_amt;
+template <uint8_t T> int8_t          Filter<T>::m_cutoff_pitch_amt;
 template <uint8_t T> uint8_t         Filter<T>::m_cutoff_expression_decrease;
 template <uint8_t T> int8_t          Filter<T>::m_cutoff_exp_amt;
 template <uint8_t T> uint8_t         Filter<T>::m_resonance;
