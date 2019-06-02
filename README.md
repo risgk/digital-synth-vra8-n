@@ -1,6 +1,6 @@
-# Digital Synth VRA8-N v2.2.x
+# Digital Synth VRA8-N v2.3.0
 
-- 2019-xx-xx ISGK Instruments
+- 2019-06-02 ISGK Instruments
 - <https://github.com/risgk/digital-synth-vra8-n>
 
 
@@ -167,8 +167,8 @@
 
 ## MIDI Implementation Chart
 
-      [Monophonic Synthesizer]                                        Date: 2019-xx-xx       
-      Model: Digital Synth VRA8-N     MIDI Implementation Chart       Version: 2.2.x         
+      [Monophonic Synthesizer]                                        Date: 2019-06-02       
+      Model: Digital Synth VRA8-N     MIDI Implementation Chart       Version: 2.3.0         
     +-------------------------------+---------------+---------------+-----------------------+
     | Function...                   | Transmitted   | Recognized    | Remarks               |
     +-------------------------------+---------------+---------------+-----------------------+
