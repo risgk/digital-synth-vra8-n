@@ -178,9 +178,9 @@ private:
     // OSC Pitch is processed here (not in Voice) for performance reasons
     uint16_t osc_pitch = IOsc<0>::get_osc_pitch();
     if (m_cutoff_pitch_amt == 1) {
-      m_cutoff_candidate += static_cast<uint8_t>(high_byte(osc_pitch + 128) - 60);
+      m_cutoff_candidate += static_cast<int8_t>(high_byte(osc_pitch + 128) - 60);
     } else if (m_cutoff_pitch_amt == 2) {
-      m_cutoff_candidate += static_cast<uint8_t>(high_byte((osc_pitch << 1) + 128) - 120);
+      m_cutoff_candidate += static_cast<int8_t>(high_byte((osc_pitch << 1) + 128) - 120);
     }
   }
 
