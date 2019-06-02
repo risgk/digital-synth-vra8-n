@@ -169,19 +169,19 @@ private:
     m_cutoff_candidate = m_cutoff;
     m_cutoff_candidate -= high_sbyte(m_cutoff_exp_amt * m_cutoff_expression_decrease);
     m_cutoff_candidate += high_sbyte((m_cutoff_env_gen_amt * env_gen_input) << 1);
-
-    // OSC Pitch is processed here (not in Voice) for performance reasons
-    uint16_t osc_pitch = IOsc<0>::get_osc_pitch();
-    if (m_cutoff_pitch_amt == 1) {
-      m_cutoff_candidate += high_byte(osc_pitch + 128) - 60;
-    } else if (m_cutoff_pitch_amt == 2) {
-      m_cutoff_candidate += high_byte(osc_pitch + osc_pitch + 128) - 120;
-    }
   }
 
   INLINE static void update_coefs_1st(int16_t lfo_input) {
     int8_t lfo_mod = high_sbyte(mul_q15_q7(lfo_input, m_cutoff_lfo_amt) << 1);
     m_cutoff_candidate -= lfo_mod;
+
+    // OSC Pitch is processed here (not in Voice) for performance reasons
+    uint16_t osc_pitch = IOsc<0>::get_osc_pitch();
+    if (m_cutoff_pitch_amt == 1) {
+      m_cutoff_candidate += static_cast<uint8_t>(high_byte(osc_pitch + 128) - 60);
+    } else if (m_cutoff_pitch_amt == 2) {
+      m_cutoff_candidate += static_cast<uint8_t>(high_byte((osc_pitch << 1) + 128) - 120);
+    }
   }
 
   INLINE static void update_coefs_2nd() {
