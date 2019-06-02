@@ -87,7 +87,7 @@ const uint8_t   PITCH_LFO_TGT = 9;
 const uint8_t   LFO_FADE_TIME = 15;
 
 const uint8_t   PB_RANGE      = 85;
-const uint8_t   CC86          = 86;
+const uint8_t   CO_PITCH_AMT  = 86;
 const uint8_t   CO_EXP_AMT    = 106;
 const uint8_t   AMP_EXP_AMT   = 107;
 
@@ -95,6 +95,11 @@ const uint8_t   PORTAMENTO    = 22;
 const uint8_t   LEGATO        = 30;
 const uint8_t   KEY_ASSIGN    = 87;
 const uint8_t   EXP_BY_VEL    = 89;
+
+const uint8_t   OSC_LEVEL     = 108;
+const uint8_t   RESO_LIMIT    = 109;
+const uint8_t   AMP_LEVEL     = 110;
+const uint8_t   DAMP_ATK      = 111;
 
 const uint8_t   ALL_NOTES_OFF = 123;
 const uint8_t   OMNI_MODE_OFF = 124;

@@ -81,7 +81,7 @@ const PITCH_LFO_TGT = 9;
 const LFO_FADE_TIME = 15;
 
 const PB_RANGE      = 85;
-const CC86          = 86;
+const CO_PITCH_AMT  = 86;
 const CO_EXP_AMT    = 106;
 const AMP_EXP_AMT   = 107;
 
@@ -89,6 +89,11 @@ const PORTAMENTO    = 22;
 const LEGATO        = 30;
 const KEY_ASSIGN    = 87;
 const EXP_BY_VEL    = 89;
+
+const OSC_LEVEL     = 108;
+const RESO_LIMIT    = 109;
+const AMP_LEVEL     = 110;
+const DAMP_ATK      = 111;
 
 // Special Program Change (only for VRA8-N CTRL)
 const SP_PROG_CHG_0 = 112;
@@ -138,7 +143,7 @@ var controllersInLocalStorage = [
   LFO_FADE_TIME,
 
   PB_RANGE     ,
-//CC86         ,
+  CO_PITCH_AMT ,
   CO_EXP_AMT   ,
   AMP_EXP_AMT  ,
 
@@ -146,50 +151,60 @@ var controllersInLocalStorage = [
   LEGATO       ,
   KEY_ASSIGN   ,
   EXP_BY_VEL   ,
+
+  OSC_LEVEL    ,
+  RESO_LIMIT   ,
+  AMP_LEVEL    ,
+  DAMP_ATK     ,
 ];
 
 var presetControllers = {};
 
 // PRESET                           #0   #1   #2   #3   #4   #5   #6   #7   
-presetControllers[OSC_WAVE     ] = [0  , 0  , 0  , 127, 0  , 0  , 0  , 0  ];
-presetControllers[OSC_MIX      ] = [64 , 64 , 64 , 64 , 0  , 64 , 0  , 0  ];
+presetControllers[OSC_WAVE     ] = [0  , 0  , 0  , 127, 0  , 0  , 48 , 0  ];
+presetControllers[OSC_MIX      ] = [64 , 64 , 64 , 64 , 0  , 32 , 127, 0  ];
 presetControllers[OSC2_COARSE  ] = [71 , 64 , 64 , 64 , 64 , 64 , 64 , 64 ];
-presetControllers[OSC2_FINE    ] = [68 , 72 , 66 , 72 , 68 , 56 , 64 , 64 ];
+presetControllers[OSC2_FINE    ] = [68 , 72 , 66 , 72 , 68 , 48 , 68 , 64 ];
 
-presetControllers[SUB_OSC_WAVE ] = [127, 0  , 0  , 0  , 127, 0  , 0  , 0  ];
+presetControllers[SUB_OSC_WAVE ] = [127, 0  , 0  , 0  , 127, 127, 0  , 0  ];
 presetControllers[SUB_OSC_LEVEL] = [127, 127, 127, 0  , 0  , 0  , 0  , 0  ];
-presetControllers[PITCH_EG_AMT ] = [64 , 62 , 64 , 64 , 64 , 72 , 64 , 64 ];
+presetControllers[PITCH_EG_AMT ] = [64 , 62 , 64 , 64 , 64 , 80 , 120, 64 ];
 presetControllers[PITCH_EG_TGT ] = [0  , 127, 0  , 0  , 0  , 127, 0  , 0  ];
 
-presetControllers[FILTER_CUTOFF] = [76 , 28 , 0  , 127, 127, 118, 127, 127];
-presetControllers[FILTER_RESO  ] = [80 , 64 , 127, 0  , 0  , 32 , 0  , 0  ];
-presetControllers[CUTOFF_EG_AMT] = [82 , 112, 94,  64 , 64 , 60 , 64 , 64 ];
+presetControllers[FILTER_CUTOFF] = [64 , 16 , 16 , 112, 112, 100, 64 , 127];
+presetControllers[FILTER_RESO  ] = [96 , 80 , 127, 0  , 0  , 64 , 64 , 0  ];
+presetControllers[CUTOFF_EG_AMT] = [82 , 112, 94,  64 , 64 , 64 , 64 , 64 ];
 presetControllers[AMP_EG_ON    ] = [127, 0  , 127, 0  , 127, 127, 127, 127];
 
-presetControllers[EG_ATTACK    ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
-presetControllers[EG_DECAY     ] = [64 , 96 , 96 , 96 , 0  , 32 , 0  , 0  ];
-presetControllers[EG_SUSTAIN   ] = [127, 0  , 0  , 0  , 127, 96 , 127, 127];
+presetControllers[EG_ATTACK    ] = [0  , 0  , 0  , 0  , 0  , 16 , 0  , 0  ];
+presetControllers[EG_DECAY     ] = [64 , 96 , 96 , 96 , 0  , 32 , 64 , 0  ];
+presetControllers[EG_SUSTAIN   ] = [127, 0  , 0  , 0  , 127, 96 , 0  , 127];
 presetControllers[EG_RELEASE   ] = [127, 127, 127, 127, 127, 0  , 127, 127];
 
-presetControllers[LFO_WAVE     ] = [0  , 0  , 0  , 127, 0  , 32 , 0  , 0  ];
-presetControllers[LFO_RATE     ] = [64 , 64 , 64 , 80 , 64 , 64 , 64 , 64 ];
-presetControllers[PITCH_LFO_AMT] = [65 , 65 , 64 , 88 , 65 , 65 , 64 , 64 ];
-presetControllers[CO_LFO_AMT   ] = [64 , 64 , 52 , 64 , 64 , 64 , 64 , 64 ];
+presetControllers[LFO_WAVE     ] = [0  , 0  , 32 , 127, 0  , 32 , 0  , 0  ];
+presetControllers[LFO_RATE     ] = [64 , 64 , 64 , 80 , 64 , 64 , 0  , 64 ];
+presetControllers[PITCH_LFO_AMT] = [66 , 66 , 64 , 88 , 66 , 66 , 64 , 64 ];
+presetControllers[CO_LFO_AMT   ] = [64 , 64 , 40 , 64 , 64 , 64 , 112, 64 ];
 
-presetControllers[LFO_DEPTH    ] = [16 , 16 , 0  , 0  , 0  , 16 , 0  , 0  ];
+presetControllers[LFO_DEPTH    ] = [8  , 8  , 0  , 0  , 0  , 8  , 0  , 0  ];
 presetControllers[LFO_RT_EG_AMT] = [64 , 64 , 64 , 72 , 64 , 64 , 64 , 64 ];
 presetControllers[PITCH_LFO_TGT] = [127, 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
 presetControllers[LFO_FADE_TIME] = [64 , 64 , 0  , 0  , 0  , 64 , 0  , 0  ];
 
-presetControllers[PB_RANGE     ] = [2  , 2  , 2  , 2  , 12 , 2  , 2  , 2  ];
-presetControllers[CC86         ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
-presetControllers[CO_EXP_AMT   ] = [64 , 64 , 64 , 64 , 64 , 94 , 64 , 64 ];
-presetControllers[AMP_EXP_AMT  ] = [127, 127, 127, 127, 127, 127, 127, 127];
+presetControllers[PB_RANGE     ] = [2  , 2  , 2  , 2  , 12 , 2  , 12 , 2  ];
+presetControllers[CO_PITCH_AMT ] = [0  , 0  , 0  , 0  , 0  , 127, 127, 0  ];
+presetControllers[CO_EXP_AMT   ] = [64 , 64 , 64 , 64 , 64 , 112, 64 , 64 ];
+presetControllers[AMP_EXP_AMT  ] = [0  , 0  , 0  , 0  , 0  , 127, 127, 0  ];
 
-presetControllers[PORTAMENTO   ] = [0  , 32 , 32 , 0  , 0  , 32 , 0  , 0  ];
+presetControllers[PORTAMENTO   ] = [0  , 32 , 32 , 0  , 0  , 0  , 0  , 0  ];
 presetControllers[LEGATO       ] = [0  , 127, 127, 0  , 0  , 127, 0  , 0  ];
-presetControllers[KEY_ASSIGN   ] = [0  , 64 , 0  , 127, 0  , 127, 0  , 0  ];
-presetControllers[EXP_BY_VEL   ] = [0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
+presetControllers[KEY_ASSIGN   ] = [0  , 64 , 0  , 127, 0  , 127, 127, 0  ];
+presetControllers[EXP_BY_VEL   ] = [0  , 0  , 0  , 0  , 0  , 0  , 127, 0  ];
+
+presetControllers[OSC_LEVEL    ] = [80 , 80 , 80 , 80 , 80 , 107, 80 , 80 ];
+presetControllers[RESO_LIMIT   ] = [127, 127, 127, 127, 127, 96 , 127, 127];
+presetControllers[AMP_LEVEL    ] = [127, 127, 127, 127, 127, 127, 127, 127];
+presetControllers[DAMP_ATK     ] = [0  , 0  , 0  , 0  , 0  , 64 , 0  , 0  ];
 
 const PRESET_NUMBER_NEUTRAL = 7;
 </script>
@@ -453,8 +468,20 @@ function preset(number) {
 
 function setRandom() {
   controllersInLocalStorage.forEach(function(i) {
-    onChangeControlChange(i, rand(128));
+    if((i != OSC_LEVEL    ) &&
+       (i != RESO_LIMIT   ) &&
+       (i != AMP_LEVEL    ) &&
+       (i != DAMP_ATK     )) {
+      onChangeControlChange(i, rand(128));
+    }
   });
+
+  // Reset EXPRESSION
+  document.getElementById("spanCC11").innerHTML = "-";
+  if (midiOutput) {
+    midiOutput.send([(CONTROL_CHANGE | MIDI_CH), EXPRESSION, 127]);
+    sleep(2);
+  }
 }
 
 function rand(n) {
@@ -502,7 +529,7 @@ function noteOff(noteNumber) {
 <body>
 
 <table>
-<tr><td><strong>VRA8-N CTRL v2.2.1</strong>&nbsp;&nbsp;Digital Synth VRA8-N Controller (<a href="https://github.com/risgk/digital-synth-vra8-n">View on GitHub</a>), We recommend Google Chrome</td></tr>
+<tr><td><strong>VRA8-N CTRL v2.3.0</strong>&nbsp;&nbsp;Digital Synth VRA8-N Controller (<a href="https://github.com/risgk/digital-synth-vra8-n">View on GitHub</a>), We recommend Google Chrome</td></tr>
 <tr><td>&nbsp;</td></tr>
 </table>
 
@@ -553,6 +580,8 @@ function noteOff(noteNumber) {
     <td><input type="button" value="#4 SAW"         onclick="preset(4)"></td>
     <td>&nbsp;</td>
     <td><input type="button" value="#5 WS"          onclick="preset(5)"></td>
+    <td>&nbsp;</td>
+    <td><input type="button" value="#6 NOISE"       onclick="preset(6)"></td>
     <td>&nbsp;</td>
     <td><input type="button" value="#7 NEUTRAL"     onclick="preset(7)"></td></tr>
 </table>
@@ -678,13 +707,13 @@ function noteOff(noteNumber) {
     <td><span   id="spanCC15">-1</span></td></tr>
 <tr><td>&nbsp;</td></tr>
 <tr><td>P. BEND RANGE         </td><td></td>
-    <td>                      </td><td></td>
+    <td>PITCH > CUTOFF        </td><td></td>
     <td>EXP > CUTOFF (-/+)    </td><td></td>
     <td>EXP > AMP LEVEL       </td><td></td></tr>
 <tr><td><input id="inputCC85" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(PB_RANGE, value)"></td>
     <td><span   id="spanCC85">-1</span></td>
-    <td><input id="inputCC86" style="visibility:hidden" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(CC86, value)"></td>
-    <td><span   id="spanCC86" style="visibility:hidden">-1</span></td>
+    <td><input id="inputCC86" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(CO_PITCH_AMT, value)"></td>
+    <td><span   id="spanCC86">-1</span></td>
     <td><input id="inputCC106" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(CO_EXP_AMT, value)"></td>
     <td><span   id="spanCC106">-1</span></td>
     <td><input id="inputCC107" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(AMP_EXP_AMT, value)"></td>
@@ -701,6 +730,19 @@ function noteOff(noteNumber) {
     <td><span   id="spanCC87">-1</span></td>
     <td><input id="inputCC89" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(EXP_BY_VEL, value)"></td>
     <td><span   id="spanCC89">-1</span></td></tr>
+<tr><td>&nbsp;</td></tr>
+<tr><td>OSC LEVEL             </td><td></td>
+    <td>RESONANCE LIMIT       </td><td></td>
+    <td>AMP LEVEL             </td><td></td>
+    <td>DAMP AND ATTACK       </td><td></td></tr>
+<tr><td><input id="inputCC108" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(OSC_LEVEL, value)"></td>
+    <td><span   id="spanCC108">-1</span></td>
+    <td><input id="inputCC109" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(RESO_LIMIT, value)"></td>
+    <td><span   id="spanCC109">-1</span></td>
+    <td><input id="inputCC110" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(AMP_LEVEL, value)"></td>
+    <td><span   id="spanCC110">-1</span></td>
+    <td><input id="inputCC111" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(DAMP_ATK, value)"></td>
+    <td><span   id="spanCC111">-1</span></td></tr>
 <tr><td>&nbsp;</td></tr>
 </table>
 
