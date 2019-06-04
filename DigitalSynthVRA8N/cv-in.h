@@ -337,13 +337,13 @@ private:
   }
 
   // CAUTION: Call after the conversion is finishd.
-  INLINE static uint16_t adc_read() {
+  INLINE static uint16_t adc_read(bool reversed = false) {
 #if defined(ENABLE_VOLTAGE_CONTROL)
     uint8_t adcLow  = ADCL;
     uint8_t adcHigh = ADCH;
     uint16_t adc = ((adcHigh << 8) | adcLow);
 
-    if (ANALOG_INPUT_REVERSED) {
+    if (ANALOG_INPUT_REVERSED != reversed) {
       return 1023 - adc;
     }
 #else
