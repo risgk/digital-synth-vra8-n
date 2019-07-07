@@ -11,6 +11,10 @@
 
 ## Change History
 
+- v2.4.0 (Major Changes)
+    - Rename the constants for CCs
+    - Introduce NewEnvGen (Level changes are smoother than the original EnvGen)
+    - Improve the ANALOG_INPUT_REVERSED option of mode-VC
 - v2.3.0 (Major Changes)
     - Do not support Arduino Nano 3.x (because the sketch uses more than 30720 bytes of program storage space)
     - Rename **VRA8-N mini** to **VRA8-N mode-VC**
