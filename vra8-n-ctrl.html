@@ -574,68 +574,68 @@ function noteOff(noteNumber) {
 
 
 
-function exportAll() {
+function fileExport() {
   var str = "{\n";
 
   str += "  \"_version     \" : \"v2.3.0\",\n";
   str += "  \"_comment     \" : \"  CUR    #8   #9   #10  #11  #12  #13  #14  #15  \",\n";
-  str += exportOneLine(OSC1_2_WAVE  );
-  str += exportOneLine(OSC_MIX      );
-  str += exportOneLine(OSC2_COARSE  );
-  str += exportOneLine(OSC2_FINE    );
+  str += fileExportOneLine(OSC1_2_WAVE  );
+  str += fileExportOneLine(OSC_MIX      );
+  str += fileExportOneLine(OSC2_COARSE  );
+  str += fileExportOneLine(OSC2_FINE    );
   str += "\n";
-  str += exportOneLine(SUB_OSC_WAVE );
-  str += exportOneLine(SUB_OSC_LEVEL);
-  str += exportOneLine(EG_TO_PITCH  );
-  str += exportOneLine(EG_TO_P_TGT  );
+  str += fileExportOneLine(SUB_OSC_WAVE );
+  str += fileExportOneLine(SUB_OSC_LEVEL);
+  str += fileExportOneLine(EG_TO_PITCH  );
+  str += fileExportOneLine(EG_TO_P_TGT  );
   str += "\n";
-  str += exportOneLine(FILTER_CUTOFF);
-  str += exportOneLine(FILTER_RESO  );
-  str += exportOneLine(EG_TO_CUTOFF );
-  str += exportOneLine(AMP_EG_ON    );
+  str += fileExportOneLine(FILTER_CUTOFF);
+  str += fileExportOneLine(FILTER_RESO  );
+  str += fileExportOneLine(EG_TO_CUTOFF );
+  str += fileExportOneLine(AMP_EG_ON    );
   str += "\n";
-  str += exportOneLine(EG_ATTACK    );
-  str += exportOneLine(EG_DECAY     );
-  str += exportOneLine(EG_SUSTAIN   );
-  str += exportOneLine(EG_RELEASE   );
+  str += fileExportOneLine(EG_ATTACK    );
+  str += fileExportOneLine(EG_DECAY     );
+  str += fileExportOneLine(EG_SUSTAIN   );
+  str += fileExportOneLine(EG_RELEASE   );
   str += "\n";
-  str += exportOneLine(LFO_WAVE     );
-  str += exportOneLine(LFO_RATE     );
-  str += exportOneLine(LFO_TO_PITCH );
-  str += exportOneLine(LFO_TO_CUTOFF);
+  str += fileExportOneLine(LFO_WAVE     );
+  str += fileExportOneLine(LFO_RATE     );
+  str += fileExportOneLine(LFO_TO_PITCH );
+  str += fileExportOneLine(LFO_TO_CUTOFF);
   str += "\n";
-  str += exportOneLine(LFO_DEPTH    );
-  str += exportOneLine(EG_TO_LFO_R  );
-  str += exportOneLine(LFO_TO_P_TGT );
-  str += exportOneLine(LFO_FADE_TIME);
+  str += fileExportOneLine(LFO_DEPTH    );
+  str += fileExportOneLine(EG_TO_LFO_R  );
+  str += fileExportOneLine(LFO_TO_P_TGT );
+  str += fileExportOneLine(LFO_FADE_TIME);
   str += "\n";
-  str += exportOneLine(P_BEND_RANGE );
-  str += exportOneLine(P_TO_CUTOFF  );
-  str += exportOneLine(EXP_TO_CUTOFF);
-  str += exportOneLine(EXP_TO_AMP_L );
+  str += fileExportOneLine(P_BEND_RANGE );
+  str += fileExportOneLine(P_TO_CUTOFF  );
+  str += fileExportOneLine(EXP_TO_CUTOFF);
+  str += fileExportOneLine(EXP_TO_AMP_L );
   str += "\n";
-  str += exportOneLine(PORTAMENTO   );
-  str += exportOneLine(LEGATO       );
-  str += exportOneLine(KEY_ASSIGN   );
-  str += exportOneLine(EXP_BY_VEL   );
+  str += fileExportOneLine(PORTAMENTO   );
+  str += fileExportOneLine(LEGATO       );
+  str += fileExportOneLine(KEY_ASSIGN   );
+  str += fileExportOneLine(EXP_BY_VEL   );
   str += "\n";
-  str += exportOneLine(OSC_LEVEL    );
-  str += exportOneLine(RESO_LIMIT   );
-  str += exportOneLine(AMP_LEVEL    );
-  str += exportOneLine(DAMP_AND_ATK );
+  str += fileExportOneLine(OSC_LEVEL    );
+  str += fileExportOneLine(RESO_LIMIT   );
+  str += fileExportOneLine(AMP_LEVEL    );
+  str += fileExportOneLine(DAMP_AND_ATK );
   str += "  \"_end         \" : \"\"\n";
   str += "}\n";
 
   var blob = new Blob([str]);
   const a = document.createElement('a');
-  a.download = 'vra8-n-prog.txt';
+  a.download = 'vra8-n-prog.json';
   document.body.appendChild(a);
   a.href = URL.createObjectURL(blob);
   a.click();
   document.body.removeChild(a);
 }
 
-function exportOneLine(number) {
+function fileExportOneLine(number) {
   var str = "  \"" + controlNumberToStringMap.get(number) + "\" : [ [" + getCCValueString(number) + "], [";
   str += getStoredCCValueString(8 , number) + ", ";
   str += getStoredCCValueString(9 , number) + ", ";
@@ -748,10 +748,7 @@ function getStoredCCValueString(index, number) {
     <td>&nbsp;</td>
     <td><input type="button" value="#14"           onclick="saveControllers(14)"></td>
     <td>&nbsp;</td>
-    <td><input type="button" value="#15"           onclick="saveControllers(15)"></td>
-    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-    <td>FILE</td>
-    <td><input type="button" value="EXPORT"        onclick="exportAll()"></td></tr>
+    <td><input type="button" value="#15"           onclick="saveControllers(15)"></td></tr>
 <tr><td>&nbsp;</td>
     <td><input type="button" value="#8 "           onclick="loadControllers(8)" ></td>
     <td>&nbsp;</td>
@@ -769,6 +766,15 @@ function getStoredCCValueString(index, number) {
     <td><input type="button" value="#10"           onclick="saveControllers(10)"></td>
     <td>&nbsp;</td>
     <td><input type="button" value="#11"           onclick="saveControllers(11)"></td></tr>
+<tr><td>&nbsp;</td></tr>
+</table>
+
+<table>
+<tr><td>IMPORT</td>
+    <td><input type="file" id="fileImport" name="fileImport" accept=".json"/></td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>EXPORT</td>
+    <td><input type="button" value="EXECUTE"       onclick="fileExport()"></td></tr>
 <tr><td>&nbsp;</td></tr>
 </table>
 
