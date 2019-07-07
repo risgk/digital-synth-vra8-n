@@ -637,14 +637,14 @@ function exportAll() {
 
 function exportOneLine(number) {
   var str = "  \"" + controlNumberToStringMap.get(number) + "\" : [ [" + getCCValueString(number) + "], [";
-  str += getStoredCCValueString(0, number) + ", ";
-  str += getStoredCCValueString(1, number) + ", ";
-  str += getStoredCCValueString(2, number) + ", ";
-  str += getStoredCCValueString(3, number) + ", ";
-  str += getStoredCCValueString(4, number) + ", ";
-  str += getStoredCCValueString(5, number) + ", ";
-  str += getStoredCCValueString(6, number) + ", ";
-  str += getStoredCCValueString(7, number) + "] ],\n";
+  str += getStoredCCValueString(8 , number) + ", ";
+  str += getStoredCCValueString(9 , number) + ", ";
+  str += getStoredCCValueString(10, number) + ", ";
+  str += getStoredCCValueString(11, number) + ", ";
+  str += getStoredCCValueString(12, number) + ", ";
+  str += getStoredCCValueString(13, number) + ", ";
+  str += getStoredCCValueString(14, number) + ", ";
+  str += getStoredCCValueString(15, number) + "] ],\n";
   return str;
 }
 
