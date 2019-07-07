@@ -111,6 +111,53 @@ const SP_RAND_CTRL  = 90;
 
 const ALL_NOTES_OFF = 123;
 
+var controlNumberToStringMap = new Map([
+  [ OSC1_2_WAVE  , "OSC1_2_WAVE  " ],
+  [ OSC_MIX      , "OSC_MIX      " ],
+  [ OSC2_COARSE  , "OSC2_COARSE  " ],
+  [ OSC2_FINE    , "OSC2_FINE    " ],
+
+  [ SUB_OSC_WAVE , "SUB_OSC_WAVE " ],
+  [ SUB_OSC_LEVEL, "SUB_OSC_LEVEL" ],
+  [ EG_TO_PITCH  , "EG_TO_PITCH  " ],
+  [ EG_TO_P_TGT  , "EG_TO_P_TGT  " ],
+
+  [ FILTER_CUTOFF, "FILTER_CUTOFF" ],
+  [ FILTER_RESO  , "FILTER_RESO  " ],
+  [ EG_TO_CUTOFF , "EG_TO_CUTOFF " ],
+  [ AMP_EG_ON    , "AMP_EG_ON    " ],
+
+  [ EG_ATTACK    , "EG_ATTACK    " ],
+  [ EG_DECAY     , "EG_DECAY     " ],
+  [ EG_SUSTAIN   , "EG_SUSTAIN   " ],
+  [ EG_RELEASE   , "EG_RELEASE   " ],
+
+  [ LFO_WAVE     , "LFO_WAVE     " ],
+  [ LFO_RATE     , "LFO_RATE     " ],
+  [ LFO_TO_PITCH , "LFO_TO_PITCH " ],
+  [ LFO_TO_CUTOFF, "LFO_TO_CUTOFF" ],
+
+  [ LFO_DEPTH    , "LFO_DEPTH    " ],
+  [ EG_TO_LFO_R  , "EG_TO_LFO_R  " ],
+  [ LFO_TO_P_TGT , "LFO_TO_P_TGT " ],
+  [ LFO_FADE_TIME, "LFO_FADE_TIME" ],
+
+  [ P_BEND_RANGE , "P_BEND_RANGE " ],
+  [ P_TO_CUTOFF  , "P_TO_CUTOFF  " ],
+  [ EXP_TO_CUTOFF, "EXP_TO_CUTOFF" ],
+  [ EXP_TO_AMP_L , "EXP_TO_AMP_L " ],
+
+  [ PORTAMENTO   , "PORTAMENTO   " ],
+  [ LEGATO       , "LEGATO       " ],
+  [ KEY_ASSIGN   , "KEY_ASSIGN   " ],
+  [ EXP_BY_VEL   , "EXP_BY_VEL   " ],
+
+  [ OSC_LEVEL    , "OSC_LEVEL    " ],
+  [ RESO_LIMIT   , "RESO_LIMIT   " ],
+  [ AMP_LEVEL    , "AMP_LEVEL    " ],
+  [ DAMP_AND_ATK , "DAMP_AND_ATK " ],
+]);
+
 var controllersInLocalStorage = [
   OSC1_2_WAVE  ,
   OSC_MIX      ,
