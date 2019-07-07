@@ -12,6 +12,7 @@
 ## Change History
 
 - v2.4.0 (Major Changes)
+    - Add the FILE EXPORT function to VRA8-N CTRL
     - Rename the constants for CCs
     - Introduce NewEnvGen (Level changes are smoother than the original EnvGen)
     - Improve the ANALOG_INPUT_REVERSED option of mode-VC
