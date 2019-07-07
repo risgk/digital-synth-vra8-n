@@ -138,15 +138,12 @@
 - "DAMP AND ATTACK": DAMP the EG level to zero before ATTACK (0-63: Off, 64: Slowest, 127: Fastest)
 
 
-## A Sample Setting of a Physical Controller (8-Knob)
+## A Sample Setting of a 4-Knob Physical Controller
 
-    +-------------------+---------------+---------------+---------------+
-    | CC #16            | CC #17        | CC #23        | CC #19        |
-    | CUTOFF            | RESONANCE     | ATTACK        | DECAY         |
-    +-------------------+---------------+---------------+---------------+
-    | CC #24            | CC #25        | CC #26        | CC #22        |
-    | OSC (SAW/SQ)      | OSC MIX (1/2) | SUB LEVEL     | PORTAMENTO    |
-    +-------------------+---------------+---------------+---------------+
+    +---------------+---------------+---------------+---------------+
+    | CC #16        | CC #17        | CC #23        | CC #19        |
+    | CUTOFF        | RESONANCE     | ATTACK        | DECAY         |
+    +---------------+---------------+---------------+---------------+
 
 
 ## **VRA8-N mode-VC** (Alternative Operation Mode)
