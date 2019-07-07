@@ -208,50 +208,50 @@ var controllersInLocalStorage = [
 var presetControllers = {};
 
 // PRESET                           #0   #1   #2   #3   #4   #5   #6   #7   
-presetControllers[OSC1_2_WAVE  ] = [0  , 0  , 0  , 127, 0  , 0  , 48 , 0  ];
+presetControllers[OSC1_2_WAVE  ] = [0  , 0  , 0  , 127, 127, 0  , 48 , 0  ];
 presetControllers[OSC_MIX      ] = [64 , 64 , 64 , 64 , 0  , 32 , 127, 0  ];
 presetControllers[OSC2_COARSE  ] = [71 , 64 , 64 , 64 , 64 , 64 , 64 , 64 ];
-presetControllers[OSC2_FINE    ] = [68 , 72 , 66 , 72 , 68 , 48 , 68 , 64 ];
+presetControllers[OSC2_FINE    ] = [68 , 72 , 66 , 72 , 72 , 48 , 68 , 64 ];
 
-presetControllers[SUB_OSC_WAVE ] = [127, 0  , 0  , 0  , 127, 127, 0  , 0  ];
-presetControllers[SUB_OSC_LEVEL] = [127, 127, 127, 0  , 0  , 0  , 0  , 0  ];
+presetControllers[SUB_OSC_WAVE ] = [127, 0  , 0  , 0  , 64 , 127, 0  , 0  ];
+presetControllers[SUB_OSC_LEVEL] = [127, 127, 127, 0  , 8  , 0  , 0  , 0  ];
 presetControllers[EG_TO_PITCH  ] = [64 , 62 , 64 , 64 , 64 , 80 , 120, 64 ];
 presetControllers[EG_TO_P_TGT  ] = [0  , 127, 0  , 0  , 0  , 127, 0  , 0  ];
 
-presetControllers[FILTER_CUTOFF] = [64 , 16 , 16 , 112, 112, 100, 64 , 127];
+presetControllers[FILTER_CUTOFF] = [64 , 16 , 16 , 112, 0  , 100, 64 , 127];
 presetControllers[FILTER_RESO  ] = [96 , 80 , 127, 0  , 0  , 64 , 64 , 0  ];
 presetControllers[EG_TO_CUTOFF ] = [82 , 112, 94,  64 , 64 , 64 , 64 , 64 ];
 presetControllers[AMP_EG_ON    ] = [127, 0  , 127, 0  , 127, 127, 127, 127];
 
-presetControllers[EG_ATTACK    ] = [0  , 0  , 0  , 0  , 0  , 16 , 0  , 0  ];
-presetControllers[EG_DECAY     ] = [64 , 96 , 96 , 96 , 0  , 32 , 64 , 0  ];
+presetControllers[EG_ATTACK    ] = [0  , 0  , 0  , 0  , 32 , 16 , 0  , 0  ];
+presetControllers[EG_DECAY     ] = [64 , 96 , 96 , 96 , 32 , 32 , 64 , 0  ];
 presetControllers[EG_SUSTAIN   ] = [127, 0  , 0  , 0  , 127, 96 , 0  , 127];
 presetControllers[EG_RELEASE   ] = [127, 127, 127, 127, 127, 0  , 127, 127];
 
-presetControllers[LFO_WAVE     ] = [0  , 0  , 32 , 127, 0  , 32 , 0  , 0  ];
+presetControllers[LFO_WAVE     ] = [0  , 0  , 32 , 127, 32 , 32 , 0  , 0  ];
 presetControllers[LFO_RATE     ] = [64 , 64 , 64 , 80 , 64 , 64 , 0  , 64 ];
 presetControllers[LFO_TO_PITCH ] = [66 , 66 , 64 , 88 , 66 , 66 , 64 , 64 ];
 presetControllers[LFO_TO_CUTOFF] = [64 , 64 , 40 , 64 , 64 , 64 , 112, 64 ];
 
-presetControllers[LFO_DEPTH    ] = [8  , 8  , 0  , 0  , 0  , 8  , 0  , 0  ];
+presetControllers[LFO_DEPTH    ] = [8  , 8  , 0  , 0  , 8  , 8  , 0  , 0  ];
 presetControllers[EG_TO_LFO_R  ] = [64 , 64 , 64 , 72 , 64 , 64 , 64 , 64 ];
 presetControllers[LFO_TO_P_TGT ] = [127, 0  , 0  , 0  , 0  , 0  , 0  , 0  ];
-presetControllers[LFO_FADE_TIME] = [64 , 64 , 0  , 0  , 0  , 64 , 0  , 0  ];
+presetControllers[LFO_FADE_TIME] = [64 , 64 , 0  , 0  , 64 , 64 , 0  , 0  ];
 
-presetControllers[P_BEND_RANGE ] = [2  , 2  , 2  , 2  , 12 , 2  , 12 , 2  ];
-presetControllers[P_TO_CUTOFF  ] = [0  , 0  , 0  , 0  , 0  , 127, 127, 0  ];
-presetControllers[EXP_TO_CUTOFF] = [64 , 64 , 64 , 64 , 64 , 112, 64 , 64 ];
-presetControllers[EXP_TO_AMP_L ] = [0  , 0  , 0  , 0  , 0  , 127, 127, 0  ];
+presetControllers[P_BEND_RANGE ] = [2  , 2  , 2  , 2  , 2  , 2  , 12 , 2  ];
+presetControllers[P_TO_CUTOFF  ] = [0  , 0  , 0  , 0  , 127, 127, 127, 0  ];
+presetControllers[EXP_TO_CUTOFF] = [64 , 64 , 64 , 64 , 88 , 112, 64 , 64 ];
+presetControllers[EXP_TO_AMP_L ] = [0  , 0  , 0  , 0  , 127, 127, 127, 0  ];
 
 presetControllers[PORTAMENTO   ] = [0  , 32 , 32 , 0  , 0  , 0  , 0  , 0  ];
-presetControllers[LEGATO       ] = [0  , 127, 127, 0  , 0  , 127, 0  , 0  ];
-presetControllers[KEY_ASSIGN   ] = [0  , 64 , 0  , 127, 0  , 127, 127, 0  ];
+presetControllers[LEGATO       ] = [0  , 127, 127, 0  , 127, 127, 0  , 0  ];
+presetControllers[KEY_ASSIGN   ] = [0  , 64 , 0  , 127, 127, 127, 127, 0  ];
 presetControllers[EXP_BY_VEL   ] = [0  , 0  , 0  , 0  , 0  , 0  , 127, 0  ];
 
-presetControllers[OSC_LEVEL    ] = [80 , 80 , 80 , 80 , 80 , 107, 80 , 80 ];
-presetControllers[RESO_LIMIT   ] = [127, 127, 127, 127, 127, 96 , 127, 127];
+presetControllers[OSC_LEVEL    ] = [80 , 80 , 80 , 80 , 120, 107, 80 , 80 ];
+presetControllers[RESO_LIMIT   ] = [127, 127, 127, 127, 96 , 96 , 127, 127];
 presetControllers[AMP_LEVEL    ] = [127, 127, 127, 127, 127, 127, 127, 127];
-presetControllers[DAMP_AND_ATK ] = [0  , 0  , 0  , 0  , 0  , 64 , 0  , 0  ];
+presetControllers[DAMP_AND_ATK ] = [0  , 0  , 0  , 0  , 64 , 64 , 0  , 0  ];
 
 const PRESET_NUMBER_NEUTRAL = 7;
 </script>
@@ -616,21 +616,28 @@ function noteOff(noteNumber) {
 
 <table>
 <tr><td>PRESET</td>
-    <td><input type="button" value="#0 FIFTH"       onclick="preset(0)"></td>
+    <td><input type="button" value="#4 PAN FLUTE"   onclick="preset(4)"></td>
     <td>&nbsp;</td>
-    <td><input type="button" value="#1 LEAD"        onclick="preset(1)"></td>
+    <td><input type="button" value="#5 WIND SYNTH"  onclick="preset(5)"></td>
     <td>&nbsp;</td>
-    <td><input type="button" value="#2 BASS"        onclick="preset(2)"></td>
+    <td><input type="button" value="#6 NOISE DRUM"  onclick="preset(6)"></td>
     <td>&nbsp;</td>
-    <td><input type="button" value="#3 SQ"          onclick="preset(3)"></td>
+    <td><input type="button" value="#7 NEUTRAL"     onclick="preset(7)"></td>
     <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-    <td><input type="button" value="#4 SAW"         onclick="preset(4)"></td>
+    <td>MISC</td>
+    <td><input type="button" value="ALL NOTES OFF"  onclick="allNotesOff()"></td></tr>
+<tr><td></td>
+    <td><input type="button" value="#0 FIFTH LEAD"  onclick="preset(0)"></td>
     <td>&nbsp;</td>
-    <td><input type="button" value="#5 WS"          onclick="preset(5)"></td>
+    <td><input type="button" value="#1 UNISON LEAD" onclick="preset(1)"></td>
     <td>&nbsp;</td>
-    <td><input type="button" value="#6 NOISE"       onclick="preset(6)"></td>
+    <td><input type="button" value="#2 SYNTH BASS"  onclick="preset(2)"></td>
     <td>&nbsp;</td>
-    <td><input type="button" value="#7 NEUTRAL"     onclick="preset(7)"></td></tr>
+    <td><input type="button" value="#3 SQ LEAD"     onclick="preset(3)"></td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>&nbsp;</td>
+    <td><input type="button" value="RANDOM CTRL"    onclick="setRandom()"></td></tr>
+<tr><td>&nbsp;</td></tr>
 </table>
 
 <table>
@@ -650,10 +657,7 @@ function noteOff(noteNumber) {
     <td>&nbsp;</td>
     <td><input type="button" value="#14"           onclick="saveControllers(14)"></td>
     <td>&nbsp;</td>
-    <td><input type="button" value="#15"           onclick="saveControllers(15)"></td>
-    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-    <td>MISC</td>
-    <td><input type="button" value="ALL NOTES OFF" onclick="allNotesOff()"      ></td></tr>
+    <td><input type="button" value="#15"           onclick="saveControllers(15)"></td></tr>
 <tr><td>&nbsp;</td>
     <td><input type="button" value="#8 "           onclick="loadControllers(8)" ></td>
     <td>&nbsp;</td>
@@ -670,10 +674,7 @@ function noteOff(noteNumber) {
     <td>&nbsp;</td>
     <td><input type="button" value="#10"           onclick="saveControllers(10)"></td>
     <td>&nbsp;</td>
-    <td><input type="button" value="#11"           onclick="saveControllers(11)"></td>
-    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-    <td>&nbsp;</td>
-    <td><input type="button" value="RANDOM CTRL"   onclick="setRandom()"        ></td></tr>
+    <td><input type="button" value="#11"           onclick="saveControllers(11)"></td></tr>
 <tr><td>&nbsp;</td></tr>
 </table>
 
