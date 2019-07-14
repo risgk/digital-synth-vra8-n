@@ -17,7 +17,7 @@ const uint8_t g_preset_table_EG_TO_P_TGT    [] = {0  , 127, 0  , 0  , 0  , 127, 
 
 const uint8_t g_preset_table_CUTOFF         [] = {64 , 16 , 16 , 112, 0  , 100, 64 , 127};
 const uint8_t g_preset_table_RESONANCE      [] = {96 , 80 , 127, 0  , 0  , 64 , 64 , 0  };
-const uint8_t g_preset_table_EG_TO_CUTOFF   [] = {82 , 112, 94,  64 , 64 , 64 , 64 , 64 };
+const uint8_t g_preset_table_EG_TO_CUTOFF   [] = {82 , 112, 94 , 64 , 64 , 64 , 64 , 64 };
 const uint8_t g_preset_table_AMP_EG         [] = {127, 0  , 127, 0  , 127, 127, 127, 127};
 
 const uint8_t g_preset_table_ATTACK         [] = {0  , 0  , 0  , 0  , 32 , 16 , 0  , 0  };
@@ -71,7 +71,7 @@ const uint8_t g_preset_table_EG_TO_P_TGT    [] = {0  , 0  , 127, 0  , 0  , 0  , 
 
 const uint8_t g_preset_table_CUTOFF         [] = {64 , 64 , 16 , 16 , 112, 0  , 100, 64 };
 const uint8_t g_preset_table_RESONANCE      [] = {64 , 96 , 80 , 127, 0  , 0  , 64 , 64 };
-const uint8_t g_preset_table_EG_TO_CUTOFF   [] = {64 , 82 , 112, 94,  64 , 64 , 64 , 64 };
+const uint8_t g_preset_table_EG_TO_CUTOFF   [] = {64 , 82 , 112, 94 , 64 , 64 , 64 , 64 };
 const uint8_t g_preset_table_AMP_EG         [] = {127, 127, 0  , 127, 0  , 127, 127, 127};
 
 const uint8_t g_preset_table_ATTACK         [] = {0  , 0  , 0  , 0  , 0  , 32 , 16 , 0  };
