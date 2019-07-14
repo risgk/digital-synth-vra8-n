@@ -13,7 +13,7 @@ def program_change(program_number)
 end
 
 def play(note_number, length)
-  $file.write([(NOTE_ON  | MIDI_CH), note_number, 64].pack("C*"))
+  $file.write([(NOTE_ON  | MIDI_CH), note_number, 127].pack("C*"))
   (length * 15 / 16).times { $file.write([ACTIVE_SENSING].pack("C")) }
   $file.write([(NOTE_OFF | MIDI_CH), note_number, 64].pack("C*"))
   (length * 1 / 16).times { $file.write([ACTIVE_SENSING].pack("C")) }
