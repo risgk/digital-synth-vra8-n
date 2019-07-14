@@ -41,6 +41,8 @@ td.keyh {
 }
 </style>
 <script>
+const APP_NAME_VERSION = "VRA8-N CTRL v2.3.0";
+
 const MIDI_CH        = 0;       // Basic Channel 1
 const NOTE_OFF       = 0x80;
 const NOTE_ON        = 0x90;
@@ -266,6 +268,8 @@ document.addEventListener("touchstart", function(event) {
 });
 
 window.onload = function() {
+  document.getElementById("spanAppNameVersion").innerHTML = "<strong>" + APP_NAME_VERSION + "</strong>";
+
   if (navigator.requestMIDIAccess) {
     navigator.requestMIDIAccess().then(onMIDISuccess, onMIDIFailure);
   } else {
@@ -577,7 +581,7 @@ function noteOff(noteNumber) {
 function fileExport() {
   var str = "{\n";
 
-  str += "  \"_version     \" : \"v2.3.0\",\n";
+  str += "  \"_version     \" : \"" + APP_NAME_VERSION + "\",\n";
   str += "  \"_comment     \" : \"    CUR    #8   #9   #10  #11  #12  #13  #14  #15  \",\n";
   str += fileExportOneLine(OSC1_2_WAVE    );
   str += fileExportOneLine(OSC_MIX        );
@@ -667,7 +671,7 @@ function getStoredCCValueString(index, number) {
 <body>
 
 <table>
-<tr><td><strong>VRA8-N CTRL v2.3.0</strong>&nbsp;&nbsp;Digital Synth VRA8-N Controller (<a href="https://github.com/risgk/digital-synth-vra8-n">View on GitHub</a>), We recommend Google Chrome</td></tr>
+<tr><td><span id="spanAppNameVersion"></span></td><td>&nbsp;&nbsp;Digital Synth VRA8-N Controller (<a href="https://github.com/risgk/digital-synth-vra8-n">View on GitHub</a>), We recommend Google Chrome</td></tr>
 <tr><td>&nbsp;</td></tr>
 </table>
 
