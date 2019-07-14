@@ -176,16 +176,16 @@ public:
       IOsc<0>::set_lfo_depth<1>(controller_value);
       break;
 
-    case FILTER_CUTOFF  :
+    case CUTOFF         :
       IFilter<0>::set_cutoff(controller_value);
       break;
-    case FILTER_RESO    :
+    case RESONANCE      :
       IFilter<0>::set_resonance(controller_value);
       break;
     case EG_TO_CUTOFF   :
       IFilter<0>::set_cutoff_env_amt(controller_value);
       break;
-    case EG_DECAY       :
+    case DECAY          :
       m_decay = controller_value;
       update_decay_release();
       break;
@@ -199,7 +199,7 @@ public:
     case PORTAMENTO     :
       m_portamento = controller_value;
       break;
-    case EG_ATTACK      :
+    case ATTACK         :
       m_attack = controller_value;
       if (m_amp_env_gen >= 64) {
         IEnvGen<0>::set_attack(m_attack);
@@ -215,10 +215,10 @@ public:
     case OSC_MIX        :
       IOsc<0>::set_osc_mix(controller_value);
       break;
-    case SUB_OSC_LEVEL  :
+    case SUB_LEVEL      :
       IOsc<0>::set_sub_osc_level(controller_value);
       break;
-    case EG_SUSTAIN     :
+    case SUSTAIN        :
       {
         m_sustain = controller_value;
 
@@ -235,7 +235,7 @@ public:
       IOsc<0>::set_lfo_waveform(controller_value);
       break;
 
-    case SUB_OSC_WAVE   :
+    case SUB_WAVE       :
       IOsc<0>::set_sub_waveform(controller_value);
       break;
 #if !defined(ENABLE_VOLTAGE_CONTROL) || !defined(USE_PITCH_CV_IN)
@@ -247,7 +247,7 @@ public:
       }
       break;
 #endif
-    case AMP_EG_ON      :
+    case AMP_EG         :
       m_amp_env_gen = controller_value;
       update_env_gen();
       break;
@@ -270,7 +270,7 @@ public:
       IOsc<0>::set_pitch_bend_minus_range(controller_value);
       IOsc<0>::set_pitch_bend_plus_range(controller_value);
       break;
-    case P_TO_CUTOFF    :
+    case PITCH_TO_CUTOFF:
       IFilter<0>::set_cutoff_pitch_amt(controller_value);
       break;
     case KEY_ASSIGN     :
@@ -286,7 +286,7 @@ public:
       break;
 #endif
 
-    case EG_RELEASE     :
+    case RELEASE        :
       m_release = controller_value;
       update_decay_release();
       break;
@@ -307,7 +307,7 @@ public:
         IOsc<0>::set_pitch_eg_target_both(false);
       }
       break;
-    case EG_TO_LFO_R    :
+    case EG_TO_LFO_RATE :
       IOsc<0>::set_lfo_rate_eg_amt(controller_value);
       break;
 
@@ -317,7 +317,7 @@ public:
     case EXP_TO_CUTOFF  :
       IFilter<0>::set_cutoff_exp_amt(controller_value);
       break;
-    case EXP_TO_AMP_L   :
+    case EXP_TO_AMP_LEV :
       IEnvGen<1>::set_amp_exp_amt(controller_value);
       break;
     case EXP_BY_VEL     :
@@ -331,13 +331,13 @@ public:
     case OSC_LEVEL      :
       IOsc<0>::set_osc_level(controller_value);
       break;
-    case RESO_LIMIT     :
+    case RESONANCE_LIMIT:
       IFilter<0>::set_resonance_limit(controller_value);
       break;
     case AMP_LEVEL      :
       IEnvGen<1>::set_gain(controller_value);
       break;
-    case DAMP_AND_ATK   :
+    case DAMP_AND_ATTACK:
       IEnvGen<0>::set_damp_atk(controller_value);
       IEnvGen<1>::set_damp_atk(controller_value);
       break;
@@ -364,20 +364,20 @@ public:
       control_change(OSC2_COARSE    , get_rnd_7());
       control_change(OSC2_FINE      , get_rnd_7());
 
-      control_change(SUB_OSC_WAVE   , get_rnd_7());
-      control_change(SUB_OSC_LEVEL  , get_rnd_7());
+      control_change(SUB_WAVE       , get_rnd_7());
+      control_change(SUB_LEVEL      , get_rnd_7());
       control_change(EG_TO_PITCH    , get_rnd_7());
       control_change(EG_TO_P_TGT    , get_rnd_7());
 
-      control_change(FILTER_CUTOFF  , get_rnd_7());
-      control_change(FILTER_RESO    , get_rnd_7());
+      control_change(CUTOFF         , get_rnd_7());
+      control_change(RESONANCE      , get_rnd_7());
       control_change(EG_TO_CUTOFF   , get_rnd_7());
-      control_change(AMP_EG_ON      , get_rnd_7());
+      control_change(AMP_EG         , get_rnd_7());
 
-      control_change(EG_ATTACK      , get_rnd_7());
-      control_change(EG_DECAY       , get_rnd_7());
-      control_change(EG_SUSTAIN     , get_rnd_7());
-      control_change(EG_RELEASE     , get_rnd_7());
+      control_change(ATTACK         , get_rnd_7());
+      control_change(DECAY          , get_rnd_7());
+      control_change(SUSTAIN        , get_rnd_7());
+      control_change(RELEASE        , get_rnd_7());
 
       control_change(LFO_WAVE       , get_rnd_7());
       control_change(LFO_RATE       , get_rnd_7());
@@ -385,14 +385,14 @@ public:
       control_change(LFO_TO_CUTOFF  , get_rnd_7());
 
       control_change(LFO_DEPTH      , get_rnd_7());
-      control_change(EG_TO_LFO_R    , get_rnd_7());
+      control_change(EG_TO_LFO_RATE , get_rnd_7());
       control_change(LFO_TO_P_TGT   , get_rnd_7());
       control_change(LFO_FADE_TIME  , get_rnd_7());
 
       control_change(P_BEND_RANGE   , get_rnd_7());
-      control_change(P_TO_CUTOFF    , get_rnd_7());
+      control_change(PITCH_TO_CUTOFF, get_rnd_7());
       control_change(EXP_TO_CUTOFF  , get_rnd_7());
-      control_change(EXP_TO_AMP_L   , get_rnd_7());
+      control_change(EXP_TO_AMP_LEV , get_rnd_7());
 
       control_change(PORTAMENTO     , get_rnd_7());
       control_change(LEGATO         , get_rnd_7());
@@ -410,20 +410,20 @@ public:
       control_change(OSC2_COARSE    , g_preset_table_OSC2_COARSE    [program_number]);
       control_change(OSC2_FINE      , g_preset_table_OSC2_FINE      [program_number]);
 
-      control_change(SUB_OSC_WAVE   , g_preset_table_SUB_OSC_WAVE   [program_number]);
-      control_change(SUB_OSC_LEVEL  , g_preset_table_SUB_OSC_LEVEL  [program_number]);
+      control_change(SUB_WAVE       , g_preset_table_SUB_WAVE       [program_number]);
+      control_change(SUB_LEVEL      , g_preset_table_SUB_LEVEL      [program_number]);
       control_change(EG_TO_PITCH    , g_preset_table_EG_TO_PITCH    [program_number]);
       control_change(EG_TO_P_TGT    , g_preset_table_EG_TO_P_TGT    [program_number]);
 
-      control_change(FILTER_CUTOFF  , g_preset_table_FILTER_CUTOFF  [program_number]);
-      control_change(FILTER_RESO    , g_preset_table_FILTER_RESO    [program_number]);
+      control_change(CUTOFF         , g_preset_table_CUTOFF         [program_number]);
+      control_change(RESONANCE      , g_preset_table_RESONANCE      [program_number]);
       control_change(EG_TO_CUTOFF   , g_preset_table_EG_TO_CUTOFF   [program_number]);
-      control_change(AMP_EG_ON      , g_preset_table_AMP_EG_ON      [program_number]);
+      control_change(AMP_EG         , g_preset_table_AMP_EG         [program_number]);
 
-      control_change(EG_ATTACK      , g_preset_table_EG_ATTACK      [program_number]);
-      control_change(EG_DECAY       , g_preset_table_EG_DECAY       [program_number]);
-      control_change(EG_SUSTAIN     , g_preset_table_EG_SUSTAIN     [program_number]);
-      control_change(EG_RELEASE     , g_preset_table_EG_RELEASE     [program_number]);
+      control_change(ATTACK         , g_preset_table_ATTACK         [program_number]);
+      control_change(DECAY          , g_preset_table_DECAY          [program_number]);
+      control_change(SUSTAIN        , g_preset_table_SUSTAIN        [program_number]);
+      control_change(RELEASE        , g_preset_table_RELEASE        [program_number]);
 
       control_change(LFO_WAVE       , g_preset_table_LFO_WAVE       [program_number]);
       control_change(LFO_RATE       , g_preset_table_LFO_RATE       [program_number]);
@@ -431,14 +431,14 @@ public:
       control_change(LFO_TO_CUTOFF  , g_preset_table_LFO_TO_CUTOFF  [program_number]);
 
       control_change(LFO_DEPTH      , g_preset_table_LFO_DEPTH      [program_number]);
-      control_change(EG_TO_LFO_R    , g_preset_table_EG_TO_LFO_R    [program_number]);
+      control_change(EG_TO_LFO_RATE , g_preset_table_EG_TO_LFO_RATE [program_number]);
       control_change(LFO_TO_P_TGT   , g_preset_table_LFO_TO_P_TGT   [program_number]);
       control_change(LFO_FADE_TIME  , g_preset_table_LFO_FADE_TIME  [program_number]);
 
       control_change(P_BEND_RANGE   , g_preset_table_P_BEND_RANGE   [program_number]);
-      control_change(P_TO_CUTOFF    , g_preset_table_P_TO_CUTOFF    [program_number]);
+      control_change(PITCH_TO_CUTOFF, g_preset_table_PITCH_TO_CUTOFF[program_number]);
       control_change(EXP_TO_CUTOFF  , g_preset_table_EXP_TO_CUTOFF  [program_number]);
-      control_change(EXP_TO_AMP_L   , g_preset_table_EXP_TO_AMP_L   [program_number]);
+      control_change(EXP_TO_AMP_LEV , g_preset_table_EXP_TO_AMP_LEV [program_number]);
 
       control_change(PORTAMENTO     , g_preset_table_PORTAMENTO     [program_number]);
       control_change(LEGATO         , g_preset_table_LEGATO         [program_number]);
@@ -446,9 +446,9 @@ public:
       control_change(EXP_BY_VEL     , g_preset_table_EXP_BY_VEL     [program_number]);
 
       control_change(OSC_LEVEL      , g_preset_table_OSC_LEVEL      [program_number]);
-      control_change(RESO_LIMIT     , g_preset_table_RESO_LIMIT     [program_number]);
+      control_change(RESONANCE_LIMIT, g_preset_table_RESONANCE_LIMIT[program_number]);
       control_change(AMP_LEVEL      , g_preset_table_AMP_LEVEL      [program_number]);
-      control_change(DAMP_AND_ATK   , g_preset_table_DAMP_AND_ATK   [program_number]);
+      control_change(DAMP_AND_ATTACK, g_preset_table_DAMP_AND_ATTACK[program_number]);
     }
   }
 
