@@ -259,6 +259,7 @@ const PRESET_NUMBER_NEUTRAL = 7;
 </script>
 <script>
 var transpose = 0;
+var fileReader = new FileReader();
 
 document.addEventListener("touchstart", function(event) {
   if (event.target.tagName.toUpperCase() != "INPUT" &&
@@ -281,6 +282,9 @@ window.onload = function() {
     onChangeTranspose(0);
     preset(0);
   }
+
+  document.getElementById("fileImport").addEventListener("change", fileImportChange, false);
+  fileReader.addEventListener("load", fileReaderLoad, false);
 };
 
 function sleep(msec) {
@@ -551,7 +555,7 @@ function loadControllers(number) {
 }
 
 function saveControllers(number) {
-  var r = confirm("Store control values to the program #" + String(number) + "?");
+  var r = confirm("Store current control values to the program #" + String(number) + "?");
   if (r == false) {
     return;
   }
@@ -577,6 +581,54 @@ function noteOff(noteNumber) {
 }
 
 
+
+function fileImport() {
+  document.getElementById("fileImport").click();
+}
+
+function fileImportChange(event) {
+  fileReader.readAsText(event.target.files[0]);
+}
+
+function fileReaderLoad(event) {
+  var r = confirm("Import current control values and stored programs?");
+  if (r == false) {
+    document.getElementById("fileImport").value = "";
+    return;
+  }
+
+  var obj = JSON.parse(event.target.result);
+
+  for (var number = 8; number < 16; number++) {
+    controllersInLocalStorage.forEach(function(i) {
+      var line = obj[controlNumberToStringMap.get(i)];
+      if (line != null) {
+        var value = line[1][number - 8];
+        if (value != null) {
+          localStorage.setItem("keyMemory" + String(number) + "CC" + String(i), value);
+        }
+      }
+    });
+  }
+
+  controllersInLocalStorage.forEach(function(i) {
+    var line = obj[controlNumberToStringMap.get(i)];
+    if (line != null) {
+      var value = line[0];
+      if (value != null) {
+        localStorage.setItem("keyCC" + String(i), value);
+      }
+    }
+  });
+
+  var result = restoreControllers();
+  if (!result) {
+    onChangeTranspose(0);
+    preset(0);
+  }
+
+  document.getElementById("fileImport").value = "";
+}
 
 function fileExport() {
   var str = "{\n";
@@ -752,7 +804,11 @@ function getStoredCCValueString(index, number) {
     <td>&nbsp;</td>
     <td><input type="button" value="#14"           onclick="saveControllers(14)"></td>
     <td>&nbsp;</td>
-    <td><input type="button" value="#15"           onclick="saveControllers(15)"></td></tr>
+    <td><input type="button" value="#15"           onclick="saveControllers(15)"></td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>FILE</td>
+    <td><input type="file" id="fileImport" style="display:none" name="fileImport" accept=".json"/>
+        <input type="button" value="IMPORT"        onclick="fileImport()"></td></tr>
 <tr><td>&nbsp;</td>
     <td><input type="button" value="#8 "           onclick="loadControllers(8)" ></td>
     <td>&nbsp;</td>
@@ -769,16 +825,10 @@ function getStoredCCValueString(index, number) {
     <td>&nbsp;</td>
     <td><input type="button" value="#10"           onclick="saveControllers(10)"></td>
     <td>&nbsp;</td>
-    <td><input type="button" value="#11"           onclick="saveControllers(11)"></td></tr>
-<tr><td>&nbsp;</td></tr>
-</table>
-
-<table>
-<tr><td>IMPORT</td>
-    <td><input type="file" id="fileImport" name="fileImport" accept=".json"/></td>
+    <td><input type="button" value="#11"           onclick="saveControllers(11)"></td>
     <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-    <td>EXPORT</td>
-    <td><input type="button" value="EXECUTE"       onclick="fileExport()"></td></tr>
+    <td>&nbsp;</td>
+    <td><input type="button" value="EXPORT"        onclick="fileExport()"></td></tr>
 <tr><td>&nbsp;</td></tr>
 </table>
 
