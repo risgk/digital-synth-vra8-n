@@ -558,7 +558,7 @@ function loadControllers(number) {
 }
 
 function saveControllers(number) {
-  var r = confirm("Store current control values to the program #" + String(number) + "?");
+  var r = confirm("Store the current control values to the program #" + String(number) + "?");
   if (r == false) {
     return;
   }
@@ -602,7 +602,7 @@ function fileImportAllChange(event) {
 }
 
 function fileReaderImportAllLoad(event) {
-  var r = confirm("Import current control values and stored programs?");
+  var r = confirm("Import the current control values and the stored programs?");
   if (r == false) {
     document.getElementById("fileImportAll").value = "";
     return;
@@ -642,7 +642,7 @@ function fileReaderImportAllLoad(event) {
 }
 
 function fileReaderImportCurrentLoad(event) {
-  var r = confirm("Import current control values?");
+  var r = confirm("Import the current control values?");
   if (r == false) {
     document.getElementById("fileImportCurrent").value = "";
     return;
