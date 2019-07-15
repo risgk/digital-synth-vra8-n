@@ -1,6 +1,6 @@
-# Digital Synth VRA8-N v2.3.0
+# Digital Synth VRA8-N v2.4.0
 
-- 2019-06-02 ISGK Instruments
+- 2019-07-15 ISGK Instruments
 - <https://github.com/risgk/digital-synth-vra8-n>
 
 
@@ -11,6 +11,11 @@
 
 ## Change History
 
+- v2.4.0 (Major Changes)
+    - Add the JSON file IMPORT/EXPORT function to VRA8-N CTRL
+    - Rename the constants for CCs
+    - Introduce NewEnvGen (Level changes are smoother than the original EnvGen)
+    - Improve the ANALOG_INPUT_REVERSED option of mode-VC
 - v2.3.0 (Major Changes)
     - Do not support Arduino Nano 3.x (because the sketch uses more than 30720 bytes of program storage space)
     - Rename **VRA8-N mini** to **VRA8-N mode-VC**
@@ -93,9 +98,9 @@
 
 ## VRA8-N CTRL
 
-- MIDI Controller (Editor) for VRA8-N, Web App
+- MIDI Controller (Editor) for VRA8-N, HTML5 App (Web App)
 - VRA8-N CTRL converts Program Changes (#0-7 for PRESET) into Control Changes
-- VRA8-N CTRL memorizes USER Programs (#8-15)
+- VRA8-N CTRL stores the current control values and the user programs (#8-15) in a Web browser (localStorage)
 - We recommend Google Chrome, which implements Web MIDI API
 - We recommend [loopMIDI](http://www.tobias-erichsen.de/software/loopmidi.html) (virtual loopback MIDI cable) to connect VRA8-N
 - **CAUTION**: Low CUTOFF with high RESONANCE can damage the speakers
@@ -134,15 +139,12 @@
 - "DAMP AND ATTACK": DAMP the EG level to zero before ATTACK (0-63: Off, 64: Slowest, 127: Fastest)
 
 
-## A Sample Setting of a Physical Controller (8-Knob)
+## A Sample Setting of a 4-Knob Physical Controller
 
-    +-------------------+---------------+---------------+---------------+
-    | CC #16            | CC #17        | CC #23        | CC #19        |
-    | CUTOFF            | RESONANCE     | ATTACK        | DECAY         |
-    +-------------------+---------------+---------------+---------------+
-    | CC #24            | CC #25        | CC #26        | CC #22        |
-    | OSC (SAW/SQ)      | OSC MIX (1/2) | SUB LEVEL     | PORTAMENTO    |
-    +-------------------+---------------+---------------+---------------+
+    +---------------+---------------+---------------+---------------+
+    | CC #16        | CC #17        | CC #23        | CC #19        |
+    | CUTOFF        | RESONANCE     | ATTACK        | DECAY         |
+    +---------------+---------------+---------------+---------------+
 
 
 ## **VRA8-N mode-VC** (Alternative Operation Mode)
@@ -167,8 +169,8 @@
 
 ## MIDI Implementation Chart
 
-      [Monophonic Synthesizer]                                        Date: 2019-06-02       
-      Model: Digital Synth VRA8-N     MIDI Implementation Chart       Version: 2.3.0         
+      [Monophonic Synthesizer]                                        Date: 2019-07-15       
+      Model: Digital Synth VRA8-N     MIDI Implementation Chart       Version: 2.4.0         
     +-------------------------------+---------------+---------------+-----------------------+
     | Function...                   | Transmitted   | Recognized    | Remarks               |
     +-------------------------------+---------------+---------------+-----------------------+

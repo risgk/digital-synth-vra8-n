@@ -8,7 +8,7 @@
 #define IOsc        Osc
 #define IFilter     Filter
 #define IAmp        Amp
-#define IEnvGen     EnvGen
+#define IEnvGen     NewEnvGen
 #define IVoice      Voice
 #define ICVIn       CVIn
 #define ISynthCore  SynthCore

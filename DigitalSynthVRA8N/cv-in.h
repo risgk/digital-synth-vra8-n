@@ -163,7 +163,7 @@ public:
           m_temp_value = static_cast<uint8_t>(m_analog_value[CV_0_ADC_NO] >> 3);
           break;
         case (0x07 << CV_IN_CONTROL_INTERVAL_BITS):
-          IVoice<0>::control_change(FILTER_CUTOFF, static_cast<uint8_t>(m_temp_value));
+          IVoice<0>::control_change(CUTOFF         , static_cast<uint8_t>(m_temp_value));
           break;
       #endif
 
@@ -185,7 +185,7 @@ public:
           m_temp_value = static_cast<uint8_t>(m_analog_value[CV_1_ADC_NO] >> 3);
           break;
         case (0x0B << CV_IN_CONTROL_INTERVAL_BITS):
-          IVoice<0>::control_change(FILTER_RESO, static_cast<uint8_t>(m_temp_value));
+          IVoice<0>::control_change(RESONANCE      , static_cast<uint8_t>(m_temp_value));
           break;
       #endif
 
@@ -207,7 +207,7 @@ public:
           m_temp_value = static_cast<uint8_t>(m_analog_value[CV_2_ADC_NO] >> 3);
           break;
         case (0x0F << CV_IN_CONTROL_INTERVAL_BITS):
-          IVoice<0>::control_change(OSC_MIX, static_cast<uint8_t>(m_temp_value));
+          IVoice<0>::control_change(OSC_MIX        , static_cast<uint8_t>(m_temp_value));
           break;
       #endif
 
@@ -296,7 +296,7 @@ public:
           m_temp_value = static_cast<uint8_t>(m_analog_value[CV_4_ADC_NO] >> 3);
           break;
         case (0x1B << CV_IN_CONTROL_INTERVAL_BITS):
-          IVoice<0>::control_change(OSC_WAVE, static_cast<uint8_t>(m_temp_value));
+          IVoice<0>::control_change(OSC1_2_WAVE    , static_cast<uint8_t>(m_temp_value));
           break;
       #endif
 
@@ -337,13 +337,13 @@ private:
   }
 
   // CAUTION: Call after the conversion is finishd.
-  INLINE static uint16_t adc_read() {
+  INLINE static uint16_t adc_read(bool reversed = false) {
 #if defined(ENABLE_VOLTAGE_CONTROL)
     uint8_t adcLow  = ADCL;
     uint8_t adcHigh = ADCH;
     uint16_t adc = ((adcHigh << 8) | adcLow);
 
-    if (ANALOG_INPUT_REVERSED) {
+    if (ANALOG_INPUT_REVERSED != reversed) {
       return 1023 - adc;
     }
 #else
