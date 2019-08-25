@@ -41,7 +41,7 @@ const uint8_t g_preset_table_EXP_TO_CUTOFF  [] = {64 , 64 , 64 , 64 , 88 , 112, 
 const uint8_t g_preset_table_EXP_TO_AMP_LEV [] = {0  , 0  , 0  , 0  , 127, 127, 127, 0  };
 
 const uint8_t g_preset_table_PORTAMENTO     [] = {0  , 32 , 32 , 0  , 0  , 0  , 0  , 0  };
-const uint8_t g_preset_table_LEGATO         [] = {0  , 127, 127, 0  , 127, 127, 0  , 0  };
+const uint8_t g_preset_table_LEGATO         [] = {0  , 127, 127, 0  , 0  , 127, 0  , 0  };
 const uint8_t g_preset_table_KEY_ASSIGN     [] = {0  , 64 , 0  , 127, 127, 127, 127, 0  };
 const uint8_t g_preset_table_EXP_BY_VEL     [] = {0  , 0  , 0  , 0  , 0  , 0  , 127, 0  };
 
@@ -95,7 +95,7 @@ const uint8_t g_preset_table_EXP_TO_CUTOFF  [] = {64 , 64 , 64 , 64 , 64 , 88 , 
 const uint8_t g_preset_table_EXP_TO_AMP_LEV [] = {0  , 0  , 0  , 0  , 0  , 127, 127, 127};
 
 const uint8_t g_preset_table_PORTAMENTO     [] = {0  , 0  , 32 , 32 , 0  , 0  , 0  , 0  };
-const uint8_t g_preset_table_LEGATO         [] = {0  , 0  , 127, 127, 0  , 127, 127, 0  };
+const uint8_t g_preset_table_LEGATO         [] = {0  , 0  , 127, 127, 0  , 0  , 127, 0  };
 const uint8_t g_preset_table_KEY_ASSIGN     [] = {127, 0  , 64 , 0  , 127, 127, 127, 127};
 const uint8_t g_preset_table_EXP_BY_VEL     [] = {0  , 0  , 0  , 0  , 0  , 0  , 0  , 127};
 
