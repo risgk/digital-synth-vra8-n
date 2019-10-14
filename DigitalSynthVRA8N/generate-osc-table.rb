@@ -79,6 +79,8 @@ def last_harmonic(freq, organ = false, organ_last)
                         ((freq + OSC_DETUNE_FREQ_MAX) * 2 * SAMPLING_RATE)) : 0
   last = organ_last if organ && last > organ_last
   last = [last, 127].min
+  # last = 3 if last == 4  # optional codes to reduce the program size (for Arduino AVR Boards 1.8.1)
+  # last = 1 if last == 2  # same as above
   last
 end
 
