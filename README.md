@@ -123,7 +123,7 @@
     - Values 0-15: Triangle (Key Trigger: Off)
     - Values 16-47: Triangle 2 (Key Trigger: On)
     - Values 48-79: SAW Down (Key Trigger: On)
-    - Values 80-111: RANDOM (Key Trigger: On)
+    - Values 80-111: Sample & Hold (Key Trigger: On)
     - Values 112-127: SQUARE Up (Key Trigger: On)
 - "LFO FADE TIME": This affects "LFO DEPTH" but not "MODULATION DEPTH"
 - "PITCH > CUTOFF": In other words, Filter CUTOFF Keyboard Tracking (Off/Half/Full)
@@ -214,7 +214,7 @@
     |                            27 | x             | o             | SUSTAIN               |
     |                            28 | x             | o             | RELEASE (OFF/ON)      |
     |                               |               |               |                       |
-    |                            14 | x             | o             | LFO (T/2/SA/RND/SQ)   |
+    |                            14 | x             | o             | LFO (T/2/SA/S&H/SQ)   |
     |                            80 | x             | o             | LFO RATE              |
     |                            82 | x             | o             | LFO > PITCH (-/+)     |
     |                            83 | x             | o             | LFO > CUTOFF (-/+)    |
