@@ -27,6 +27,7 @@
     - Add comments for macOS Catalina 10.15
     - Add ENABLE_SPECIAL_PROGRAM_CHANGE option: Program Change by Control Change (112-119, 90)
     - Reset EXPRESSION when EXP BY VEL changes
+    - Add "vra8-n-prog-wind-synth.json"
 - v2.4.0 (Major Changes)
     - Add the JSON file IMPORT/EXPORT function to VRA8-N CTRL
     - Rename the constants for CCs
