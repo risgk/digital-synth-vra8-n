@@ -1,5 +1,7 @@
 require_relative 'constants'
 
+REDUCE_OSC_TABLE_SIZE_1 = false
+
 $file = File.open("osc-table.h", "w")
 
 $file.printf("#pragma once\n\n")
@@ -79,8 +81,10 @@ def last_harmonic(freq, organ = false, organ_last)
                         ((freq + OSC_DETUNE_FREQ_MAX) * 2 * SAMPLING_RATE)) : 0
   last = organ_last if organ && last > organ_last
   last = [last, 127].min
-  # last = 3 if last == 4  # optional codes to reduce the program size (for Arduino AVR Boards 1.8.1)
-  # last = 1 if last == 2  # same as above
+  if REDUCE_OSC_TABLE_SIZE_1 == true
+    last = 3 if last == 4
+    last = 1 if last == 2
+  end
   last
 end
 
