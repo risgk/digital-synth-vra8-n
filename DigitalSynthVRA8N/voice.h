@@ -321,9 +321,10 @@ public:
       IEnvGen<1>::set_amp_exp_amt(controller_value);
       break;
     case EXP_BY_VEL     :
-      if (controller_value < 64) {
+      if ((m_exp_by_vel == true) && (controller_value < 64)) {
         m_exp_by_vel = false;
-      } else {
+        control_change(EXPRESSION, 127);
+      } else if ((m_exp_by_vel == false) && (controller_value >= 64)) {
         m_exp_by_vel = true;
       }
       break;
