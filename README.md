@@ -9,10 +9,23 @@
 - Monophonic Synthesizer (MIDI Sound Module) for Arduino Uno
 
 
+## Caution about the version of the Arduino IDE
+
+- We *strongly recommend* **Arduino IDE 1.8.5**, more precisely **Arduino AVR Boards 1.6.20**
+- When running Arduino IDE on **macOS Catalina 10.15** or later, 
+  where you can only use Arduino IDE 1.8.10 (Arduino AVR Boards 1.8.1) or later, this sketch *does not work well*. We are sorry
+- If you use **Arduino IDE 1.8.10** (**Arduino AVR Boards 1.8.1**), 
+  you need to *disable oscillator 2* and *reduce the program size*. Please do the following:
+    - Comment out the line `#define ENABLE_OSC_2` in `DigitalSynthVRA8N.ino`
+    - Change `REDUCE_OSC_TABLE_SIZE_1 = false` to `REDUCE_TABLE_SIZE_1 = true` in `generate-osc-table.rb`, and execute this
+
+
 ## Change History
 
-- v2.4.1 (Major Changes)
-    - TODO
+- v2.4.1
+    - Fix comments about Arduino AVR Boards core
+    - Add comments for macOS Catalina 10.15
+    - Add ENABLE_SPECIAL_PROGRAM_CHANGE option: Program Change by Control Change (112-119, 90)
 - v2.4.0 (Major Changes)
     - Add the JSON file IMPORT/EXPORT function to VRA8-N CTRL
     - Rename the constants for CCs
@@ -92,9 +105,6 @@
         - `make-sample-wav-file-cc.bat` makes a sample WAV file (working on Windows)
     - `generate-*.rb` generates source files
         - Requiring a Ruby execution environment
-- **CAUTION**: We *strongly recommend* **Arduino IDE 1.8.5**, more precisely **Arduino AVR Boards 1.6.20**
-    - In **VRA8-N mode-VC**, `DigitalSynthVRA8N.ino` *does not work well* with Arduino IDE 1.8.6 (Arduino AVR Boards 1.6.21) or later
-        - *Not* in **VRA8-N mode-VC**, `DigitalSynthVRA8N.ino` works well with even Arduino IDE 1.8.9 (Arduino AVR Boards 1.6.23)
 
 
 ## VRA8-N CTRL
