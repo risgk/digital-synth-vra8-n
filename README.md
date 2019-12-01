@@ -1,6 +1,6 @@
-# Digital Synth VRA8-N v2.4.0
+# Digital Synth VRA8-N v2.4.x
 
-- 2019-07-15 ISGK Instruments
+- 2019-xx-xx ISGK Instruments
 - <https://github.com/risgk/digital-synth-vra8-n>
 
 
@@ -11,6 +11,8 @@
 
 ## Change History
 
+- v2.4.1 (Major Changes)
+    - TODO
 - v2.4.0 (Major Changes)
     - Add the JSON file IMPORT/EXPORT function to VRA8-N CTRL
     - Rename the constants for CCs
@@ -168,8 +170,8 @@
 
 ## MIDI Implementation Chart
 
-      [Monophonic Synthesizer]                                        Date: 2019-07-15       
-      Model: Digital Synth VRA8-N     MIDI Implementation Chart       Version: 2.4.0         
+      [Monophonic Synthesizer]                                        Date: 2019-xx-xx       
+      Model: Digital Synth VRA8-N     MIDI Implementation Chart       Version: 2.4.x         
     +-------------------------------+---------------+---------------+-----------------------+
     | Function...                   | Transmitted   | Recognized    | Remarks               |
     +-------------------------------+---------------+---------------+-----------------------+

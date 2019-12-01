@@ -107,6 +107,17 @@ const uint8_t   OMNI_MODE_ON    = 125;
 const uint8_t   MONO_MODE_ON    = 126;
 const uint8_t   POLY_MODE_ON    = 127;
 
+const uint8_t   SP_PROG_CHG_0   = 112;
+const uint8_t   SP_PROG_CHG_1   = 113;
+const uint8_t   SP_PROG_CHG_2   = 114;
+const uint8_t   SP_PROG_CHG_3   = 115;
+const uint8_t   SP_PROG_CHG_4   = 116;
+const uint8_t   SP_PROG_CHG_5   = 117;
+const uint8_t   SP_PROG_CHG_6   = 118;
+const uint8_t   SP_PROG_CHG_7   = 119;
+
+const uint8_t   SP_RAND_CTRL    = 90;
+
 const uint8_t   OSC_WAVEFORM_SAW   = 0;
 const uint8_t   OSC_WAVEFORM_NOISE = 64;
 const uint8_t   OSC_WAVEFORM_SQ    = 127;

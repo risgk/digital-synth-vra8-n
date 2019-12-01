@@ -350,6 +350,39 @@ public:
     case POLY_MODE_ON   :
       all_note_off();
       break;
+
+#if defined(ENABLE_SPECIAL_PROGRAM_CHANGE)
+    // Special Program Change
+    case SP_PROG_CHG_0  :
+      program_change(0);
+      break;
+    case SP_PROG_CHG_1  :
+      program_change(1);
+      break;
+    case SP_PROG_CHG_2  :
+      program_change(2);
+      break;
+    case SP_PROG_CHG_3  :
+      program_change(3);
+      break;
+    case SP_PROG_CHG_4  :
+      program_change(4);
+      break;
+    case SP_PROG_CHG_5  :
+      program_change(5);
+      break;
+    case SP_PROG_CHG_6  :
+      program_change(6);
+      break;
+    case SP_PROG_CHG_7  :
+      program_change(7);
+      break;
+
+    // Special Random Control
+    case SP_RAND_CTRL   :
+      program_change(PROGRAM_NUMBER_RANDOM_CONTROL);
+      break;
+#endif
     }
   }
 

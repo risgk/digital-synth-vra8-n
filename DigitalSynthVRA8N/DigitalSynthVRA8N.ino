@@ -19,6 +19,8 @@
                                   // - See "cv-in.h"
 #define USE_PITCH_CV_IN           // Comment out this line, if you use a MIDI keyboard
 
+#define ENABLE_SPECIAL_PROGRAM_CHANGE    // Program Change by Control Change (112-119, 90)
+
 
 
 #include "common.h"
