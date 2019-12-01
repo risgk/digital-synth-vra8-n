@@ -162,7 +162,11 @@ public:
       v = 123;
     }
 
+#if defined(ENABLE_OSCILLATOR_2)
     m_mix_target = v >> 2;
+#else
+    m_mix_target = 0;
+#endif
   }
 
   INLINE static void set_sub_osc_level(uint8_t controller_value) {
@@ -415,6 +419,7 @@ public:
       case (0x7 << OSC_CONTROL_INTERVAL_BITS):
         update_lfo_2nd();
         break;
+#if defined(ENABLE_OSCILLATOR_2)
       case (0x8 << OSC_CONTROL_INTERVAL_BITS):
         update_freq_0th<1>();
         break;
@@ -430,6 +435,7 @@ public:
       case (0xC << OSC_CONTROL_INTERVAL_BITS):
         update_freq_4th<1>();
         break;
+#endif
       case (0xD << OSC_CONTROL_INTERVAL_BITS):
         if ((m_rnd_cnt & 0x07) == 0x00) {
           update_rnd_1st();
@@ -449,15 +455,19 @@ public:
     }
 
     m_phase[0] += m_freq[0];
+#if defined(ENABLE_OSCILLATOR_2)
     m_phase[1] += m_freq[1];
+#endif
 
     int8_t wave_0_main   = get_wave_level(m_wave_table[0], static_cast<uint16_t>(m_phase[0] >> 8) << 1);
-    int8_t wave_0_detune;
+    int8_t wave_0_detune = 0;
+#if defined(ENABLE_OSCILLATOR_2)
     if (m_waveform[1] == OSC_WAVEFORM_NOISE) {
       wave_0_detune = lfsr_noise<0>();
     } else {
       wave_0_detune = get_wave_level(m_wave_table[1], static_cast<uint16_t>(m_phase[1] >> 8) << 1);
     }
+#endif
 
     // amp and mix
     int16_t level_main   = wave_0_main   * m_mix_0;
