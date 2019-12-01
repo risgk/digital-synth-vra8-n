@@ -323,8 +323,8 @@ public:
     case EXP_BY_VEL     :
       if ((m_exp_by_vel == true) && (controller_value < 64)) {
         m_exp_by_vel = false;
-        IFilter<0>::set_expression(controller_value);
-        IEnvGen<1>::set_expression(controller_value);
+        IFilter<0>::set_expression(127);
+        IEnvGen<1>::set_expression(127);
       } else if ((m_exp_by_vel == false) && (controller_value >= 64)) {
         m_exp_by_vel = true;
       }
