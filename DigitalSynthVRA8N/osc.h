@@ -290,15 +290,17 @@ public:
 
   INLINE static void set_pitch_eg_amt(uint8_t controller_value) {
     if (controller_value < 2) {
-      m_pitch_eg_amt = -30 * 256 * 2;
+      m_pitch_eg_amt = -((30 << 8) << 1);
     } else if (controller_value < 32) {
-      m_pitch_eg_amt = (controller_value - 32) << 8 << 1;
+      m_pitch_eg_amt = -(((32 - controller_value) << 8) << 1);
+    } else if (controller_value < 64) {
+      m_pitch_eg_amt = -(((64 - controller_value) << 3) << 1);
     } else if (controller_value < 97) {
-      m_pitch_eg_amt = (controller_value - 64) << 3 << 1;
+      m_pitch_eg_amt = ((controller_value - 64) << 3) << 1;
     } else if (controller_value < 127) {
-      m_pitch_eg_amt = (controller_value - 96) << 8 << 1;
+      m_pitch_eg_amt = ((controller_value - 96) << 8) << 1;
     } else {
-      m_pitch_eg_amt = 30 * 256 * 2;
+      m_pitch_eg_amt = (30 << 8) << 1;
     }
   }
 
