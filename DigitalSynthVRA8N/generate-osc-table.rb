@@ -82,6 +82,8 @@ def last_harmonic(freq, organ = false, organ_last)
   last = organ_last if organ && last > organ_last
   last = [last, 127].min
   if REDUCE_OSC_TABLE_SIZE_1 == true
+    last = 7 if last == 8
+    last = 5 if last == 6
     last = 3 if last == 4
     last = 1 if last == 2
   end
