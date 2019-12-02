@@ -388,7 +388,7 @@ public:
   }
 
   INLINE static void pitch_bend(uint8_t lsb, uint8_t msb) {
-    uint16_t pitch_bend = (msb << 7) + lsb - 8192;
+    int16_t pitch_bend = ((static_cast<uint16_t>(msb) << 8) >> 1) + lsb - 8192;
     IOsc<0>::set_pitch_bend(pitch_bend);
   }
 
