@@ -18,6 +18,7 @@
 - If you have to use AVR Boards 1.8.1, it is recommended to *disable oscillator 2* and *reduce the program size*. Please do the following:
     - Comment out the line `#define ENABLE_OSC_2` in `"DigitalSynthVRA8N.ino"`
     - Change `REDUCE_OSC_TABLE_SIZE_1 = false` to `REDUCE_OSC_TABLE_SIZE_1 = true` in `"generate-osc-table.rb"`, and execute this
+        - Requiring a Ruby execution environment
 
 
 ## Change History
