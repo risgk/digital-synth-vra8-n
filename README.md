@@ -24,8 +24,8 @@
 ## Change History
 
 - v2.4.1
-    - Fix comments about Arduino AVR Boards core
-    - Add comments for macOS Catalina 10.15
+    - Fix comments about Arduino AVR Boards Core: "There is no restriction on a version of Arduino AVR Core" was a mistake
+    - Add comments for macOS Catalina 10.15 and Arduino IDE 1.8.10 (Arduino AVR Boards 1.8.1)
     - Reset "EXPRESSION" when "EXP BY VEL" turns OFF
     - Add `ENABLE_SPECIAL_PROGRAM_CHANGE` option: Program Change by Control Change #112-119, and #90
     - Add the JSON file `vra8-n-prog-wind-synth.json`
