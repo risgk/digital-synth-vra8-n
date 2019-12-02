@@ -1,4 +1,4 @@
-# Digital Synth VRA8-N v2.4.x
+# Digital Synth VRA8-N v2.4.1
 
 - 2019-xx-xx ISGK Instruments
 - <https://github.com/risgk/digital-synth-vra8-n>
@@ -27,6 +27,7 @@
     - Fix explanation about Arduino AVR Boards (Core)
         - "There is no restriction on a version of Arduino AVR Core" was a mistake!
     - Add comments for macOS Catalina 10.15 and Arduino IDE 1.8.10 (AVR Boards 1.8.1)
+    - Change "LEGATO" of "PRESET #4 PAN FLUTE" from ON to OFF
     - Reset "EXPRESSION" when "EXP BY VEL" turns OFF
     - Add `ENABLE_SPECIAL_PROGRAM_CHANGE` option: Program Change by Control Change #112-119, and #90
 - v2.4.0 (Major Changes)
@@ -184,7 +185,7 @@
 ## MIDI Implementation Chart
 
       [Monophonic Synthesizer]                                        Date: 2019-xx-xx       
-      Model: Digital Synth VRA8-N     MIDI Implementation Chart       Version: 2.4.x         
+      Model: Digital Synth VRA8-N     MIDI Implementation Chart       Version: 2.4.1         
     +-------------------------------+---------------+---------------+-----------------------+
     | Function...                   | Transmitted   | Recognized    | Remarks               |
     +-------------------------------+---------------+---------------+-----------------------+
