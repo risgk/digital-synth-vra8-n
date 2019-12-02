@@ -29,7 +29,7 @@
     - Add comments for macOS Catalina 10.15 and Arduino IDE 1.8.10 (AVR Boards 1.8.1)
     - Reset "EXPRESSION" when "EXP BY VEL" turns OFF
     - Add `ENABLE_SPECIAL_PROGRAM_CHANGE` option: Program Change by Control Change #112-119, and #90
-    - Add the JSON file `vra8-n-prog-wind-synth.json`
+    - Add the JSON file `"vra8-n-prog-wind-synth.json"`
     - Avoid Undefined Behavior in C++: left shift of negative value
 - v2.4.0 (Major Changes)
     - Add the JSON file IMPORT/EXPORT function to VRA8-N CTRL
@@ -176,9 +176,9 @@
         - SCALE MODE 0: "C Major" (2Oct / 5V)
         - SCALE MODE 1: "Chromatic" (2Oct / 5V)
         - SCALE MODE 2: "Linear" (5Oct / 5V)
-- To make the sketch operate as **VRA8-N mode-VC**, edit `ENABLE_VOLTAGE_CONTROL` in `DigitalSynthVRA8N.ino`
+- To make the sketch operate as **VRA8-N mode-VC**, edit `ENABLE_VOLTAGE_CONTROL` in `"DigitalSynthVRA8N.ino"`
     - If you use a MIDI keyboard, comment out the line `#define USE_PITCH_CV_IN`
-- See `cv-in.h`
+- See `"cv-in.h"`
     - If you use a GATE Signal (A5), cancel comment out of the line `//#define USE_GATE_IN`
 - **NOTE**: A **power supply adapter** is *strongly recommended* to avoiding the swings of voltage values
 
