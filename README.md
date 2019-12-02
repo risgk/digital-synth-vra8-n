@@ -9,13 +9,14 @@
 - Monophonic Synthesizer (MIDI Sound Module) for Arduino Uno
 
 
-## Caution about the version of the Arduino IDE
+## Caution about the version of Arduino IDE
 
-- We *strongly recommend* **Arduino IDE 1.8.5**, more precisely **Arduino AVR Boards 1.6.20**
-- When running Arduino IDE on **macOS Catalina 10.15** or later, 
-  where you can only use Arduino IDE 1.8.10 (Arduino AVR Boards 1.8.1) or later, this sketch *does not work well*. We are sorry
+- We *strongly recommend* **Arduino IDE 1.8.5** (more precisely **Arduino AVR Boards 1.6.20**)
+- When running Arduino IDE on **macOS Catalina 10.15**, 
+  where *only* Arduino IDE 1.8.10 (Arduino AVR Boards 1.8.1) or later can be used, 
+  this sketch *does not work well*: CPU Busy LED (LED L) does not flash occasionally, but *is almost always lit*
 - If you use **Arduino IDE 1.8.10** (**Arduino AVR Boards 1.8.1**), 
-  you need to *disable oscillator 2* and *reduce the program size*. Please do the following:
+  you need to *disable oscillator 2* and *reduce the program size*. Please do the following items:
     - Comment out the line `#define ENABLE_OSC_2` in `DigitalSynthVRA8N.ino`
     - Change `REDUCE_OSC_TABLE_SIZE_1 = false` to `REDUCE_TABLE_SIZE_1 = true` in `generate-osc-table.rb`, and execute this
 
