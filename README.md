@@ -23,14 +23,12 @@
 
 ## Change History
 
-- v2.4.1
+- v2.4.1 (Major Changes)
     - Fix explanation about Arduino AVR Boards (Core)
         - "There is no restriction on a version of Arduino AVR Core" was a mistake!
     - Add comments for macOS Catalina 10.15 and Arduino IDE 1.8.10 (AVR Boards 1.8.1)
     - Reset "EXPRESSION" when "EXP BY VEL" turns OFF
     - Add `ENABLE_SPECIAL_PROGRAM_CHANGE` option: Program Change by Control Change #112-119, and #90
-    - Add the JSON file `"vra8-n-prog-wind-synth.json"`
-    - Avoid Undefined Behavior in C++: left shift of negative value
 - v2.4.0 (Major Changes)
     - Add the JSON file IMPORT/EXPORT function to VRA8-N CTRL
     - Rename the constants for CCs
