@@ -9,7 +9,7 @@
 - Monophonic Synthesizer (MIDI Sound Module) for Arduino Uno
 
 
-## Caution about the versions of Arduino IDE and AVR Boards
+## Caution about Arduino: Sorry for Mac users
 
 - We *strongly recommend* **Arduino IDE 1.8.5** (more precisely **Arduino AVR Boards 1.6.20**)
 - If you use **Arduino IDE 1.8.10** (**Arduino AVR Boards 1.8.1**), this sketch *does not work well*
