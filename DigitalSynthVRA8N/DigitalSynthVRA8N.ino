@@ -6,7 +6,7 @@
 //#define DEBUG
 
 #define SERIAL_SPEED (38400)    // For Serial MIDI
-//#define SERIAL_SPEED (31250)    // For MIDI Shield
+//#define SERIAL_SPEED (31250)    // For MIDI Shield (MIDI Breakout)
 
 //#define SUBSTITUTE_PIN_D5_FOR_D6_AS_AUDIO_OUT    // For MIDI Shield
 
