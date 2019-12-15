@@ -377,7 +377,6 @@ public:
     // Special Random Control
     case SP_RAND_CTRL   :
       {
-        uint8_t program_number = controller_number - SP_PROG_CHG_0;
         uint8_t old_value = m_sp_rand_ctrl_cc_value;
         m_sp_rand_ctrl_cc_value = controller_value;
         if ((old_value <= 63) && (controller_value >= 64)) {
