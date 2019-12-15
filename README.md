@@ -23,6 +23,8 @@
 
 ## Change History
 
+- v2.4.2 (Major Changes)
+    - Improve `ENABLE_SPECIAL_PROGRAM_CHANGE` option: Works when the CC value changes from <= 63 to >= 64
 - v2.4.1 (Major Changes)
     - Fix explanation about Arduino AVR Boards (Core)
         - "There is no restriction on a version of Arduino AVR Core" was a mistake!

@@ -19,6 +19,8 @@ class Voice {
   static uint8_t m_amp_env_gen;
   static uint8_t m_exp_by_vel;
   static uint16_t m_rnd;
+  static uint8_t m_sp_prog_chg_cc_values[8];
+  static uint8_t m_sp_rand_ctrl_cc_value;
 
 public:
   INLINE static void initialize() {
@@ -355,33 +357,33 @@ public:
 #if defined(ENABLE_SPECIAL_PROGRAM_CHANGE)
     // Special Program Change
     case SP_PROG_CHG_0  :
-      program_change(0);
-      break;
     case SP_PROG_CHG_1  :
-      program_change(1);
-      break;
     case SP_PROG_CHG_2  :
-      program_change(2);
-      break;
     case SP_PROG_CHG_3  :
-      program_change(3);
-      break;
     case SP_PROG_CHG_4  :
-      program_change(4);
-      break;
     case SP_PROG_CHG_5  :
-      program_change(5);
-      break;
     case SP_PROG_CHG_6  :
-      program_change(6);
-      break;
     case SP_PROG_CHG_7  :
-      program_change(7);
+      {
+        uint8_t program_number = controller_number - SP_PROG_CHG_0;
+        uint8_t old_value = m_sp_prog_chg_cc_values[program_number];
+        m_sp_prog_chg_cc_values[program_number] = controller_value;
+        if ((old_value <= 63) && (controller_value >= 64)) {
+          program_change(program_number);
+        }
+      }
       break;
 
     // Special Random Control
     case SP_RAND_CTRL   :
-      program_change(PROGRAM_NUMBER_RANDOM_CONTROL);
+      {
+        uint8_t program_number = controller_number - SP_PROG_CHG_0;
+        uint8_t old_value = m_sp_rand_ctrl_cc_value;
+        m_sp_rand_ctrl_cc_value = controller_value;
+        if ((old_value <= 63) && (controller_value >= 64)) {
+          program_change(PROGRAM_NUMBER_RANDOM_CONTROL);
+        }
+      }
       break;
 #endif
     }
@@ -642,3 +644,5 @@ template <uint8_t T> uint8_t Voice<T>::m_release;
 template <uint8_t T> uint8_t Voice<T>::m_amp_env_gen;
 template <uint8_t T> uint8_t Voice<T>::m_exp_by_vel;
 template <uint8_t T> uint16_t Voice<T>::m_rnd;
+template <uint8_t T> uint8_t Voice<T>::m_sp_prog_chg_cc_values[8];
+template <uint8_t T> uint8_t Voice<T>::m_sp_rand_ctrl_cc_value;
