@@ -1,6 +1,6 @@
-# Digital Synth VRA8-N v2.4.0
+# Digital Synth VRA8-N v2.4.2
 
-- 2019-07-15 ISGK Instruments
+- 2019-12-15 ISGK Instruments
 - <https://github.com/risgk/digital-synth-vra8-n>
 
 
@@ -9,8 +9,29 @@
 - Monophonic Synthesizer (MIDI Sound Module) for Arduino Uno
 
 
+## Caution about Arduino: Sorry for Mac users
+
+- We *strongly recommend* **Arduino IDE 1.8.5** (more precisely **Arduino AVR Boards 1.6.20**)
+- If you use **Arduino IDE 1.8.10** (**Arduino AVR Boards 1.8.1**), this sketch *does not work well*
+    - CPU Busy LED (LED L) does not flash occasionally, but *is almost always lit*
+- However, with **macOS Catalina 10.15**, only IDE 1.8.10 (AVR Boards 1.8.1) or later can be used!
+- If you have to use AVR Boards 1.8.1, it is recommended to *disable oscillator 2* and *reduce the program size*. Please do the following:
+    - Comment out the line `#define ENABLE_OSC_2` in `"DigitalSynthVRA8N.ino"`
+    - Change `REDUCE_OSC_TABLE_SIZE_1 = false` to `REDUCE_OSC_TABLE_SIZE_1 = true` in `"generate-osc-table.rb"`, and execute this
+        - Requiring a Ruby execution environment
+
+
 ## Change History
 
+- v2.4.2 (Major Changes)
+    - Improve `ENABLE_SPECIAL_PROGRAM_CHANGE` option: Works when the CC value changes from <= 63 to >= 64
+- v2.4.1 (Major Changes)
+    - Fix explanation about Arduino AVR Boards (Core)
+        - "There is no restriction on a version of Arduino AVR Core" was a mistake!
+    - Add comments for macOS Catalina 10.15 and Arduino IDE 1.8.10 (AVR Boards 1.8.1)
+    - Change "LEGATO" of "PRESET #4 PAN FLUTE" from ON to OFF
+    - Reset "EXPRESSION" when "EXP BY VEL" turns OFF
+    - Add `ENABLE_SPECIAL_PROGRAM_CHANGE` option: Program Change by Control Change #112-119, and #90
 - v2.4.0 (Major Changes)
     - Add the JSON file IMPORT/EXPORT function to VRA8-N CTRL
     - Rename the constants for CCs
@@ -81,19 +102,15 @@
     - **CAUTION**: Click sounds may occur when you connect the audio out to an amp or reset the board
 - We recommend [Hairless MIDI<->Serial Bridge](http://projectgus.github.io/hairless-midiserial/) to connect PC
     - **NOTE**: A combination of a **MIDI Shield** (MIDI Breakout) and a **power supply adapter** is *recommended* to avoiding USB noise
-        - To use MIDI Shield, edit `SERIAL_SPEED`, `LFO_LED_OUT_ACTIVE`, and `SUBSTITUTE_PIN_D5_FOR_D6_AS_AUDIO_OUT` in `DigitalSynthVRA8N.ino`
+        - To use MIDI Shield, edit `SERIAL_SPEED`, `LFO_LED_OUT_ACTIVE`, and `SUBSTITUTE_PIN_D5_FOR_D6_AS_AUDIO_OUT` in `"DigitalSynthVRA8N.ino"`
         - Even using only the **power supply adapter** *significantly* reduces USB noise
 - Files
-    - `DigitalSynthVRA8N.ino` is a sketch for Arduino/Genuino Uno Rev3 (ATmega328P)
-    - `make-sample-wav-file.cc` is for Debugging on PC
+    - `"DigitalSynthVRA8N.ino"` is a sketch for Arduino/Genuino Uno Rev3 (ATmega328P)
+    - `"make-sample-wav-file.cc"` is for Debugging on PC
         - Requiring GCC (g++) or other
-        - `make-sample-wav-file-cc.bat` makes a sample WAV file (working on Windows)
-    - `generate-*.rb` generates source files
+        - `"make-sample-wav-file-cc.bat"` makes a sample WAV file (working on Windows)
+    - `"generate-*.rb"` generates source files
         - Requiring a Ruby execution environment
-- **CAUTION**: We *strongly recommend* **Arduino IDE 1.8.5**
-    - In **VRA8-N mode-VC**, `DigitalSynthVRA8N.ino` *does not work well* with Arduino IDE 1.8.6 or later
-        - *Not* in **VRA8-N mode-VC**, `DigitalSynthVRA8N.ino` works well with even Arduino IDE 1.8.9
-    - There is no restriction on a version of Arduino AVR Core
 
 
 ## VRA8-N CTRL
@@ -160,17 +177,17 @@
         - SCALE MODE 0: "C Major" (2Oct / 5V)
         - SCALE MODE 1: "Chromatic" (2Oct / 5V)
         - SCALE MODE 2: "Linear" (5Oct / 5V)
-- To make the sketch operate as **VRA8-N mode-VC**, edit `ENABLE_VOLTAGE_CONTROL` in `DigitalSynthVRA8N.ino`
+- To make the sketch operate as **VRA8-N mode-VC**, edit `ENABLE_VOLTAGE_CONTROL` in `"DigitalSynthVRA8N.ino"`
     - If you use a MIDI keyboard, comment out the line `#define USE_PITCH_CV_IN`
-- See `cv-in.h`
+- See `"cv-in.h"`
     - If you use a GATE Signal (A5), cancel comment out of the line `//#define USE_GATE_IN`
 - **NOTE**: A **power supply adapter** is *strongly recommended* to avoiding the swings of voltage values
 
 
 ## MIDI Implementation Chart
 
-      [Monophonic Synthesizer]                                        Date: 2019-07-15       
-      Model: Digital Synth VRA8-N     MIDI Implementation Chart       Version: 2.4.0         
+      [Monophonic Synthesizer]                                        Date: 2019-12-15       
+      Model: Digital Synth VRA8-N     MIDI Implementation Chart       Version: 2.4.2         
     +-------------------------------+---------------+---------------+-----------------------+
     | Function...                   | Transmitted   | Recognized    | Remarks               |
     +-------------------------------+---------------+---------------+-----------------------+

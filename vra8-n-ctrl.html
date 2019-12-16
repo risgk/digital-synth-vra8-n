@@ -41,7 +41,7 @@ td.keyh {
 }
 </style>
 <script>
-const APP_NAME_VERSION = "VRA8-N CTRL v2.4.0";
+const APP_NAME_VERSION = "VRA8-N CTRL v2.4.2";
 
 const MIDI_CH        = 0;       // Basic Channel 1
 const NOTE_OFF       = 0x80;
@@ -97,7 +97,7 @@ const RESONANCE_LIMIT = 109;
 const AMP_LEVEL       = 110;
 const DAMP_AND_ATTACK = 111;
 
-// Special Program Change (only for VRA8-N CTRL)
+// Special Program Change (for VRA8-N CTRL)
 const SP_PROG_CHG_0   = 112;
 const SP_PROG_CHG_1   = 113;
 const SP_PROG_CHG_2   = 114;
@@ -108,7 +108,7 @@ const SP_PROG_CHG_5   = 117;
 const SP_PROG_CHG_6   = 118;
 const SP_PROG_CHG_7   = 119;
 
-// Special Random Control (only for VRA8-N CTRL)
+// Special Random Control (for VRA8-N CTRL)
 const SP_RAND_CTRL    = 90;
 
 const ALL_NOTES_OFF   = 123;
@@ -246,7 +246,7 @@ presetControllers[EXP_TO_CUTOFF  ] = [64 , 64 , 64 , 64 , 88 , 112, 64 , 64 ];
 presetControllers[EXP_TO_AMP_LEV ] = [0  , 0  , 0  , 0  , 127, 127, 127, 0  ];
 
 presetControllers[PORTAMENTO     ] = [0  , 32 , 32 , 0  , 0  , 0  , 0  , 0  ];
-presetControllers[LEGATO         ] = [0  , 127, 127, 0  , 127, 127, 0  , 0  ];
+presetControllers[LEGATO         ] = [0  , 127, 127, 0  , 0  , 127, 0  , 0  ];
 presetControllers[KEY_ASSIGN     ] = [0  , 64 , 0  , 127, 127, 127, 127, 0  ];
 presetControllers[EXP_BY_VEL     ] = [0  , 0  , 0  , 0  , 0  , 0  , 127, 0  ];
 

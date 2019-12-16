@@ -1,11 +1,12 @@
-////////////////////////////////////////////////////////////////////
-// Digital Synth VRA8-N (We strongly recommend Arduino IDE 1.8.5) //
-////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
+// Digital Synth VRA8-N -- We strongly recommend Arduino IDE 1.8.5          //
+//                               (more precisely Arduino AVR Boards 1.6.20) //
+//////////////////////////////////////////////////////////////////////////////
 
 //#define DEBUG
 
 #define SERIAL_SPEED (38400)    // For Serial MIDI
-//#define SERIAL_SPEED (31250)    // For MIDI Shield
+//#define SERIAL_SPEED (31250)    // For MIDI Shield (MIDI Breakout)
 
 //#define SUBSTITUTE_PIN_D5_FOR_D6_AS_AUDIO_OUT    // For MIDI Shield
 
@@ -17,6 +18,9 @@
 //#define ENABLE_VOLTAGE_CONTROL    // Make the sketch operate as **VRA8-N mode-VC**
                                   // - See "cv-in.h"
 #define USE_PITCH_CV_IN           // Comment out this line, if you use a MIDI keyboard
+
+//#define ENABLE_SPECIAL_PROGRAM_CHANGE    // Program Change by Control Change (112-119, 90)
+#define ENABLE_OSCILLATOR_2
 
 
 

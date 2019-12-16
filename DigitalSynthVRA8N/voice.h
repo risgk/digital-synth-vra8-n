@@ -19,6 +19,8 @@ class Voice {
   static uint8_t m_amp_env_gen;
   static uint8_t m_exp_by_vel;
   static uint16_t m_rnd;
+  static uint8_t m_sp_prog_chg_cc_values[8];
+  static uint8_t m_sp_rand_ctrl_cc_value;
 
 public:
   INLINE static void initialize() {
@@ -321,9 +323,11 @@ public:
       IEnvGen<1>::set_amp_exp_amt(controller_value);
       break;
     case EXP_BY_VEL     :
-      if (controller_value < 64) {
+      if ((m_exp_by_vel == true) && (controller_value < 64)) {
         m_exp_by_vel = false;
-      } else {
+        IFilter<0>::set_expression(127);
+        IEnvGen<1>::set_expression(127);
+      } else if ((m_exp_by_vel == false) && (controller_value >= 64)) {
         m_exp_by_vel = true;
       }
       break;
@@ -349,11 +353,43 @@ public:
     case POLY_MODE_ON   :
       all_note_off();
       break;
+
+#if defined(ENABLE_SPECIAL_PROGRAM_CHANGE)
+    // Special Program Change
+    case SP_PROG_CHG_0  :
+    case SP_PROG_CHG_1  :
+    case SP_PROG_CHG_2  :
+    case SP_PROG_CHG_3  :
+    case SP_PROG_CHG_4  :
+    case SP_PROG_CHG_5  :
+    case SP_PROG_CHG_6  :
+    case SP_PROG_CHG_7  :
+      {
+        uint8_t program_number = controller_number - SP_PROG_CHG_0;
+        uint8_t old_value = m_sp_prog_chg_cc_values[program_number];
+        m_sp_prog_chg_cc_values[program_number] = controller_value;
+        if ((old_value <= 63) && (controller_value >= 64)) {
+          program_change(program_number);
+        }
+      }
+      break;
+
+    // Special Random Control
+    case SP_RAND_CTRL   :
+      {
+        uint8_t old_value = m_sp_rand_ctrl_cc_value;
+        m_sp_rand_ctrl_cc_value = controller_value;
+        if ((old_value <= 63) && (controller_value >= 64)) {
+          program_change(PROGRAM_NUMBER_RANDOM_CONTROL);
+        }
+      }
+      break;
+#endif
     }
   }
 
   INLINE static void pitch_bend(uint8_t lsb, uint8_t msb) {
-    uint16_t pitch_bend = (msb << 7) + lsb - 8192;
+    int16_t pitch_bend = ((static_cast<uint16_t>(msb) << 8) >> 1) + lsb - 8192;
     IOsc<0>::set_pitch_bend(pitch_bend);
   }
 
@@ -607,3 +643,5 @@ template <uint8_t T> uint8_t Voice<T>::m_release;
 template <uint8_t T> uint8_t Voice<T>::m_amp_env_gen;
 template <uint8_t T> uint8_t Voice<T>::m_exp_by_vel;
 template <uint8_t T> uint16_t Voice<T>::m_rnd;
+template <uint8_t T> uint8_t Voice<T>::m_sp_prog_chg_cc_values[8];
+template <uint8_t T> uint8_t Voice<T>::m_sp_rand_ctrl_cc_value;
