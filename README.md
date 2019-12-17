@@ -1,6 +1,6 @@
-# Digital Synth VRA8-N v2.4.2
+# Digital Synth VRA8-N v2.4.x
 
-- 2019-12-15 ISGK Instruments
+- 2019-12-xx ISGK Instruments
 - <https://github.com/risgk/digital-synth-vra8-n>
 
 
@@ -23,6 +23,8 @@
 
 ## Change History
 
+- v2.4.3
+    - Fix `"make-sample-wav-file.cc"` (for Debugging on PC): Add `#define ENABLE_OSC_2`
 - v2.4.2 (Major Changes)
     - Improve `ENABLE_SPECIAL_PROGRAM_CHANGE` option: Works when the CC value changes from <= 63 to >= 64
 - v2.4.1 (Major Changes)
@@ -186,8 +188,8 @@
 
 ## MIDI Implementation Chart
 
-      [Monophonic Synthesizer]                                        Date: 2019-12-15       
-      Model: Digital Synth VRA8-N     MIDI Implementation Chart       Version: 2.4.2         
+      [Monophonic Synthesizer]                                        Date: 2019-12-xx       
+      Model: Digital Synth VRA8-N     MIDI Implementation Chart       Version: 2.4.x         
     +-------------------------------+---------------+---------------+-----------------------+
     | Function...                   | Transmitted   | Recognized    | Remarks               |
     +-------------------------------+---------------+---------------+-----------------------+
