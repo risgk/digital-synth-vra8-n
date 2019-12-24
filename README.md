@@ -1,6 +1,6 @@
-# Digital Synth VRA8-N v2.4.3
+# Digital Synth VRA8-N v2.4.x
 
-- 2019-12-17 ISGK Instruments
+- 2019-12-xx ISGK Instruments
 - <https://github.com/risgk/digital-synth-vra8-n>
 
 
@@ -11,18 +11,21 @@
 
 ## Caution about Arduino: Sorry for Mac users
 
-- We *strongly recommend* **Arduino IDE 1.8.5** (more precisely **Arduino AVR Boards 1.6.20**)
-- If you use **Arduino IDE 1.8.10** (**Arduino AVR Boards 1.8.1**), this sketch *does not work well*
-    - CPU Busy LED (LED L) does not flash occasionally, but *is almost always lit*
+- We *strongly recommend* Arduino IDE 1.8.5 (more precisely **Arduino AVR Boards 1.6.20**)
+    - If you use other than AVR Boards 1.6.20 (or modified this sketch), the sketch *may not work well*
+        - CPU Busy LED (LED L) *may almost always lit*, rather than flashing occasionally
 - However, with **macOS Catalina 10.15**, only IDE 1.8.10 (AVR Boards 1.8.1) or later can be used!
-- If you have to use AVR Boards 1.8.1, it is recommended to *disable oscillator 2* and *reduce the program size*. Please do the following:
-    - Comment out the line `#define ENABLE_OSC_2` in `"DigitalSynthVRA8N.ino"`
+- If you have to use **Arduino AVR Boards 1.8.1**, it is recommended to *reduce the program size*. Please do the following:
     - Change `REDUCE_OSC_TABLE_SIZE_1 = false` to `REDUCE_OSC_TABLE_SIZE_1 = true` in `"generate-osc-table.rb"`, and execute this
         - Requiring a Ruby execution environment
 
 
 ## Change History
 
+- v2.4.4
+    - Prevent increase of CPU load in AVR Boards 1.8.1
+    - Change comments for macOS Catalina 10.15 and Arduino IDE 1.8.10 (AVR Boards 1.8.1)
+    - Improve portability of "make-sample-wav-file.cc"
 - v2.4.3
     - Fix `"make-sample-wav-file.cc"` (for Debugging on PC): Add `#define ENABLE_OSC_2`
 - v2.4.2 (Major Changes)
@@ -188,8 +191,8 @@
 
 ## MIDI Implementation Chart
 
-      [Monophonic Synthesizer]                                        Date: 2019-12-17       
-      Model: Digital Synth VRA8-N     MIDI Implementation Chart       Version: 2.4.3         
+      [Monophonic Synthesizer]                                        Date: 2019-12-xx       
+      Model: Digital Synth VRA8-N     MIDI Implementation Chart       Version: 2.4.x         
     +-------------------------------+---------------+---------------+-----------------------+
     | Function...                   | Transmitted   | Recognized    | Remarks               |
     +-------------------------------+---------------+---------------+-----------------------+
