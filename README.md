@@ -11,20 +11,20 @@
 
 ## Caution about Arduino: Sorry for Mac users
 
-- We *strongly recommend* Arduino IDE 1.8.5 (more precisely **Arduino AVR Boards 1.6.20**)
-    - If you use other than AVR Boards 1.6.20 (or modified this sketch), the sketch *may not work well*
+- We *strongly recommend* Arduino IDE 1.8.5 (more precisely **Arduino AVR Boards core 1.6.20**)
+    - If you use other than AVR Boards core 1.6.20 (or modified this sketch), the sketch *may not work well*
         - CPU Busy LED (LED L) *may almost always lit*, rather than flashing occasionally
-- However, with **macOS Catalina 10.15**, only IDE 1.8.10 (AVR Boards 1.8.1) or later can be used!
-- If you have to use **Arduino AVR Boards 1.8.1**, it is recommended to *reduce the program size*. Please do the following:
+- However, with **macOS Catalina 10.15**, only IDE 1.8.10 (AVR Boards core 1.8.1) or later can be used!
+- If you have to use **Arduino AVR Boards core 1.8.1**, it is recommended to *reduce the program size*. Please do the following:
     - Change `REDUCE_OSC_TABLE_SIZE_1 = false` to `REDUCE_OSC_TABLE_SIZE_1 = true` in `"generate-osc-table.rb"`, and execute this
         - Requiring a Ruby execution environment
-
+    - Or delete `"osc-table.h"`, and rename `"osc-table.h.REDUCE_OSC_TABLE_SIZE_1.txt"` to `"osc-table.h"`
 
 ## Change History
 
 - v2.4.4
-    - Prevent increase of CPU load in AVR Boards 1.8.1
-    - Change comments for macOS Catalina 10.15 and Arduino IDE 1.8.10 (AVR Boards 1.8.1)
+    - Prevent increase of CPU load in AVR Boards core 1.8.1
+    - Change comments for macOS Catalina 10.15 and Arduino IDE 1.8.10 (AVR Boards core 1.8.1)
     - Improve portability of "make-sample-wav-file.cc"
 - v2.4.3
     - Fix `"make-sample-wav-file.cc"` (for Debugging on PC): Add `#define ENABLE_OSC_2`
