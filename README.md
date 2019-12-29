@@ -1,6 +1,6 @@
-# Digital Synth VRA8-N v2.4.x
+# Digital Synth VRA8-N v2.4.4
 
-- 2019-12-xx ISGK Instruments
+- 2019-12-29 ISGK Instruments
 - <https://github.com/risgk/digital-synth-vra8-n>
 
 
@@ -24,8 +24,9 @@
 
 - v2.4.4
     - Prevent increase of CPU load in AVR Boards core 1.8.1
-    - Change comments for macOS Catalina 10.15 and Arduino IDE 1.8.10 (AVR Boards core 1.8.1)
+        - Change comments for macOS Catalina 10.15 and Arduino IDE 1.8.10 (AVR Boards core 1.8.1)
     - Improve portability of "make-sample-wav-file.cc"
+    - Add "osc-table.h.REDUCE_OSC_TABLE_SIZE_1.txt"
 - v2.4.3
     - Fix `"make-sample-wav-file.cc"` (for Debugging on PC): Add `#define ENABLE_OSC_2`
 - v2.4.2 (Major Changes)
@@ -191,8 +192,8 @@
 
 ## MIDI Implementation Chart
 
-      [Monophonic Synthesizer]                                        Date: 2019-12-xx       
-      Model: Digital Synth VRA8-N     MIDI Implementation Chart       Version: 2.4.x         
+      [Monophonic Synthesizer]                                        Date: 2019-12-29       
+      Model: Digital Synth VRA8-N     MIDI Implementation Chart       Version: 2.4.4         
     +-------------------------------+---------------+---------------+-----------------------+
     | Function...                   | Transmitted   | Recognized    | Remarks               |
     +-------------------------------+---------------+---------------+-----------------------+
