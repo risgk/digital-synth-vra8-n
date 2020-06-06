@@ -1,6 +1,7 @@
 require_relative 'constants'
 
 REDUCE_OSC_TABLE_SIZE_1 = false
+REDUCE_OSC_TABLE_SIZE_2 = false
 
 $file = File.open("osc-table.h", "w")
 
@@ -86,6 +87,9 @@ def last_harmonic(freq, organ = false, organ_last)
     last = 5 if last == 6
     last = 3 if last == 4
     last = 1 if last == 2
+  end
+  if REDUCE_OSC_TABLE_SIZE_2 == true
+    last = 3 if last == 5
   end
   last
 end
