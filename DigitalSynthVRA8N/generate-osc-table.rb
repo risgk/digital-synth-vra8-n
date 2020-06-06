@@ -49,6 +49,7 @@ $file.printf("};\n\n")
 
 def generate_osc_wave_table(name, last, amp, organ = false)
   $file.printf("const uint8_t g_osc_#{name}_wave_table_h%d[] PROGMEM = {\n  ", last)
+  prev_level = 0
   (0..(1 << OSC_WAVE_TABLE_SAMPLES_BITS)).each do |n|
     level = 0
     max = organ ? last * 2 : last
@@ -57,6 +58,10 @@ def generate_osc_wave_table(name, last, amp, organ = false)
     end
     level *= amp
     level = (level * OSC_WAVE_TABLE_AMPLITUDE).floor.to_i
+    level_valid = (-127 <= level) && (level <= +127)
+    delta = level - prev_level
+    delta_valid = (-127 <= delta) && (delta <= +127)
+    prev_level = level
     level += 0x100 if level < 0
     $file.printf("0x%02X,", level)
     if n == (1 << OSC_WAVE_TABLE_SAMPLES_BITS)
@@ -66,6 +71,8 @@ def generate_osc_wave_table(name, last, amp, organ = false)
     else
       $file.printf(" ")
     end
+    raise Exception.new("Invalid level!") if level_valid == false
+    raise Exception.new("Invalid delta!") if delta_valid == false
   end
   $file.printf("};\n\n")
 end
