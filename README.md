@@ -22,6 +22,8 @@
 
 ## Change History
 
+- v2.4.5
+    - Fix downward portamento
 - v2.4.4
     - Prevent increase of CPU load in AVR Boards core 1.8.1
         - Change comments for macOS Catalina 10.15 and Arduino IDE 1.8.10 (AVR Boards core 1.8.1)
