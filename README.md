@@ -22,8 +22,10 @@
 
 ## Change History
 
-- v2.4.5
+- v2.5.0
     - Fix downward portamento
+    - Add generate-osc-table for Digital Synth VRA8-N pSAW-16
+        - Digital Synth VRA8-N pSAW-16: VRA8-N Special Edition with 16-step Pseudo-SAW Wave
 - v2.4.4
     - Prevent increase of CPU load in AVR Boards core 1.8.1
         - Change comments for macOS Catalina 10.15 and Arduino IDE 1.8.10 (AVR Boards core 1.8.1)
