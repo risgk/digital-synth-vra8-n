@@ -23,7 +23,7 @@
 ## Change History
 
 - v2.5.0
-    - Fix downward portamento
+    - Fix downward portamentos
     - Add generate-osc-table for Digital Synth VRA8-N pSAW-16
         - Digital Synth VRA8-N pSAW-16: VRA8-N Special Edition with 16-step Pseudo-SAW Wave
 - v2.4.4
