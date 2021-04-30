@@ -1,5 +1,6 @@
 require_relative 'constants'
 
+PSEUDO_SAW_STEPS = 16
 REDUCE_OSC_TABLE_SIZE_1 = false
 REDUCE_OSC_TABLE_SIZE_2 = false
 
@@ -108,21 +109,33 @@ def generate_osc_wave_table_arrays(organ = false, organ_last = 8)
   end
 end
 
+def sq_harm(n, k)
+  if k % 2 == 1
+    (4.0 / Math::PI) * Math.sin((2.0 * Math::PI) *
+                                (n.to_f / (1 << OSC_WAVE_TABLE_SAMPLES_BITS)) * k) / k
+  else
+    0.0
+  end
+end
+
 generate_osc_wave_table_arrays do |last|
   generate_osc_wave_table("saw", last, 6.0 / 6.0) do |n, k|
-    (2.0 / Math::PI) * Math.sin((2.0 * Math::PI) *
-                                (n.to_f / (1 << OSC_WAVE_TABLE_SAMPLES_BITS)) * k) / k
+    case PSEUDO_SAW_STEPS
+    when 8
+      (1.0 / 2.0) * (sq_harm(n, k) + sq_harm(2 * n, k) / 2 + sq_harm(4 * n, k) / 4)
+    when 16
+      (1.0 / 2.0) * (sq_harm(n, k) + sq_harm(2 * n, k) / 2 + sq_harm(4 * n, k) / 4 + sq_harm(8 * n, k) / 8)
+    when 32
+      (1.0 / 2.0) * (sq_harm(n, k) + sq_harm(2 * n, k) / 2 + sq_harm(4 * n, k) / 4 + sq_harm(8 * n, k) / 8 + sq_harm(16 * n, k) / 16)
+    else
+      raise Exception.new("Invalid PSEUDO_SAW_STEPS!")
+    end
   end
 end
 
 generate_osc_wave_table_arrays do |last|
   generate_osc_wave_table("sq", last, 4.0 / 6.0) do |n, k|
-    if k % 2 == 1
-      (4.0 / Math::PI) * Math.sin((2.0 * Math::PI) *
-                                  (n.to_f / (1 << OSC_WAVE_TABLE_SAMPLES_BITS)) * k) / k
-    else
-      0.0
-    end
+    sq_harm(n, k)
   end
 end
 

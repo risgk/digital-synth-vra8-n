@@ -1,6 +1,6 @@
-# Digital Synth VRA8-N v2.4.4
+# Digital Synth VRA8-N v2.5.0
 
-- 2019-12-29 ISGK Instruments
+- 2021-04-30 ISGK Instruments
 - <https://github.com/risgk/digital-synth-vra8-n>
 
 
@@ -22,6 +22,10 @@
 
 ## Change History
 
+- v2.5.0
+    - Fix downward portamentos
+    - Add generate-osc-table for Digital Synth VRA8-N pSAW-16
+        - Digital Synth VRA8-N pSAW-16: VRA8-N Special Edition with 16-step Pseudo-SAW Wave
 - v2.4.4
     - Prevent increase of CPU load in AVR Boards core 1.8.1
         - Change comments for macOS Catalina 10.15 and Arduino IDE 1.8.10 (AVR Boards core 1.8.1)
@@ -192,8 +196,8 @@
 
 ## MIDI Implementation Chart
 
-      [Monophonic Synthesizer]                                        Date: 2019-12-29       
-      Model: Digital Synth VRA8-N     MIDI Implementation Chart       Version: 2.4.4         
+      [Monophonic Synthesizer]                                        Date: 2021-04-30       
+      Model: Digital Synth VRA8-N     MIDI Implementation Chart       Version: 2.5.0         
     +-------------------------------+---------------+---------------+-----------------------+
     | Function...                   | Transmitted   | Recognized    | Remarks               |
     +-------------------------------+---------------+---------------+-----------------------+
