@@ -22,6 +22,8 @@
 
 ## Change History
 
+- v2.6.0
+    - Fix wave tables
 - v2.5.0
     - Fix downward portamentos
     - Add generate-osc-table for Digital Synth VRA8-N pSAW-16

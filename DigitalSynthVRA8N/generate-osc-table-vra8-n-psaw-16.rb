@@ -53,9 +53,11 @@ def generate_osc_wave_table(name, last, amp, organ = false)
   prev_level = 0
   (0..(1 << OSC_WAVE_TABLE_SAMPLES_BITS)).each do |n|
     level = 0
+    nn = n
+    nn = 0 if n == (1 << OSC_WAVE_TABLE_SAMPLES_BITS)
     max = organ ? last * 2 : last
     (1..max).each do |k|
-      level += yield(n, k)
+      level += yield(nn, k)
     end
     level *= amp
     level = (level * OSC_WAVE_TABLE_AMPLITUDE).floor.to_i
